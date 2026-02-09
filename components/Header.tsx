@@ -60,7 +60,7 @@ export default function Header() {
 
           <div className="flex items-center gap-4">
             <Link
-              href="/pedir"
+              href="/proximamente"
               className="px-4 py-2 md:px-6 md:py-2.5 bg-primary-500 text-white text-sm font-semibold rounded-lg hover:bg-primary-600 transition-colors shadow-sm"
             >
               Pedir

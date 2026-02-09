@@ -123,7 +123,7 @@ export default function ContactoPage() {
             Haz tu pedido ahora y disfruta de la calidad AriMar
           </p>
           <a
-            href="/pedir"
+            href="/proximamente"
             className="inline-block px-8 py-4 bg-primary-500 text-white text-lg font-semibold rounded-lg hover:bg-primary-600 transition-colors shadow-lg"
           >
             Hacer pedido

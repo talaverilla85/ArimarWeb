@@ -41,7 +41,7 @@ export default function CartaPage() {
       {/* Floating CTA Button */}
       <div className="fixed bottom-6 right-6 z-40">
         <Link
-          href="/pedir"
+          href="/proximamente"
           className="px-6 py-3 bg-primary-500 text-white font-semibold rounded-full shadow-lg hover:bg-primary-600 transition-colors flex items-center gap-2"
         >
           <span>Pedir ahora</span>
