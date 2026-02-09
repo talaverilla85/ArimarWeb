@@ -30,7 +30,7 @@ export default function AvisoLegalPage() {
           <section className="mb-8">
             <h2 className="text-2xl font-bold text-slate-800 mb-4">2. Objeto</h2>
             <p className="text-slate-600 leading-relaxed">
-              El presente aviso legal regula el uso del sitio web www.arimar.es (en adelante, el "Sitio Web"), 
+              El presente aviso legal regula el uso del sitio web www.arimarfoodlab.es (en adelante, el "Sitio Web"), 
               del cual es titular AriMar.
             </p>
             <p className="text-slate-600 leading-relaxed mt-4">

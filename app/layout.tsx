@@ -16,23 +16,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="es">
-      <head>
-        {/* Google Analytics placeholder */}
-        <script
-          async
-          src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"
-        />
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-              gtag('config', 'GA_MEASUREMENT_ID');
-            `,
-          }}
-        />
-      </head>
+      <head />
       <body className="bg-slate-50 text-slate-800 antialiased relative">
         <div 
           className="fixed inset-0 z-0 pointer-events-none opacity-[0.06]"

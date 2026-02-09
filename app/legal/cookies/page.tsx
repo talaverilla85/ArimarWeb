@@ -25,48 +25,20 @@ export default function CookiesPage() {
           </section>
 
           <section className="mb-8">
-            <h2 className="text-2xl font-bold text-slate-800 mb-4">2. Tipos de Cookies que Utilizamos</h2>
+            <h2 className="text-2xl font-bold text-slate-800 mb-4">2. Cookies que Utilizamos</h2>
             <p className="text-slate-600 leading-relaxed mb-4">
-              En nuestro sitio web utilizamos los siguientes tipos de cookies:
+              En nuestro sitio web utilizamos únicamente <strong>cookies técnicas</strong>, necesarias para el 
+              correcto funcionamiento del sitio (por ejemplo, sesión o preferencias de visualización). No utilizamos 
+              cookies de análisis, publicitarias ni de terceros.
             </p>
-            
-            <h3 className="text-xl font-bold text-slate-800 mb-3 mt-6">Cookies Técnicas</h3>
             <p className="text-slate-600 leading-relaxed">
-              Son aquellas que permiten al usuario la navegación a través de una página web y la utilización de 
-              las diferentes opciones o servicios que en ella existen.
-            </p>
-
-            <h3 className="text-xl font-bold text-slate-800 mb-3 mt-6">Cookies de Análisis</h3>
-            <p className="text-slate-600 leading-relaxed">
-              Son aquellas que permiten el seguimiento y análisis del comportamiento de los usuarios en los sitios 
-              web. La información recogida mediante este tipo de cookies se utiliza en la medición de la actividad 
-              del sitio web y para la elaboración de perfiles de navegación de los usuarios.
-            </p>
-
-            <h3 className="text-xl font-bold text-slate-800 mb-3 mt-6">Cookies de Terceros</h3>
-            <p className="text-slate-600 leading-relaxed">
-              Son aquellas que se envían al equipo terminal del usuario desde un equipo o dominio que no es gestionado 
-              por el editor, sino por otra entidad que trata los datos obtenidos través de las cookies.
+              Son cookies que permiten la navegación a través de la página web y el uso de las opciones y servicios 
+              que en ella existen. No requieren consentimiento previo por ser estrictamente necesarias.
             </p>
           </section>
 
           <section className="mb-8">
-            <h2 className="text-2xl font-bold text-slate-800 mb-4">3. Cookies Específicas Utilizadas</h2>
-            <div className="bg-slate-50 rounded-lg p-6 mb-4">
-              <h3 className="text-lg font-bold text-slate-800 mb-3">Google Analytics</h3>
-              <p className="text-slate-600 leading-relaxed mb-2">
-                Utilizamos Google Analytics para analizar el uso de nuestro sitio web. Esta herramienta utiliza 
-                cookies para recopilar información sobre cómo los visitantes utilizan nuestro sitio.
-              </p>
-              <p className="text-slate-600 leading-relaxed">
-                <strong>Duración:</strong> Cookies persistentes<br />
-                <strong>Finalidad:</strong> Análisis estadístico del uso del sitio web
-              </p>
-            </div>
-          </section>
-
-          <section className="mb-8">
-            <h2 className="text-2xl font-bold text-slate-800 mb-4">4. Gestión de Cookies</h2>
+            <h2 className="text-2xl font-bold text-slate-800 mb-4">3. Gestión de Cookies</h2>
             <p className="text-slate-600 leading-relaxed mb-4">
               Puede permitir, bloquear o eliminar las cookies instaladas en su equipo mediante la configuración 
               de las opciones del navegador instalado en su ordenador:
@@ -96,7 +68,7 @@ export default function CookiesPage() {
           </section>
 
           <section className="mb-8">
-            <h2 className="text-2xl font-bold text-slate-800 mb-4">5. Consentimiento</h2>
+            <h2 className="text-2xl font-bold text-slate-800 mb-4">4. Consentimiento</h2>
             <p className="text-slate-600 leading-relaxed">
               Al navegar y continuar en nuestro sitio web estará consintiendo el uso de las cookies antes 
               descritas, en las condiciones contenidas en la presente Política de Cookies.
@@ -108,7 +80,7 @@ export default function CookiesPage() {
           </section>
 
           <section className="mb-8">
-            <h2 className="text-2xl font-bold text-slate-800 mb-4">6. Actualización de la Política</h2>
+            <h2 className="text-2xl font-bold text-slate-800 mb-4">5. Actualización de la Política</h2>
             <p className="text-slate-600 leading-relaxed">
               AriMar puede modificar esta Política de Cookies en función de exigencias legislativas, 
               reglamentarias, o con la finalidad de adaptar dicha política a las instrucciones dictadas 

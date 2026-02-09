@@ -5,7 +5,7 @@ export const siteConfig = {
   /** Teléfono en formato E.164 sin el símbolo + (ej: 346XXXXXXXX) */
   whatsappPhoneE164: '34614881678',
   /** Mensaje por defecto al abrir WhatsApp */
-  whatsappMessage: 'Hola, me gustaría información sobre AriMar',
+  whatsappMessage: 'Hola, buenos días. Tengo una consulta',
   /** Dominio del sitio (sin protocolo) */
   domain: 'arimarfoodlab.es',
 } as const
