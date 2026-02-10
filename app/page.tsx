@@ -93,12 +93,29 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Bloque "Hoy en cocina" */}
+      {/* Bloque "Hoy en cocina" / Lo que solemos cocinar */}
       <section className="py-16 md:py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-slate-800 mb-6">
-            Hoy en cocina
+          <h2 className="text-3xl md:text-4xl font-bold text-slate-800 mb-2">
+            Lo que solemos cocinar
           </h2>
+          <p className="text-sm md:text-base text-slate-500 mb-6">
+            Rotación diaria según temporada y producción.
+          </p>
+
+          <div className="flex flex-wrap justify-center gap-2 md:gap-3 mb-8">
+            {['Potajes', 'Cremas', 'Pastas', 'Arroces', 'Guisos', 'Vegetales', 'Postres'].map(
+              (item) => (
+                <span
+                  key={item}
+                  className="px-4 py-2 rounded-full border border-primary-100/70 bg-primary-50/60 text-sm md:text-base text-primary-800/90 shadow-sm"
+                >
+                  {item}
+                </span>
+              ),
+            )}
+          </div>
+
           <p className="text-lg md:text-xl text-slate-600 leading-relaxed">
             Cada día cocinamos una selección corta de platos caseros que va cambiando:
             algo de cuchara, algo vegetal, algo de carne o pescado y un par de cosas dulces.
