@@ -3,16 +3,16 @@ import type { Metadata } from 'next'
 const domain = 'https://www.arimarfoodlab.es'
 
 export const metadata: Metadata = {
-  title: 'Carta · Comida para llevar Playa de Arinaga | AriMar FoodLab',
+  title: 'Comida para llevar en Playa de Arinaga · Carta | AriMar FoodLab',
   description:
-    'Carta de comida casera para llevar en Playa de Arinaga, Agüimes. Potajes, cremas, pastas, arroces, guisos y postres. AriMar FoodLab, Avenida Polizón 67.',
+    'Comida para llevar en Playa de Arinaga, Agüimes (Gran Canaria). Carta casera de rotación diaria: potajes, cremas, pastas, arroces, guisos, vegetales y postres. AriMar FoodLab, Avenida Polizón 67.',
   alternates: {
     canonical: `${domain}/carta`,
   },
   openGraph: {
-    title: 'Carta · Comida para llevar Playa de Arinaga | AriMar FoodLab',
+    title: 'Comida para llevar en Playa de Arinaga · Carta | AriMar FoodLab',
     description:
-      'Comida casera para llevar en Playa de Arinaga, Agüimes. Carta diaria: potajes, cremas, pastas, guisos y postres.',
+      'Comida para llevar en Playa de Arinaga, Agüimes. Carta diaria: potajes, cremas, pastas, guisos y postres. AriMar FoodLab.',
     type: 'website',
     url: `${domain}/carta`,
   },
