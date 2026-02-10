@@ -37,7 +37,7 @@ export default function Home() {
             priority
             sizes="100vw"
           />
-          <div className="absolute inset-0 bg-black/40 z-10" />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/30 to-black/50 z-10" />
         </div>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -77,7 +77,7 @@ export default function Home() {
 
       {/* Banner informativo bajo el hero */}
       <section className="px-4 sm:px-6 lg:px-8 py-4 bg-white/70 backdrop-blur-sm border-b border-slate-200/60">
-        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
+        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3 pl-4 sm:pl-5 border-l-4 border-primary-400">
           <p className="text-sm md:text-base text-slate-700">
             <span className="font-semibold text-primary-600">
               Estamos dando sabor a esta historia para compartirla contigo. Muy pronto.
@@ -94,9 +94,9 @@ export default function Home() {
       </section>
 
       {/* Bloque "Hoy en cocina" / Lo que solemos cocinar */}
-      <section className="py-16 md:py-20 px-4 sm:px-6 lg:px-8">
+      <section className="py-20 md:py-24 px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-slate-800 mb-2">
+          <h2 className="text-3xl md:text-4xl font-bold text-slate-800 mb-2 tracking-tight">
             Lo que solemos cocinar
           </h2>
           <p className="text-sm md:text-base text-slate-500 mb-6">
@@ -108,7 +108,7 @@ export default function Home() {
               (item) => (
                 <span
                   key={item}
-                  className="px-4 py-2 rounded-full border border-primary-100/70 bg-primary-50/60 text-sm md:text-base text-primary-800/90 shadow-sm"
+                  className="px-4 py-2 rounded-full border border-primary-100/70 bg-primary-50/60 text-sm md:text-base text-primary-800/90 shadow-sm hover:bg-primary-50/80 transition-colors"
                 >
                   {item}
                 </span>
@@ -134,7 +134,7 @@ export default function Home() {
               viewport={{ once: true, margin: '-100px' }}
               transition={{ duration: 0.8 }}
             >
-              <h2 className="text-3xl md:text-4xl font-bold text-slate-800 mb-2">
+              <h2 className="text-3xl md:text-4xl font-bold text-slate-800 mb-2 tracking-tight">
                 Cómo cocinamos
               </h2>
               <p className="text-sm md:text-base text-slate-600 mb-6">
@@ -163,7 +163,7 @@ export default function Home() {
                     key={item.title}
                     className="rounded-xl border border-slate-200 bg-white/80 p-5 shadow-sm flex flex-col gap-2"
                   >
-                    <div className="w-8 h-8 rounded-full bg-primary-100 text-primary-700 flex items-center justify-center text-sm font-semibold">
+                    <div className="w-9 h-9 rounded-full bg-primary-100 text-primary-700 flex items-center justify-center text-sm font-semibold">
                       •
                     </div>
                     <h3 className="text-lg font-semibold text-slate-800">
@@ -181,7 +181,7 @@ export default function Home() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true, margin: '-100px' }}
               transition={{ duration: 0.8 }}
-              className="relative aspect-[4/3] rounded-lg overflow-hidden bg-slate-100"
+              className="relative aspect-[4/3] rounded-xl overflow-hidden bg-slate-100"
             >
               <Image
                 src="/images/cocina-lote-linea.webp"
@@ -204,7 +204,7 @@ export default function Home() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true, margin: '-100px' }}
               transition={{ duration: 0.8 }}
-              className="relative aspect-[4/3] rounded-lg overflow-hidden bg-slate-100 order-2 lg:order-1"
+              className="relative aspect-[4/3] rounded-xl overflow-hidden bg-slate-100 order-2 lg:order-1"
             >
               <Image
                 src="/images/packaging-tupper.webp"
@@ -221,7 +221,7 @@ export default function Home() {
               transition={{ duration: 0.8 }}
               className="order-1 lg:order-2"
             >
-              <h2 className="text-3xl md:text-4xl font-bold text-slate-800 mb-6">
+              <h2 className="text-3xl md:text-4xl font-bold text-slate-800 mb-6 tracking-tight">
                 Así te lo llevas
               </h2>
               <div className="space-y-4 text-slate-600 leading-relaxed">
@@ -232,8 +232,8 @@ export default function Home() {
                   <strong className="text-slate-800">Etiquetado claro.</strong> Fecha, ingredientes y alérgenos. Fácil y transparente.
                 </p>
                 <p>
-                  <strong className="text-slate-800">Listo para Arinaga.</strong> Aguanta el trayecto y llega perfecto a casa.
-                </p>
+                  <strong className="text-slate-800">Listo para Arinaga.</strong> Aguanta el trayecto y llega perfecto a casa o la playa.
+                </p>  
               </div>
             </motion.div>
           </div>
@@ -243,9 +243,9 @@ export default function Home() {
       {/* Callout de ubicación */}
       <section className="px-4 sm:px-6 lg:px-8 pb-20">
         <div className="max-w-7xl mx-auto mt-10">
-          <div className="rounded-2xl border border-slate-200 bg-white/70 px-6 py-8 md:px-8 md:py-10 shadow-sm text-center md:text-left flex flex-col md:flex-row items-center justify-between gap-6">
+          <div className="rounded-2xl border border-slate-300 bg-white/70 px-6 py-8 md:px-8 md:py-10 shadow-md text-center md:text-left flex flex-col md:flex-row items-center justify-between gap-6">
             <div className="flex-1">
-              <h2 className="text-lg md:text-xl font-semibold text-slate-800 mb-2">
+              <h2 className="text-lg md:text-xl font-semibold text-slate-800 mb-2 tracking-tight">
                 📍 Estamos en Playa de Arinaga
               </h2>
               <p className="text-sm md:text-base text-slate-600 mb-4">
@@ -276,7 +276,7 @@ export default function Home() {
       <section className="py-16 px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto">
           <div className="rounded-2xl bg-primary-50 border border-primary-100 px-6 py-10 md:px-10 text-center shadow-sm">
-            <h2 className="text-2xl md:text-3xl font-bold text-slate-800 mb-4">
+            <h2 className="text-2xl md:text-3xl font-bold text-slate-800 mb-4 tracking-tight">
               Pedidos online muy pronto
             </h2>
             <p className="text-slate-600 mb-8 max-w-2xl mx-auto">
@@ -292,7 +292,7 @@ export default function Home() {
               </Link>
               <Link
                 href="/proximamente"
-                className="inline-block px-8 py-3 border border-primary-500 text-primary-600 text-sm md:text-base font-semibold rounded-lg hover:bg-primary-50 transition-colors"
+                className="inline-block px-8 py-3 border border-primary-200 text-primary-700 text-sm md:text-base font-semibold rounded-lg hover:bg-primary-50 transition-colors"
               >
                 Síguenos
               </Link>
