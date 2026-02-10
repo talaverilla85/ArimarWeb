@@ -45,11 +45,23 @@ export default function Home() {
           className="relative z-20 max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8"
         >
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight">
-            Comida para llevar, hecha con cabeza.
+            Comida casera para llevar en Playa de Arinaga.
           </h1>
-          <p className="text-xl md:text-2xl text-white/90 mb-10 max-w-2xl mx-auto leading-relaxed">
-            Cocina diaria · Producción por lotes · Residuo 0
+          <p className="text-lg md:text-xl text-white/85 mb-6 max-w-2xl mx-auto leading-relaxed">
+            Platos que aguantan el paseo hasta casa, la oficina o el paseo marítimo.
           </p>
+
+          <div className="flex flex-col sm:flex-row flex-wrap gap-3 justify-center mb-10">
+            {['Cocina diaria', 'Producción por lotes', 'Residuo 0'].map((item) => (
+              <div
+                key={item}
+                className="px-4 py-2 rounded-full border border-white/25 bg-white/10 text-white/90 text-sm md:text-base backdrop-blur-sm shadow-sm"
+              >
+                {item}
+              </div>
+            ))}
+          </div>
+
           <Link
             href="/proximamente"
             className="inline-block px-8 py-4 bg-primary-500 text-white text-lg font-semibold rounded-lg hover:bg-primary-600 transition-colors shadow-lg"
@@ -57,6 +69,22 @@ export default function Home() {
             Pedir ahora
           </Link>
         </motion.div>
+      </section>
+
+      {/* Banner informativo bajo el hero */}
+      <section className="px-4 sm:px-6 lg:px-8 py-4 bg-white/70 backdrop-blur-sm border-b border-slate-200/60">
+        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
+          <p className="text-sm md:text-base text-slate-700">
+            <span className="font-semibold text-primary-600">Ya estamos abiertos</span> · Playa de Arinaga
+          </p>
+          <Link
+            href="/contacto"
+            className="inline-flex items-center gap-2 text-sm font-semibold text-primary-600 hover:text-primary-700"
+          >
+            Ver ubicación
+            <span aria-hidden>→</span>
+          </Link>
+        </div>
       </section>
 
       {/* Bloque "Hoy en cocina" */}
@@ -110,16 +138,40 @@ export default function Home() {
               <h2 className="text-3xl md:text-4xl font-bold text-slate-800 mb-6">
                 Cómo cocinamos
               </h2>
-              <div className="space-y-4 text-slate-600 leading-relaxed">
-                <p>
-                  <strong className="text-slate-800">Producción por lotes.</strong> Cocina central que optimiza recursos y garantiza frescura.
-                </p>
-                <p>
-                  <strong className="text-slate-800">Control de raciones y caducidades.</strong> Cada lote se etiqueta, se controla y se gestiona para evitar desperdicio.
-                </p>
-                <p>
-                  <strong className="text-slate-800">Tecnología Rational.</strong> Equipamiento profesional que cocina con precisión y conserva nutrientes.
-                </p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 text-left">
+                {[
+                  {
+                    title: 'Producción por lotes',
+                    text: 'Cocinamos en tandas para que tengas platos caseros listos varios días.',
+                  },
+                  {
+                    title: 'Control de raciones',
+                    text: 'Cada lote se etiqueta y se controla para evitar desperdicio.',
+                  },
+                  {
+                    title: 'Tecnología profesional',
+                    text: 'Equipos que cocinan con precisión y cuidan los nutrientes.',
+                  },
+                  {
+                    title: 'Misma calidad cada día',
+                    text: 'Procesos pensados para que cada plato salga igual de bien.',
+                  },
+                ].map((item) => (
+                  <div
+                    key={item.title}
+                    className="rounded-xl border border-slate-200 bg-white/80 p-5 shadow-sm flex flex-col gap-2"
+                  >
+                    <div className="w-8 h-8 rounded-full bg-primary-100 text-primary-700 flex items-center justify-center text-sm font-semibold">
+                      •
+                    </div>
+                    <h3 className="text-lg font-semibold text-slate-800">
+                      {item.title}
+                    </h3>
+                    <p className="text-sm text-slate-600 leading-relaxed">
+                      {item.text}
+                    </p>
+                  </div>
+                ))}
               </div>
             </motion.div>
             <motion.div
@@ -227,6 +279,35 @@ export default function Home() {
                 </p>
               </div>
             </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* CTA final: pedidos online */}
+      <section className="py-16 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-4xl mx-auto">
+          <div className="rounded-2xl bg-primary-50 border border-primary-100 px-6 py-10 md:px-10 text-center shadow-sm">
+            <h2 className="text-2xl md:text-3xl font-bold text-slate-800 mb-4">
+              Pedidos online muy pronto
+            </h2>
+            <p className="text-slate-600 mb-8 max-w-2xl mx-auto">
+              Estamos ultimando la tienda online. Mientras tanto, puedes seguirnos y
+              ver qué cocinamos cada día en Playa de Arinaga.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link
+                href="/proximamente"
+                className="inline-block px-8 py-3 bg-primary-500 text-white text-sm md:text-base font-semibold rounded-lg hover:bg-primary-600 transition-colors shadow-md"
+              >
+                Pedir (muy pronto)
+              </Link>
+              <Link
+                href="/proximamente"
+                className="inline-block px-8 py-3 border border-primary-500 text-primary-600 text-sm md:text-base font-semibold rounded-lg hover:bg-primary-50 transition-colors"
+              >
+                Síguenos
+              </Link>
+            </div>
           </div>
         </div>
       </section>
