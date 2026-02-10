@@ -102,17 +102,9 @@ export default function ContactoPage() {
               <h2 className="text-2xl font-bold text-slate-800">Horario</h2>
             </div>
             <div className="space-y-3">
-              <div className="flex justify-between items-center py-2 border-b border-slate-200">
-                <span className="text-slate-600 font-medium">Lunes - Viernes</span>
-                <span className="text-slate-800 font-semibold">12:00 - 22:00</span>
-              </div>
-              <div className="flex justify-between items-center py-2 border-b border-slate-200">
-                <span className="text-slate-600 font-medium">Sábado</span>
-                <span className="text-slate-800 font-semibold">12:00 - 23:00</span>
-              </div>
               <div className="flex justify-between items-center py-2">
-                <span className="text-slate-600 font-medium">Domingo</span>
-                <span className="text-slate-800 font-semibold">12:00 - 22:00</span>
+                <span className="text-slate-600 font-medium">Todos los días</span>
+                <span className="text-slate-800 font-semibold">11:30 - 16:00</span>
               </div>
             </div>
           </div>
