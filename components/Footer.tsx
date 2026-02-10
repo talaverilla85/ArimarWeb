@@ -92,7 +92,7 @@ export default function Footer() {
 
         <div className="mt-8 md:mt-12 pt-8 border-t border-slate-200">
           <p className="text-xs text-slate-500 text-center">
-            © {new Date().getFullYear()} AriMar. Todos los derechos reservados.
+            © {new Date().getFullYear()} AriMar FoodLab. Todos los derechos reservados.
           </p>
         </div>
       </div>
