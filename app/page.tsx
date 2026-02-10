@@ -94,40 +94,16 @@ export default function Home() {
       </section>
 
       {/* Bloque "Hoy en cocina" */}
-      <section className="py-20 md:py-28 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
-          <h2 className="text-3xl md:text-4xl font-bold text-slate-800 text-center mb-16">
+      <section className="py-16 md:py-20 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-4xl mx-auto text-center">
+          <h2 className="text-3xl md:text-4xl font-bold text-slate-800 mb-6">
             Hoy en cocina
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[
-              { src: '/images/carta-crema.webp', alt: 'Crema' },
-              { src: '/images/carta-potaje.webp', alt: 'Potaje' },
-              { src: '/images/carta-pasta.webp', alt: 'Pasta' },
-            ].map((item, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: '-100px' }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                className="group"
-              >
-                <div className="relative aspect-[4/3] rounded-lg overflow-hidden mb-4 bg-slate-100">
-                  <Image
-                    src={item.src}
-                    alt={item.alt}
-                    fill
-                    className="object-cover group-hover:scale-[1.02] transition-transform duration-500"
-                    sizes="(max-width: 768px) 100vw, 33vw"
-                  />
-                </div>
-                <p className="text-sm text-slate-600 text-center">
-                  Producción diaria · Rotación constante
-                </p>
-              </motion.div>
-            ))}
-          </div>
+          <p className="text-lg md:text-xl text-slate-600 leading-relaxed">
+            Cada día cocinamos una selección corta de platos caseros que va cambiando:
+            algo de cuchara, algo vegetal, algo de carne o pescado y un par de cosas dulces.
+            Lo justo para que todo se mueva y nada se quede.
+          </p>
         </div>
       </section>
 
