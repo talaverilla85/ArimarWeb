@@ -32,7 +32,9 @@ export default function PrivacidadPage() {
             </p>
             <ul className="list-disc pl-6 text-slate-600 space-y-2 mt-4">
               <li>Denominación: AriMar</li>
-              <li>Domicilio: Playa de Arinaga, Gran Canaria, España</li>
+              <li>
+                Domicilio: Avenida Polizón 67, Playa de Arinaga, Agüimes, Gran Canaria, España
+              </li>
             </ul>
           </section>
 

@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { getWhatsAppUrl } from '@/lib/siteConfig'
+import { getWhatsAppUrl, siteConfig } from '@/lib/siteConfig'
 
 export const metadata: Metadata = {
   title: 'Contacto - AriMar',
@@ -68,12 +68,16 @@ export default function ContactoPage() {
               <strong className="text-slate-800">AriMar</strong>
             </p>
             <p className="text-lg text-slate-600 mb-4">
-              Playa de Arinaga
+              {siteConfig.address.street}
               <br />
-              Gran Canaria, España
+              {siteConfig.address.locality}
+              <br />
+              {siteConfig.address.municipality}
+              <br />
+              {siteConfig.address.region}, {siteConfig.address.country}
             </p>
             <a
-              href="https://maps.google.com/?q=Playa+de+Arinaga,+Gran+Canaria"
+              href={siteConfig.mapsUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 text-slate-800 font-semibold hover:underline"

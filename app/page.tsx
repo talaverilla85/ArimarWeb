@@ -11,8 +11,9 @@ const jsonLd = {
   description: 'Comida para llevar en Playa de Arinaga, Gran Canaria',
   address: {
     '@type': 'PostalAddress',
+    streetAddress: 'Avenida Polizón 67',
     addressLocality: 'Playa de Arinaga',
-    addressRegion: 'Gran Canaria',
+    addressRegion: 'Agüimes, Gran Canaria',
     addressCountry: 'ES',
   },
 }
@@ -44,9 +45,12 @@ export default function Home() {
           transition={{ duration: 0.8, ease: 'easeOut' }}
           className="relative z-20 max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8"
         >
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 leading-tight">
             Comida casera para llevar en Playa de Arinaga.
           </h1>
+          <p className="text-sm md:text-base text-white/80 mb-4 tracking-wide uppercase">
+            Playa de Arinaga · Comida para llevar
+          </p>
           <p className="text-lg md:text-xl text-white/85 mb-6 max-w-2xl mx-auto leading-relaxed">
             Platos que aguantan el paseo hasta casa, la oficina o el paseo marítimo.
           </p>
@@ -75,7 +79,9 @@ export default function Home() {
       <section className="px-4 sm:px-6 lg:px-8 py-4 bg-white/70 backdrop-blur-sm border-b border-slate-200/60">
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
           <p className="text-sm md:text-base text-slate-700">
-            <span className="font-semibold text-primary-600">Ya estamos abiertos</span> · Playa de Arinaga
+            <span className="font-semibold text-primary-600">
+              Estamos dando sabor a esta historia para compartirla contigo. Muy pronto.
+            </span>
           </p>
           <Link
             href="/contacto"
@@ -135,26 +141,29 @@ export default function Home() {
               viewport={{ once: true, margin: '-100px' }}
               transition={{ duration: 0.8 }}
             >
-              <h2 className="text-3xl md:text-4xl font-bold text-slate-800 mb-6">
+              <h2 className="text-3xl md:text-4xl font-bold text-slate-800 mb-2">
                 Cómo cocinamos
               </h2>
+              <p className="text-sm md:text-base text-slate-600 mb-6">
+                Hecho en Playa de Arinaga, para llevarte el sabor de casa donde quieras.
+              </p>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 text-left">
                 {[
                   {
                     title: 'Producción por lotes',
-                    text: 'Cocinamos en tandas para que tengas platos caseros listos varios días.',
+                    text: 'Cocinamos en tandas para que siempre tengas platos listos, ricos y sin prisas.',
                   },
                   {
-                    title: 'Control de raciones',
-                    text: 'Cada lote se etiqueta y se controla para evitar desperdicio.',
+                    title: 'Raciones claras',
+                    text: 'Porciones equilibradas y etiquetadas. Para comer bien y no desperdiciar.',
                   },
                   {
-                    title: 'Tecnología profesional',
-                    text: 'Equipos que cocinan con precisión y cuidan los nutrientes.',
+                    title: 'Cocina profesional, trato cercano',
+                    text: 'Equipo pro para clavar el punto… y sabor de los que apetece repetir.',
                   },
                   {
                     title: 'Misma calidad cada día',
-                    text: 'Procesos pensados para que cada plato salga igual de bien.',
+                    text: 'Si vienes hoy o mañana, quieres lo mismo: que esté igual de bueno.',
                   },
                 ].map((item) => (
                   <div
@@ -193,51 +202,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Bloque "Cocinar sin desperdiciar" */}
-      <section className="py-20 md:py-28 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
-          <h2 className="text-3xl md:text-4xl font-bold text-slate-800 text-center mb-12">
-            Cocinar sin desperdiciar
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
-            {[
-              { src: '/images/residuo0-caducidad.webp', alt: 'Control de caducidades' },
-              { src: '/images/residuo0-aprovechamiento.webp', alt: 'Aprovechamiento de alimentos' },
-            ].map((item, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: '-100px' }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                className="relative aspect-[4/3] rounded-lg overflow-hidden bg-slate-100"
-              >
-                <Image
-                  src={item.src}
-                  alt={item.alt}
-                  fill
-                  className="object-cover"
-                  sizes="(max-width: 768px) 100vw, 50vw"
-                />
-              </motion.div>
-            ))}
-          </div>
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="max-w-3xl mx-auto text-center"
-          >
-            <p className="text-lg md:text-xl text-slate-700 leading-relaxed">
-              Aquí no se tira comida:<br />
-              lo que tiene vida corta baja de precio,<br />
-              lo que no se vende se planifica mejor.
-            </p>
-          </motion.div>
-        </div>
-      </section>
-
       {/* Bloque "Envases y presentación" */}
       <section className="py-20 md:py-28 px-4 sm:px-6 lg:px-8 bg-slate-50">
         <div className="max-w-7xl mx-auto">
@@ -265,20 +229,52 @@ export default function Home() {
               className="order-1 lg:order-2"
             >
               <h2 className="text-3xl md:text-4xl font-bold text-slate-800 mb-6">
-                Envases y presentación
+                Así te lo llevas
               </h2>
               <div className="space-y-4 text-slate-600 leading-relaxed">
                 <p>
-                  <strong className="text-slate-800">Envases compostables.</strong> Materiales que vuelven a la tierra.
+                  <strong className="text-slate-800">Envases compostables.</strong> Ligeros y limpios, pensados para el día a día.
                 </p>
                 <p>
-                  <strong className="text-slate-800">Etiquetado claro.</strong> Fecha, contenido, alérgenos. Sin sorpresas.
+                  <strong className="text-slate-800">Etiquetado claro.</strong> Fecha, ingredientes y alérgenos. Fácil y transparente.
                 </p>
                 <p>
-                  <strong className="text-slate-800">Listo para llevar.</strong> Empaquetado que aguanta el trayecto.
+                  <strong className="text-slate-800">Listo para Arinaga.</strong> Aguanta el trayecto y llega perfecto a casa.
                 </p>
               </div>
             </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* Callout de ubicación */}
+      <section className="px-4 sm:px-6 lg:px-8 pb-20">
+        <div className="max-w-7xl mx-auto mt-10">
+          <div className="rounded-2xl border border-slate-200 bg-white/70 px-6 py-8 md:px-8 md:py-10 shadow-sm text-center md:text-left flex flex-col md:flex-row items-center justify-between gap-6">
+            <div className="flex-1">
+              <h2 className="text-lg md:text-xl font-semibold text-slate-800 mb-2">
+                📍 Estamos en Playa de Arinaga
+              </h2>
+              <p className="text-sm md:text-base text-slate-600 mb-4">
+                Ven a vernos y llévate comida lista sin complicarte.
+              </p>
+              <Link
+                href="/contacto"
+                className="inline-flex items-center gap-2 px-6 py-3 bg-primary-500 text-white text-sm md:text-base font-semibold rounded-lg hover:bg-primary-600 transition-colors shadow-sm"
+              >
+                Ver ubicación
+                <span aria-hidden>→</span>
+              </Link>
+            </div>
+            <div className="w-24 h-24 md:w-28 md:h-28 flex-shrink-0">
+              <Image
+                src="/images/Ari.png"
+                alt="Ari, la mascota de AriMar"
+                width={120}
+                height={120}
+                className="w-full h-full object-contain"
+              />
+            </div>
           </div>
         </div>
       </section>

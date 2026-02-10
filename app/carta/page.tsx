@@ -15,8 +15,9 @@ const jsonLd = {
     name: 'AriMar',
     address: {
       '@type': 'PostalAddress',
+      streetAddress: 'Avenida Polizón 67',
       addressLocality: 'Playa de Arinaga',
-      addressRegion: 'Gran Canaria',
+      addressRegion: 'Agüimes, Gran Canaria',
       addressCountry: 'ES',
     },
   },
