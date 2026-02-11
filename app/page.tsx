@@ -52,7 +52,7 @@ export default function Home() {
             Playa de Arinaga · Comida para llevar
           </p>
           <p className="text-lg md:text-xl text-white/85 mb-6 max-w-2xl mx-auto leading-relaxed">
-            Platos que aguantan el paseo hasta casa, la oficina o el paseo marítimo.
+            Platos que aguantan para que lo disfrutes en casa, en la oficina o en la playa.
           </p>
 
           <div className="flex flex-col sm:flex-row flex-wrap gap-3 justify-center mb-10">
