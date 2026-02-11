@@ -15,9 +15,6 @@ export const metadata: Metadata = {
   },
 }
 
-// TODO: añadir mapsEmbedUrl en siteConfig para mostrar mapa embebido
-const mapsEmbedUrl = (siteConfig as { mapsEmbedUrl?: string }).mapsEmbedUrl
-
 const faqs = [
   {
     q: '¿Cómo hago un encargo?',
@@ -127,10 +124,10 @@ export default function ContactoPage() {
               <li>Acceso rápido desde la avenida principal.</li>
               <li>Si vienes de la playa, estás a un paseo.</li>
             </ul>
-            {mapsEmbedUrl ? (
+            {siteConfig.mapsEmbedUrl ? (
               <div className="relative aspect-video rounded-2xl overflow-hidden border border-slate-200 bg-slate-100">
                 <iframe
-                  src={mapsEmbedUrl}
+                  src={siteConfig.mapsEmbedUrl}
                   title="Ubicación de AriMar FoodLab en Google Maps"
                   className="absolute inset-0 w-full h-full"
                   allowFullScreen
