@@ -4,9 +4,9 @@ import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 
 export const metadata: Metadata = {
-  title: 'AriMar - Comida para llevar en Playa de Arinaga, Gran Canaria',
-  description: 'Comida para llevar de calidad en Playa de Arinaga. Tecnología, higiene y sabor en cada plato.',
-  keywords: 'comida para llevar, Playa de Arinaga, Gran Canaria, comida rápida, takeaway',
+  title: 'AriMar | Freiduría y Comida Casera para Llevar en Playa de Arinaga – Gran Canaria',
+  description: 'Freiduría en Playa de Arinaga con platos caseros diarios, pollo asado fresco, opciones sin gluten y vegetarianas. Todo listo para llevar a casa o playa. Envases compostables y etiquetado completo. Muy pronto abrimos.',
+  keywords: 'comida para llevar, Playa de Arinaga, Gran Canaria, freiduría, comida casera, takeaway',
 }
 
 export default function RootLayout({

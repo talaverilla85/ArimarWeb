@@ -46,7 +46,7 @@ export default function Home() {
           className="relative z-20 max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8"
         >
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 leading-tight">
-            Comida casera para llevar en Playa de Arinaga.
+            AriMar – Freiduría y comida casera para llevar en Playa de Arinaga
           </h1>
           <p className="text-sm md:text-base text-white/80 mb-4 tracking-wide uppercase">
             Playa de Arinaga · Comida para llevar
@@ -80,7 +80,15 @@ export default function Home() {
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3 pl-4 sm:pl-5 border-l-4 border-primary-400">
           <p className="text-sm md:text-base text-slate-700">
             <span className="font-semibold text-primary-600">
-              Estamos dando sabor a esta historia para compartirla contigo. Muy pronto.
+              Platos caseros diarios para llevar en Playa de Arinaga
+            </span>
+            <br />
+            <span className="text-slate-600">
+              Pollo asado · Guisos · Vegetales · Postres · Opciones sin gluten
+            </span>
+            <br />
+            <span className="font-medium text-slate-800">
+              Muy pronto en Avenida Polizón 67
             </span>
           </p>
           <Link
