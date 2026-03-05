@@ -1,5 +1,8 @@
 import Link from 'next/link'
 import Logo from './Logo'
+import { siteConfig } from '@/lib/siteConfig'
+
+const phoneDisplay = `+34 ${siteConfig.whatsappPhoneE164.slice(3, 6)} ${siteConfig.whatsappPhoneE164.slice(6, 9)} ${siteConfig.whatsappPhoneE164.slice(9)}`
 
 export default function Footer() {
   return (
@@ -11,9 +14,27 @@ export default function Footer() {
             <p className="text-primary-500 font-semibold text-sm mb-3 italic">
               "Tu Disfruta, nosotros cocinamos por tí"
             </p>
-            <p className="text-slate-600 text-sm leading-relaxed">
+            <p className="text-slate-600 text-sm leading-relaxed mb-4">
               Comida casera de calidad en Playa de Arinaga, Gran Canaria. 
               Profesionalidad, cercanía y el sabor de casa.
+            </p>
+            <p className="text-slate-600 text-sm leading-relaxed" aria-label="Nombre, dirección y teléfono">
+              <span className="font-semibold text-slate-800">AriMar FoodLab</span>
+              {' · '}
+              {siteConfig.address.street}, local, {siteConfig.address.locality}
+              {' · '}
+              <a href={`tel:${siteConfig.whatsappPhoneE164}`} className="text-primary-600 hover:underline">
+                {phoneDisplay}
+              </a>
+              {' · '}
+              <a
+                href="https://www.instagram.com/arimarfoodlab/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-primary-600 hover:underline"
+              >
+                Instagram @arimarfoodlab
+              </a>
             </p>
           </div>
 
