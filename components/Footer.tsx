@@ -112,6 +112,19 @@ export default function Footer() {
         </div>
 
         <div className="mt-8 md:mt-12 pt-8 border-t border-slate-200">
+          <p className="text-sm text-slate-600 text-center mb-4" aria-label="Nombre, dirección y teléfono">
+            <span className="font-semibold text-slate-800">AriMar FoodLab</span>
+            {' · '}
+            {siteConfig.address.street}, local, {siteConfig.address.locality}
+            {' · '}
+            <a href={`tel:${siteConfig.whatsappPhoneE164}`} className="text-slate-800 hover:text-primary-600 hover:underline">
+              {phoneDisplay}
+            </a>
+            {' · '}
+            <a href="https://www.instagram.com/arimarfoodlab/" target="_blank" rel="noopener noreferrer" className="text-primary-600 hover:underline">
+              Instagram @arimarfoodlab
+            </a>
+          </p>
           <p className="text-xs text-slate-500 text-center">
             © {new Date().getFullYear()} AriMar FoodLab. Todos los derechos reservados.
           </p>
