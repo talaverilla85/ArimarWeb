@@ -84,7 +84,7 @@ export default function Home() {
             </span>
             <br />
             <span className="text-slate-600">
-              Pollo asado · Guisos · Vegetales · Postres · Opciones sin gluten
+              Pollo asado · Cremas y potajes · Pastas y arroces · Guisos de carne o pescado · Opciones vegetarianas · Postres caseros · Sin gluten disponible
             </span>
             <br />
             <span className="font-medium text-slate-800">
