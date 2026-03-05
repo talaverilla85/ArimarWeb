@@ -15,21 +15,6 @@ export const metadata: Metadata = {
   },
 }
 
-const faqs = [
-  {
-    q: '¿Cómo hago un encargo?',
-    a: 'Escríbenos por WhatsApp indicando el día, la hora aproximada de recogida y tus preferencias. Te ayudamos a concretar.',
-  },
-  {
-    q: '¿Dónde se recoge?',
-    a: 'En el local, en Playa de Arinaga. Puedes ver la ubicación exacta y cómo llegar en Google Maps.',
-  },
-  {
-    q: '¿Incluís alérgenos en la etiqueta?',
-    a: 'Sí. Cada plato lleva etiqueta con ingredientes y alérgenos para que puedas elegir con tranquilidad.',
-  },
-]
-
 export default function ContactoPage() {
   return (
     <div className="pt-32 pb-20 px-4 sm:px-6 lg:px-8">
@@ -196,34 +181,69 @@ export default function ContactoPage() {
           </div>
         </section>
 
-        {/* SEO: texto indexable + FAQ */}
+        {/* SEO: texto indexable */}
         <section className="pt-8 border-t border-slate-200" aria-labelledby="seo-heading">
           <h2 id="seo-heading" className="text-2xl font-bold text-slate-800 mb-6 tracking-tight">
-            Comida para llevar en Playa de Arinaga
+            AriMar FoodLab – Comida casera y freiduría para llevar en Playa de Arinaga
           </h2>
-          <p className="text-slate-600 leading-relaxed mb-10 max-w-3xl">
-            AriMar FoodLab es tu punto de comida casera para llevar en Playa de Arinaga, Agüimes (Gran Canaria). Recogida en local: sin comedor, todo pensado para llevártelo. Puedes escribirnos por WhatsApp para consultar la carta del día, reservar para una hora concreta o resolver dudas. La carta rota a diario según producción y temporada; cada plato lleva etiqueta con ingredientes y alérgenos. Estamos en Avenida Polizón 67. Horario de recogida todos los días de 11:30 a 16:00; para ubicación exacta y cómo llegar, consulta Google Maps.
-          </p>
-          <ul className="space-y-6 list-none pl-0">
-            {faqs.map((faq) => (
-              <li key={faq.q} className="border-b border-slate-200 pb-6 last:border-0">
-                <h3 className="text-base font-semibold text-slate-800 mb-2">
-                  {faq.q}
-                </h3>
-                <p className="text-slate-600 text-sm leading-relaxed">
-                  {faq.q === '¿Dónde se recoge?' ? (
-                    <>
-                      En el local, en Playa de Arinaga. Puedes ver la ubicación exacta y cómo llegar en{' '}
-                      <a href={siteConfig.mapsUrl} target="_blank" rel="noopener noreferrer" className="text-primary-600 font-medium hover:underline">
-                        Google Maps
-                      </a>.
-                    </>
-                  ) : (
-                    faq.a
-                  )}
-                </p>
-              </li>
-            ))}
+          <div className="max-w-3xl space-y-4 text-slate-600 leading-relaxed">
+            <p>
+              Tu opción diaria de comida rica y fresca para llevar en Playa de Arinaga (Agüimes, Gran Canaria). Todo para recoger en local: sin comedor, enfocado 100% en takeaway express a casa, oficina o playa.
+            </p>
+            <p>
+              Platos rotativos cada día según temporada y producción: pollo asado fresco, cremas y potajes de cuchara, pastas y arroces, guisos de carne o pescado, opciones vegetarianas y sin gluten. Envases compostables y etiquetas claras con nuestros ingredientes y alérgenos en cada tupper.
+            </p>
+            <p>
+              Estamos en Avenida Polizón 67, local. Horario: todos los días 11:30 – 16:00.
+            </p>
+            <p>
+              Para pedidos normales: usa nuestra web para indicar día y hora de recogida. Para encargos de mayor volumen: escríbenos por WhatsApp. Muy pronto abrimos – síguenos para ver avances. 🌊🍲
+            </p>
+          </div>
+
+          <h2 id="faq-heading" className="text-xl font-bold text-slate-800 mt-12 mb-6 tracking-tight">
+            Preguntas frecuentes
+          </h2>
+          <ul className="space-y-6 list-none pl-0 max-w-3xl">
+            <li className="border-b border-slate-200 pb-6 last:border-0">
+              <h3 className="text-base font-semibold text-slate-800 mb-2">¿Cómo hago un encargo o reservo mi pedido?</h3>
+              <p className="text-slate-600 text-sm leading-relaxed">
+                Para pedidos normales: entra en nuestra web y selecciona día y hora de recogida. Para encargos de mayor volumen: escríbenos por WhatsApp y te ayudamos a organizarlo.
+              </p>
+            </li>
+            <li className="border-b border-slate-200 pb-6 last:border-0">
+              <h3 className="text-base font-semibold text-slate-800 mb-2">¿Dónde y cómo se recoge el pedido?</h3>
+              <p className="text-slate-600 text-sm leading-relaxed">
+                En nuestro local: Avenida Polizón 67, Playa de Arinaga (Agüimes). Recogida express sin esperas largas. Consulta ubicación exacta y cómo llegar en{' '}
+                <a href={siteConfig.mapsUrl} target="_blank" rel="noopener noreferrer" className="text-primary-600 font-medium hover:underline">
+                  Google Maps
+                </a>.
+              </p>
+            </li>
+            <li className="border-b border-slate-200 pb-6 last:border-0">
+              <h3 className="text-base font-semibold text-slate-800 mb-2">¿Incluís información de alérgenos y ingredientes?</h3>
+              <p className="text-slate-600 text-sm leading-relaxed">
+                Sí, cada tupper lleva etiqueta clara con: ingredientes principales, alérgenos, fecha de caducidad y número de lote. Marcamos siempre las opciones sin gluten y vegetarianas.
+              </p>
+            </li>
+            <li className="border-b border-slate-200 pb-6 last:border-0">
+              <h3 className="text-base font-semibold text-slate-800 mb-2">¿Tenéis opciones sin gluten o vegetarianas?</h3>
+              <p className="text-slate-600 text-sm leading-relaxed">
+                Sí, varias opciones disponibles cada día. Pásate por el local y elige con tranquilidad viendo las etiquetas.
+              </p>
+            </li>
+            <li className="border-b border-slate-200 pb-6 last:border-0">
+              <h3 className="text-base font-semibold text-slate-800 mb-2">¿Hacéis pollo asado?</h3>
+              <p className="text-slate-600 text-sm leading-relaxed">
+                Sí, pollo asado es uno de los platos que solemos tener.
+              </p>
+            </li>
+            <li className="border-b border-slate-200 pb-6 last:border-0">
+              <h3 className="text-base font-semibold text-slate-800 mb-2">¿Abrís todos los días? ¿Horario?</h3>
+              <p className="text-slate-600 text-sm leading-relaxed">
+                Sí, de lunes a domingo de 11:30 a 16:00. Recogida en local – sin comedor.
+              </p>
+            </li>
           </ul>
         </section>
       </div>
