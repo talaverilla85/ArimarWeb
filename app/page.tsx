@@ -1,79 +1,13 @@
-'use client'
-
 import Link from 'next/link'
 import Image from 'next/image'
-import { motion } from 'framer-motion'
-
-const jsonLd = {
-  '@context': 'https://schema.org',
-  '@type': 'LocalBusiness',
-  name: 'AriMar',
-  description: 'Comida para llevar en Playa de Arinaga, Gran Canaria',
-  address: {
-    '@type': 'PostalAddress',
-    streetAddress: 'Avenida Polizón 67',
-    addressLocality: 'Playa de Arinaga',
-    addressRegion: 'Agüimes, Gran Canaria',
-    addressCountry: 'ES',
-  },
-}
+import HeroSection from '@/components/home/HeroSection'
+import CocinamosBlock from '@/components/home/CocinamosBlock'
+import EnvasesBlock from '@/components/home/EnvasesBlock'
 
 export default function Home() {
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
-      
-      {/* Hero Section */}
-      <section className="relative min-h-[85vh] flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0 z-0">
-          <Image
-            src="/images/hero-variedad-tuppers.webp"
-            alt="Variedad de tuppers con comida"
-            fill
-            className="object-cover"
-            priority
-            sizes="100vw"
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/30 to-black/50 z-10" />
-        </div>
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: 'easeOut' }}
-          className="relative z-20 max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8"
-        >
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 leading-tight">
-            AriMar – Comida casera para llevar en Playa de Arinaga
-          </h1>
-          <p className="text-sm md:text-base text-white/80 mb-4 tracking-wide uppercase">
-            Playa de Arinaga · Comida para llevar
-          </p>
-          <p className="text-lg md:text-xl text-white/85 mb-6 max-w-2xl mx-auto leading-relaxed">
-            Platos de diario para disfrutar en casa, en la oficina o en la playa.
-          </p>
-
-          <div className="flex flex-col sm:flex-row flex-wrap gap-3 justify-center mb-10">
-            {['Cocina diaria', 'Producción por lotes', 'Residuo 0'].map((item) => (
-              <div
-                key={item}
-                className="px-4 py-2 rounded-full border border-white/25 bg-white/10 text-white/90 text-sm md:text-base backdrop-blur-sm shadow-sm"
-              >
-                {item}
-              </div>
-            ))}
-          </div>
-
-          <Link
-            href="/proximamente"
-            className="inline-block px-8 py-4 bg-primary-500 text-white text-lg font-semibold rounded-lg hover:bg-primary-600 transition-colors shadow-lg"
-          >
-            Pedir ahora
-          </Link>
-        </motion.div>
-      </section>
+      <HeroSection />
 
       {/* Banner informativo bajo el hero */}
       <section className="px-4 sm:px-6 lg:px-8 py-4 bg-white/70 backdrop-blur-sm border-b border-slate-200/60">
@@ -136,121 +70,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Bloque "Cómo cocinamos" */}
-      <section className="py-20 md:py-28 px-4 sm:px-6 lg:px-8 bg-slate-50">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <motion.div
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, margin: '-100px' }}
-              transition={{ duration: 0.8 }}
-            >
-              <h2 className="text-3xl md:text-4xl font-bold text-slate-800 mb-2 tracking-tight">
-                Cómo cocinamos
-              </h2>
-              <p className="text-sm md:text-base text-slate-600 mb-6">
-                Hecho en Playa de Arinaga, para llevarte el sabor de casa donde quieras.
-              </p>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 text-left">
-                {[
-                  {
-                    title: 'Producción por lotes',
-                    text: 'Cocinamos en tandas para que siempre tengas platos listos, ricos y sin prisas.',
-                  },
-                  {
-                    title: 'Raciones claras',
-                    text: 'Porciones equilibradas y etiquetadas. Para comer bien y no desperdiciar.',
-                  },
-                  {
-                    title: 'Cocina profesional, trato cercano',
-                    text: 'Equipo pro para clavar el punto… y sabor de los que apetece repetir.',
-                  },
-                  {
-                    title: 'Misma calidad cada día',
-                    text: 'Si vienes hoy o mañana, quieres lo mismo: que esté igual de bueno.',
-                  },
-                ].map((item) => (
-                  <div
-                    key={item.title}
-                    className="rounded-xl border border-slate-200 bg-white/80 p-5 shadow-sm flex flex-col gap-2"
-                  >
-                    <div className="w-9 h-9 rounded-full bg-primary-100 text-primary-700 flex items-center justify-center text-sm font-semibold">
-                      •
-                    </div>
-                    <h3 className="text-lg font-semibold text-slate-800">
-                      {item.title}
-                    </h3>
-                    <p className="text-sm text-slate-600 leading-relaxed">
-                      {item.text}
-                    </p>
-                  </div>
-                ))}
-              </div>
-            </motion.div>
-            <motion.div
-              initial={{ opacity: 0, x: 30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, margin: '-100px' }}
-              transition={{ duration: 0.8 }}
-              className="relative aspect-[4/3] rounded-xl overflow-hidden bg-slate-100"
-            >
-              <Image
-                src="/images/cocina-lote-linea.webp"
-                alt="Cocina con producción por lotes"
-                fill
-                className="object-cover"
-                sizes="(max-width: 1024px) 100vw, 50vw"
-              />
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* Bloque "Envases y presentación" */}
-      <section className="py-20 md:py-28 px-4 sm:px-6 lg:px-8 bg-slate-50">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <motion.div
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, margin: '-100px' }}
-              transition={{ duration: 0.8 }}
-              className="relative aspect-[4/3] rounded-xl overflow-hidden bg-slate-100 order-2 lg:order-1"
-            >
-              <Image
-                src="/images/packaging-tupper.webp"
-                alt="Envases y packaging"
-                fill
-                className="object-cover"
-                sizes="(max-width: 1024px) 100vw, 50vw"
-              />
-            </motion.div>
-            <motion.div
-              initial={{ opacity: 0, x: 30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, margin: '-100px' }}
-              transition={{ duration: 0.8 }}
-              className="order-1 lg:order-2"
-            >
-              <h2 className="text-3xl md:text-4xl font-bold text-slate-800 mb-6 tracking-tight">
-                Así te lo llevas
-              </h2>
-              <div className="space-y-4 text-slate-600 leading-relaxed">
-                <p>
-                  <strong className="text-slate-800">Envases compostables.</strong> Ligeros y limpios, pensados para el día a día.
-                </p>
-                <p>
-                  <strong className="text-slate-800">Etiquetado claro.</strong> Fecha, ingredientes y alérgenos. Fácil y transparente.
-                </p>
-                <p>
-                  <strong className="text-slate-800">Listo para Arinaga.</strong> Aguanta el trayecto y llega perfecto a casa o la playa.
-                </p>  
-              </div>
-            </motion.div>
-          </div>
-        </div>
-      </section>
+      <CocinamosBlock />
+      <EnvasesBlock />
 
       {/* Callout de ubicación */}
       <section className="px-4 sm:px-6 lg:px-8 pb-20">
