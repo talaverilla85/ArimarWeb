@@ -37,54 +37,58 @@ export default function Home() {
 
       {/* Por qué nace AriMar */}
       <section className="py-16 md:py-24 px-4 sm:px-6 lg:px-8 bg-slate-50" aria-labelledby="por-que-nace-heading">
-        <div className="max-w-3xl mx-auto">
-          <h2 id="por-que-nace-heading" className="text-2xl md:text-3xl font-bold text-slate-800 mb-8 tracking-tight text-center">
+        <div className="max-w-4xl mx-auto">
+          <h2 id="por-que-nace-heading" className="text-3xl md:text-4xl font-bold text-slate-800 mb-6 tracking-tight text-center">
             Por qué nace AriMar
           </h2>
-          <p className="text-slate-600 leading-relaxed mb-5">
+          <p className="text-lg md:text-xl text-slate-600 leading-relaxed mb-5">
             AriMar nace para responder a los nuevos ritmos de vida: comer casero, variado y con calidad cada día. Queremos ofrecer una forma de alimentarte mejor, con opciones que se adapten a ti, sin renunciar al sabor, a la variedad ni a una experiencia cuidada.
           </p>
-          <p className="text-slate-600 leading-relaxed">
+          <p className="text-lg md:text-xl text-slate-600 leading-relaxed">
             Nuestra idea es combinar platos fijos con otros que vayan rotando, de manera que siempre encuentres opciones conocidas y, al mismo tiempo, tengas motivos para volver.
           </p>
 
-          {/* Subsección visual: Cómo encaja mejor contigo (dos caminos desde un punto central) */}
+          {/* Infografía: Cómo encaja mejor contigo — dos columnas con pasos debajo */}
           <div className="mt-16 md:mt-20 pt-12 border-t border-slate-200/80">
             <p id="como-encaja-label" className="text-xs font-semibold text-slate-500 uppercase tracking-widest text-center mb-10">
               Cómo encaja mejor contigo
             </p>
 
-            <div className="flex flex-col lg:flex-row lg:items-center gap-8 lg:gap-0 max-w-4xl mx-auto">
-              {/* Cuadro 1: Vienes al local */}
-              <div className="flex-1 rounded-2xl border border-slate-200 bg-white p-7 md:p-8 shadow-sm ring-1 ring-slate-100/50">
-                <h3 className="text-lg font-semibold text-slate-800 mb-3 tracking-tight">
-                  Vienes al local
-                </h3>
-                <p className="text-slate-600 leading-relaxed text-sm md:text-base">
-                  Ves la vitrina del día, eliges lo que te apetece y te lo llevas al momento.
-                </p>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-8 max-w-4xl mx-auto">
+              {/* Columna 1: Vienes al local */}
+              <div className="flex flex-col gap-4">
+                <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+                  <h3 className="text-lg md:text-xl font-semibold text-slate-800 mb-0 tracking-tight">
+                    Vienes al local
+                  </h3>
+                </div>
+                <div className="rounded-xl border border-slate-200 bg-white/90 p-4 shadow-sm pl-5 border-l-4 border-l-primary-400">
+                  <p className="text-slate-700 text-base md:text-lg leading-relaxed">Ves la vitrina del día.</p>
+                </div>
+                <div className="rounded-xl border border-slate-200 bg-white/90 p-4 shadow-sm pl-5 border-l-4 border-l-primary-400">
+                  <p className="text-slate-700 text-base md:text-lg leading-relaxed">Eliges lo que te apetece.</p>
+                </div>
+                <div className="rounded-xl border border-slate-200 bg-white/90 p-4 shadow-sm pl-5 border-l-4 border-l-primary-400">
+                  <p className="text-slate-700 text-base md:text-lg leading-relaxed">Te lo llevas al momento.</p>
+                </div>
               </div>
 
-              {/* Nodo central: línea–punto–línea (roadmap elegante en desktop) */}
-              <div className="hidden lg:flex flex-shrink-0 flex-1 max-w-[4rem] flex-row items-center justify-center px-1" aria-hidden>
-                <span className="h-px flex-1 bg-slate-300" />
-                <span className="w-3 h-3 rounded-full bg-primary-500 ring-4 ring-primary-100 flex-shrink-0" />
-                <span className="h-px flex-1 bg-slate-300" />
-              </div>
-              <div className="lg:hidden flex flex-col items-center py-3" aria-hidden>
-                <span className="w-px h-6 bg-slate-200" />
-                <span className="w-3 h-3 rounded-full bg-primary-500 ring-4 ring-primary-100 my-2" />
-                <span className="w-px h-6 bg-slate-200" />
-              </div>
-
-              {/* Cuadro 2: Realizas el pedido desde la web */}
-              <div className="flex-1 rounded-2xl border border-slate-200 bg-white p-7 md:p-8 shadow-sm ring-1 ring-slate-100/50">
-                <h3 className="text-lg font-semibold text-slate-800 mb-3 tracking-tight">
-                  Realizas el pedido desde la web
-                </h3>
-                <p className="text-slate-600 leading-relaxed text-sm md:text-base">
-                  Eliges la comida con calma, seleccionas tu hora de recogida y pasas por el local cuando te venga mejor.
-                </p>
+              {/* Columna 2: Realizas el pedido desde la web */}
+              <div className="flex flex-col gap-4">
+                <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+                  <h3 className="text-lg md:text-xl font-semibold text-slate-800 mb-0 tracking-tight">
+                    Realizas el pedido desde la web
+                  </h3>
+                </div>
+                <div className="rounded-xl border border-slate-200 bg-white/90 p-4 shadow-sm pl-5 border-l-4 border-l-primary-400">
+                  <p className="text-slate-700 text-base md:text-lg leading-relaxed">Eliges la comida con calma.</p>
+                </div>
+                <div className="rounded-xl border border-slate-200 bg-white/90 p-4 shadow-sm pl-5 border-l-4 border-l-primary-400">
+                  <p className="text-slate-700 text-base md:text-lg leading-relaxed">Seleccionas tu hora de recogida.</p>
+                </div>
+                <div className="rounded-xl border border-slate-200 bg-white/90 p-4 shadow-sm pl-5 border-l-4 border-l-primary-400">
+                  <p className="text-slate-700 text-base md:text-lg leading-relaxed">Pasas por el local cuando te venga mejor.</p>
+                </div>
               </div>
             </div>
 
