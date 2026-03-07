@@ -33,8 +33,15 @@ const jsonLd = {
 }
 
 export const metadata: Metadata = {
-  title: 'AriMar | Freiduría y Comida Casera para Llevar en Playa de Arinaga – Gran Canaria',
-  description: 'Freiduría en Playa de Arinaga con platos caseros diarios, pollo asado fresco, opciones sin gluten y vegetarianas. Todo listo para llevar a casa o playa. Envases compostables y etiquetado completo. Muy pronto abrimos.',
+  title: 'AriMar | Otro concepto de freiduría en Arinaga',
+  description:
+    'Comida casera para llevar en Playa de Arinaga. Potajes, cremas, guisos y platos del día. AriMar: otro concepto de freiduría, con cocina casera y etiquetado claro.',
+  openGraph: {
+    title: 'AriMar | Otro concepto de freiduría en Arinaga',
+    description:
+      'Comida casera para llevar en Playa de Arinaga. Potajes, cremas, guisos y platos del día. AriMar: otro concepto de freiduría, con cocina casera y etiquetado claro.',
+    type: 'website',
+  },
   keywords: 'comida para llevar, Playa de Arinaga, Gran Canaria, freiduría, comida casera, takeaway',
 }
 

@@ -46,13 +46,13 @@ export default function Home() {
           className="relative z-20 max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8"
         >
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 leading-tight">
-            AriMar – Freiduría y comida casera para llevar en Playa de Arinaga
+            AriMar – Comida casera para llevar en Playa de Arinaga
           </h1>
           <p className="text-sm md:text-base text-white/80 mb-4 tracking-wide uppercase">
             Playa de Arinaga · Comida para llevar
           </p>
           <p className="text-lg md:text-xl text-white/85 mb-6 max-w-2xl mx-auto leading-relaxed">
-            Platos que aguantan para que lo disfrutes en casa, en la oficina o en la playa.
+            Platos de diario para disfrutar en casa, en la oficina o en la playa.
           </p>
 
           <div className="flex flex-col sm:flex-row flex-wrap gap-3 justify-center mb-10">
@@ -128,6 +128,10 @@ export default function Home() {
             Cada día cocinamos una selección corta de platos caseros que va cambiando:
             algo de cuchara, algo vegetal, algo de carne o pescado y un par de cosas dulces.
             Lo justo para que todo se mueva y nada se quede.
+          </p>
+          <p className="text-sm md:text-base text-slate-500 leading-relaxed max-w-3xl mx-auto mt-6">
+            AriMar es otro concepto de freiduría en Arinaga: cocina casera para llevar, con
+            rotación diaria y una selección corta que se mueve cada día.
           </p>
         </div>
       </section>
