@@ -12,7 +12,7 @@ export default function Footer() {
           <div>
             <Logo className="mb-4" />
             <p className="text-primary-500 font-semibold text-sm mb-3 italic">
-              "Tu Disfruta, nosotros cocinamos por ti"
+              "Tú disfruta, nosotros cocinamos por ti"
             </p>
             <p className="text-slate-600 text-sm leading-relaxed mb-4">
               Comida casera de calidad en Playa de Arinaga, Gran Canaria. 

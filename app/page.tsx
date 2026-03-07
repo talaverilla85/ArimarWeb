@@ -35,6 +35,47 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Qué es AriMar */}
+      <section className="py-12 md:py-16 px-4 sm:px-6 lg:px-8" aria-labelledby="que-es-arimar-heading">
+        <div className="max-w-3xl mx-auto text-center">
+          <h2 id="que-es-arimar-heading" className="text-2xl md:text-3xl font-bold text-slate-800 mb-4 tracking-tight">
+            Qué es AriMar
+          </h2>
+          <p className="text-slate-600 leading-relaxed">
+            AriMar FoodLab es cocina casera para llevar en Playa de Arinaga. Trabajamos con una selección corta que rota a diario para mantener frescura, orden y una vitrina viva. Platos pensados para el día a día: venir, elegir y llevar.
+          </p>
+        </div>
+      </section>
+
+      {/* Cómo funciona */}
+      <section className="py-12 md:py-16 px-4 sm:px-6 lg:px-8 bg-slate-50" aria-labelledby="como-funciona-heading">
+        <div className="max-w-4xl mx-auto">
+          <h2 id="como-funciona-heading" className="text-2xl md:text-3xl font-bold text-slate-800 mb-8 text-center tracking-tight">
+            Cómo funciona
+          </h2>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-6 mb-8">
+            <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm text-center">
+              <span className="inline-flex w-10 h-10 items-center justify-center rounded-full bg-primary-100 text-primary-700 font-bold text-lg mb-3">1</span>
+              <h3 className="text-base font-semibold text-slate-800 mb-1">Vienes al local</h3>
+              <p className="text-sm text-slate-600">Avenida Polizón 67, Playa de Arinaga.</p>
+            </div>
+            <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm text-center">
+              <span className="inline-flex w-10 h-10 items-center justify-center rounded-full bg-primary-100 text-primary-700 font-bold text-lg mb-3">2</span>
+              <h3 className="text-base font-semibold text-slate-800 mb-1">Ves la vitrina del día</h3>
+              <p className="text-sm text-slate-600">Lo que hay hoy, listo para llevar.</p>
+            </div>
+            <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm text-center">
+              <span className="inline-flex w-10 h-10 items-center justify-center rounded-full bg-primary-100 text-primary-700 font-bold text-lg mb-3">3</span>
+              <h3 className="text-base font-semibold text-slate-800 mb-1">Eliges y te lo llevas</h3>
+              <p className="text-sm text-slate-600">Sin reserva, sin esperas largas.</p>
+            </div>
+          </div>
+          <p className="text-slate-600 text-center text-sm md:text-base max-w-2xl mx-auto">
+            No trabajamos con una carta infinita. Preferimos pocas cosas, bien hechas y listas para llevar.
+          </p>
+        </div>
+      </section>
+
       {/* Bloque "Hoy en cocina" / Lo que solemos cocinar */}
       <section className="py-20 md:py-24 px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto text-center">
@@ -72,6 +113,47 @@ export default function Home() {
 
       <CocinamosBlock />
       <EnvasesBlock />
+
+      {/* FAQ Home */}
+      <section className="py-20 md:py-24 px-4 sm:px-6 lg:px-8 bg-slate-50" aria-labelledby="faq-home-heading">
+        <div className="max-w-3xl mx-auto">
+          <h2 id="faq-home-heading" className="text-2xl md:text-3xl font-bold text-slate-800 mb-8 tracking-tight">
+            Preguntas frecuentes
+          </h2>
+          <ul className="space-y-6 list-none pl-0">
+            <li className="border-b border-slate-200 pb-6">
+              <h3 className="text-base font-semibold text-slate-800 mb-2">¿La carta cambia cada día?</h3>
+              <p className="text-slate-600 leading-relaxed text-sm md:text-base">
+                Sí. Rotamos la oferta según temporada y producción: potajes, cremas, pastas, arroces, guisos, vegetales y postres. Siempre una selección corta y del día.
+              </p>
+            </li>
+            <li className="border-b border-slate-200 pb-6">
+              <h3 className="text-base font-semibold text-slate-800 mb-2">¿Incluís alérgenos en la etiqueta?</h3>
+              <p className="text-slate-600 leading-relaxed text-sm md:text-base">
+                Sí. Etiquetamos fecha, ingredientes y alérgenos en cada envase para que sea fácil y transparente.
+              </p>
+            </li>
+            <li className="border-b border-slate-200 pb-6">
+              <h3 className="text-base font-semibold text-slate-800 mb-2">¿Dónde estáis?</h3>
+              <p className="text-slate-600 leading-relaxed text-sm md:text-base">
+                En Playa de Arinaga, Agüimes (Gran Canaria). Avenida Polizón 67. Horario y mapa en la <Link href="/contacto" className="text-primary-600 font-medium hover:underline">página de contacto</Link>.
+              </p>
+            </li>
+            <li className="border-b border-slate-200 pb-6">
+              <h3 className="text-base font-semibold text-slate-800 mb-2">¿Sois una freiduría?</h3>
+              <p className="text-slate-600 leading-relaxed text-sm md:text-base">
+                No somos una freiduría tradicional; somos otro concepto de freiduría en Arinaga, con cocina casera para llevar, rotación diaria y una selección corta que se mueve cada día.
+              </p>
+            </li>
+            <li className="pb-0">
+              <h3 className="text-base font-semibold text-slate-800 mb-2">¿Se puede reservar para una hora concreta?</h3>
+              <p className="text-slate-600 leading-relaxed text-sm md:text-base">
+                No hace falta reservar: vienes, ves la vitrina y te llevas lo que quieras. Si necesitas cantidad grande o un encargo especial, contáctanos por <Link href="/contacto" className="text-primary-600 font-medium hover:underline">WhatsApp</Link>.
+              </p>
+            </li>
+          </ul>
+        </div>
+      </section>
 
       {/* Callout de ubicación */}
       <section className="px-4 sm:px-6 lg:px-8 pb-20">

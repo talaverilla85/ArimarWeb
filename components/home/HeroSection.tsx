@@ -35,7 +35,7 @@ export default function HeroSection() {
         </p>
 
         <div className="flex flex-col sm:flex-row flex-wrap gap-3 justify-center mb-10">
-          {['Cocina diaria', 'Producción por lotes', 'Residuo 0'].map((item) => (
+          {['Cocina diaria', 'Producción por lotes', 'Menos desperdicio'].map((item) => (
             <div
               key={item}
               className="px-4 py-2 rounded-full border border-white/25 bg-white/10 text-white/90 text-sm md:text-base backdrop-blur-sm shadow-sm"
