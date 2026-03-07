@@ -48,7 +48,7 @@ export default function Footer() {
                   href="/carta"
                   className="text-sm text-slate-600 hover:text-primary-500 transition-colors"
                 >
-                  Carta
+                  Descubrir la carta
                 </Link>
               </li>
               <li>
@@ -72,7 +72,7 @@ export default function Footer() {
                   href="/contacto"
                   className="text-sm text-slate-600 hover:text-primary-500 transition-colors"
                 >
-                  Contacto
+                  Ubicación y horario
                 </Link>
               </li>
             </ul>

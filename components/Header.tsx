@@ -24,7 +24,7 @@ export default function Header() {
                   : 'text-slate-600 hover:text-slate-800'
               }`}
             >
-              Carta
+              Descubrir la carta
             </Link>
             <Link
               href="/nuestra-cocina"
@@ -54,7 +54,7 @@ export default function Header() {
                   : 'text-slate-600 hover:text-slate-800'
               }`}
             >
-              Contacto
+              Ubicación y horario
             </Link>
           </nav>
 
@@ -96,7 +96,7 @@ export default function Header() {
                     : 'text-slate-600 hover:text-slate-800'
                 }`}
               >
-                Carta
+                Descubrir la carta
               </Link>
               <Link
                 href="/nuestra-cocina"
@@ -129,7 +129,7 @@ export default function Header() {
                     : 'text-slate-600 hover:text-slate-800'
                 }`}
               >
-                Contacto
+                Ubicación y horario
               </Link>
             </div>
           </nav>
