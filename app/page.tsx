@@ -95,7 +95,7 @@ export default function Home() {
             href="/contacto"
             className="inline-flex items-center gap-2 text-sm font-semibold text-primary-600 hover:text-primary-700"
           >
-            Ubicación y horario
+            Ver ubicación
             <span aria-hidden>→</span>
           </Link>
         </div>
@@ -267,7 +267,7 @@ export default function Home() {
                 href="/contacto"
                 className="inline-flex items-center gap-2 px-6 py-3 bg-primary-500 text-white text-sm md:text-base font-semibold rounded-lg hover:bg-primary-600 transition-colors shadow-sm"
               >
-                Ubicación y horario
+                Ver ubicación
                 <span aria-hidden>→</span>
               </Link>
             </div>

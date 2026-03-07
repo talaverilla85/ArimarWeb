@@ -34,6 +34,10 @@ const jsonLd = {
 
 export const metadata: Metadata = {
   title: 'AriMar | Otro concepto de freiduría en Arinaga',
+  icons: {
+    icon: '/favicon.ico',
+    apple: '/apple-touch-icon.png',
+  },
   description:
     'Comida casera para llevar en Playa de Arinaga. Potajes, cremas, guisos y platos del día. AriMar: otro concepto de freiduría, con cocina casera y etiquetado claro.',
   openGraph: {

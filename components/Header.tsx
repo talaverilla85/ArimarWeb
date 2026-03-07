@@ -54,7 +54,7 @@ export default function Header() {
                   : 'text-slate-600 hover:text-slate-800'
               }`}
             >
-              Ubicación y horario
+              Ver ubicación
             </Link>
           </nav>
 
@@ -129,7 +129,7 @@ export default function Header() {
                     : 'text-slate-600 hover:text-slate-800'
                 }`}
               >
-                Ubicación y horario
+                Ver ubicación
               </Link>
             </div>
           </nav>

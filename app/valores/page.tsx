@@ -191,7 +191,7 @@ export default function ValoresPage() {
               href="/contacto"
               className="w-full sm:w-auto inline-flex justify-center px-8 py-3.5 bg-primary-500 text-white font-semibold rounded-xl hover:bg-primary-600 transition-colors shadow-md"
             >
-              Ubicación y horario
+              Ver ubicación
             </Link>
             <Link
               href="/carta"
