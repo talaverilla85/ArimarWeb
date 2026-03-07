@@ -35,54 +35,52 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Más fácil para ti, mejor organizado para nosotros */}
-      <section className="py-16 md:py-24 px-4 sm:px-6 lg:px-8 bg-slate-50" aria-labelledby="mas-facil-heading">
+      {/* Por qué nace AriMar */}
+      <section className="py-16 md:py-24 px-4 sm:px-6 lg:px-8 bg-slate-50" aria-labelledby="por-que-nace-heading">
         <div className="max-w-3xl mx-auto">
-          <h2 id="mas-facil-heading" className="text-2xl md:text-3xl font-bold text-slate-800 mb-6 tracking-tight text-center">
-            Más fácil para ti, mejor organizado para nosotros
+          <h2 id="por-que-nace-heading" className="text-2xl md:text-3xl font-bold text-slate-800 mb-8 tracking-tight text-center">
+            Por qué nace AriMar
           </h2>
-          <p className="text-slate-600 leading-relaxed mb-4">
-            AriMar nace con una idea sencilla: que puedas comer casero sin perder tiempo. Puedes pedir desde la web, elegir tu hora de recogida y venir directamente cuando te toque. Así organizamos mejor la cocina, reducimos esperas y conseguimos que todo fluya con más orden.
+          <p className="text-slate-600 leading-relaxed mb-5">
+            AriMar nace para responder a los nuevos ritmos de vida: comer casero, variado y con calidad cada día. Queremos ofrecer una forma de alimentarte mejor, con opciones que se adapten a ti, sin renunciar al sabor, a la variedad ni a una experiencia cuidada.
           </p>
           <p className="text-slate-600 leading-relaxed">
-            Trabajamos con una carta cuidada de platos, combinando opciones fijas con otras que van rotando según el día. Así mantenemos variedad, agilidad en el servicio y una oferta pensada para el ritmo real de Playa de Arinaga.
+            Nuestra idea es combinar platos fijos con otros que vayan rotando, de manera que siempre encuentres opciones conocidas y, al mismo tiempo, tengas motivos para volver.
           </p>
 
-          {/* Subsección: Cómo funciona (bifurcación) */}
-          <div className="mt-14 md:mt-16 pt-10 border-t border-slate-200">
-            <p id="como-funciona-label" className="text-xs font-semibold text-slate-500 uppercase tracking-wider text-center mb-8">
-              Cómo funciona
+          {/* Subsección visual: Cómo encaja mejor contigo (dos caminos desde un punto central) */}
+          <div className="mt-16 md:mt-20 pt-12 border-t border-slate-200/80">
+            <p id="como-encaja-label" className="text-xs font-semibold text-slate-500 uppercase tracking-widest text-center mb-10">
+              Cómo encaja mejor contigo
             </p>
 
-            {/* Esquema bifurcación: desktop = dos bloques unidos por nodo central (—•—); móvil = apilado */}
             <div className="flex flex-col lg:flex-row lg:items-center gap-8 lg:gap-0 max-w-4xl mx-auto">
-              {/* Bloque 1: Si vienes al local */}
-              <div className="flex-1 rounded-2xl border border-slate-200 bg-white p-6 md:p-7 shadow-sm">
-                <h3 className="text-lg font-semibold text-slate-800 mb-2 tracking-tight">
-                  Si vienes al local
+              {/* Cuadro 1: Vienes al local */}
+              <div className="flex-1 rounded-2xl border border-slate-200 bg-white p-7 md:p-8 shadow-sm ring-1 ring-slate-100/50">
+                <h3 className="text-lg font-semibold text-slate-800 mb-3 tracking-tight">
+                  Vienes al local
                 </h3>
                 <p className="text-slate-600 leading-relaxed text-sm md:text-base">
-                  Ves la vitrina del día, eliges lo que te apetece y te lo llevas.
+                  Ves la vitrina del día, eliges lo que te apetece y te lo llevas al momento.
                 </p>
               </div>
 
-              {/* Nodo central: línea–punto–línea (conecta los dos bloques en desktop) */}
+              {/* Nodo central: línea–punto–línea (roadmap elegante en desktop) */}
               <div className="hidden lg:flex flex-shrink-0 flex-1 max-w-[4rem] flex-row items-center justify-center px-1" aria-hidden>
                 <span className="h-px flex-1 bg-slate-300" />
-                <span className="w-2.5 h-2.5 rounded-full bg-primary-400 border-2 border-primary-100 flex-shrink-0" />
+                <span className="w-3 h-3 rounded-full bg-primary-500 ring-4 ring-primary-100 flex-shrink-0" />
                 <span className="h-px flex-1 bg-slate-300" />
               </div>
-              {/* En móvil: separador con punto entre los dos bloques */}
-              <div className="lg:hidden flex flex-col items-center py-1" aria-hidden>
-                <span className="w-px h-5 bg-slate-200" />
-                <span className="w-2.5 h-2.5 rounded-full bg-primary-400 border-2 border-primary-100 my-1.5" />
-                <span className="w-px h-5 bg-slate-200" />
+              <div className="lg:hidden flex flex-col items-center py-3" aria-hidden>
+                <span className="w-px h-6 bg-slate-200" />
+                <span className="w-3 h-3 rounded-full bg-primary-500 ring-4 ring-primary-100 my-2" />
+                <span className="w-px h-6 bg-slate-200" />
               </div>
 
-              {/* Bloque 2: Si prefieres pedir desde la web */}
-              <div className="flex-1 rounded-2xl border border-slate-200 bg-white p-6 md:p-7 shadow-sm">
-                <h3 className="text-lg font-semibold text-slate-800 mb-2 tracking-tight">
-                  Si prefieres pedir desde la web
+              {/* Cuadro 2: Realizas el pedido desde la web */}
+              <div className="flex-1 rounded-2xl border border-slate-200 bg-white p-7 md:p-8 shadow-sm ring-1 ring-slate-100/50">
+                <h3 className="text-lg font-semibold text-slate-800 mb-3 tracking-tight">
+                  Realizas el pedido desde la web
                 </h3>
                 <p className="text-slate-600 leading-relaxed text-sm md:text-base">
                   Eliges la comida con calma, seleccionas tu hora de recogida y pasas por el local cuando te venga mejor.
@@ -91,7 +89,7 @@ export default function Home() {
             </div>
 
             {/* Frase destacada */}
-            <p className="mt-10 text-center text-lg md:text-xl font-semibold text-slate-800 tracking-tight text-balance">
+            <p className="mt-12 text-center text-lg md:text-xl font-semibold text-slate-800 tracking-tight text-balance">
               Menos tiempo esperando. Más tiempo para ti.
             </p>
           </div>
