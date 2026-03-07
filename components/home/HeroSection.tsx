@@ -1,8 +1,5 @@
-'use client'
-
 import Link from 'next/link'
 import Image from 'next/image'
-import { motion } from 'framer-motion'
 
 export default function HeroSection() {
   return (
@@ -18,12 +15,7 @@ export default function HeroSection() {
         />
         <div className="absolute inset-0 bg-gradient-to-b from-black/30 to-black/50 z-10" />
       </div>
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, ease: 'easeOut' }}
-        className="relative z-20 max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8"
-      >
+      <div className="relative z-20 max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8 animate-fade-in-up">
         <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 leading-tight">
           AriMar – Comida casera para llevar en Playa de Arinaga
         </h1>
@@ -51,7 +43,7 @@ export default function HeroSection() {
         >
           Pedir ahora
         </Link>
-      </motion.div>
+      </div>
     </section>
   )
 }

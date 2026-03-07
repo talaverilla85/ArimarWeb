@@ -23,7 +23,7 @@ export default function Footer() {
               {' · '}
               {siteConfig.address.street}, local, {siteConfig.address.locality}
               {' · '}
-              <a href={`tel:${siteConfig.whatsappPhoneE164}`} className="text-primary-600 hover:underline">
+              <a href={`tel:${siteConfig.whatsappPhoneE164}`} className="text-primary-600 underline underline-offset-2 hover:decoration-2 focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 focus-visible:outline-none rounded">
                 {phoneDisplay}
               </a>
               {' · '}
@@ -31,7 +31,7 @@ export default function Footer() {
                 href="https://www.instagram.com/arimarfoodlab/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-primary-600 hover:underline"
+                className="text-primary-600 underline underline-offset-2 hover:decoration-2 focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 focus-visible:outline-none rounded"
               >
                 Instagram @arimarfoodlab
               </a>
@@ -39,14 +39,14 @@ export default function Footer() {
           </div>
 
           <div>
-            <h4 className="text-sm font-semibold text-slate-800 mb-4 uppercase tracking-wide">
+            <p className="text-sm font-semibold text-slate-800 mb-4 uppercase tracking-wide">
               Información
-            </h4>
+            </p>
             <ul className="space-y-2">
               <li>
                 <Link
                   href="/carta"
-                  className="text-sm text-slate-600 hover:text-primary-500 transition-colors"
+                  className="text-sm text-slate-600 underline underline-offset-2 hover:text-primary-500 hover:decoration-2 focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 focus-visible:outline-none rounded transition-colors"
                 >
                   Descubrir la carta
                 </Link>
@@ -54,7 +54,7 @@ export default function Footer() {
               <li>
                 <Link
                   href="/nuestra-cocina"
-                  className="text-sm text-slate-600 hover:text-primary-500 transition-colors"
+                  className="text-sm text-slate-600 underline underline-offset-2 hover:text-primary-500 hover:decoration-2 focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 focus-visible:outline-none rounded transition-colors"
                 >
                   Nuestra Cocina
                 </Link>
@@ -62,7 +62,7 @@ export default function Footer() {
               <li>
                 <Link
                   href="/valores"
-                  className="text-sm text-slate-600 hover:text-primary-500 transition-colors"
+                  className="text-sm text-slate-600 underline underline-offset-2 hover:text-primary-500 hover:decoration-2 focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 focus-visible:outline-none rounded transition-colors"
                 >
                   Valores
                 </Link>
@@ -70,7 +70,7 @@ export default function Footer() {
               <li>
                 <Link
                   href="/contacto"
-                  className="text-sm text-slate-600 hover:text-primary-500 transition-colors"
+                  className="text-sm text-slate-600 underline underline-offset-2 hover:text-primary-500 hover:decoration-2 focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 focus-visible:outline-none rounded transition-colors"
                 >
                   Ver ubicación
                 </Link>
@@ -79,14 +79,14 @@ export default function Footer() {
           </div>
 
           <div>
-            <h4 className="text-sm font-semibold text-slate-800 mb-4 uppercase tracking-wide">
+            <p className="text-sm font-semibold text-slate-800 mb-4 uppercase tracking-wide">
               Legal
-            </h4>
+            </p>
             <ul className="space-y-2">
               <li>
                 <Link
                   href="/legal/aviso-legal"
-                  className="text-sm text-slate-600 hover:text-primary-500 transition-colors"
+                  className="text-sm text-slate-600 underline underline-offset-2 hover:text-primary-500 hover:decoration-2 focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 focus-visible:outline-none rounded transition-colors"
                 >
                   Aviso Legal
                 </Link>
@@ -94,7 +94,7 @@ export default function Footer() {
               <li>
                 <Link
                   href="/legal/privacidad"
-                  className="text-sm text-slate-600 hover:text-primary-500 transition-colors"
+                  className="text-sm text-slate-600 underline underline-offset-2 hover:text-primary-500 hover:decoration-2 focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 focus-visible:outline-none rounded transition-colors"
                 >
                   Privacidad
                 </Link>
@@ -102,7 +102,7 @@ export default function Footer() {
               <li>
                 <Link
                   href="/legal/cookies"
-                  className="text-sm text-slate-600 hover:text-primary-500 transition-colors"
+                  className="text-sm text-slate-600 underline underline-offset-2 hover:text-primary-500 hover:decoration-2 focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 focus-visible:outline-none rounded transition-colors"
                 >
                   Cookies
                 </Link>

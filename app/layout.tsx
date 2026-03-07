@@ -39,11 +39,11 @@ export const metadata: Metadata = {
     apple: '/apple-touch-icon.png',
   },
   description:
-    'Comida casera para llevar en Playa de Arinaga. Potajes, cremas, guisos y platos del día. AriMar: otro concepto de freiduría, con cocina casera y etiquetado claro.',
+    'Comida casera para llevar en Playa de Arinaga. Potajes, cremas, guisos y platos del día. AriMar FoodLab: otro concepto de freiduría, con cocina de diario y etiquetado claro.',
   openGraph: {
     title: 'AriMar | Otro concepto de freiduría en Arinaga',
     description:
-      'Comida casera para llevar en Playa de Arinaga. Potajes, cremas, guisos y platos del día. AriMar: otro concepto de freiduría, con cocina casera y etiquetado claro.',
+      'Comida casera para llevar en Playa de Arinaga. Potajes, cremas, guisos y platos del día. AriMar FoodLab: otro concepto de freiduría, con cocina de diario y etiquetado claro.',
     type: 'website',
   },
   keywords: 'comida para llevar, Playa de Arinaga, Gran Canaria, freiduría, comida casera, takeaway',
