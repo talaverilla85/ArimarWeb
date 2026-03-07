@@ -35,44 +35,66 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Qué es AriMar */}
-      <section className="py-12 md:py-16 px-4 sm:px-6 lg:px-8" aria-labelledby="que-es-arimar-heading">
-        <div className="max-w-3xl mx-auto text-center">
-          <h2 id="que-es-arimar-heading" className="text-2xl md:text-3xl font-bold text-slate-800 mb-4 tracking-tight">
-            Qué es AriMar
+      {/* Más fácil para ti, mejor organizado para nosotros */}
+      <section className="py-16 md:py-24 px-4 sm:px-6 lg:px-8 bg-slate-50" aria-labelledby="mas-facil-heading">
+        <div className="max-w-3xl mx-auto">
+          <h2 id="mas-facil-heading" className="text-2xl md:text-3xl font-bold text-slate-800 mb-6 tracking-tight text-center">
+            Más fácil para ti, mejor organizado para nosotros
           </h2>
+          <p className="text-slate-600 leading-relaxed mb-4">
+            AriMar nace con una idea sencilla: que puedas comer casero sin perder tiempo. Puedes pedir desde la web, elegir tu hora de recogida y venir directamente cuando te toque. Así organizamos mejor la cocina, reducimos esperas y conseguimos que todo fluya con más orden.
+          </p>
           <p className="text-slate-600 leading-relaxed">
-            AriMar FoodLab es cocina casera para llevar en Playa de Arinaga. Trabajamos con una selección corta que rota a diario para mantener frescura, orden y una vitrina viva. Platos pensados para el día a día: venir, elegir y llevar.
+            Trabajamos con una carta cuidada de platos, combinando opciones fijas con otras que van rotando según el día. Así mantenemos variedad, agilidad en el servicio y una oferta pensada para el ritmo real de Playa de Arinaga.
           </p>
-        </div>
-      </section>
 
-      {/* Cómo funciona */}
-      <section className="py-12 md:py-16 px-4 sm:px-6 lg:px-8 bg-slate-50" aria-labelledby="como-funciona-heading">
-        <div className="max-w-4xl mx-auto">
-          <h2 id="como-funciona-heading" className="text-2xl md:text-3xl font-bold text-slate-800 mb-8 text-center tracking-tight">
-            Cómo funciona
-          </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-6 mb-8">
-            <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm text-center">
-              <span className="inline-flex w-10 h-10 items-center justify-center rounded-full bg-primary-100 text-primary-700 font-bold text-lg mb-3">1</span>
-              <h3 className="text-base font-semibold text-slate-800 mb-1">Vienes al local</h3>
-              <p className="text-sm text-slate-600">Avenida Polizón 67, Playa de Arinaga.</p>
+          {/* Subsección: Cómo funciona (bifurcación) */}
+          <div className="mt-14 md:mt-16 pt-10 border-t border-slate-200">
+            <p id="como-funciona-label" className="text-xs font-semibold text-slate-500 uppercase tracking-wider text-center mb-8">
+              Cómo funciona
+            </p>
+
+            {/* Esquema bifurcación: desktop = dos bloques unidos por nodo central (—•—); móvil = apilado */}
+            <div className="flex flex-col lg:flex-row lg:items-center gap-8 lg:gap-0 max-w-4xl mx-auto">
+              {/* Bloque 1: Si vienes al local */}
+              <div className="flex-1 rounded-2xl border border-slate-200 bg-white p-6 md:p-7 shadow-sm">
+                <h3 className="text-lg font-semibold text-slate-800 mb-2 tracking-tight">
+                  Si vienes al local
+                </h3>
+                <p className="text-slate-600 leading-relaxed text-sm md:text-base">
+                  Ves la vitrina del día, eliges lo que te apetece y te lo llevas.
+                </p>
+              </div>
+
+              {/* Nodo central: línea–punto–línea (conecta los dos bloques en desktop) */}
+              <div className="hidden lg:flex flex-shrink-0 flex-1 max-w-[4rem] flex-row items-center justify-center px-1" aria-hidden>
+                <span className="h-px flex-1 bg-slate-300" />
+                <span className="w-2.5 h-2.5 rounded-full bg-primary-400 border-2 border-primary-100 flex-shrink-0" />
+                <span className="h-px flex-1 bg-slate-300" />
+              </div>
+              {/* En móvil: separador con punto entre los dos bloques */}
+              <div className="lg:hidden flex flex-col items-center py-1" aria-hidden>
+                <span className="w-px h-5 bg-slate-200" />
+                <span className="w-2.5 h-2.5 rounded-full bg-primary-400 border-2 border-primary-100 my-1.5" />
+                <span className="w-px h-5 bg-slate-200" />
+              </div>
+
+              {/* Bloque 2: Si prefieres pedir desde la web */}
+              <div className="flex-1 rounded-2xl border border-slate-200 bg-white p-6 md:p-7 shadow-sm">
+                <h3 className="text-lg font-semibold text-slate-800 mb-2 tracking-tight">
+                  Si prefieres pedir desde la web
+                </h3>
+                <p className="text-slate-600 leading-relaxed text-sm md:text-base">
+                  Eliges la comida con calma, seleccionas tu hora de recogida y pasas por el local cuando te venga mejor.
+                </p>
+              </div>
             </div>
-            <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm text-center">
-              <span className="inline-flex w-10 h-10 items-center justify-center rounded-full bg-primary-100 text-primary-700 font-bold text-lg mb-3">2</span>
-              <h3 className="text-base font-semibold text-slate-800 mb-1">Ves la vitrina del día</h3>
-              <p className="text-sm text-slate-600">Lo que hay hoy, listo para llevar.</p>
-            </div>
-            <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm text-center">
-              <span className="inline-flex w-10 h-10 items-center justify-center rounded-full bg-primary-100 text-primary-700 font-bold text-lg mb-3">3</span>
-              <h3 className="text-base font-semibold text-slate-800 mb-1">Eliges y te lo llevas</h3>
-              <p className="text-sm text-slate-600">Sin reserva, sin esperas largas.</p>
-            </div>
+
+            {/* Frase destacada */}
+            <p className="mt-10 text-center text-lg md:text-xl font-semibold text-slate-800 tracking-tight text-balance">
+              Menos tiempo esperando. Más tiempo para ti.
+            </p>
           </div>
-          <p className="text-slate-600 text-center text-sm md:text-base max-w-2xl mx-auto">
-            No trabajamos con una carta infinita. Preferimos pocas cosas, bien hechas y listas para llevar.
-          </p>
         </div>
       </section>
 
