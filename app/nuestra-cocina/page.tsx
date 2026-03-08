@@ -1,5 +1,7 @@
 import type { Metadata } from 'next'
-import NuestraCocinaClient from './NuestraCocinaClient'
+import dynamic from 'next/dynamic'
+
+const NuestraCocinaClient = dynamic(() => import('./NuestraCocinaClient'), { ssr: true })
 
 export const metadata: Metadata = {
   title: 'Nuestra cocina | AriMar FoodLab – Playa de Arinaga',

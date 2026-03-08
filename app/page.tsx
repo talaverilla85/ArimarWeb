@@ -48,36 +48,63 @@ export default function Home() {
             Trabajamos con una carta cuidada de platos, combinando opciones fijas con otras que van rotando según el día. Así mantenemos variedad, agilidad en el servicio y una oferta pensada para el ritmo real de Playa de Arinaga.
           </p>
 
-          {/* Subsección: Cómo funciona (bifurcación elegante) */}
+          {/* Subsección: Cómo funciona — dos opciones + roadmap debajo */}
           <div className="mt-16 md:mt-20 pt-12 border-t border-slate-200/80">
             <p id="como-funciona-label" className="text-xs font-semibold text-slate-500 uppercase tracking-widest text-center mb-10">
               Cómo funciona
             </p>
 
-            <div className="flex flex-col lg:flex-row lg:items-center gap-8 lg:gap-0 max-w-4xl mx-auto">
+            {/* Dos cuadros superiores (opciones) */}
+            <div className="flex flex-col lg:flex-row lg:items-stretch gap-8 lg:gap-6 max-w-4xl mx-auto">
               <div className="flex-1 rounded-2xl border border-slate-200 bg-white p-6 md:p-7 shadow-sm">
                 <h3 className="text-lg font-semibold text-slate-800 mb-2 tracking-tight">Si vienes al local</h3>
                 <p className="text-slate-600 leading-relaxed text-sm md:text-base">
                   Ves la vitrina del día, eliges lo que te apetece y te lo llevas.
                 </p>
               </div>
-
-              <div className="hidden lg:flex flex-shrink-0 flex-1 max-w-[4rem] flex-row items-center justify-center px-1" aria-hidden>
-                <span className="h-px flex-1 bg-slate-300" />
-                <span className="w-3 h-3 rounded-full bg-primary-500 ring-4 ring-primary-100 flex-shrink-0" />
-                <span className="h-px flex-1 bg-slate-300" />
-              </div>
-              <div className="lg:hidden flex flex-col items-center py-3" aria-hidden>
-                <span className="w-px h-6 bg-slate-200" />
-                <span className="w-3 h-3 rounded-full bg-primary-500 ring-4 ring-primary-100 my-2" />
-                <span className="w-px h-6 bg-slate-200" />
-              </div>
-
               <div className="flex-1 rounded-2xl border border-slate-200 bg-white p-6 md:p-7 shadow-sm">
                 <h3 className="text-lg font-semibold text-slate-800 mb-2 tracking-tight">Si prefieres pedir desde la web</h3>
                 <p className="text-slate-600 leading-relaxed text-sm md:text-base">
                   Eliges la comida con calma, seleccionas tu hora de recogida y pasas por el local cuando te venga mejor.
                 </p>
+              </div>
+            </div>
+
+            {/* Roadmap debajo: pasos en dos columnas */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-8 max-w-4xl mx-auto mt-10">
+              {/* Columna 1: pasos "al local" */}
+              <div className="flex flex-col">
+                <p className="text-xs font-medium text-slate-500 mb-4 uppercase tracking-wider">Al local</p>
+                <div className="flex flex-col gap-0">
+                  <div className="rounded-xl border border-slate-200 bg-white/95 p-4 pl-5 border-l-4 border-l-primary-400 shadow-sm">
+                    <p className="text-slate-700 text-sm md:text-base font-medium">Ves la vitrina del día</p>
+                  </div>
+                  <div className="flex justify-center py-0.5" aria-hidden><span className="w-px h-3 bg-slate-200" /></div>
+                  <div className="rounded-xl border border-slate-200 bg-white/95 p-4 pl-5 border-l-4 border-l-primary-400 shadow-sm">
+                    <p className="text-slate-700 text-sm md:text-base font-medium">Eliges lo que te apetece</p>
+                  </div>
+                  <div className="flex justify-center py-0.5" aria-hidden><span className="w-px h-3 bg-slate-200" /></div>
+                  <div className="rounded-xl border border-slate-200 bg-white/95 p-4 pl-5 border-l-4 border-l-primary-400 shadow-sm">
+                    <p className="text-slate-700 text-sm md:text-base font-medium">Te lo llevas</p>
+                  </div>
+                </div>
+              </div>
+              {/* Columna 2: pasos "desde la web" */}
+              <div className="flex flex-col">
+                <p className="text-xs font-medium text-slate-500 mb-4 uppercase tracking-wider">Desde la web</p>
+                <div className="flex flex-col gap-0">
+                  <div className="rounded-xl border border-slate-200 bg-white/95 p-4 pl-5 border-l-4 border-l-primary-400 shadow-sm">
+                    <p className="text-slate-700 text-sm md:text-base font-medium">Eliges la comida con calma</p>
+                  </div>
+                  <div className="flex justify-center py-0.5" aria-hidden><span className="w-px h-3 bg-slate-200" /></div>
+                  <div className="rounded-xl border border-slate-200 bg-white/95 p-4 pl-5 border-l-4 border-l-primary-400 shadow-sm">
+                    <p className="text-slate-700 text-sm md:text-base font-medium">Seleccionas tu hora de recogida</p>
+                  </div>
+                  <div className="flex justify-center py-0.5" aria-hidden><span className="w-px h-3 bg-slate-200" /></div>
+                  <div className="rounded-xl border border-slate-200 bg-white/95 p-4 pl-5 border-l-4 border-l-primary-400 shadow-sm">
+                    <p className="text-slate-700 text-sm md:text-base font-medium">Pasas por el local cuando te venga mejor</p>
+                  </div>
+                </div>
               </div>
             </div>
 
