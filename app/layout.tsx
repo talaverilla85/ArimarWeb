@@ -3,6 +3,7 @@ import './globals.css'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import { siteConfig } from '@/lib/siteConfig'
+import CookieConsent from '@/components/CookieConsent'
 
 const jsonLd = {
   '@context': 'https://schema.org',
@@ -65,6 +66,7 @@ export default function RootLayout({
         />
       </head>
       <body className="bg-slate-50 text-slate-800 antialiased relative">
+        <CookieConsent />
         <div 
           className="fixed inset-0 z-0 pointer-events-none opacity-[0.06]"
           style={{
