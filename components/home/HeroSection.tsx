@@ -38,25 +38,27 @@ export default function HeroSection() {
           ))}
         </div>
 
-        <div className="flex flex-col sm:flex-row gap-3 justify-center">
+        <div className="flex flex-col items-center gap-3">
           <Link
             href="/proximamente"
             className="inline-block px-8 py-4 bg-primary-500 text-white text-lg font-semibold rounded-lg hover:bg-primary-600 transition-colors shadow-lg"
           >
             Pedir
           </Link>
-          <Link
-            href="/carta"
-            className="inline-block px-8 py-3 border border-white/40 text-white text-sm md:text-base font-semibold rounded-lg hover:bg-white/10 transition-colors"
-          >
-            Ver carta
-          </Link>
-          <Link
-            href="/contacto"
-            className="inline-block px-8 py-3 border border-white/40 text-white text-sm md:text-base font-semibold rounded-lg hover:bg-white/10 transition-colors"
-          >
-            Ver ubicación
-          </Link>
+          <div className="flex flex-col sm:flex-row gap-3 justify-center">
+            <Link
+              href="/carta"
+              className="inline-block px-8 py-3 border border-white/40 text-white text-sm md:text-base font-semibold rounded-lg hover:bg-white/10 transition-colors"
+            >
+              Ver carta
+            </Link>
+            <Link
+              href="/contacto"
+              className="inline-block px-8 py-3 border border-white/40 text-white text-sm md:text-base font-semibold rounded-lg hover:bg-white/10 transition-colors"
+            >
+              Ver ubicación
+            </Link>
+          </div>
         </div>
       </div>
     </section>

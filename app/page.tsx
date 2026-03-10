@@ -178,25 +178,27 @@ export default function Home() {
             <p className="text-slate-600 mb-8 max-w-2xl mx-auto">
               Ven a vernos a Playa de Arinaga, descubre nuestra carta de comida casera para llevar y decide si prefieres pedir por adelantado o elegir en la vitrina del día.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <div className="flex flex-col items-center gap-4">
               <Link
                 href="/proximamente"
                 className="inline-block px-8 py-3 bg-primary-500 text-white text-sm md:text-base font-semibold rounded-lg hover:bg-primary-600 transition-colors shadow-md"
               >
                 Pedir
               </Link>
-              <Link
-                href="/carta"
-                className="inline-block px-8 py-3 border border-primary-200 text-primary-700 text-sm md:text-base font-semibold rounded-lg hover:bg-primary-50 transition-colors"
-              >
-                Ver carta
-              </Link>
-              <Link
-                href="/contacto"
-                className="inline-block px-8 py-3 border border-slate-200 text-slate-700 text-sm md:text-base font-semibold rounded-lg hover:bg-slate-50 transition-colors"
-              >
-                Ver ubicación
-              </Link>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <Link
+                  href="/carta"
+                  className="inline-block px-8 py-3 border border-primary-200 text-primary-700 text-sm md:text-base font-semibold rounded-lg hover:bg-primary-50 transition-colors"
+                >
+                  Ver carta
+                </Link>
+                <Link
+                  href="/contacto"
+                  className="inline-block px-8 py-3 border border-primary-200 text-primary-700 text-sm md:text-base font-semibold rounded-lg hover:bg-primary-50 transition-colors"
+                >
+                  Ver ubicación
+                </Link>
+              </div>
             </div>
           </div>
         </div>
