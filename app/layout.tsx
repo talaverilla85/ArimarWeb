@@ -9,7 +9,7 @@ const jsonLd = {
   '@type': ['LocalBusiness', 'Restaurant'],
   name: 'AriMar FoodLab',
   description: 'Freiduría y comida casera para llevar en Playa de Arinaga, Agüimes (Gran Canaria). Pollo asado, cremas, potajes, pastas, arroces, guisos, opciones vegetarianas y postres.',
-  url: `https://www.${siteConfig.domain}`,
+  url: `https://${siteConfig.domain}`,
   telephone: `+34 ${siteConfig.whatsappPhoneE164.slice(3, 6)} ${siteConfig.whatsappPhoneE164.slice(6, 9)} ${siteConfig.whatsappPhoneE164.slice(9)}`,
   address: {
     '@type': 'PostalAddress',
@@ -33,6 +33,7 @@ const jsonLd = {
 }
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://arimarfoodlab.es'),
   title: 'AriMar | Otro concepto de freiduría en Arinaga',
   icons: {
     icon: '/favicon.ico',
@@ -44,6 +45,7 @@ export const metadata: Metadata = {
     title: 'AriMar | Otro concepto de freiduría en Arinaga',
     description:
       'Freiduría y comida casera para llevar en Playa de Arinaga. Potajes, cremas, guisos y platos del día en AriMar.',
+    url: 'https://arimarfoodlab.es/',
     type: 'website',
   },
   keywords: 'comida para llevar, Playa de Arinaga, Gran Canaria, freiduría, comida casera, takeaway',

@@ -1,132 +1,46 @@
+import type { Metadata } from 'next'
 import Link from 'next/link'
 import Image from 'next/image'
 import HeroSection from '@/components/home/HeroSection'
-import CocinamosBlock from '@/components/home/CocinamosBlock'
-import EnvasesBlock from '@/components/home/EnvasesBlock'
+
+export const metadata: Metadata = {
+  alternates: {
+    canonical: '/',
+  },
+}
 
 export default function Home() {
   return (
     <>
       <HeroSection />
 
-      {/* Banner informativo bajo el hero */}
-      <section className="px-4 sm:px-6 lg:px-8 py-4 bg-white/70 backdrop-blur-sm border-b border-slate-200/60">
-        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3 pl-4 sm:pl-5 border-l-4 border-primary-400">
-          <p className="text-sm md:text-base text-slate-700">
-            <span className="font-semibold text-primary-600">
-              Platos caseros diarios para llevar en Playa de Arinaga
-            </span>
-            <br />
-            <span className="text-slate-600">
-              Pollo asado · Cremas y potajes · Pastas y arroces · Guisos de carne o pescado · Opciones vegetarianas · Postres caseros · Sin gluten disponible
-            </span>
-            <br />
-            <span className="font-medium text-slate-800">
-              Muy pronto en Avenida Polizón 67
-            </span>
-          </p>
-          <Link
-            href="/contacto"
-            className="inline-flex items-center gap-2 text-sm font-semibold text-primary-600 hover:text-primary-700"
-          >
-            Ver ubicación
-            <span aria-hidden>→</span>
-          </Link>
-        </div>
-      </section>
-
-      {/* Más fácil para ti, mejor organizado para nosotros */}
+      {/* Qué es AriMar */}
       <section className="py-16 md:py-24 px-4 sm:px-6 lg:px-8 bg-slate-50" aria-labelledby="mas-facil-heading">
         <div className="max-w-4xl mx-auto">
           <h2 id="mas-facil-heading" className="text-3xl md:text-4xl font-bold text-slate-800 mb-6 tracking-tight text-center">
-            Más fácil para ti, mejor organizado para nosotros
+            Qué es AriMar
           </h2>
           <p className="text-lg md:text-xl text-slate-600 leading-relaxed mb-5 text-center">
-            AriMar nace con una idea sencilla: que puedas comer casero sin perder tiempo. Puedes pedir desde la web, elegir tu hora de recogida y venir directamente cuando te toque. Así organizamos mejor la cocina, reducimos esperas y conseguimos que todo fluya con más orden.
+            AriMar es una freiduría moderna de comida casera para llevar en Playa de Arinaga que nace para dar respuesta a los ritmos de vida actuales y a la creciente demanda de una comida casera, equilibrada y fácil de recoger, pensada para quienes quieren comer bien sin tener que dedicar cada día tiempo a cocinar.
           </p>
           <p className="text-lg md:text-xl text-slate-600 leading-relaxed text-center">
-            Trabajamos con una carta cuidada de platos, combinando opciones fijas con otras que van rotando según el día. Así mantenemos variedad, agilidad en el servicio y una oferta pensada para el ritmo real de Playa de Arinaga.
+            Queremos que ese tiempo pueda invertirse en lo que de verdad importa: la familia, la crianza, el deporte, el descanso, el ocio o, simplemente, llegar a casa con la tranquilidad de tener la comida resuelta, sin renunciar a la calidad.
           </p>
-
-          {/* Subsección: Cómo funciona — dos opciones + roadmap debajo */}
-          <div className="mt-16 md:mt-20 pt-12 border-t border-slate-200/80">
-            <p id="como-funciona-label" className="text-xs font-semibold text-slate-500 uppercase tracking-widest text-center mb-10">
-              Cómo funciona
-            </p>
-
-            {/* Dos cuadros superiores (opciones) */}
-            <div className="flex flex-col lg:flex-row lg:items-stretch gap-8 lg:gap-6 max-w-4xl mx-auto">
-              <div className="flex-1 rounded-2xl border border-slate-200 bg-white p-6 md:p-7 shadow-sm">
-                <h3 className="text-lg font-semibold text-slate-800 mb-2 tracking-tight">Si vienes al local</h3>
-                <p className="text-slate-600 leading-relaxed text-sm md:text-base">
-                  Ves la vitrina del día, eliges lo que te apetece y te lo llevas.
-                </p>
-              </div>
-              <div className="flex-1 rounded-2xl border border-slate-200 bg-white p-6 md:p-7 shadow-sm">
-                <h3 className="text-lg font-semibold text-slate-800 mb-2 tracking-tight">Si prefieres pedir desde la web</h3>
-                <p className="text-slate-600 leading-relaxed text-sm md:text-base">
-                  Eliges la comida con calma, seleccionas tu hora de recogida y pasas por el local cuando te venga mejor.
-                </p>
-              </div>
-            </div>
-
-            {/* Roadmap debajo: pasos en dos columnas */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-8 max-w-4xl mx-auto mt-10">
-              {/* Columna 1: pasos "al local" */}
-              <div className="flex flex-col">
-                <p className="text-xs font-medium text-slate-500 mb-4 uppercase tracking-wider">Al local</p>
-                <div className="flex flex-col gap-0">
-                  <div className="rounded-xl border border-slate-200 bg-white/95 p-4 pl-5 border-l-4 border-l-primary-400 shadow-sm">
-                    <p className="text-slate-700 text-sm md:text-base font-medium">Ves la vitrina del día</p>
-                  </div>
-                  <div className="flex justify-center py-0.5" aria-hidden><span className="w-px h-3 bg-slate-200" /></div>
-                  <div className="rounded-xl border border-slate-200 bg-white/95 p-4 pl-5 border-l-4 border-l-primary-400 shadow-sm">
-                    <p className="text-slate-700 text-sm md:text-base font-medium">Eliges lo que te apetece</p>
-                  </div>
-                  <div className="flex justify-center py-0.5" aria-hidden><span className="w-px h-3 bg-slate-200" /></div>
-                  <div className="rounded-xl border border-slate-200 bg-white/95 p-4 pl-5 border-l-4 border-l-primary-400 shadow-sm">
-                    <p className="text-slate-700 text-sm md:text-base font-medium">Te lo llevas</p>
-                  </div>
-                </div>
-              </div>
-              {/* Columna 2: pasos "desde la web" */}
-              <div className="flex flex-col">
-                <p className="text-xs font-medium text-slate-500 mb-4 uppercase tracking-wider">Desde la web</p>
-                <div className="flex flex-col gap-0">
-                  <div className="rounded-xl border border-slate-200 bg-white/95 p-4 pl-5 border-l-4 border-l-primary-400 shadow-sm">
-                    <p className="text-slate-700 text-sm md:text-base font-medium">Eliges la comida con calma</p>
-                  </div>
-                  <div className="flex justify-center py-0.5" aria-hidden><span className="w-px h-3 bg-slate-200" /></div>
-                  <div className="rounded-xl border border-slate-200 bg-white/95 p-4 pl-5 border-l-4 border-l-primary-400 shadow-sm">
-                    <p className="text-slate-700 text-sm md:text-base font-medium">Seleccionas tu hora de recogida</p>
-                  </div>
-                  <div className="flex justify-center py-0.5" aria-hidden><span className="w-px h-3 bg-slate-200" /></div>
-                  <div className="rounded-xl border border-slate-200 bg-white/95 p-4 pl-5 border-l-4 border-l-primary-400 shadow-sm">
-                    <p className="text-slate-700 text-sm md:text-base font-medium">Pasas por el local cuando te venga mejor</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <p className="mt-12 text-center text-lg md:text-xl font-semibold text-slate-800 tracking-tight text-balance">
-              Menos tiempo esperando. Más tiempo para ti.
-            </p>
-          </div>
         </div>
       </section>
 
-      {/* Bloque "Hoy en cocina" / Lo que solemos cocinar */}
+      {/* Qué encontrarás en AriMar */}
       <section className="py-20 md:py-24 px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-3xl md:text-4xl font-bold text-slate-800 mb-2 tracking-tight">
-            Lo que solemos cocinar
+            Qué encontrarás en AriMar
           </h2>
           <p className="text-sm md:text-base text-slate-500 mb-6">
-            Rotación diaria según temporada y producción.
+            Una selección de comida casera para llevar pensada para el día a día.
           </p>
 
           <div className="flex flex-wrap justify-center gap-2 md:gap-3 mb-8">
-            {['Potajes', 'Cremas', 'Pastas', 'Arroces', 'Guisos', 'Vegetales', 'Postres'].map(
+            {['Platos del día', 'Pollo asado', 'Potajes', 'Cremas', 'Arroces y pastas', 'Guisos y fritos', 'Postres caseros'].map(
               (item) => (
                 <span
                   key={item}
@@ -139,25 +53,73 @@ export default function Home() {
           </div>
 
           <p className="text-lg md:text-xl text-slate-600 leading-relaxed">
-            Cada día cocinamos una selección distinta según temporada y producción. Lo justo para que todo se mueva, todo esté en buen punto y siempre encuentres opciones para el día a día.
+            En AriMar encontrarás una selección de comida casera para llevar pensada para el día a día: platos del día, pollo asado, potajes, cremas, arroces, pastas, guisos, fritos y postres caseros. Una propuesta variada y cercana, propia de una freiduría moderna, donde la cocina de siempre se adapta a una forma de comer más cómoda, práctica y actual.
           </p>
         </div>
       </section>
 
-      {/* Hecho para el ritmo de aquí */}
-      <section className="py-16 md:py-20 px-4 sm:px-6 lg:px-8 bg-slate-50" aria-labelledby="ritmo-heading">
-        <div className="max-w-3xl mx-auto text-center">
-          <h2 id="ritmo-heading" className="text-3xl md:text-4xl font-bold text-slate-800 mb-6 tracking-tight">
-            Hecho para el ritmo de aquí
+      {/* Otro concepto de freiduría */}
+      <section className="py-16 md:py-24 px-4 sm:px-6 lg:px-8 bg-slate-50">
+        <div className="max-w-5xl mx-auto">
+          <h2 className="text-3xl md:text-4xl font-bold text-slate-800 mb-6 tracking-tight text-center">
+            Otro concepto de freiduría
+          </h2>
+          <p className="text-lg md:text-xl text-slate-600 leading-relaxed text-center mb-10">
+            Apostamos por una forma más clara, organizada y actual de llevarte comida casera de calidad: recogida fácil, información transparente y una cocina pensada para acompañarte en el día a día.
+          </p>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm text-left">
+              <h3 className="text-lg font-semibold text-slate-800 mb-2 tracking-tight">Recogida fácil</h3>
+              <p className="text-sm text-slate-600 leading-relaxed">
+                Vienes, ves la vitrina del día y eliges lo que te apetece. También puedes hacer tu pedido y pasar a recogerlo a la hora que mejor te encaje.
+              </p>
+            </div>
+            <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm text-left">
+              <h3 className="text-lg font-semibold text-slate-800 mb-2 tracking-tight">Información clara</h3>
+              <p className="text-sm text-slate-600 leading-relaxed">
+                Etiquetas con ingredientes y alérgenos para que sepas siempre qué estás comiendo y puedas elegir con tranquilidad.
+              </p>
+            </div>
+            <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm text-left">
+              <h3 className="text-lg font-semibold text-slate-800 mb-2 tracking-tight">Cocina para tu día a día</h3>
+              <p className="text-sm text-slate-600 leading-relaxed">
+                Platos pensados para encajar en tu rutina: comida casera que puedes llevarte a casa, al trabajo o cerca del mar, sin renunciar al sabor ni a la calidad.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Ubicación y entorno */}
+      <section className="py-16 md:py-20 px-4 sm:px-6 lg:px-8 bg-white" aria-labelledby="ubicacion-entorno-heading">
+        <div className="max-w-4xl mx-auto text-center">
+          <h2 id="ubicacion-entorno-heading" className="text-3xl md:text-4xl font-bold text-slate-800 mb-6 tracking-tight">
+            Dónde está AriMar
+          </h2>
+          <p className="text-lg md:text-xl text-slate-600 leading-relaxed mb-6">
+            AriMar está en el corazón de Playa de Arinaga, en una calle peatonal con vida propia y escenario habitual de eventos y ferias durante el año. Estamos a un paso de la playa, en un entorno perfecto para llevarte tu comida y disfrutarla con calma, y muy cerca del colegio y del centro de salud, en una ubicación cómoda para el día a día.
+          </p>
+          <Link
+            href="/contacto"
+            className="inline-flex items-center gap-2 px-6 py-3 bg-primary-500 text-white text-sm md:text-base font-semibold rounded-lg hover:bg-primary-600 transition-colors shadow-sm"
+          >
+            Ver ubicación y horario
+            <span aria-hidden>→</span>
+          </Link>
+        </div>
+      </section>
+
+      {/* Cómo encaja en tu día */}
+      <section className="py-16 md:py-20 px-4 sm:px-6 lg:px-8 bg-slate-50" aria-labelledby="encaja-heading">
+        <div className="max-w-4xl mx-auto text-center">
+          <h2 id="encaja-heading" className="text-3xl md:text-4xl font-bold text-slate-800 mb-6 tracking-tight">
+            Cómo encaja en tu día
           </h2>
           <p className="text-lg md:text-xl text-slate-600 leading-relaxed">
-            Estamos en Playa de Arinaga, en Agüimes, Gran Canaria. AriMar nace para el ritmo de aquí: salir del trabajo, venir de la playa o simplemente no cocinar y llevarte comida hecha con cabeza.
+            AriMar está pensada para quienes viven, trabajan o pasan por Arinaga y quieren resolver la comida de forma sencilla, sin renunciar al sabor ni a la calidad. Puedes disfrutarla en casa, en la oficina o cerca del mar, según lo que te pida el día.
           </p>
         </div>
       </section>
-
-      <CocinamosBlock />
-      <EnvasesBlock />
 
       {/* FAQ Home */}
       <section className="py-20 md:py-24 px-4 sm:px-6 lg:px-8 bg-slate-50" aria-labelledby="faq-home-heading">
@@ -167,15 +129,15 @@ export default function Home() {
           </h2>
           <ul className="space-y-6 list-none pl-0">
             <li className="border-b border-slate-200 pb-6">
-              <h3 className="text-base font-semibold text-slate-800 mb-2">¿La carta cambia cada día?</h3>
+              <h3 className="text-base font-semibold text-slate-800 mb-2">¿Qué tipo de comida puedo encontrar en AriMar?</h3>
               <p className="text-slate-600 leading-relaxed text-sm md:text-base">
-                Sí. Rotamos la oferta según temporada y producción: potajes, cremas, pastas, arroces, guisos, vegetales y postres. Siempre una selección corta y del día.
+                Comida casera para llevar: platos del día, pollo asado, potajes, cremas, arroces, pastas, guisos, fritos y postres caseros.
               </p>
             </li>
             <li className="border-b border-slate-200 pb-6">
-              <h3 className="text-base font-semibold text-slate-800 mb-2">¿Incluís alérgenos en la etiqueta?</h3>
+              <h3 className="text-base font-semibold text-slate-800 mb-2">¿Puedo hacer un encargo o pedido para recoger?</h3>
               <p className="text-slate-600 leading-relaxed text-sm md:text-base">
-                Sí. Etiquetamos fecha, ingredientes y alérgenos en cada envase para que sea fácil y transparente.
+                Sí. Puedes venir directamente al local y elegir en la vitrina del día o hacer tu pedido y pasar a recogerlo a la hora que mejor te encaje.
               </p>
             </li>
             <li className="border-b border-slate-200 pb-6">
@@ -185,78 +147,55 @@ export default function Home() {
               </p>
             </li>
             <li className="border-b border-slate-200 pb-6">
-              <h3 className="text-base font-semibold text-slate-800 mb-2">¿Sois una freiduría?</h3>
+              <h3 className="text-base font-semibold text-slate-800 mb-2">¿Cambiáis platos y elaboraciones?</h3>
               <p className="text-slate-600 leading-relaxed text-sm md:text-base">
-                No somos una freiduría tradicional; somos otro concepto de freiduría en Arinaga, con cocina casera para llevar, rotación diaria y una selección corta que se mueve cada día.
+                Sí. Trabajamos con una carta que rota según temporada y producción, manteniendo siempre una base de platos reconocibles y alguna novedad.
               </p>
             </li>
             <li className="pb-0">
-              <h3 className="text-base font-semibold text-slate-800 mb-2">¿Se puede reservar para una hora concreta?</h3>
+              <h3 className="text-base font-semibold text-slate-800 mb-2">¿Tenéis información sobre alérgenos?</h3>
               <p className="text-slate-600 leading-relaxed text-sm md:text-base">
-                No hace falta reservar: vienes, ves la vitrina y te llevas lo que quieras. Si necesitas cantidad grande o un encargo especial, contáctanos por <Link href="/contacto" className="text-primary-600 font-medium underline underline-offset-2 hover:decoration-2 focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 focus-visible:outline-none rounded">WhatsApp</Link>.
+                Sí. Cada plato lleva etiqueta con ingredientes y alérgenos para que puedas elegir con tranquilidad.
+              </p>
+            </li>
+            <li className="pb-0">
+              <h3 className="text-base font-semibold text-slate-800 mb-2">¿Dónde comer en Playa de Arinaga?</h3>
+              <p className="text-slate-600 leading-relaxed text-sm md:text-base">
+                En Playa de Arinaga hay muy buenos lugares donde comer, pero en AriMar te ofrecemos algo diferente: la posibilidad de disfrutar de comida casera de calidad donde tú quieras. Puedes llevarla a la playa, al campo, a casa, al trabajo o a casa de unos amigos si aparece un plan inesperado. Una forma cómoda y práctica de comer bien sin depender siempre de sentarte en un local.
               </p>
             </li>
           </ul>
         </div>
       </section>
 
-      {/* Callout de ubicación */}
-      <section className="px-4 sm:px-6 lg:px-8 pb-20">
-        <div className="max-w-7xl mx-auto mt-10">
-          <div className="rounded-2xl border border-slate-300 bg-white/70 px-6 py-8 md:px-8 md:py-10 shadow-md text-center md:text-left flex flex-col md:flex-row items-center justify-between gap-6">
-            <div className="flex-1">
-              <h2 className="text-lg md:text-xl font-semibold text-slate-800 mb-2 tracking-tight">
-                📍 Estamos en Playa de Arinaga
-              </h2>
-              <p className="text-sm md:text-base text-slate-600 mb-4">
-                Ven a vernos y llévate comida lista sin complicarte.
-              </p>
-              <Link
-                href="/contacto"
-                className="inline-flex items-center gap-2 px-6 py-3 bg-primary-500 text-white text-sm md:text-base font-semibold rounded-lg hover:bg-primary-600 transition-colors shadow-sm"
-              >
-                Ver ubicación
-                <span aria-hidden>→</span>
-              </Link>
-            </div>
-            <div className="w-24 h-24 md:w-28 md:h-28 flex-shrink-0">
-              <Image
-                src="/images/Ari.png"
-                alt="Ari, la mascota de AriMar"
-                width={120}
-                height={120}
-                className="w-full h-full object-contain"
-              />
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* CTA final: pedidos online */}
+      {/* CTA final */}
       <section className="py-16 px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto">
           <div className="rounded-2xl bg-primary-50 border border-primary-100 px-6 py-10 md:px-10 text-center shadow-sm">
             <h2 className="text-2xl md:text-3xl font-bold text-slate-800 mb-4 tracking-tight">
-              Pedidos online muy pronto
+              ¿Te apetece probar AriMar?
             </h2>
             <p className="text-slate-600 mb-8 max-w-2xl mx-auto">
-              Estamos ultimando la tienda online. Mientras tanto, puedes seguirnos y
-              ver qué cocinamos cada día en Playa de Arinaga.
+              Ven a vernos a Playa de Arinaga, descubre nuestra carta de comida casera para llevar y decide si prefieres pedir por adelantado o elegir en la vitrina del día.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
                 href="/proximamente"
                 className="inline-block px-8 py-3 bg-primary-500 text-white text-sm md:text-base font-semibold rounded-lg hover:bg-primary-600 transition-colors shadow-md"
               >
-                Pedir (muy pronto)
+                Pedir
               </Link>
               <Link
-                href="https://www.instagram.com/arimarfoodlab/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-block px-8 py-3 border border-primary-200 text-primary-700 text-sm md:text-base font-semibold rounded-lg hover:bg-primary-50 transition-colors underline underline-offset-2 hover:decoration-2 focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 focus-visible:outline-none"
+                href="/carta"
+                className="inline-block px-8 py-3 border border-primary-200 text-primary-700 text-sm md:text-base font-semibold rounded-lg hover:bg-primary-50 transition-colors"
               >
-                Síguenos
+                Ver carta
+              </Link>
+              <Link
+                href="/contacto"
+                className="inline-block px-8 py-3 border border-slate-200 text-slate-700 text-sm md:text-base font-semibold rounded-lg hover:bg-slate-50 transition-colors"
+              >
+                Ver ubicación
               </Link>
             </div>
           </div>

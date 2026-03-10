@@ -18,13 +18,13 @@ export default function HeroSection() {
       </div>
       <div className="relative z-20 max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8 animate-fade-in-up">
         <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 leading-tight">
-          AriMar – Freiduría y comida casera para llevar en Playa de Arinaga
+          Freiduría y comida casera para llevar en Playa de Arinaga
         </h1>
         <p className="text-sm md:text-base text-white/80 mb-4 tracking-wide uppercase">
           Playa de Arinaga · Comida para llevar
         </p>
         <p className="text-lg md:text-xl text-white/85 mb-6 max-w-2xl mx-auto leading-relaxed">
-          Platos de diario para disfrutar en casa, en la oficina o en la playa.
+          Platos del día, pollo asado, guisos, cremas y mucho más, listos para recoger en AriMar.
         </p>
 
         <div className="flex flex-col sm:flex-row flex-wrap gap-3 justify-center mb-10">
@@ -38,12 +38,26 @@ export default function HeroSection() {
           ))}
         </div>
 
-        <Link
-          href="/proximamente"
-          className="inline-block px-8 py-4 bg-primary-500 text-white text-lg font-semibold rounded-lg hover:bg-primary-600 transition-colors shadow-lg"
-        >
-          Pedir ahora
-        </Link>
+        <div className="flex flex-col sm:flex-row gap-3 justify-center">
+          <Link
+            href="/proximamente"
+            className="inline-block px-8 py-4 bg-primary-500 text-white text-lg font-semibold rounded-lg hover:bg-primary-600 transition-colors shadow-lg"
+          >
+            Pedir
+          </Link>
+          <Link
+            href="/carta"
+            className="inline-block px-8 py-3 border border-white/40 text-white text-sm md:text-base font-semibold rounded-lg hover:bg-white/10 transition-colors"
+          >
+            Ver carta
+          </Link>
+          <Link
+            href="/contacto"
+            className="inline-block px-8 py-3 border border-white/40 text-white text-sm md:text-base font-semibold rounded-lg hover:bg-white/10 transition-colors"
+          >
+            Ver ubicación
+          </Link>
+        </div>
       </div>
     </section>
   )

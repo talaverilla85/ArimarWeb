@@ -13,6 +13,9 @@ export const metadata: Metadata = {
       'Contacto de AriMar FoodLab en Playa de Arinaga (Agüimes), Gran Canaria: WhatsApp, ubicación en Google Maps, horario y cómo llegar.',
     type: 'website',
   },
+  alternates: {
+    canonical: '/contacto',
+  },
 }
 
 export default function ContactoPage() {
