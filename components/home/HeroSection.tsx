@@ -18,7 +18,7 @@ export default function HeroSection() {
       </div>
       <div className="relative z-20 max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8 animate-fade-in-up">
         <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 leading-tight">
-          AriMar – Comida casera para llevar en Playa de Arinaga
+          AriMar – Freiduría y comida casera para llevar en Playa de Arinaga
         </h1>
         <p className="text-sm md:text-base text-white/80 mb-4 tracking-wide uppercase">
           Playa de Arinaga · Comida para llevar
