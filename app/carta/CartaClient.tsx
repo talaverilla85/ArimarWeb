@@ -6,12 +6,13 @@ import Image from 'next/image'
 import { motion } from 'framer-motion'
 
 const categoriesSeo = [
+  'Platos del día',
+  'Pollo asado',
   'Potajes',
   'Cremas',
-  'Pastas y arroces',
-  'Guisos',
-  'Vegetales',
-  'Postres',
+  'Arroces y pastas',
+  'Guisos y fritos',
+  'Postres caseros',
 ]
 
 const antojoButtons = [
@@ -29,20 +30,53 @@ const antojoToCategories: Record<string, string[]> = {
 }
 
 const cartaItems = [
-  { src: '/images/carta-crema.webp', alt: 'Crema o sopa del día en AriMar FoodLab, comida para llevar Playa de Arinaga', title: 'Cremas y sopas', description: 'De cuchara, según el día.' },
-  { src: '/images/carta-potaje.webp', alt: 'Potaje tradicional, comida casera para llevar en Agüimes', title: 'Potajes', description: 'Legumbres y verduras de temporada.' },
-  { src: '/images/carta-pasta.webp', alt: 'Pasta y arroz caseros para llevar, AriMar FoodLab Playa de Arinaga', title: 'Pastas y arroces', description: 'Platos de pasta y arroz caseros.' },
-  { src: '/images/carta-carne-estofada.webp', alt: 'Guisos y carnes para llevar en Playa de Arinaga', title: 'Guisos', description: 'Carnes y guisos que repiten.' },
-  { src: '/images/carta-vegetal.webp', alt: 'Platos vegetales, comida para llevar Playa de Arinaga', title: 'Vegetales', description: 'Opciones vegetales y ligeras.' },
-  { src: '/images/carta-postre-vaso.webp', alt: 'Postres caseros, AriMar FoodLab', title: 'Postres', description: 'Algo dulce para cerrar.' },
+  {
+    src: '/images/carta-crema.webp',
+    alt: 'Cremas y sopas del día en AriMar FoodLab, comida para llevar en Playa de Arinaga',
+    title: 'Cremas y sopas',
+    description: 'De cuchara, suaves y caseras, según el día.',
+  },
+  {
+    src: '/images/carta-potaje.webp',
+    alt: 'Potaje tradicional, comida casera para llevar en Agüimes',
+    title: 'Potajes',
+    description: 'Legumbres y verduras de temporada, como en casa.',
+  },
+  {
+    src: '/images/carta-pasta.webp',
+    alt: 'Arroces y pastas caseros para llevar, AriMar FoodLab Playa de Arinaga',
+    title: 'Arroces y pastas',
+    description: 'Platos de arroz y pasta listos para llevar.',
+  },
+  {
+    src: '/images/carta-carne-estofada.webp',
+    alt: 'Guisos y fritos caseros para llevar en Playa de Arinaga',
+    title: 'Guisos y fritos',
+    description: 'Carnes guisadas y frituras hechas al momento.',
+  },
+  {
+    src: '/images/carta-vegetal.webp',
+    alt: 'Pollo asado y acompañamientos para llevar en AriMar FoodLab',
+    title: 'Pollo asado',
+    description: 'Pollo asado y combinaciones pensadas para compartir.',
+  },
+  {
+    src: '/images/carta-postre-vaso.webp',
+    alt: 'Postres caseros en vaso, AriMar FoodLab',
+    title: 'Postres caseros',
+    description: 'Dulces caseros para cerrar la comida.',
+  },
 ]
 
 const faqs = [
-  { q: '¿Dónde está AriMar FoodLab?', a: 'Estamos en Playa de Arinaga, Agüimes (Gran Canaria). Dirección: Avenida Polizón 67. Puedes ver el horario y la ubicación en nuestra página de contacto.' },
+  { q: '¿Dónde está AriMar?', a: 'Estamos en Playa de Arinaga, Agüimes (Gran Canaria). Dirección: Avenida Polizón 67. Puedes ver el horario y la ubicación en nuestra página de contacto.' },
   { q: '¿La carta es fija o cambia?', a: 'La carta cambia cada día según temporada y producción. Solemos tener de cuchara (potajes, cremas), pastas, arroces, guisos, platos vegetales y postres.' },
   { q: '¿Puedo pedir para llevar?', a: 'Sí. Todo nuestro menú es comida para llevar. Abrimos todos los días de 11:30 a 16:00. Para horario completo y cómo llegar: Horario y ubicación.' },
-  { q: '¿Qué tipo de comida hacéis?', a: 'Comida casera para llevar: potajes, cremas, pastas, arroces, guisos, vegetales y postres. Elaborada con productos de calidad en Playa de Arinaga.' },
-  { q: '¿Sois una freiduría?', a: "No exactamente. Somos cocina casera para llevar con platos variados. Aun así, si buscas una 'freiduría' en Arinaga, aquí encontrarás opciones listas para llevar, además de guisos, cremas y platos de cuchara." },
+  { q: '¿Qué tipo de comida puedo encontrar en AriMar?', a: 'Comida casera para llevar: potajes, cremas, pastas, arroces, guisos, vegetales y postres. Elaborada con productos de calidad en Playa de Arinaga.' },
+  {
+    q: '¿Sois una freiduría?',
+    a: 'Sí. AriMar es una freiduría moderna de comida casera para llevar en Playa de Arinaga. Aquí encontrarás platos del día, pollo asado, potajes, cremas, arroces, guisos, fritos y postres caseros, en una propuesta pensada para el día a día y para recoger con facilidad.',
+  },
 ]
 
 export default function CartaClient() {
@@ -78,11 +112,11 @@ export default function CartaClient() {
               Comida para llevar en Playa de Arinaga
             </h1>
             <p className="text-lg text-slate-600 max-w-2xl mx-auto leading-relaxed">
-              En AriMar FoodLab elaboramos comida casera para llevar en Playa de Arinaga, Agüimes.
-              Nuestra carta cambia cada día según temporada y producción: potajes, cremas, pastas,
-              arroces, guisos, platos vegetales y postres. Todo pensado para que te lo lleves y lo
-              disfrutes en casa, en la oficina o donde prefieras. Estamos en Avenida Polizón 67.
-              Ven a vernos y llévate la comida lista sin complicarte.
+              En la carta de AriMar encontrarás una selección de comida casera para llevar pensada
+              para el día a día: platos del día, pollo asado, potajes, cremas, arroces, pastas,
+              guisos, fritos y postres caseros. Una propuesta variada, cercana y propia de una
+              freiduría moderna en Playa de Arinaga, pensada para que elijas fácilmente lo que más
+              te apetece en cada momento.
             </p>
           </header>
 
@@ -140,14 +174,13 @@ export default function CartaClient() {
 
           <section className="mb-16" aria-labelledby="carta-seo-heading">
             <h2 id="carta-seo-heading" className="text-2xl md:text-3xl font-bold text-slate-800 mb-4 tracking-tight">
-              Comida para llevar en Playa de Arinaga
+              Una carta pensada para el día a día
             </h2>
             <p className="text-slate-600 leading-relaxed max-w-3xl mb-6">
-              En Playa de Arinaga, Agüimes (Gran Canaria), AriMar FoodLab ofrece comida para llevar
-              con carta de rotación diaria. Potajes, cremas, pastas, arroces, guisos, platos
-              vegetales y postres elaborados con productos de calidad. Ideal para recoger y
-              disfrutar en casa o en la playa —una alternativa a la típica freiduría de Arinaga, con más variedad y cocina de diario—. Estamos en Avenida Polizón 67; horario de atención
-              todos los días. Ven a probar nuestra comida casera en el sur de Gran Canaria.
+              En AriMar trabajamos con una carta de rotación diaria para que siempre encuentres
+              opciones variadas y caseras según temporada y producción. Así puedes elegir entre
+              platos de cuchara, elaboraciones más ligeras, propuestas para compartir o algo dulce
+              para completar tu comida.
             </p>
             <ul className="flex flex-wrap gap-2 md:gap-3 list-disc list-inside pl-0 [list-style:none]">
               {categoriesSeo.map((cat) => (
