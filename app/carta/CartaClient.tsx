@@ -107,7 +107,7 @@ export default function CartaClient() {
 
       <div className="pt-32 pb-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-6xl mx-auto">
-          <header className="text-center mb-12">
+          <header className="text-center mb-10 pb-6 border-b border-slate-200/70">
             <h1 className="text-4xl md:text-5xl font-bold text-slate-800 mb-4 tracking-tight">
               Descubre nuestra carta
             </h1>
@@ -121,13 +121,16 @@ export default function CartaClient() {
           </header>
 
           <section
-            className="mb-16 text-center bg-primary-50/40 border border-primary-100/70 rounded-3xl px-4 py-8 sm:px-8"
+            className="mb-16 text-center bg-gradient-to-br from-primary-50/80 via-white to-primary-50/40 border border-primary-100/70 rounded-3xl px-4 py-8 sm:px-8 shadow-sm"
             aria-labelledby="elige-antojo-heading"
           >
+            <div className="inline-flex items-center gap-2 mb-3 px-3 py-1 rounded-full bg-white/80 border border-primary-100 text-xs font-semibold uppercase tracking-wide text-primary-700">
+              <span>Te ayudamos a elegir</span>
+            </div>
             <h2 id="elige-antojo-heading" className="text-2xl md:text-3xl font-bold text-slate-800 mb-2 tracking-tight">
               Elige tu antojo
             </h2>
-            <p className="text-slate-600 mb-8">Te ayudamos a elegir según el momento.</p>
+            <p className="text-slate-600 mb-8">Marca cómo vienes hoy y te sugerimos qué encaja mejor.</p>
 
             <div className="flex flex-wrap justify-center gap-2 md:gap-3 mb-8" role="group" aria-label="Momento del día">
               {antojoButtons.map((btn) => (
@@ -175,27 +178,32 @@ export default function CartaClient() {
           </section>
 
           <section
-            className="mb-16 bg-slate-50/80 border border-slate-200 rounded-3xl px-4 py-8 sm:px-8"
+            className="mb-16 bg-amber-50/70 border border-amber-100 rounded-3xl px-4 py-8 sm:px-8 shadow-sm"
             aria-labelledby="carta-seo-heading"
           >
             <h2 id="carta-seo-heading" className="text-2xl md:text-3xl font-bold text-slate-800 mb-4 tracking-tight">
               Una carta pensada para el día a día
             </h2>
-            <p className="text-slate-600 leading-relaxed max-w-3xl mb-6">
+            <p className="text-slate-700 leading-relaxed max-w-3xl mb-6">
               En AriMar trabajamos con una carta de rotación diaria para que siempre encuentres
               opciones variadas y caseras según temporada y producción. Así puedes elegir entre
               platos de cuchara, elaboraciones más ligeras, propuestas para compartir o algo dulce
               para completar tu comida.
             </p>
-            <ul className="flex flex-wrap gap-2 md:gap-3 list-disc list-inside pl-0 [list-style:none]">
-              {categoriesSeo.map((cat) => (
-                <li key={cat}>
-                  <span className="inline-block px-4 py-2 rounded-full border border-primary-100/70 bg-primary-50/60 text-sm md:text-base text-primary-800/90">
-                    {cat}
-                  </span>
-                </li>
-              ))}
-            </ul>
+            <div className="mt-4 rounded-2xl bg-white/80 px-4 py-4 sm:px-5 sm:py-5">
+              <p className="text-xs font-semibold tracking-wide text-slate-500 uppercase mb-3">
+                Lo que solemos tener en vitrina
+              </p>
+              <ul className="flex flex-wrap gap-2 md:gap-3 list-none pl-0">
+                {categoriesSeo.map((cat) => (
+                  <li key={cat}>
+                    <span className="inline-block px-4 py-2 rounded-full border border-primary-100/70 bg-primary-50/70 text-sm md:text-base text-primary-800/90">
+                      {cat}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </section>
 
           <section className="mb-20" aria-labelledby="carta-visual-heading">
@@ -210,9 +218,9 @@ export default function CartaClient() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: '-50px' }}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
-                  className="group"
+                  className="group bg-white/95 rounded-2xl shadow-sm hover:shadow-md transition-shadow duration-300"
                 >
-                  <div className="relative aspect-[4/3] rounded-xl overflow-hidden mb-3 bg-slate-100">
+                  <div className="relative aspect-[4/3] rounded-t-2xl overflow-hidden mb-3 bg-slate-100">
                     <Image
                       src={item.src}
                       alt={item.alt}
@@ -221,10 +229,10 @@ export default function CartaClient() {
                       sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                     />
                   </div>
-                  <h3 className="text-lg font-semibold text-slate-800 mb-1 tracking-tight">
+                  <h3 className="px-3 text-lg font-semibold text-slate-800 mb-1 tracking-tight">
                     {item.title}
                   </h3>
-                  <p className="text-sm text-slate-600">{item.description}</p>
+                  <p className="px-3 pb-4 text-sm text-slate-600">{item.description}</p>
                 </motion.article>
               ))}
             </div>
@@ -246,13 +254,16 @@ export default function CartaClient() {
             <h2 id="faq-heading" className="text-2xl md:text-3xl font-bold text-slate-800 mb-8 tracking-tight">
               Preguntas frecuentes
             </h2>
-            <ul className="space-y-6 list-none pl-0">
+            <ul className="space-y-5 list-none pl-0">
               {faqs.map((faq, i) => (
-                <li key={i} className="border-b border-slate-200 pb-6 last:border-0">
-                  <h3 className="text-base font-semibold text-slate-800 mb-2">
+                <li
+                  key={i}
+                  className="bg-white/90 rounded-2xl border border-slate-200 px-4 py-4 shadow-xs"
+                >
+                  <h3 className="text-base font-semibold text-slate-900 mb-2">
                     {faq.q}
                   </h3>
-                  <p className="text-slate-600 leading-relaxed">
+                  <p className="text-sm text-slate-700 leading-relaxed">
                     {faq.a.includes('Horario y ubicación')
                       ? <>
                           {faq.a.slice(0, faq.a.indexOf('Horario y ubicación'))}
