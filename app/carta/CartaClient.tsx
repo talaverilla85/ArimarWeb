@@ -23,10 +23,10 @@ const antojoButtons = [
 ]
 
 const antojoToCategories: Record<string, string[]> = {
-  prisa: ['Pastas y arroces', 'Guisos'],
+  prisa: ['Platos del día', 'Arroces y pastas', 'Guisos y fritos'],
   cuchara: ['Potajes', 'Cremas'],
-  ligero: ['Vegetales', 'Cremas'],
-  capricho: ['Postres', 'Pastas y arroces'],
+  ligero: ['Cremas', 'Platos del día'],
+  capricho: ['Postres caseros', 'Pollo asado'],
 }
 
 const cartaItems = [
@@ -109,7 +109,7 @@ export default function CartaClient() {
         <div className="max-w-6xl mx-auto">
           <header className="text-center mb-12">
             <h1 className="text-4xl md:text-5xl font-bold text-slate-800 mb-4 tracking-tight">
-              Comida para llevar en Playa de Arinaga
+              Descubre nuestra carta
             </h1>
             <p className="text-lg text-slate-600 max-w-2xl mx-auto leading-relaxed">
               En la carta de AriMar encontrarás una selección de comida casera para llevar pensada
@@ -133,12 +133,11 @@ export default function CartaClient() {
                   type="button"
                   aria-pressed={selectedAntojo === btn.id}
                   onClick={() => setSelectedAntojo(selectedAntojo === btn.id ? null : btn.id)}
-                  className="px-4 py-2.5 rounded-full border-2 text-sm md:text-base font-medium transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
-                  style={{
-                    borderColor: selectedAntojo === btn.id ? 'var(--color-primary-500, #0d9488)' : 'var(--color-slate-200, #e2e8f0)',
-                    backgroundColor: selectedAntojo === btn.id ? 'var(--color-primary-50, #f0fdfa)' : 'white',
-                    color: selectedAntojo === btn.id ? 'var(--color-primary-800, #115e59)' : 'var(--color-slate-700, #334155)',
-                  }}
+                  className={`px-4 py-2.5 rounded-full border-2 text-sm md:text-base font-medium transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white ${
+                    selectedAntojo === btn.id
+                      ? 'border-primary-500 bg-primary-50 text-primary-800 shadow-sm'
+                      : 'border-slate-200 bg-white text-slate-700'
+                  }`}
                 >
                   {btn.label}
                 </button>
