@@ -3,7 +3,7 @@ import Image from 'next/image'
 
 export default function HeroSection() {
   return (
-    <section className="relative min-h-[85vh] flex items-center justify-center overflow-hidden">
+    <section className="relative min-h-[85vh] flex items-center justify-center overflow-hidden pt-24 md:pt-28">
       <div className="absolute inset-0 z-0">
         <Image
           src="/images/hero-variedad-tuppers.webp"
