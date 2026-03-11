@@ -120,7 +120,10 @@ export default function CartaClient() {
             </p>
           </header>
 
-          <section className="mb-16 text-center" aria-labelledby="elige-antojo-heading">
+          <section
+            className="mb-16 text-center bg-primary-50/40 border border-primary-100/70 rounded-3xl px-4 py-8 sm:px-8"
+            aria-labelledby="elige-antojo-heading"
+          >
             <h2 id="elige-antojo-heading" className="text-2xl md:text-3xl font-bold text-slate-800 mb-2 tracking-tight">
               Elige tu antojo
             </h2>
@@ -171,7 +174,10 @@ export default function CartaClient() {
             )}
           </section>
 
-          <section className="mb-16" aria-labelledby="carta-seo-heading">
+          <section
+            className="mb-16 bg-slate-50/80 border border-slate-200 rounded-3xl px-4 py-8 sm:px-8"
+            aria-labelledby="carta-seo-heading"
+          >
             <h2 id="carta-seo-heading" className="text-2xl md:text-3xl font-bold text-slate-800 mb-4 tracking-tight">
               Una carta pensada para el día a día
             </h2>
@@ -233,7 +239,10 @@ export default function CartaClient() {
             </Link>
           </p>
 
-          <section className="max-w-3xl mx-auto" aria-labelledby="faq-heading">
+          <section
+            className="max-w-3xl mx-auto bg-slate-50/80 border border-slate-200 rounded-3xl px-4 py-8 sm:px-8"
+            aria-labelledby="faq-heading"
+          >
             <h2 id="faq-heading" className="text-2xl md:text-3xl font-bold text-slate-800 mb-8 tracking-tight">
               Preguntas frecuentes
             </h2>
