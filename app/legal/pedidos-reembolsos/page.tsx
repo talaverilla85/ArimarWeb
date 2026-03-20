@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 }
 
 export default function PedidosReembolsosPage() {
-  const phoneDisplay = `+34 ${siteConfig.whatsappPhoneE164.slice(3, 6)} ${siteConfig.whatsappPhoneE164.slice(6, 9)} ${siteConfig.whatsappPhoneE164.slice(9)}`
+  const phoneDisplay = `+34 ${siteConfig.whatsappPhoneE164.slice(3)}`
 
   return (
     <div className="pt-32 pb-20 px-4 sm:px-6 lg:px-8">

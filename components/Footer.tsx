@@ -2,7 +2,7 @@ import Link from 'next/link'
 import Logo from './Logo'
 import { siteConfig } from '@/lib/siteConfig'
 
-const phoneDisplay = `+34 ${siteConfig.whatsappPhoneE164.slice(3, 6)} ${siteConfig.whatsappPhoneE164.slice(6, 9)} ${siteConfig.whatsappPhoneE164.slice(9)}`
+const phoneDisplay = `+34 ${siteConfig.whatsappPhoneE164.slice(3)}`
 
 export default function Footer() {
   return (
