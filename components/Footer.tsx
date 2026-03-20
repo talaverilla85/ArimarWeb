@@ -107,6 +107,22 @@ export default function Footer() {
                   Cookies
                 </Link>
               </li>
+              <li>
+                <Link
+                  href="/legal/pedidos-reembolsos"
+                  className="text-sm text-slate-600 underline underline-offset-2 hover:text-primary-500 hover:decoration-2 focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 focus-visible:outline-none rounded transition-colors"
+                >
+                  Pedidos y reembolsos
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/legal/entrega-recogida"
+                  className="text-sm text-slate-600 underline underline-offset-2 hover:text-primary-500 hover:decoration-2 focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 focus-visible:outline-none rounded transition-colors"
+                >
+                  Entrega y recogida
+                </Link>
+              </li>
             </ul>
           </div>
         </div>

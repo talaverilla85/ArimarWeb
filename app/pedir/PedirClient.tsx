@@ -52,6 +52,9 @@ export default function PedirClient() {
         <p className="text-sm text-white/80 mt-6">
           Si no eres redirigido automáticamente, haz clic en el botón de arriba
         </p>
+        <p className="text-xs text-white/75 mt-3 max-w-xl mx-auto">
+          La compra y el pago se formalizan en una plataforma externa de pedidos (Qamarero).
+        </p>
       </motion.div>
     </div>
   )

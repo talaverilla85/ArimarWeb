@@ -14,9 +14,10 @@ const jsonLd = {
   telephone: `+34 ${siteConfig.whatsappPhoneE164.slice(3, 6)} ${siteConfig.whatsappPhoneE164.slice(6, 9)} ${siteConfig.whatsappPhoneE164.slice(9)}`,
   address: {
     '@type': 'PostalAddress',
-    streetAddress: `${siteConfig.address.street}, local`,
+    streetAddress: siteConfig.address.street,
+    postalCode: siteConfig.address.postalCode,
     addressLocality: siteConfig.address.locality,
-    addressRegion: siteConfig.address.municipality + ', ' + siteConfig.address.region,
+    addressRegion: siteConfig.address.province,
     addressCountry: 'ES',
   },
   geo: {

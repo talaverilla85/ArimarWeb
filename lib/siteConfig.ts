@@ -2,13 +2,21 @@
  * Configuración única del sitio. Usar para WhatsApp, dominio y mensajes por defecto.
  */
 export const siteConfig = {
+  legal: {
+    ownerName: 'AriMar FoodLab S.L',
+    businessName: 'AriMar FoodLab S.L',
+    nif: 'B-23826688',
+    email: 'info@arimarfoodlab.es',
+  },
   whatsappPhoneE164: '34614881678',
   whatsappMessage: 'Hola, buenos días. Tengo una consulta',
   domain: 'arimarfoodlab.es',
 
   address: {
-    street: 'Avenida Polizón 67',
+    street: 'Avenida Polizón 67, local',
+    postalCode: '35118',
     locality: 'Playa de Arinaga',
+    province: 'Las Palmas',
     municipality: 'Agüimes',
     region: 'Gran Canaria',
     country: 'España',

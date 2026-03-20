@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { siteConfig } from '@/lib/siteConfig'
 
 export const metadata: Metadata = {
   title: 'Aviso Legal - AriMar',
@@ -6,6 +7,8 @@ export const metadata: Metadata = {
 }
 
 export default function AvisoLegalPage() {
+  const phoneDisplay = `+34 ${siteConfig.whatsappPhoneE164.slice(3, 6)} ${siteConfig.whatsappPhoneE164.slice(6, 9)} ${siteConfig.whatsappPhoneE164.slice(9)}`
+
   return (
     <div className="pt-32 pb-20 px-4 sm:px-6 lg:px-8">
       <div className="max-w-4xl mx-auto">
@@ -22,11 +25,18 @@ export default function AvisoLegalPage() {
               a continuación se reflejan los siguientes datos:
             </p>
             <ul className="list-disc pl-6 text-slate-600 space-y-2 mt-4">
-              <li>Denominación social: AriMar</li>
+              <li>Titular: {siteConfig.legal.ownerName}</li>
+              <li>Razón social / denominación: {siteConfig.legal.businessName}</li>
+              <li>NIF: {siteConfig.legal.nif}</li>
               <li>
-                Domicilio: Avenida Polizón 67, Playa de Arinaga, Agüimes, Gran Canaria, España
+                Domicilio: {siteConfig.address.street}, {siteConfig.address.postalCode} {siteConfig.address.locality}, {siteConfig.address.province}, España
               </li>
+              <li>Correo electrónico: {siteConfig.legal.email}</li>
+              <li>Teléfono de contacto: {phoneDisplay}</li>
             </ul>
+            <p className="text-slate-500 text-sm leading-relaxed mt-4">
+              Si alguno de estos datos estuviera desactualizado, puede solicitar su actualización mediante WhatsApp o correo electrónico.
+            </p>
           </section>
 
           <section className="mb-8">
