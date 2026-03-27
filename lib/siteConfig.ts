@@ -9,7 +9,7 @@ export const siteConfig = {
     email: 'info@arimarfoodlab.es',
   },
   whatsappPhoneE164: '34614881678',
-  whatsappPhoneDisplay: '+34 614881678',
+  whatsappPhoneDisplay: '614 88 16 78',
   whatsappMessage: 'Hola, buenos días. Tengo una consulta',
   domain: 'arimarfoodlab.es',
 
