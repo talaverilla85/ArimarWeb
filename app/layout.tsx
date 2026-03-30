@@ -36,7 +36,7 @@ const jsonLd = {
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://arimarfoodlab.es'),
-  title: 'AriMar | Otro concepto de freiduría en Arinaga',
+  title: 'AriMar - Freiduría y comida casera para llevar en Playa de Arinaga',
   icons: {
     icon: '/favicon.ico',
     apple: '/apple-touch-icon.png',
@@ -44,7 +44,7 @@ export const metadata: Metadata = {
   description:
     'Freiduría y comida casera para llevar en Playa de Arinaga. En AriMar encontrarás potajes, cremas, guisos, pollo asado y platos del día listos para recoger.',
   openGraph: {
-    title: 'AriMar | Otro concepto de freiduría en Arinaga',
+    title: 'AriMar - Freiduría y comida casera para llevar en Playa de Arinaga',
     description:
       'Freiduría y comida casera para llevar en Playa de Arinaga. En AriMar encontrarás potajes, cremas, guisos, pollo asado y platos del día listos para recoger.',
     url: 'https://arimarfoodlab.es/',
