@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import Image from 'next/image'
 import HeroSection from '@/components/home/HeroSection'
+import { faqCanonicalPath, homeFaqTeasers } from '@/lib/faqContent'
 
 export const metadata: Metadata = {
   alternates: {
@@ -121,50 +121,31 @@ export default function Home() {
         </div>
       </section>
 
-      {/* FAQ Home */}
+      {/* FAQ: resumen en home; listado completo en /preguntas-frecuentes */}
       <section className="py-20 md:py-24 px-4 sm:px-6 lg:px-8 bg-slate-50" aria-labelledby="faq-home-heading">
         <div className="max-w-3xl mx-auto">
-          <h2 id="faq-home-heading" className="text-2xl md:text-3xl font-bold text-slate-800 mb-8 tracking-tight">
+          <h2 id="faq-home-heading" className="text-2xl md:text-3xl font-bold text-slate-800 mb-3 tracking-tight">
             Preguntas frecuentes
           </h2>
+          <p className="text-slate-600 text-sm md:text-base mb-8">
+            Estas son algunas de las más habituales. La lista completa está en nuestra página de ayuda.
+          </p>
           <ul className="space-y-6 list-none pl-0">
-            <li className="border-b border-slate-200 pb-6">
-              <h3 className="text-base font-semibold text-slate-800 mb-2">¿Qué tipo de comida puedo encontrar en AriMar?</h3>
-              <p className="text-slate-600 leading-relaxed text-sm md:text-base">
-                Comida casera para llevar: platos del día, pollo asado, potajes, cremas, arroces, pastas, guisos, fritos y postres caseros.
-              </p>
-            </li>
-            <li className="border-b border-slate-200 pb-6">
-              <h3 className="text-base font-semibold text-slate-800 mb-2">¿Puedo hacer un encargo o pedido para recoger?</h3>
-              <p className="text-slate-600 leading-relaxed text-sm md:text-base">
-                Sí. Puedes venir directamente al local y elegir en la vitrina del día o hacer tu pedido y pasar a recogerlo a la hora que mejor te encaje.
-              </p>
-            </li>
-            <li className="border-b border-slate-200 pb-6">
-              <h3 className="text-base font-semibold text-slate-800 mb-2">¿Dónde estáis?</h3>
-              <p className="text-slate-600 leading-relaxed text-sm md:text-base">
-                En Playa de Arinaga, Agüimes (Gran Canaria). Avenida Polizón 67. Horario y mapa en la <Link href="/contacto" className="text-primary-600 font-medium underline underline-offset-2 hover:decoration-2 focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 focus-visible:outline-none rounded">página de contacto</Link>.
-              </p>
-            </li>
-            <li className="border-b border-slate-200 pb-6">
-              <h3 className="text-base font-semibold text-slate-800 mb-2">¿Cambiáis platos y elaboraciones?</h3>
-              <p className="text-slate-600 leading-relaxed text-sm md:text-base">
-                Sí. Trabajamos con una carta que rota según temporada y producción, manteniendo siempre una base de platos reconocibles y alguna novedad.
-              </p>
-            </li>
-            <li className="pb-0">
-              <h3 className="text-base font-semibold text-slate-800 mb-2">¿Tenéis información sobre alérgenos?</h3>
-              <p className="text-slate-600 leading-relaxed text-sm md:text-base">
-                Sí. Cada plato lleva etiqueta con ingredientes y alérgenos para que puedas elegir con tranquilidad.
-              </p>
-            </li>
-            <li className="pb-0">
-              <h3 className="text-base font-semibold text-slate-800 mb-2">¿Dónde comer en Playa de Arinaga?</h3>
-              <p className="text-slate-600 leading-relaxed text-sm md:text-base">
-                En Playa de Arinaga hay muy buenos lugares donde comer, pero en AriMar te ofrecemos algo diferente: la posibilidad de disfrutar de comida casera de calidad donde tú quieras. Puedes llevarla a la playa, al campo, a casa, al trabajo o a casa de unos amigos si aparece un plan inesperado. Una forma cómoda y práctica de comer bien sin depender siempre de sentarte en un local.
-              </p>
-            </li>
+            {homeFaqTeasers.map((item) => (
+              <li key={item.question} className="border-b border-slate-200 pb-6 last:border-0">
+                <h3 className="text-base font-semibold text-slate-800 mb-2">{item.question}</h3>
+                <p className="text-slate-600 leading-relaxed text-sm md:text-base">{item.answer}</p>
+              </li>
+            ))}
           </ul>
+          <p className="mt-8 text-center">
+            <Link
+              href={faqCanonicalPath}
+              className="inline-flex items-center justify-center px-6 py-3 text-primary-700 font-semibold rounded-lg border-2 border-primary-200 hover:bg-primary-50 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2"
+            >
+              Ver todas las preguntas frecuentes
+            </Link>
+          </p>
         </div>
       </section>
 

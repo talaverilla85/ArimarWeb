@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
 import { getWhatsAppUrl, siteConfig } from '@/lib/siteConfig'
+import { faqCanonicalPath } from '@/lib/faqContent'
 
 export const metadata: Metadata = {
   title: 'Contacto | AriMar FoodLab – Playa de Arinaga',
@@ -184,70 +185,26 @@ export default function ContactoPage() {
           </div>
         </section>
 
-        {/* SEO: texto indexable */}
+        {/* Contexto breve + enlace a FAQs (evita duplicar listados largos en varias URLs) */}
         <section className="pt-8 border-t border-slate-200" aria-labelledby="seo-heading">
-          <h2 id="seo-heading" className="text-2xl font-bold text-slate-800 mb-6 tracking-tight">
-            AriMar FoodLab – Comida casera y freiduría para llevar en Playa de Arinaga
+          <h2 id="seo-heading" className="text-2xl font-bold text-slate-800 mb-4 tracking-tight">
+            AriMar FoodLab en Playa de Arinaga
           </h2>
-          <div className="max-w-3xl space-y-4 text-slate-600 leading-relaxed">
+          <div className="max-w-3xl space-y-4 text-slate-600 leading-relaxed text-sm md:text-base">
             <p>
-              Tu opción diaria de comida rica y fresca para llevar en Playa de Arinaga (Agüimes, Gran Canaria). Todo para recoger en local: sin comedor, enfocado 100% en takeaway express a casa, oficina o playa.
+              Freiduría y comida casera para llevar en Playa de Arinaga (Agüimes, Gran Canaria). Recogida en local, sin comedor: Avenida Polizón 67. Horario habitual: todos los días 11:30 – 16:00 (consulta arriba por si hubiera cambios puntuales).
             </p>
             <p>
-              Platos rotativos cada día según temporada y producción: pollo asado fresco, cremas y potajes de cuchara, pastas y arroces, guisos de carne o pescado, opciones vegetarianas y sin gluten. Envases compostables y etiquetas claras con nuestros ingredientes y alérgenos en cada tupper.
-            </p>
-            <p>
-              Estamos en Avenida Polizón 67, local. Horario: todos los días 11:30 – 16:00.
-            </p>
-            <p>
-              Para pedidos normales: usa nuestra web para indicar día y hora de recogida. Para encargos de mayor volumen: escríbenos por WhatsApp. Muy pronto abrimos – síguenos para ver avances. 🌊🍲
+              Para dudas sobre carta, alérgenos, pedidos o encargos, tenemos una página de{' '}
+              <Link
+                href={faqCanonicalPath}
+                className="text-primary-600 font-semibold underline underline-offset-2 hover:decoration-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 rounded"
+              >
+                preguntas frecuentes
+              </Link>
+              .
             </p>
           </div>
-
-          <h2 id="faq-heading" className="text-xl font-bold text-slate-800 mt-12 mb-6 tracking-tight">
-            Preguntas frecuentes
-          </h2>
-          <ul className="space-y-6 list-none pl-0 max-w-3xl">
-            <li className="border-b border-slate-200 pb-6 last:border-0">
-              <h3 className="text-base font-semibold text-slate-800 mb-2">¿Cómo hago un encargo o reservo mi pedido?</h3>
-              <p className="text-slate-600 text-sm leading-relaxed">
-                Para pedidos normales: entra en nuestra web y selecciona día y hora de recogida. Para encargos de mayor volumen: escríbenos por WhatsApp y te ayudamos a organizarlo.
-              </p>
-            </li>
-            <li className="border-b border-slate-200 pb-6 last:border-0">
-              <h3 className="text-base font-semibold text-slate-800 mb-2">¿Dónde y cómo se recoge el pedido?</h3>
-              <p className="text-slate-600 text-sm leading-relaxed">
-                En nuestro local: Avenida Polizón 67, Playa de Arinaga (Agüimes). Recogida express sin esperas largas. Consulta ubicación exacta y cómo llegar en{' '}
-                <a href={siteConfig.mapsUrl} target="_blank" rel="noopener noreferrer" className="text-primary-600 font-medium hover:underline">
-                  Google Maps
-                </a>.
-              </p>
-            </li>
-            <li className="border-b border-slate-200 pb-6 last:border-0">
-              <h3 className="text-base font-semibold text-slate-800 mb-2">¿Incluís información de alérgenos y ingredientes?</h3>
-              <p className="text-slate-600 text-sm leading-relaxed">
-                Sí, cada tupper lleva etiqueta clara con: ingredientes principales, alérgenos, fecha de caducidad y número de lote. Marcamos siempre las opciones sin gluten y vegetarianas.
-              </p>
-            </li>
-            <li className="border-b border-slate-200 pb-6 last:border-0">
-              <h3 className="text-base font-semibold text-slate-800 mb-2">¿Tenéis opciones sin gluten o vegetarianas?</h3>
-              <p className="text-slate-600 text-sm leading-relaxed">
-                Sí, varias opciones disponibles cada día. Pásate por el local y elige con tranquilidad viendo las etiquetas.
-              </p>
-            </li>
-            <li className="border-b border-slate-200 pb-6 last:border-0">
-              <h3 className="text-base font-semibold text-slate-800 mb-2">¿Hacéis pollo asado?</h3>
-              <p className="text-slate-600 text-sm leading-relaxed">
-                Sí, pollo asado es uno de los platos que solemos tener.
-              </p>
-            </li>
-            <li className="border-b border-slate-200 pb-6 last:border-0">
-              <h3 className="text-base font-semibold text-slate-800 mb-2">¿Abrís todos los días? ¿Horario?</h3>
-              <p className="text-slate-600 text-sm leading-relaxed">
-                Sí, de lunes a domingo de 11:30 a 16:00. Recogida en local – sin comedor.
-              </p>
-            </li>
-          </ul>
         </section>
       </div>
     </div>

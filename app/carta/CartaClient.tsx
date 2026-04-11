@@ -4,6 +4,7 @@ import { useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
+import { cartaFaqTeasers, faqCanonicalPath } from '@/lib/faqContent'
 
 const categoriesSeo = [
   'Platos del día',
@@ -68,17 +69,6 @@ const cartaItems = [
   },
 ]
 
-const faqs = [
-  { q: '¿Dónde está AriMar?', a: 'Estamos en Playa de Arinaga, Agüimes (Gran Canaria). Dirección: Avenida Polizón 67. Puedes ver el horario y la ubicación en nuestra página de contacto.' },
-  { q: '¿La carta es fija o cambia?', a: 'La carta cambia cada día según temporada y producción. Solemos tener de cuchara (potajes, cremas), pastas, arroces, guisos, platos vegetales y postres.' },
-  { q: '¿Puedo pedir para llevar?', a: 'Sí. Todo nuestro menú es comida para llevar. Abrimos todos los días de 11:30 a 16:00. Para horario completo y cómo llegar: Horario y ubicación.' },
-  { q: '¿Qué tipo de comida puedo encontrar en AriMar?', a: 'Comida casera para llevar: potajes, cremas, pastas, arroces, guisos, vegetales y postres. Elaborada con productos de calidad en Playa de Arinaga.' },
-  {
-    q: '¿Sois una freiduría?',
-    a: 'Sí. AriMar es una freiduría moderna de comida casera para llevar en Playa de Arinaga. Aquí encontrarás platos del día, pollo asado, potajes, cremas, arroces, guisos, fritos y postres caseros, en una propuesta pensada para el día a día y para recoger con facilidad.',
-  },
-]
-
 export default function CartaClient() {
   const [selectedAntojo, setSelectedAntojo] = useState<'prisa' | 'cuchara' | 'ligero' | 'capricho' | null>(null)
   const highlightedCats = selectedAntojo ? antojoToCategories[selectedAntojo] ?? [] : []
@@ -112,11 +102,9 @@ export default function CartaClient() {
               Descubre nuestra carta
             </h1>
             <p className="text-lg text-slate-600 max-w-2xl mx-auto leading-relaxed">
-              En la carta de AriMar encontrarás una selección de comida casera para llevar pensada
-              para el día a día: platos del día, pollo asado, potajes, cremas, arroces, pastas,
-              guisos, fritos y postres caseros. Una propuesta variada, cercana y propia de una
-              freiduría moderna en Playa de Arinaga, pensada para que elijas fácilmente lo que más
-              te apetece en cada momento.
+              Cocina casera para llevar con rotación diaria: de cuchara, arroces, pastas, guisos,
+              propuestas para compartir y postres. Una freiduría moderna en Playa de Arinaga para
+              que elijas rápido lo que más te apetece hoy.
             </p>
           </header>
 
@@ -251,32 +239,35 @@ export default function CartaClient() {
             className="max-w-3xl mx-auto bg-slate-50/80 border border-slate-200 rounded-3xl px-4 py-8 sm:px-8"
             aria-labelledby="faq-heading"
           >
-            <h2 id="faq-heading" className="text-2xl md:text-3xl font-bold text-slate-800 mb-8 tracking-tight">
-              Preguntas frecuentes
+            <h2 id="faq-heading" className="text-2xl md:text-3xl font-bold text-slate-800 mb-3 tracking-tight">
+              Dudas sobre la carta
             </h2>
+            <p className="text-slate-600 text-sm mb-6">
+              El listado completo de preguntas (horario, ubicación, alérgenos, pedidos…) está en la página de ayuda.
+            </p>
             <ul className="space-y-5 list-none pl-0">
-              {faqs.map((faq, i) => (
+              {cartaFaqTeasers.map((item) => (
                 <li
-                  key={i}
+                  key={item.question}
                   className="bg-white/90 rounded-2xl border border-slate-200 px-4 py-4 shadow-xs"
                 >
-                  <h3 className="text-base font-semibold text-slate-900 mb-2">
-                    {faq.q}
-                  </h3>
-                  <p className="text-sm text-slate-700 leading-relaxed">
-                    {faq.a.includes('Horario y ubicación')
-                      ? <>
-                          {faq.a.slice(0, faq.a.indexOf('Horario y ubicación'))}
-                          <Link href="/contacto" className="text-primary-600 font-medium hover:underline">
-                            Horario y ubicación
-                          </Link>
-                          {faq.a.slice(faq.a.indexOf('Horario y ubicación') + 'Horario y ubicación'.length)}
-                        </>
-                      : faq.a}
-                  </p>
+                  <h3 className="text-base font-semibold text-slate-900 mb-2">{item.question}</h3>
+                  <p className="text-sm text-slate-700 leading-relaxed">{item.answer}</p>
                 </li>
               ))}
             </ul>
+            <p className="mt-6 text-center">
+              <Link
+                href={faqCanonicalPath}
+                className="inline-flex text-primary-600 font-semibold hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 rounded"
+              >
+                Ver todas las preguntas frecuentes
+              </Link>
+              {' · '}
+              <Link href="/contacto" className="text-primary-600 font-semibold hover:underline">
+                Horario y ubicación
+              </Link>
+            </p>
           </section>
         </div>
       </div>

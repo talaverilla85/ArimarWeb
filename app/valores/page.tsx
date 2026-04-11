@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import Image from 'next/image'
+import { faqCanonicalPath } from '@/lib/faqContent'
 
 export const metadata: Metadata = {
   title: 'Nuestros valores | AriMar FoodLab – Playa de Arinaga',
@@ -53,21 +54,6 @@ const expectList = [
   'Etiquetado con ingredientes y alérgenos.',
   'Cocina con método, orden y limpieza.',
   'Envases pensados para llevarlo bien.',
-]
-
-const faqs = [
-  {
-    q: '¿La carta cambia cada día?',
-    a: 'Sí. Trabajamos con rotación diaria según producción y temporada: pocas opciones, frescas y bien hechas.',
-  },
-  {
-    q: '¿Incluís alérgenos en la etiqueta?',
-    a: 'Sí. Cada plato lleva etiqueta con ingredientes y alérgenos para que puedas elegir con tranquilidad.',
-  },
-  {
-    q: '¿Dónde estáis?',
-    a: 'En Playa de Arinaga, Agüimes (Gran Canaria). Avenida Polizón 67. Horario y cómo llegar en la página de contacto.',
-  },
 ]
 
 function Icon({ name }: { name: string }) {
@@ -208,26 +194,21 @@ export default function ValoresPage() {
           </div>
         </div>
 
-        {/* SEO: H2 + párrafo + mini FAQ */}
         <section className="pt-8 border-t border-slate-200" aria-labelledby="seo-heading">
-          <h2 id="seo-heading" className="text-2xl font-bold text-slate-800 mb-6 tracking-tight">
+          <h2 id="seo-heading" className="text-2xl font-bold text-slate-800 mb-4 tracking-tight">
             Comida para llevar en Playa de Arinaga
           </h2>
-          <p className="text-slate-600 leading-relaxed mb-10 max-w-3xl">
-            En AriMar FoodLab elaboramos comida casera para llevar en Playa de Arinaga, Agüimes (Gran Canaria). La carta rota cada día: pocas opciones, frescas y bien hechas, con control del punto y de las cocciones. Cada plato lleva etiqueta con ingredientes y alérgenos para que elijas con tranquilidad. Pensado para recoger y disfrutar en casa, en la oficina o donde prefieras. Estamos en Avenida Polizón 67; horario y ubicación en la página de contacto.
+          <p className="text-slate-600 leading-relaxed max-w-3xl mb-4">
+            AriMar FoodLab es comida casera para llevar en Playa de Arinaga (Agüimes): rotación diaria, pocas opciones bien hechas y etiquetado claro. Los valores de arriba resumen cómo trabajamos; para horario, dirección o pedidos, usa{' '}
+            <Link href="/contacto" className="text-primary-600 font-semibold underline underline-offset-2 hover:decoration-2">
+              contacto
+            </Link>{' '}
+            o las{' '}
+            <Link href={faqCanonicalPath} className="text-primary-600 font-semibold underline underline-offset-2 hover:decoration-2">
+              preguntas frecuentes
+            </Link>
+            .
           </p>
-          <ul className="space-y-6 list-none pl-0">
-            {faqs.map((faq) => (
-              <li key={faq.q} className="border-b border-slate-200 pb-6 last:border-0">
-                <h3 className="text-base font-semibold text-slate-800 mb-2">
-                  {faq.q}
-                </h3>
-                <p className="text-slate-600 text-sm leading-relaxed">
-                  {faq.a}
-                </p>
-              </li>
-            ))}
-          </ul>
         </section>
       </div>
     </div>
