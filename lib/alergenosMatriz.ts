@@ -69,14 +69,32 @@ export function tieneAlergeno(fila: ElaboracionAlergenos, col: string): boolean 
   return (fila.alergenos || []).some((a) => String(a || '').trim().toLowerCase() === ck)
 }
 
-/** Elaboraciones que no declaran el alérgeno indicado (filtro «Sin …»). */
+/** Elaboraciones que no declaran ninguno de los alérgenos indicados (filtro «Sin …» acumulativo). */
+export function filtrarSinAlergenos(
+  elaboraciones: ElaboracionAlergenos[],
+  excluir: string | string[] | null | undefined,
+): ElaboracionAlergenos[] {
+  const keys = (Array.isArray(excluir) ? excluir : excluir ? [excluir] : [])
+    .map((k) => k.trim())
+    .filter(Boolean)
+  if (keys.length === 0) return elaboraciones
+  return elaboraciones.filter((row) => !keys.some((key) => tieneAlergeno(row, key)))
+}
+
+/** @deprecated Usar filtrarSinAlergenos */
 export function filtrarSinAlergeno(
   elaboraciones: ElaboracionAlergenos[],
   excluir: string | null | undefined,
 ): ElaboracionAlergenos[] {
-  const key = excluir?.trim()
-  if (!key) return elaboraciones
-  return elaboraciones.filter((row) => !tieneAlergeno(row, key))
+  return filtrarSinAlergenos(elaboraciones, excluir)
+}
+
+/** Texto legible: «Apio», «Apio ni Lactosa», «Apio, Lactosa ni Soja». */
+export function textoAlergenosExcluidos(nombres: string[]): string {
+  if (nombres.length === 0) return ''
+  if (nombres.length === 1) return nombres[0]
+  if (nombres.length === 2) return `${nombres[0]} ni ${nombres[1]}`
+  return `${nombres.slice(0, -1).join(', ')} ni ${nombres[nombres.length - 1]}`
 }
 
 export function elaboracionesOrdenadas(elaboraciones: ElaboracionAlergenos[]): ElaboracionAlergenos[] {

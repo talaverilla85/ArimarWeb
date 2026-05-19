@@ -4,8 +4,9 @@ import { useCallback, useEffect, useMemo, useState } from 'react'
 import {
   columnasAlergenos,
   elaboracionesOrdenadas,
-  filtrarSinAlergeno,
+  filtrarSinAlergenos,
   fmtActualizado,
+  textoAlergenosExcluidos,
   tieneAlergeno,
   type CartaAlergenosPayload,
 } from '@/lib/alergenosMatriz'
@@ -14,7 +15,7 @@ export default function AlergenosClient() {
   const [data, setData] = useState<CartaAlergenosPayload | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
-  const [sinAlergeno, setSinAlergeno] = useState<string | null>(null)
+  const [sinAlergenos, setSinAlergenos] = useState<string[]>([])
 
   const load = useCallback(async () => {
     setLoading(true)
@@ -44,13 +45,17 @@ export default function AlergenosClient() {
   )
   const cols = useMemo(() => columnasAlergenos(filas), [filas])
   const filasVisibles = useMemo(
-    () => filtrarSinAlergeno(filas, sinAlergeno),
-    [filas, sinAlergeno],
+    () => filtrarSinAlergenos(filas, sinAlergenos),
+    [filas, sinAlergenos],
   )
   const actualizadoStr = fmtActualizado(data?.actualizadoEn)
+  const filtroActivo = sinAlergenos.length > 0
+  const textoExcluidos = textoAlergenosExcluidos(sinAlergenos)
 
   const toggleSinAlergeno = (nombre: string) => {
-    setSinAlergeno((prev) => (prev === nombre ? null : nombre))
+    setSinAlergenos((prev) =>
+      prev.includes(nombre) ? prev.filter((a) => a !== nombre) : [...prev, nombre],
+    )
   }
 
   return (
@@ -104,7 +109,7 @@ export default function AlergenosClient() {
               </p>
               <div className="flex flex-wrap gap-2 -mx-1 px-1 pb-1 max-h-[9rem] overflow-y-auto sm:max-h-none">
                 {cols.map((c) => {
-                  const activo = sinAlergeno === c
+                  const activo = sinAlergenos.includes(c)
                   return (
                     <button
                       key={c}
@@ -121,28 +126,35 @@ export default function AlergenosClient() {
                     </button>
                   )
                 })}
-                {sinAlergeno && (
+                {filtroActivo && (
                   <button
                     type="button"
-                    onClick={() => setSinAlergeno(null)}
+                    onClick={() => setSinAlergenos([])}
                     className="shrink-0 rounded-full px-3 py-1.5 text-sm font-medium text-slate-600 border border-slate-300 bg-white hover:bg-slate-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2"
                   >
                     Ver todo
                   </button>
                 )}
               </div>
-              {sinAlergeno ? (
+              {filtroActivo ? (
                 <p className="mt-3 text-sm text-primary-800">
                   <span className="font-semibold">{filasVisibles.length}</span>
                   {filasVisibles.length === 1 ? ' elaboración' : ' elaboraciones'} sin{' '}
-                  <span className="font-semibold">{sinAlergeno}</span>
+                  <span className="font-semibold">{textoExcluidos}</span>
+                  {filas.length !== filasVisibles.length && (
+                    <span className="text-slate-600">
+                      {' '}
+                      (de {filas.length} en total; van desapareciendo al añadir filtros)
+                    </span>
+                  )}
                   {filasVisibles.length === 0 && (
-                    <span className="text-slate-600"> — pruebe otro filtro o consulte en el local.</span>
+                    <span className="text-slate-600"> — quite algún filtro o consulte en el local.</span>
                   )}
                 </p>
               ) : (
                 <p className="mt-3 text-xs text-slate-500">
-                  Pulse un alérgeno para ver solo los platos que no lo declaran.
+                  Pulse uno o varios alérgenos: cada «Sin …» activo reduce la lista (sin Apio, sin Lactosa,
+                  etc. a la vez).
                 </p>
               )}
               <p className="mt-2 text-xs text-slate-500">
@@ -173,14 +185,14 @@ export default function AlergenosClient() {
                   </tr>
                 </thead>
                 <tbody>
-                  {filasVisibles.length === 0 && sinAlergeno ? (
+                  {filasVisibles.length === 0 && filtroActivo ? (
                     <tr>
                       <td
                         colSpan={cols.length + 1}
                         className="px-4 py-10 text-center text-slate-500 text-sm"
                       >
-                        Ninguna elaboración coincide con «Sin {sinAlergeno}». Pruebe «Ver todo» o pregunte en
-                        el local.
+                        Ninguna elaboración coincide con sin {textoExcluidos}. Pruebe «Ver todo» o quite algún
+                        filtro.
                       </td>
                     </tr>
                   ) : null}
