@@ -47,6 +47,16 @@ export default function Header() {
               Valores
             </Link>
             <Link
+              href="/alergenos"
+              className={`text-sm font-medium transition-colors ${
+                pathname === '/alergenos'
+                  ? 'text-slate-800'
+                  : 'text-slate-600 hover:text-slate-800'
+              }`}
+            >
+              Alérgenos
+            </Link>
+            <Link
               href="/contacto"
               className={`text-sm font-medium transition-colors ${
                 pathname === '/contacto'
@@ -119,6 +129,17 @@ export default function Header() {
                 }`}
               >
                 Valores
+              </Link>
+              <Link
+                href="/alergenos"
+                onClick={() => setMobileMenuOpen(false)}
+                className={`text-base font-medium transition-colors ${
+                  pathname === '/alergenos'
+                    ? 'text-slate-800'
+                    : 'text-slate-600 hover:text-slate-800'
+                }`}
+              >
+                Alérgenos
               </Link>
               <Link
                 href="/contacto"

@@ -63,7 +63,7 @@ La página pública `/alergenos` y la API interna `/api/carta-alergenos` obtiene
 
 | Variable | Dónde |
 |----------|--------|
-| `ARIMAR_API_URL` | URL HTTPS pública del backend (túnel o dominio), sin `/` final |
+| `ARIMAR_API_URL` | Host HTTPS de Gestión (ej. `https://gestion.arimarfoodlab.es`); se usa `/api-backend` automáticamente |
 | `ARIMAR_LOGIN_EMAIL` | Cuenta con acceso al catálogo |
 | `ARIMAR_LOGIN_PASSWORD` | Contraseña (solo servidor) |
 
@@ -71,6 +71,8 @@ La página pública `/alergenos` y la API interna `/api/carta-alergenos` obtiene
 - **Local:** crear `Web/.env.local` con los mismos valores y `npm run dev`.
 
 Probar: `http://localhost:3000/alergenos` y `http://localhost:3000/api/carta-alergenos` (JSON con `elaboraciones` y `actualizadoEn`). La respuesta se cachea ~10 minutos en el edge.
+
+**Si en Vercel no carga:** el dominio de Gestión debe ser **accesible desde internet** (registro DNS + túnel Cloudflare activo). Prueba desde fuera: `curl -X POST "https://TU-DOMINIO/api-backend/auth/login" -H "Content-Type: application/json" -d '{"email":"...","password":"..."}'`. Tras cambiar variables en Vercel, haz **Redeploy**.
 
 ## Estructura del Proyecto
 
