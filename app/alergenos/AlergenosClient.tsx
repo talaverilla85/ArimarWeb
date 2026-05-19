@@ -47,9 +47,10 @@ export default function AlergenosClient() {
     <div className="pt-32 pb-20 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
         <header className="text-center mb-10 md:mb-12">
-          <h1 className="text-3xl md:text-4xl font-bold text-slate-800 mb-3 tracking-tight">
+          <h1 className="text-3xl md:text-4xl font-bold text-primary-800 mb-3 tracking-tight">
             Carta de alérgenos
           </h1>
+          <div className="h-1 w-16 bg-primary-500 mx-auto rounded-full mb-4" aria-hidden />
           <p className="text-slate-600 max-w-2xl mx-auto text-base md:text-lg">
             Información de alérgenos declarados en nuestras elaboraciones. Los datos se actualizan desde
             nuestra cocina cuando cambia una receta.
@@ -86,14 +87,14 @@ export default function AlergenosClient() {
         )}
 
         {!loading && !error && filas.length > 0 && (
-          <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+          <div className="bg-white rounded-2xl border border-primary-200 shadow-md overflow-hidden ring-1 ring-primary-100">
             <div className="overflow-x-auto">
               <table className="w-full text-sm border-collapse min-w-[640px]">
                 <thead>
-                  <tr className="bg-slate-100 border-b border-slate-200">
+                  <tr className="bg-primary-600 text-white border-b border-primary-700">
                     <th
                       scope="col"
-                      className="sticky left-0 z-20 bg-slate-100 text-left font-semibold text-slate-800 px-3 py-3 min-w-[180px] sm:min-w-[220px] shadow-[2px_0_4px_rgba(0,0,0,0.06)]"
+                      className="sticky left-0 z-20 bg-primary-600 text-left font-semibold text-white px-3 py-3.5 min-w-[180px] sm:min-w-[220px] shadow-[2px_0_6px_rgba(0,0,0,0.12)]"
                     >
                       Elaboración
                     </th>
@@ -102,7 +103,7 @@ export default function AlergenosClient() {
                         key={c}
                         scope="col"
                         title={c}
-                        className="px-2 py-3 text-center font-semibold text-slate-700 text-xs sm:text-sm max-w-[88px] whitespace-normal leading-tight align-bottom"
+                        className="px-2 py-3.5 text-center font-semibold text-white text-xs sm:text-sm max-w-[88px] whitespace-normal leading-tight align-bottom bg-primary-600"
                       >
                         {c}
                       </th>
@@ -110,15 +111,15 @@ export default function AlergenosClient() {
                   </tr>
                 </thead>
                 <tbody>
-                  {filas.map((row, idx) => (
+                  {filas.map((row, idx) => {
+                    const rowBg = idx % 2 === 0 ? 'bg-white' : 'bg-primary-50'
+                    return (
                     <tr
                       key={row.id}
-                      className={idx % 2 === 0 ? 'bg-white' : 'bg-slate-50/80'}
+                      className={`${rowBg} transition-colors hover:bg-primary-100/50 border-b border-primary-100/60 last:border-b-0`}
                     >
                       <td
-                        className={`sticky left-0 z-10 px-3 py-2.5 font-medium text-slate-800 shadow-[2px_0_4px_rgba(0,0,0,0.04)] ${
-                          idx % 2 === 0 ? 'bg-white' : 'bg-slate-50'
-                        }`}
+                        className={`sticky left-0 z-10 px-3 py-2.5 font-medium text-slate-800 shadow-[2px_0_4px_rgba(0,0,0,0.06)] ${rowBg}`}
                       >
                         {row.nombre}
                       </td>
@@ -126,7 +127,7 @@ export default function AlergenosClient() {
                         <td key={c} className="px-2 py-2.5 text-center align-middle">
                           {tieneAlergeno(row, c) ? (
                             <span
-                              className="inline-flex items-center justify-center text-primary-600 font-bold text-lg leading-none"
+                              className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-primary-100 text-primary-700 font-bold text-base leading-none"
                               title={`${row.nombre}: ${c}`}
                               aria-label={`${row.nombre} contiene ${c}`}
                             >
@@ -140,11 +141,12 @@ export default function AlergenosClient() {
                         </td>
                       ))}
                     </tr>
-                  ))}
+                    )
+                  })}
                 </tbody>
               </table>
             </div>
-            <p className="text-xs text-slate-500 px-4 py-3 border-t border-slate-100">
+            <p className="text-xs text-slate-600 px-4 py-3 border-t border-primary-100 bg-primary-50/50">
               ✓ = el plato declara ese alérgeno según la información de elaboración. Consulte con el
               personal si tiene alergias graves.
             </p>
