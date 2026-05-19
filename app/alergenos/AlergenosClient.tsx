@@ -4,6 +4,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react'
 import {
   columnasAlergenos,
   elaboracionesOrdenadas,
+  filtrarSinAlergeno,
   fmtActualizado,
   tieneAlergeno,
   type CartaAlergenosPayload,
@@ -13,6 +14,7 @@ export default function AlergenosClient() {
   const [data, setData] = useState<CartaAlergenosPayload | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
+  const [sinAlergeno, setSinAlergeno] = useState<string | null>(null)
 
   const load = useCallback(async () => {
     setLoading(true)
@@ -41,7 +43,15 @@ export default function AlergenosClient() {
     [data?.elaboraciones],
   )
   const cols = useMemo(() => columnasAlergenos(filas), [filas])
+  const filasVisibles = useMemo(
+    () => filtrarSinAlergeno(filas, sinAlergeno),
+    [filas, sinAlergeno],
+  )
   const actualizadoStr = fmtActualizado(data?.actualizadoEn)
+
+  const toggleSinAlergeno = (nombre: string) => {
+    setSinAlergeno((prev) => (prev === nombre ? null : nombre))
+  }
 
   return (
     <div className="pt-32 pb-20 px-4 sm:px-6 lg:px-8">
@@ -88,6 +98,58 @@ export default function AlergenosClient() {
 
         {!loading && !error && filas.length > 0 && (
           <div className="bg-white rounded-2xl border border-primary-200 shadow-md overflow-hidden ring-1 ring-primary-100">
+            <div className="px-4 sm:px-5 py-4 border-b border-primary-100 bg-primary-50/40">
+              <p className="text-sm font-semibold text-primary-800 mb-2">
+                Buscar elaboraciones sin alérgeno
+              </p>
+              <div className="flex flex-wrap gap-2 -mx-1 px-1 pb-1 max-h-[9rem] overflow-y-auto sm:max-h-none">
+                {cols.map((c) => {
+                  const activo = sinAlergeno === c
+                  return (
+                    <button
+                      key={c}
+                      type="button"
+                      onClick={() => toggleSinAlergeno(c)}
+                      aria-pressed={activo}
+                      className={`shrink-0 rounded-full px-3 py-1.5 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 ${
+                        activo
+                          ? 'bg-primary-600 text-white shadow-sm'
+                          : 'bg-white text-primary-700 border border-primary-300 hover:bg-primary-100'
+                      }`}
+                    >
+                      Sin {c}
+                    </button>
+                  )
+                })}
+                {sinAlergeno && (
+                  <button
+                    type="button"
+                    onClick={() => setSinAlergeno(null)}
+                    className="shrink-0 rounded-full px-3 py-1.5 text-sm font-medium text-slate-600 border border-slate-300 bg-white hover:bg-slate-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2"
+                  >
+                    Ver todo
+                  </button>
+                )}
+              </div>
+              {sinAlergeno ? (
+                <p className="mt-3 text-sm text-primary-800">
+                  <span className="font-semibold">{filasVisibles.length}</span>
+                  {filasVisibles.length === 1 ? ' elaboración' : ' elaboraciones'} sin{' '}
+                  <span className="font-semibold">{sinAlergeno}</span>
+                  {filasVisibles.length === 0 && (
+                    <span className="text-slate-600"> — pruebe otro filtro o consulte en el local.</span>
+                  )}
+                </p>
+              ) : (
+                <p className="mt-3 text-xs text-slate-500">
+                  Pulse un alérgeno para ver solo los platos que no lo declaran.
+                </p>
+              )}
+              <p className="mt-2 text-xs text-slate-500">
+                Filtro orientativo según la declaración en receta. No sustituye consultar con el local si
+                tiene alergia grave o intolerancia.
+              </p>
+            </div>
             <div className="overflow-x-auto">
               <table className="w-full text-sm border-collapse min-w-[640px]">
                 <thead>
@@ -111,7 +173,18 @@ export default function AlergenosClient() {
                   </tr>
                 </thead>
                 <tbody>
-                  {filas.map((row, idx) => {
+                  {filasVisibles.length === 0 && sinAlergeno ? (
+                    <tr>
+                      <td
+                        colSpan={cols.length + 1}
+                        className="px-4 py-10 text-center text-slate-500 text-sm"
+                      >
+                        Ninguna elaboración coincide con «Sin {sinAlergeno}». Pruebe «Ver todo» o pregunte en
+                        el local.
+                      </td>
+                    </tr>
+                  ) : null}
+                  {filasVisibles.map((row, idx) => {
                     const rowBg = idx % 2 === 0 ? 'bg-white' : 'bg-primary-50'
                     return (
                     <tr

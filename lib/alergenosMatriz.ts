@@ -69,6 +69,16 @@ export function tieneAlergeno(fila: ElaboracionAlergenos, col: string): boolean 
   return (fila.alergenos || []).some((a) => String(a || '').trim().toLowerCase() === ck)
 }
 
+/** Elaboraciones que no declaran el alérgeno indicado (filtro «Sin …»). */
+export function filtrarSinAlergeno(
+  elaboraciones: ElaboracionAlergenos[],
+  excluir: string | null | undefined,
+): ElaboracionAlergenos[] {
+  const key = excluir?.trim()
+  if (!key) return elaboraciones
+  return elaboraciones.filter((row) => !tieneAlergeno(row, key))
+}
+
 export function elaboracionesOrdenadas(elaboraciones: ElaboracionAlergenos[]): ElaboracionAlergenos[] {
   return [...elaboraciones].sort((a, b) =>
     String(a?.nombre || '').localeCompare(String(b?.nombre || ''), 'es', { sensitivity: 'base' }),
