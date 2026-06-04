@@ -3,13 +3,13 @@ import Link from 'next/link'
 import { buildFaqPageJsonLd, faqCanonicalPath, siteFaqItems } from '@/lib/faqContent'
 
 export const metadata: Metadata = {
-  title: 'Preguntas frecuentes | AriMar FoodLab – Playa de Arinaga',
+  title: 'Preguntas frecuentes sin gluten | AriMar FoodLab – Playa de Arinaga',
   description:
-    'Respuestas sobre carta, horario, ubicación, alérgenos, pedidos para llevar y comida casera en AriMar FoodLab (Playa de Arinaga, Agüimes).',
+    'Respuestas sobre carta 100 % sin gluten, alérgenos, horario, ubicación y comida casera para llevar en AriMar FoodLab (Playa de Arinaga, Gran Canaria).',
   openGraph: {
-    title: 'Preguntas frecuentes | AriMar FoodLab – Playa de Arinaga',
+    title: 'Preguntas frecuentes sin gluten | AriMar FoodLab – Playa de Arinaga',
     description:
-      'Carta, horario, ubicación, alérgenos y pedidos para llevar en AriMar FoodLab, Playa de Arinaga.',
+      'Carta 100 % sin gluten, horario, ubicación, alérgenos y pedidos para llevar en AriMar FoodLab, Playa de Arinaga.',
     type: 'website',
     url: `https://arimarfoodlab.es${faqCanonicalPath}`,
   },
@@ -34,7 +34,8 @@ export default function PreguntasFrecuentesPage() {
               Preguntas frecuentes
             </h1>
             <p className="text-lg text-slate-600 leading-relaxed">
-              Aquí reunimos las dudas más habituales sobre AriMar. Si no encuentras lo que buscas,{' '}
+              Aquí reunimos las dudas más habituales sobre nuestra carta 100 % sin gluten, alérgenos,
+              pedidos y ubicación en Playa de Arinaga. Si no encuentras lo que buscas,{' '}
               <Link
                 href="/contacto"
                 className="text-primary-600 font-semibold underline underline-offset-2 hover:decoration-2"
@@ -59,7 +60,7 @@ export default function PreguntasFrecuentesPage() {
 
           <p className="mt-12 text-center text-slate-600 text-sm">
             <Link href="/carta" className="text-primary-600 font-semibold hover:underline">
-              Ver la carta
+              Ver carta 100% sin gluten
             </Link>
             {' · '}
             <Link href="/contacto" className="text-primary-600 font-semibold hover:underline">

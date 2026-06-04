@@ -9,17 +9,17 @@ export const siteFaqItems: FaqItem[] = [
   {
     question: '¿Qué tipo de comida puedo encontrar en AriMar?',
     answer:
-      'Comida casera para llevar: platos del día, pollo asado, potajes, cremas, arroces, pastas, guisos, fritos y postres caseros. Elaboramos en Playa de Arinaga (Agüimes, Gran Canaria) con foco en recogida rápida en local.',
+      'Comida casera 100 % sin gluten para llevar: platos del día, pollo asado, potajes, cremas, arroces, pastas, guisos, fritos y postres caseros. Elaboramos en Playa de Arinaga (Agüimes, Gran Canaria) con foco en recogida rápida en local.',
   },
   {
     question: '¿Sois una freiduría?',
     answer:
-      'Sí. AriMar es una freiduría moderna de comida casera para llevar: recetas reconocibles, vitrina del día y opción de encargar con hora de recogida. No disponemos de comedor; todo el servicio es takeaway.',
+      'Sí. AriMar es una freiduría moderna 100 % sin gluten y casa de comidas para llevar: recetas reconocibles, vitrina del día y opción de encargar con hora de recogida. No disponemos de comedor; todo el servicio es takeaway.',
   },
   {
     question: '¿La carta es fija o cambia?',
     answer:
-      'La carta rota cada día según temporada y producción. Solemos tener platos de cuchara (potajes, cremas), pastas, arroces, guisos, opciones vegetales y postres, además de platos del día y pollo asado cuando toca.',
+      'La carta 100 % sin gluten rota cada día según temporada y producción. Solemos tener platos de cuchara (potajes, cremas), pastas, arroces, guisos, opciones vegetales y postres, además de platos del día y pollo asado cuando toca.',
   },
   {
     question: '¿Cómo hago un pedido o encargo para recoger?',
@@ -39,12 +39,12 @@ export const siteFaqItems: FaqItem[] = [
   {
     question: '¿Incluís alérgenos e información de ingredientes?',
     answer:
-      'Sí. Cada tupper lleva etiqueta con ingredientes principales, alérgenos, fecha de caducidad y número de lote para que elijas con tranquilidad.',
+      'Sí. No trabajamos con ingredientes con gluten y, además, cada tupper lleva etiqueta con ingredientes principales, resto de alérgenos, fecha de caducidad y número de lote para que elijas con tranquilidad.',
   },
   {
     question: '¿Sois un establecimiento sin gluten?',
     answer:
-      'Sí. AriMar es un local 100 % sin gluten: toda la carta está elaborada sin gluten, pensada para que las personas celíacas puedan comer con tranquilidad.',
+      'Sí. AriMar es un establecimiento 100 % sin gluten en Playa de Arinaga, Gran Canaria: no trabajamos con ingredientes con gluten y toda la carta está elaborada sin gluten, pensada para que las personas celíacas puedan elegir con tranquilidad.',
   },
   {
     question: '¿Tenéis opciones vegetarianas?',
@@ -64,7 +64,7 @@ export const siteFaqItems: FaqItem[] = [
   {
     question: '¿Dónde comer en Playa de Arinaga si quiero comida casera para llevar?',
     answer:
-      'En la zona hay buenos sitios para comer en local. AriMar apuesta por llevarte comida casera de calidad donde tú quieras: casa, trabajo, playa u otro plan, sin depender de sentarte en un restaurante.',
+      'En la zona hay buenos sitios para comer en local. AriMar apuesta por comida casera y freiduría 100 % sin gluten para llevar donde tú quieras: casa, trabajo, playa u otro plan, sin depender de sentarte en un restaurante.',
   },
 ]
 

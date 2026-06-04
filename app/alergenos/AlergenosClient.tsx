@@ -64,12 +64,13 @@ export default function AlergenosClient() {
       <div className="max-w-7xl mx-auto">
         <header className="text-center mb-10 md:mb-12">
           <h1 className="text-3xl md:text-4xl font-bold text-primary-800 mb-3 tracking-tight">
-            Carta de alérgenos
+            Alérgenos y carta 100 % sin gluten
           </h1>
           <div className="h-1 w-16 bg-primary-500 mx-auto rounded-full mb-4" aria-hidden />
           <p className="text-slate-600 max-w-2xl mx-auto text-base md:text-lg">
-            Establecimiento 100 % sin gluten. La carta de alérgenos detalla el resto de alérgenos presentes en
-            cada elaboración. Los datos se actualizan desde nuestra cocina cuando cambia una receta.
+            AriMar es un establecimiento 100 % sin gluten. Toda nuestra carta está elaborada sin ingredientes
+            con gluten. Además, informamos del resto de alérgenos presentes en cada elaboración para que el
+            cliente pueda decidir con claridad y consultar cualquier duda con nuestro equipo.
           </p>
           <div className="mt-8 max-w-xl mx-auto">
             <SinGlutenBlock variant="inline" />
@@ -78,6 +79,20 @@ export default function AlergenosClient() {
             <p className="text-sm text-slate-500 mt-3">Actualizado el {actualizadoStr} (hora Canarias)</p>
           )}
         </header>
+
+        <section
+          className="mb-10 rounded-2xl border border-primary-100 bg-primary-50/50 px-5 py-6 md:px-8 text-center"
+          aria-labelledby="informacion-clara-heading"
+        >
+          <h2 id="informacion-clara-heading" className="text-xl md:text-2xl font-bold text-slate-800 mb-3 tracking-tight">
+            Información clara para comer con tranquilidad
+          </h2>
+          <p className="text-slate-600 leading-relaxed max-w-3xl mx-auto">
+            Sabemos que para una persona celíaca no basta con que un plato no lleve gluten en la receta.
+            Por eso AriMar se plantea desde su origen como un establecimiento 100 % sin gluten, con una
+            carta clara, etiquetado de elaboraciones e información visible sobre alérgenos.
+          </p>
+        </section>
 
         {loading && (
           <p className="text-center text-slate-500 py-12" role="status">

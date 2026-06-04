@@ -9,8 +9,11 @@ export default function NuestraCocinaClient() {
       <div className="max-w-6xl mx-auto">
         {/* H1 visible */}
         <h1 className="text-4xl md:text-5xl font-bold text-slate-800 mb-6 tracking-tight text-center md:text-left">
-          Nuestra cocina
+          Nuestra cocina 100 % sin gluten
         </h1>
+        <p className="text-xl text-slate-600 max-w-3xl mb-10 leading-relaxed text-center md:text-left">
+          Método, organización y control para ofrecer comida casera sin gluten con regularidad, sabor y confianza.
+        </p>
 
         {/* Imagen cabecera */}
         <motion.div
@@ -29,6 +32,20 @@ export default function NuestraCocinaClient() {
           />
         </motion.div>
 
+        <section
+          className="mb-20 rounded-2xl border border-primary-100 bg-primary-50/50 px-6 py-8 md:px-10"
+          aria-labelledby="origen-sin-gluten-heading"
+        >
+          <h2 id="origen-sin-gluten-heading" className="text-2xl md:text-3xl font-bold text-slate-800 mb-4 tracking-tight">
+            Un sistema pensado desde el origen
+          </h2>
+          <p className="text-slate-600 leading-relaxed max-w-3xl">
+            La cocina de AriMar no funciona como una cocina mixta con algunas opciones adaptadas. Nuestro
+            modelo de trabajo parte de una carta sin gluten, procesos organizados, etiquetado de elaboraciones
+            y control diario de producción.
+          </p>
+        </section>
+
         {/* Sección "Cocina con método" */}
         <section className="mb-20" aria-labelledby="metodo-heading">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
@@ -43,13 +60,13 @@ export default function NuestraCocinaClient() {
               </h2>
               <div className="space-y-4 text-slate-600 leading-relaxed">
                 <p>
-                  <strong className="text-slate-800">Selección corta y rotación.</strong> Cocinamos pocas cosas, bien hechas, para que todo esté fresco y se mueva.
+                  <strong className="text-slate-800">Selección corta y rotación.</strong> Cocinamos pocas cosas, bien hechas y sin ingredientes con gluten, para que todo esté fresco y se mueva.
                 </p>
                 <p>
                   <strong className="text-slate-800">Cocciones controladas.</strong> Buscamos el punto exacto y la misma calidad cada día.
                 </p>
                 <p>
-                  <strong className="text-slate-800">Etiqueta clara.</strong> Ingredientes y alérgenos, para que elijas con tranquilidad.
+                  <strong className="text-slate-800">Etiqueta clara.</strong> Ingredientes y resto de alérgenos, para que elijas con tranquilidad.
                 </p>
                 <p>
                   <strong className="text-slate-800">Buenas prácticas y controles.</strong> Trabajamos con orden y limpieza para cuidar el producto.
@@ -104,7 +121,7 @@ export default function NuestraCocinaClient() {
               className="space-y-4 text-slate-600 leading-relaxed order-1 lg:order-2"
             >
               <p>
-                En AriMar FoodLab trabajamos con tecnología RATIONAL para que el resultado sea constante: platos con el punto exacto, cada día. Nuestra comida para llevar en Playa de Arinaga (Agüimes), Gran Canaria, se elabora con estos equipos para ofrecerte la misma calidad día a día.
+                En AriMar FoodLab trabajamos con tecnología RATIONAL para que el resultado sea constante: platos con el punto exacto, cada día. Nuestra comida casera 100 % sin gluten para llevar en Playa de Arinaga (Agüimes), Gran Canaria, se elabora con estos equipos para ofrecerte la misma calidad día a día.
               </p>
               <p>
                 Método, control y cariño para cocinar mejor y servir mejor: misma textura, mismo sabor, sin pasarse ni quedarse corto.

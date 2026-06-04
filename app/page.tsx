@@ -14,6 +14,35 @@ export default function Home() {
     <>
       <HeroSection />
 
+      {/* Sin gluten desde el origen */}
+      <section className="py-16 md:py-20 px-4 sm:px-6 lg:px-8 bg-white" aria-labelledby="sin-gluten-home-heading">
+        <div className="max-w-4xl mx-auto text-center">
+          <h2 id="sin-gluten-home-heading" className="text-3xl md:text-4xl font-bold text-slate-800 mb-6 tracking-tight">
+            Aquí no preguntas qué puedes comer. Preguntas qué te apetece.
+          </h2>
+          <p className="text-lg md:text-xl text-slate-600 leading-relaxed mb-8">
+            AriMar no es un local con algunas opciones adaptadas. Somos un establecimiento 100 % sin gluten:
+            nuestra carta, nuestra freiduría y nuestras elaboraciones están pensadas desde el principio sin gluten.
+            Cocinamos para familias, trabajadores, turistas y personas celíacas que quieren comer bien sin estar
+            preguntando cada detalle.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link
+              href="/carta"
+              className="inline-flex justify-center px-8 py-3 bg-primary-500 text-white text-sm md:text-base font-semibold rounded-lg hover:bg-primary-600 transition-colors shadow-sm"
+            >
+              Ver carta 100 % sin gluten
+            </Link>
+            <Link
+              href="/contacto"
+              className="inline-flex justify-center px-8 py-3 border border-primary-200 text-primary-700 text-sm md:text-base font-semibold rounded-lg hover:bg-primary-50 transition-colors"
+            >
+              Cómo llegar
+            </Link>
+          </div>
+        </div>
+      </section>
+
       {/* Qué es AriMar */}
       <section className="py-16 md:py-24 px-4 sm:px-6 lg:px-8 bg-slate-50" aria-labelledby="mas-facil-heading">
         <div className="max-w-4xl mx-auto">
@@ -21,10 +50,10 @@ export default function Home() {
             Qué es AriMar
           </h2>
           <p className="text-lg md:text-xl text-slate-600 leading-relaxed mb-5 text-center">
-            AriMar es una freiduría moderna de comida casera 100 % sin gluten para llevar en Playa de Arinaga que nace para dar respuesta a los ritmos de vida actuales y a la creciente demanda de una comida casera, equilibrada y fácil de recoger, pensada para quienes quieren comer bien sin tener que dedicar cada día tiempo a cocinar.
+            AriMar es una casa de comidas y freiduría moderna de comida casera 100 % sin gluten para llevar en Playa de Arinaga, Gran Canaria. Nace para dar respuesta a los ritmos de vida actuales y a la demanda de una comida casera, equilibrada y fácil de recoger, pensada para quienes quieren comer bien sin dedicar cada día tiempo a cocinar.
           </p>
           <p className="text-lg md:text-xl text-slate-600 leading-relaxed text-center">
-            Queremos que ese tiempo pueda invertirse en lo que de verdad importa: la familia, la crianza, el deporte, el descanso, el ocio o, simplemente, llegar a casa con la tranquilidad de tener la comida resuelta, sin renunciar a la calidad.
+            Queremos que ese tiempo pueda invertirse en lo que de verdad importa: la familia, la crianza, el deporte, el descanso, el ocio o, simplemente, llegar a casa con la tranquilidad de tener la comida resuelta, sin renunciar a la calidad ni a una carta elaborada sin gluten.
           </p>
         </div>
       </section>
@@ -36,7 +65,7 @@ export default function Home() {
             Qué encontrarás en AriMar
           </h2>
           <p className="text-sm md:text-base text-slate-500 mb-6">
-            Una selección de comida casera para llevar pensada para el día a día.
+            Una selección de comida casera sin gluten para llevar pensada para el día a día.
           </p>
 
           <div className="flex flex-wrap justify-center gap-2 md:gap-3 mb-8">
@@ -53,8 +82,23 @@ export default function Home() {
           </div>
 
           <p className="text-lg md:text-xl text-slate-600 leading-relaxed">
-            En AriMar encontrarás una selección de comida casera para llevar pensada para el día a día: platos del día, pollo asado, potajes, cremas, arroces, pastas, guisos, fritos y postres caseros. Una propuesta variada y cercana, propia de una freiduría moderna, donde la cocina de siempre se adapta a una forma de comer más cómoda, práctica y actual.
+            En AriMar encontrarás una selección de comida casera sin gluten para llevar pensada para el día a día: platos del día, pollo asado, potajes, cremas, arroces, pastas, guisos, fritos y postres caseros. Una propuesta variada y cercana, propia de una freiduría moderna 100 % sin gluten, donde la cocina de siempre se adapta a una forma de comer más cómoda, práctica y actual.
           </p>
+        </div>
+      </section>
+
+      {/* Freiduría sin gluten */}
+      <section className="py-16 md:py-20 px-4 sm:px-6 lg:px-8 bg-white" aria-labelledby="freiduria-sin-gluten-heading">
+        <div className="max-w-4xl mx-auto">
+          <div className="rounded-2xl border border-primary-100 bg-primary-50/50 px-6 py-8 md:px-10 text-center shadow-sm">
+            <h2 id="freiduria-sin-gluten-heading" className="text-2xl md:text-3xl font-bold text-slate-800 mb-4 tracking-tight">
+              Freiduría 100 % sin gluten
+            </h2>
+            <p className="text-lg text-slate-600 leading-relaxed">
+              Croquetas, fritos, papas y elaboraciones de vitrina preparadas en un entorno donde no trabajamos
+              con ingredientes con gluten. El objetivo es que puedas mirar la vitrina y elegir con tranquilidad.
+            </p>
+          </div>
         </div>
       </section>
 
@@ -65,13 +109,13 @@ export default function Home() {
             Otro concepto de freiduría
           </h2>
           <p className="text-lg md:text-xl text-slate-600 leading-relaxed text-center mb-10">
-            Apostamos por una forma más clara, organizada y actual de llevarte comida casera de calidad: recogida fácil, información transparente y una cocina pensada para acompañarte en el día a día.
+            Apostamos por una forma más clara, organizada y actual de llevarte comida casera 100 % sin gluten: recogida fácil, información transparente y una cocina pensada para acompañarte en el día a día en Playa de Arinaga.
           </p>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm text-left">
               <h3 className="text-lg font-semibold text-slate-800 mb-2 tracking-tight">Recogida fácil</h3>
               <p className="text-sm text-slate-600 leading-relaxed">
-                Vienes, ves la vitrina del día y eliges lo que te apetece. También puedes hacer tu pedido y pasar a recogerlo a la hora que mejor te encaje.
+                Vienes, ves la vitrina del día y eliges lo que te apetece. Toda la carta está elaborada sin gluten y también puedes hacer tu pedido para recogerlo a la hora que mejor te encaje.
               </p>
             </div>
             <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm text-left">
@@ -83,7 +127,7 @@ export default function Home() {
             <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm text-left">
               <h3 className="text-lg font-semibold text-slate-800 mb-2 tracking-tight">Cocina para tu día a día</h3>
               <p className="text-sm text-slate-600 leading-relaxed">
-                Platos pensados para encajar en tu rutina: comida casera que puedes llevarte a casa, al trabajo o cerca del mar, sin renunciar al sabor ni a la calidad.
+                Platos pensados para encajar en tu rutina: comida casera sin gluten que puedes llevarte a casa, al trabajo o cerca del mar, sin renunciar al sabor ni a la calidad.
               </p>
             </div>
           </div>
@@ -97,7 +141,7 @@ export default function Home() {
             Dónde está AriMar
           </h2>
           <p className="text-lg md:text-xl text-slate-600 leading-relaxed mb-6">
-            AriMar está en el corazón de Playa de Arinaga, en una calle peatonal con vida propia y escenario habitual de eventos y ferias durante el año. Estamos a un paso de la playa, en un entorno perfecto para llevarte tu comida y disfrutarla con calma, y muy cerca del colegio y del centro de salud, en una ubicación cómoda para el día a día.
+            AriMar está en el corazón de Playa de Arinaga, Gran Canaria, en una calle peatonal con vida propia y escenario habitual de eventos y ferias durante el año. Estamos a un paso de la playa, en un entorno perfecto para llevarte comida 100 % sin gluten y disfrutarla con calma, y muy cerca del colegio y del centro de salud.
           </p>
           <Link
             href="/contacto"
@@ -116,7 +160,7 @@ export default function Home() {
             Cómo encaja en tu día
           </h2>
           <p className="text-lg md:text-xl text-slate-600 leading-relaxed">
-            AriMar está pensada para quienes viven, trabajan o pasan por Arinaga y quieren resolver la comida de forma sencilla, sin renunciar al sabor ni a la calidad. Puedes disfrutarla en casa, en la oficina o cerca del mar, según lo que te pida el día.
+            AriMar está pensada para quienes viven, trabajan o pasan por Arinaga y quieren resolver la comida de forma sencilla, sin renunciar al sabor, la calidad ni la tranquilidad de una carta sin gluten. Puedes disfrutarla en casa, en la oficina o cerca del mar, según lo que te pida el día.
           </p>
         </div>
       </section>
@@ -157,7 +201,7 @@ export default function Home() {
               ¿Te apetece probar AriMar?
             </h2>
             <p className="text-slate-600 mb-8 max-w-2xl mx-auto">
-              Ven a vernos a Playa de Arinaga, descubre nuestra carta de comida casera para llevar y decide si prefieres pedir por adelantado o elegir en la vitrina del día.
+              Ven a vernos a Playa de Arinaga, descubre nuestra carta de comida casera y freiduría 100 % sin gluten, y decide si prefieres pedir por adelantado o elegir en la vitrina del día.
             </p>
             <div className="flex flex-col items-center gap-4">
               <Link
@@ -171,7 +215,7 @@ export default function Home() {
                   href="/carta"
                   className="inline-block px-8 py-3 border border-primary-200 text-primary-700 text-sm md:text-base font-semibold rounded-lg hover:bg-primary-50 transition-colors"
                 >
-                  Ver carta
+                  Ver carta 100 % sin gluten
                 </Link>
                 <Link
                   href="/contacto"

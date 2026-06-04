@@ -6,13 +6,13 @@ import { getWhatsAppUrl, siteConfig } from '@/lib/siteConfig'
 import { faqCanonicalPath } from '@/lib/faqContent'
 
 export const metadata: Metadata = {
-  title: 'Contacto | AriMar FoodLab – Playa de Arinaga',
+  title: 'Ubicación de AriMar 100 % sin gluten | Playa de Arinaga',
   description:
-    'Contacto de AriMar FoodLab en Playa de Arinaga (Agüimes), Gran Canaria: establecimiento 100 % sin gluten, WhatsApp, ubicación en Google Maps, horario y cómo llegar.',
+    'Cómo llegar a AriMar FoodLab, casa de comidas y freiduría 100 % sin gluten en Playa de Arinaga, Gran Canaria. WhatsApp, ubicación, horario y recogida.',
   openGraph: {
-    title: 'Contacto | AriMar FoodLab – Playa de Arinaga',
+    title: 'Ubicación de AriMar 100 % sin gluten | Playa de Arinaga',
     description:
-      'Contacto de AriMar FoodLab en Playa de Arinaga: local 100 % sin gluten, WhatsApp, ubicación en Google Maps, horario y cómo llegar.',
+      'Casa de comidas y freiduría 100 % sin gluten en Playa de Arinaga, Gran Canaria. WhatsApp, ubicación, horario y cómo llegar.',
     type: 'website',
   },
   alternates: {
@@ -30,7 +30,7 @@ export default function ContactoPage() {
             Ubicación y horario
           </h1>
           <p className="text-xl text-slate-600 max-w-2xl mx-auto">
-            ¿Dudas, encargos o sugerencias? Escríbenos y te ayudamos.
+            Estamos en Playa de Arinaga, Gran Canaria. Si buscas comida casera y freiduría 100 % sin gluten para llevar, escríbenos o ven a ver la vitrina.
           </p>
         </header>
 
@@ -48,7 +48,7 @@ export default function ContactoPage() {
                   WhatsApp
                 </h2>
                 <p className="text-slate-600 leading-relaxed mb-4">
-                  Es la forma más rápida de hablar con nosotros.
+                  Es la forma más rápida de hablar con nosotros sobre carta sin gluten, encargos o dudas de alérgenos.
                 </p>
                 <p className="text-slate-500 text-sm mb-6">
                   Si es para un día concreto, dinos hora aproximada y lo preparamos.
@@ -117,6 +117,7 @@ export default function ContactoPage() {
             <ul className="list-disc pl-6 space-y-2 text-slate-600 leading-relaxed mb-8">
               <li>Recogida en local (sin comedor).</li>
               <li>Establecimiento 100 % sin gluten — busca nuestro distintivo en la puerta.</li>
+              <li>No trabajamos con ingredientes con gluten e informamos del resto de alérgenos.</li>
               <li>Acceso rápido desde la avenida principal.</li>
               <li>Si vienes de la playa, estás a un paseo.</li>
             </ul>
@@ -162,7 +163,7 @@ export default function ContactoPage() {
               ¿Hablamos?
             </h2>
             <p className="text-slate-600 max-w-xl mx-auto mb-8">
-              Si quieres reservar para un día concreto o preguntar qué hay hoy, escríbenos por WhatsApp.
+              Si quieres reservar para un día concreto o preguntar qué hay hoy en nuestra vitrina 100 % sin gluten, escríbenos por WhatsApp.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center flex-wrap">
               <a
@@ -180,7 +181,7 @@ export default function ContactoPage() {
                 href="/carta"
                 className="w-full sm:w-auto inline-flex justify-center px-8 py-4 border-2 border-slate-300 text-slate-700 font-semibold rounded-lg hover:border-slate-400 hover:bg-slate-50 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-400 focus-visible:ring-offset-2"
               >
-                Descubrir la carta
+                Carta 100% sin gluten
               </Link>
               <Link
                 href="/proximamente"

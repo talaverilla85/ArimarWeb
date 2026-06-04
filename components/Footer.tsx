@@ -12,11 +12,11 @@ export default function Footer() {
           <div>
             <Logo className="mb-4" />
             <p className="text-primary-500 font-semibold text-sm mb-3 italic">
-              "Tú disfruta, nosotros cocinamos por ti"
+              "Tu disfruta, nosotros cocinamos."
             </p>
             <p className="text-slate-600 text-sm leading-relaxed mb-4">
-              Comida casera de calidad en Playa de Arinaga, Gran Canaria. 
-              Profesionalidad, cercanía y el sabor de casa.
+              Casa de comidas y freiduría 100 % sin gluten en Playa de Arinaga, Gran Canaria.
+              Profesionalidad, cercanía y el sabor de casa para llevar.
             </p>
             <p className="text-slate-600 text-sm leading-relaxed" aria-label="Nombre, dirección y teléfono">
               <span className="font-semibold text-slate-800">AriMar FoodLab</span>
@@ -48,7 +48,15 @@ export default function Footer() {
                   href="/carta"
                   className="text-sm text-slate-600 underline underline-offset-2 hover:text-primary-500 hover:decoration-2 focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 focus-visible:outline-none rounded transition-colors"
                 >
-                  Descubrir la carta
+                  Carta 100% sin gluten
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/sin-gluten-gran-canaria"
+                  className="text-sm text-slate-600 underline underline-offset-2 hover:text-primary-500 hover:decoration-2 focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 focus-visible:outline-none rounded transition-colors"
+                >
+                  Para celíacos
                 </Link>
               </li>
               <li>

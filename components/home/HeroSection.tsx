@@ -19,13 +19,15 @@ export default function HeroSection() {
       </div>
       <div className="relative z-20 max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8 animate-fade-in-up">
         <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 leading-tight">
-          Freiduría y comida casera 100 % sin gluten en Playa de Arinaga
+          AriMar: comida casera y freiduría 100 % sin gluten en Gran Canaria
         </h1>
         <p className="text-sm md:text-base text-white/80 mb-4 tracking-wide uppercase">
-          Playa de Arinaga · Comida para llevar · Apto para celíacos
+          Tu disfruta, nosotros cocinamos. · Playa de Arinaga · Gran Canaria
         </p>
         <p className="text-lg md:text-xl text-white/85 mb-6 max-w-2xl mx-auto leading-relaxed">
-          Platos del día, pollo asado, guisos, cremas y mucho más — toda la carta sin gluten, lista para recoger.
+          En Playa de Arinaga hemos creado un establecimiento donde toda la carta es sin gluten:
+          platos preparados, freiduría, comida casera y raciones para llevar pensadas para que
+          puedas elegir con tranquilidad.
         </p>
 
         <div className="mb-8">
@@ -33,7 +35,7 @@ export default function HeroSection() {
         </div>
 
         <div className="flex flex-col sm:flex-row flex-wrap gap-3 justify-center mb-10">
-          {['Cocina diaria', 'Producción por lotes', 'Menos desperdicio'].map((item) => (
+          {['100 % sin gluten', 'Freiduría sin gluten', 'Comida casera para llevar'].map((item) => (
             <div
               key={item}
               className="px-4 py-2 rounded-full border border-white/25 bg-white/10 text-white/90 text-sm md:text-base backdrop-blur-sm shadow-sm"
@@ -55,7 +57,7 @@ export default function HeroSection() {
               href="/carta"
               className="inline-block px-8 py-3 border border-white/40 text-white text-sm md:text-base font-semibold rounded-lg hover:bg-white/10 transition-colors"
             >
-              Ver carta
+              Ver carta 100 % sin gluten
             </Link>
             <Link
               href="/contacto"

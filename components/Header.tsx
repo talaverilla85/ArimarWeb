@@ -15,7 +15,7 @@ export default function Header() {
         <div className="flex items-center justify-between h-16 md:h-20">
           <Logo />
           
-          <nav className="hidden md:flex items-center space-x-8">
+          <nav className="hidden md:flex items-center space-x-6">
             <Link
               href="/carta"
               className={`text-sm font-medium transition-colors ${
@@ -24,7 +24,17 @@ export default function Header() {
                   : 'text-slate-600 hover:text-slate-800'
               }`}
             >
-              Descubrir la carta
+              Carta 100% sin gluten
+            </Link>
+            <Link
+              href="/sin-gluten-gran-canaria"
+              className={`text-sm font-medium transition-colors ${
+                pathname === '/sin-gluten-gran-canaria'
+                  ? 'text-slate-800'
+                  : 'text-slate-600 hover:text-slate-800'
+              }`}
+            >
+              Para celíacos
             </Link>
             <Link
               href="/nuestra-cocina"
@@ -64,7 +74,7 @@ export default function Header() {
                   : 'text-slate-600 hover:text-slate-800'
               }`}
             >
-              Ver ubicación
+              Ubicación
             </Link>
           </nav>
 
@@ -106,7 +116,18 @@ export default function Header() {
                     : 'text-slate-600 hover:text-slate-800'
                 }`}
               >
-                Descubrir la carta
+                Carta 100% sin gluten
+              </Link>
+              <Link
+                href="/sin-gluten-gran-canaria"
+                onClick={() => setMobileMenuOpen(false)}
+                className={`text-base font-medium transition-colors ${
+                  pathname === '/sin-gluten-gran-canaria'
+                    ? 'text-slate-800'
+                    : 'text-slate-600 hover:text-slate-800'
+                }`}
+              >
+                Para celíacos
               </Link>
               <Link
                 href="/nuestra-cocina"
@@ -150,7 +171,7 @@ export default function Header() {
                     : 'text-slate-600 hover:text-slate-800'
                 }`}
               >
-                Ver ubicación
+                Ubicación
               </Link>
             </div>
           </nav>

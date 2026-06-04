@@ -4,13 +4,13 @@ import Image from 'next/image'
 import { faqCanonicalPath } from '@/lib/faqContent'
 
 export const metadata: Metadata = {
-  title: 'Nuestros valores | AriMar FoodLab – Playa de Arinaga',
+  title: 'Valores de una cocina 100 % sin gluten | AriMar FoodLab',
   description:
-    'Los valores de AriMar FoodLab: sabor honesto, establecimiento 100 % sin gluten, selección corta y rotación diaria, punto y consistencia, etiqueta clara y mejora continua. Comida para llevar en Playa de Arinaga (Agüimes), Gran Canaria.',
+    'Valores de AriMar FoodLab: establecimiento 100 % sin gluten, comida casera sin gluten, sabor honesto, etiqueta clara y cercanía en Playa de Arinaga, Gran Canaria.',
   openGraph: {
-    title: 'Nuestros valores | AriMar FoodLab – Playa de Arinaga',
+    title: 'Valores de una cocina 100 % sin gluten | AriMar FoodLab',
     description:
-      'Los valores de AriMar FoodLab: sabor honesto, 100 % sin gluten, selección corta y rotación diaria, punto y consistencia, etiqueta clara y mejora continua. Comida para llevar en Playa de Arinaga (Agüimes), Gran Canaria.',
+      'AriMar apuesta por una casa de comidas y freiduría 100 % sin gluten, cercana y clara, en Playa de Arinaga, Gran Canaria.',
     type: 'website',
   },
 }
@@ -20,6 +20,11 @@ const valueCards = [
     title: 'Sabor honesto',
     text: 'Recetas reconocibles, bien hechas, sin artificios.',
     icon: 'check',
+  },
+  {
+    title: 'Comer sin miedo también es calidad',
+    text: 'Una persona celíaca no debería conformarse con una opción aislada ni comer con dudas. Por eso apostamos por un establecimiento 100 % sin gluten, cercano y práctico.',
+    icon: 'heart',
   },
   {
     title: 'Selección corta, frescura real',
@@ -115,7 +120,7 @@ export default function ValoresPage() {
             Nuestros valores
           </h1>
           <p className="text-xl text-slate-600 max-w-2xl mx-auto leading-relaxed">
-            Lo que prometemos cuando no nos estás mirando: método, cercanía y respeto por el producto.
+            Lo que prometemos cuando no nos estás mirando: método, cercanía, respeto por el producto y una carta 100 % sin gluten pensada desde el origen.
           </p>
           <div className="relative aspect-video rounded-2xl overflow-hidden mt-10 bg-slate-100 shadow-md">
             <Image
@@ -129,10 +134,10 @@ export default function ValoresPage() {
           </div>
         </header>
 
-        {/* 6 cards */}
+        {/* Valores principales */}
         <section className="mb-20" aria-labelledby="manda-heading">
           <h2 id="manda-heading" className="text-2xl md:text-3xl font-bold text-slate-800 mb-10 tracking-tight text-center">
-            Lo que manda en nuestra cocina
+            Lo que manda en nuestra cocina sin gluten
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {valueCards.map((card) => (
@@ -170,7 +175,7 @@ export default function ValoresPage() {
         <div className="mb-20 space-y-8">
           <div className="rounded-2xl border border-primary-200/80 bg-primary-50/40 px-6 py-6 text-center">
             <p className="text-slate-700 leading-relaxed">
-              Hecho en Playa de Arinaga (Agüimes), Gran Canaria, para cuando sales del trabajo, vienes de la playa o simplemente no te apetece cocinar.
+              Hecho en Playa de Arinaga (Agüimes), Gran Canaria, para cuando sales del trabajo, vienes de la playa o simplemente no te apetece cocinar. Tu disfruta, nosotros cocinamos.
             </p>
           </div>
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
@@ -184,7 +189,7 @@ export default function ValoresPage() {
               href="/carta"
               className="w-full sm:w-auto inline-flex justify-center px-8 py-3.5 border-2 border-slate-300 text-slate-700 font-semibold rounded-xl hover:border-slate-400 hover:bg-slate-50 transition-colors"
             >
-              Descubrir la carta
+              Carta 100% sin gluten
             </Link>
             <Link
               href="/proximamente"
@@ -200,7 +205,7 @@ export default function ValoresPage() {
             Comida para llevar en Playa de Arinaga
           </h2>
           <p className="text-slate-600 leading-relaxed max-w-3xl mb-4">
-            AriMar FoodLab es comida casera 100 % sin gluten para llevar en Playa de Arinaga (Agüimes): rotación diaria, pocas opciones bien hechas y etiquetado claro. Los valores de arriba resumen cómo trabajamos; para horario, dirección o pedidos, usa{' '}
+            AriMar FoodLab es comida casera y freiduría 100 % sin gluten para llevar en Playa de Arinaga (Agüimes, Gran Canaria): rotación diaria, pocas opciones bien hechas y etiquetado claro. Los valores de arriba resumen cómo trabajamos; para horario, dirección o pedidos, usa{' '}
             <Link href="/contacto" className="text-primary-600 font-semibold underline underline-offset-2 hover:decoration-2">
               contacto
             </Link>{' '}
