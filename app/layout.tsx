@@ -9,7 +9,7 @@ const jsonLd = {
   '@context': 'https://schema.org',
   '@type': ['LocalBusiness', 'Restaurant'],
   name: 'AriMar FoodLab',
-  description: 'Freiduría y comida casera para llevar en Playa de Arinaga, Agüimes (Gran Canaria). Pollo asado, cremas, potajes, pastas, arroces, guisos, opciones vegetarianas y postres.',
+  description: 'Freiduría y comida casera 100 % sin gluten para llevar en Playa de Arinaga, Agüimes (Gran Canaria). Pollo asado, cremas, potajes, pastas, arroces, guisos, opciones vegetarianas y postres — apto para celíacos.',
   url: `https://${siteConfig.domain}`,
   telephone: siteConfig.whatsappPhoneDisplay,
   address: {
@@ -31,26 +31,26 @@ const jsonLd = {
     opens: '11:30',
     closes: '16:00',
   },
-  servesCuisine: ['Comida casera', 'Freiduría', 'Takeaway'],
+  servesCuisine: ['Comida casera', 'Freiduría', 'Takeaway', 'Sin gluten'],
 }
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://arimarfoodlab.es'),
-  title: 'AriMar - Freiduría y comida casera para llevar en Playa de Arinaga',
+  title: 'AriMar - Freiduría y comida casera 100 % sin gluten en Playa de Arinaga',
   icons: {
     icon: '/favicon.ico',
     apple: '/apple-touch-icon.png',
   },
   description:
-    'Freiduría y comida casera para llevar en Playa de Arinaga. En AriMar encontrarás potajes, cremas, guisos, pollo asado y platos del día listos para recoger.',
+    'Freiduría y comida casera 100 % sin gluten para llevar en Playa de Arinaga. En AriMar encontrarás potajes, cremas, guisos, pollo asado y platos del día listos para recoger — apto para celíacos.',
   openGraph: {
-    title: 'AriMar - Freiduría y comida casera para llevar en Playa de Arinaga',
+    title: 'AriMar - Freiduría y comida casera 100 % sin gluten en Playa de Arinaga',
     description:
-      'Freiduría y comida casera para llevar en Playa de Arinaga. En AriMar encontrarás potajes, cremas, guisos, pollo asado y platos del día listos para recoger.',
+      'Freiduría y comida casera 100 % sin gluten para llevar en Playa de Arinaga. Potajes, cremas, guisos, pollo asado y platos del día — apto para celíacos.',
     url: 'https://arimarfoodlab.es/',
     type: 'website',
   },
-  keywords: 'comida para llevar, Playa de Arinaga, Gran Canaria, freiduría, comida casera, takeaway',
+  keywords: 'comida para llevar, sin gluten, celíacos, Playa de Arinaga, Gran Canaria, freiduría, comida casera, takeaway',
 }
 
 export default function RootLayout({

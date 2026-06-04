@@ -42,9 +42,14 @@ export const siteFaqItems: FaqItem[] = [
       'Sí. Cada tupper lleva etiqueta con ingredientes principales, alérgenos, fecha de caducidad y número de lote para que elijas con tranquilidad.',
   },
   {
-    question: '¿Tenéis opciones sin gluten o vegetarianas?',
+    question: '¿Sois un establecimiento sin gluten?',
     answer:
-      'Sí, solemos tener varias opciones cada día. Te recomendamos revisar las etiquetas en vitrina o preguntarnos por WhatsApp si tienes una necesidad concreta.',
+      'Sí. AriMar es un local 100 % sin gluten: toda la carta está elaborada sin gluten, pensada para que las personas celíacas puedan comer con tranquilidad.',
+  },
+  {
+    question: '¿Tenéis opciones vegetarianas?',
+    answer:
+      'Sí, solemos tener varias opciones vegetales cada día. Revisa las etiquetas en vitrina o pregúntanos por WhatsApp si tienes alguna duda.',
   },
   {
     question: '¿Hacéis pollo asado?',
@@ -64,7 +69,7 @@ export const siteFaqItems: FaqItem[] = [
 ]
 
 /** Tres preguntas representativas para la home (el resto vive en la página canónica). */
-export const homeFaqTeasers: FaqItem[] = [siteFaqItems[0], siteFaqItems[3], siteFaqItems[4]]
+export const homeFaqTeasers: FaqItem[] = [siteFaqItems[0], siteFaqItems[7], siteFaqItems[4]]
 
 /** Preguntas muy ligadas a la carta; el resto en /preguntas-frecuentes */
 export const cartaFaqTeasers: FaqItem[] = [siteFaqItems[2], siteFaqItems[1]]

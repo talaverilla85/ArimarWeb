@@ -4,6 +4,9 @@ Este directorio contiene todas las imágenes locales utilizadas en la web.
 
 ## Estructura de imágenes requeridas
 
+### Identidad sin gluten
+- `sin-gluten-ari.png` - Logo sin gluten con la mascota Ari (puerta del local y web)
+
 ### Home (/)
 - `hero-variedad-tuppers.webp` - Imagen de fondo del hero
 - `carta-crema.webp` - Bloque "Hoy en cocina"

@@ -1,17 +1,18 @@
 import type { Metadata } from 'next'
-import Image from 'next/image'
 import Link from 'next/link'
+import Image from 'next/image'
+import SinGlutenBlock from '@/components/SinGlutenBlock'
 import { getWhatsAppUrl, siteConfig } from '@/lib/siteConfig'
 import { faqCanonicalPath } from '@/lib/faqContent'
 
 export const metadata: Metadata = {
   title: 'Contacto | AriMar FoodLab – Playa de Arinaga',
   description:
-    'Contacto de AriMar FoodLab en Playa de Arinaga (Agüimes), Gran Canaria: WhatsApp, ubicación en Google Maps, horario y cómo llegar.',
+    'Contacto de AriMar FoodLab en Playa de Arinaga (Agüimes), Gran Canaria: establecimiento 100 % sin gluten, WhatsApp, ubicación en Google Maps, horario y cómo llegar.',
   openGraph: {
     title: 'Contacto | AriMar FoodLab – Playa de Arinaga',
     description:
-      'Contacto de AriMar FoodLab en Playa de Arinaga (Agüimes), Gran Canaria: WhatsApp, ubicación en Google Maps, horario y cómo llegar.',
+      'Contacto de AriMar FoodLab en Playa de Arinaga: local 100 % sin gluten, WhatsApp, ubicación en Google Maps, horario y cómo llegar.',
     type: 'website',
   },
   alternates: {
@@ -32,6 +33,11 @@ export default function ContactoPage() {
             ¿Dudas, encargos o sugerencias? Escríbenos y te ayudamos.
           </p>
         </header>
+
+        {/* Sin gluten */}
+        <section className="mb-16" aria-labelledby="sin-gluten-heading">
+          <SinGlutenBlock />
+        </section>
 
         {/* Bloque WhatsApp + Ari */}
         <section className="mb-16" aria-labelledby="whatsapp-heading">
@@ -110,6 +116,7 @@ export default function ContactoPage() {
             <h3 className="text-lg font-semibold text-slate-800 mt-8 mb-3">Cómo llegar</h3>
             <ul className="list-disc pl-6 space-y-2 text-slate-600 leading-relaxed mb-8">
               <li>Recogida en local (sin comedor).</li>
+              <li>Establecimiento 100 % sin gluten — busca nuestro distintivo en la puerta.</li>
               <li>Acceso rápido desde la avenida principal.</li>
               <li>Si vienes de la playa, estás a un paseo.</li>
             </ul>
@@ -192,7 +199,7 @@ export default function ContactoPage() {
           </h2>
           <div className="max-w-3xl space-y-4 text-slate-600 leading-relaxed text-sm md:text-base">
             <p>
-              Freiduría y comida casera para llevar en Playa de Arinaga (Agüimes, Gran Canaria). Recogida en local, sin comedor: Avenida Polizón 67. Horario habitual: todos los días 11:30 – 16:00 (consulta arriba por si hubiera cambios puntuales).
+              Freiduría y comida casera 100 % sin gluten para llevar en Playa de Arinaga (Agüimes, Gran Canaria). Recogida en local, sin comedor: Avenida Polizón 67. Horario habitual: todos los días 11:30 – 16:00 (consulta arriba por si hubiera cambios puntuales).
             </p>
             <p>
               Para dudas sobre carta, alérgenos, pedidos o encargos, tenemos una página de{' '}

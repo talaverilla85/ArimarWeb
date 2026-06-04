@@ -10,6 +10,7 @@ import {
   tieneAlergeno,
   type CartaAlergenosPayload,
 } from '@/lib/alergenosMatriz'
+import SinGlutenBlock from '@/components/SinGlutenBlock'
 
 export default function AlergenosClient() {
   const [data, setData] = useState<CartaAlergenosPayload | null>(null)
@@ -67,9 +68,12 @@ export default function AlergenosClient() {
           </h1>
           <div className="h-1 w-16 bg-primary-500 mx-auto rounded-full mb-4" aria-hidden />
           <p className="text-slate-600 max-w-2xl mx-auto text-base md:text-lg">
-            Información de alérgenos declarados en nuestras elaboraciones. Los datos se actualizan desde
-            nuestra cocina cuando cambia una receta.
+            Establecimiento 100 % sin gluten. La carta de alérgenos detalla el resto de alérgenos presentes en
+            cada elaboración. Los datos se actualizan desde nuestra cocina cuando cambia una receta.
           </p>
+          <div className="mt-8 max-w-xl mx-auto">
+            <SinGlutenBlock variant="inline" />
+          </div>
           {actualizadoStr && !loading && !error && (
             <p className="text-sm text-slate-500 mt-3">Actualizado el {actualizadoStr} (hora Canarias)</p>
           )}

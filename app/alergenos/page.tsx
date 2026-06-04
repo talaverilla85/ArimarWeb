@@ -4,11 +4,11 @@ import AlergenosClient from './AlergenosClient'
 export const metadata: Metadata = {
   title: 'Carta de alérgenos | AriMar FoodLab',
   description:
-    'Matriz de alérgenos de las elaboraciones de AriMar FoodLab en Playa de Arinaga. Información actualizada desde nuestra cocina.',
+    'Carta de alérgenos de AriMar FoodLab, establecimiento 100 % sin gluten en Playa de Arinaga. Información actualizada desde nuestra cocina.',
   openGraph: {
     title: 'Carta de alérgenos | AriMar FoodLab',
     description:
-      'Consulta los alérgenos declarados en las elaboraciones de AriMar FoodLab, comida casera para llevar en Playa de Arinaga.',
+      'Alérgenos de las elaboraciones de AriMar FoodLab: local 100 % sin gluten, comida casera para llevar en Playa de Arinaga.',
     type: 'website',
     url: 'https://arimarfoodlab.es/alergenos',
   },

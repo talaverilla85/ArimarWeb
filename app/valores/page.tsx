@@ -6,11 +6,11 @@ import { faqCanonicalPath } from '@/lib/faqContent'
 export const metadata: Metadata = {
   title: 'Nuestros valores | AriMar FoodLab – Playa de Arinaga',
   description:
-    'Los valores de AriMar FoodLab: sabor honesto, selección corta y rotación diaria, punto y consistencia, etiqueta clara y mejora continua. Comida para llevar en Playa de Arinaga (Agüimes), Gran Canaria.',
+    'Los valores de AriMar FoodLab: sabor honesto, establecimiento 100 % sin gluten, selección corta y rotación diaria, punto y consistencia, etiqueta clara y mejora continua. Comida para llevar en Playa de Arinaga (Agüimes), Gran Canaria.',
   openGraph: {
     title: 'Nuestros valores | AriMar FoodLab – Playa de Arinaga',
     description:
-      'Los valores de AriMar FoodLab: sabor honesto, selección corta y rotación diaria, punto y consistencia, etiqueta clara y mejora continua. Comida para llevar en Playa de Arinaga (Agüimes), Gran Canaria.',
+      'Los valores de AriMar FoodLab: sabor honesto, 100 % sin gluten, selección corta y rotación diaria, punto y consistencia, etiqueta clara y mejora continua. Comida para llevar en Playa de Arinaga (Agüimes), Gran Canaria.',
     type: 'website',
   },
 }
@@ -50,6 +50,7 @@ const valueCards = [
 
 const expectList = [
   'Trato cercano y claro.',
+  'Establecimiento 100 % sin gluten — toda la carta apta para celíacos.',
   'Platos que cambian según producción y temporada.',
   'Etiquetado con ingredientes y alérgenos.',
   'Cocina con método, orden y limpieza.',
@@ -199,7 +200,7 @@ export default function ValoresPage() {
             Comida para llevar en Playa de Arinaga
           </h2>
           <p className="text-slate-600 leading-relaxed max-w-3xl mb-4">
-            AriMar FoodLab es comida casera para llevar en Playa de Arinaga (Agüimes): rotación diaria, pocas opciones bien hechas y etiquetado claro. Los valores de arriba resumen cómo trabajamos; para horario, dirección o pedidos, usa{' '}
+            AriMar FoodLab es comida casera 100 % sin gluten para llevar en Playa de Arinaga (Agüimes): rotación diaria, pocas opciones bien hechas y etiquetado claro. Los valores de arriba resumen cómo trabajamos; para horario, dirección o pedidos, usa{' '}
             <Link href="/contacto" className="text-primary-600 font-semibold underline underline-offset-2 hover:decoration-2">
               contacto
             </Link>{' '}

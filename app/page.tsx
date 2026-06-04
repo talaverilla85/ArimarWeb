@@ -21,7 +21,7 @@ export default function Home() {
             Qué es AriMar
           </h2>
           <p className="text-lg md:text-xl text-slate-600 leading-relaxed mb-5 text-center">
-            AriMar es una freiduría moderna de comida casera para llevar en Playa de Arinaga que nace para dar respuesta a los ritmos de vida actuales y a la creciente demanda de una comida casera, equilibrada y fácil de recoger, pensada para quienes quieren comer bien sin tener que dedicar cada día tiempo a cocinar.
+            AriMar es una freiduría moderna de comida casera 100 % sin gluten para llevar en Playa de Arinaga que nace para dar respuesta a los ritmos de vida actuales y a la creciente demanda de una comida casera, equilibrada y fácil de recoger, pensada para quienes quieren comer bien sin tener que dedicar cada día tiempo a cocinar.
           </p>
           <p className="text-lg md:text-xl text-slate-600 leading-relaxed text-center">
             Queremos que ese tiempo pueda invertirse en lo que de verdad importa: la familia, la crianza, el deporte, el descanso, el ocio o, simplemente, llegar a casa con la tranquilidad de tener la comida resuelta, sin renunciar a la calidad.
@@ -77,7 +77,7 @@ export default function Home() {
             <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm text-left">
               <h3 className="text-lg font-semibold text-slate-800 mb-2 tracking-tight">Información clara</h3>
               <p className="text-sm text-slate-600 leading-relaxed">
-                Etiquetas con ingredientes y alérgenos para que sepas siempre qué estás comiendo y puedas elegir con tranquilidad.
+                Etiquetas con ingredientes y alérgenos. Somos un establecimiento 100 % sin gluten: toda la carta apta para celíacos.
               </p>
             </div>
             <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm text-left">
