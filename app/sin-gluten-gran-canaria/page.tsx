@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import SeoInternalLinks from '@/components/SeoInternalLinks'
 
 export const metadata: Metadata = {
   title: 'Comida 100% sin gluten en Gran Canaria | AriMar FoodLab',
@@ -76,7 +77,7 @@ export default function SinGlutenGranCanariaPage() {
           ))}
         </div>
 
-        <section className="rounded-2xl bg-primary-50 border border-primary-100 px-6 py-10 md:px-10 text-center shadow-sm">
+        <section className="rounded-2xl bg-primary-50 border border-primary-100 px-6 py-10 md:px-10 text-center shadow-sm mb-10">
           <h2 className="text-2xl md:text-3xl font-bold text-slate-800 mb-4 tracking-tight">
             Aquí no preguntas qué puedes comer. Preguntas qué te apetece.
           </h2>
@@ -98,6 +99,8 @@ export default function SinGlutenGranCanariaPage() {
             </Link>
           </div>
         </section>
+
+        <SeoInternalLinks />
       </div>
     </div>
   )

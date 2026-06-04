@@ -5,6 +5,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { cartaFaqTeasers, faqCanonicalPath } from '@/lib/faqContent'
+import SeoInternalLinks from '@/components/SeoInternalLinks'
 
 const categoriesSeo = [
   'Platos del día',
@@ -284,6 +285,8 @@ export default function CartaClient() {
               </Link>
             </p>
           </section>
+
+          <SeoInternalLinks className="max-w-3xl mx-auto mt-10" />
         </div>
       </div>
     </>

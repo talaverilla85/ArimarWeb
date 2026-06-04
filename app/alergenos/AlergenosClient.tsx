@@ -11,6 +11,7 @@ import {
   type CartaAlergenosPayload,
 } from '@/lib/alergenosMatriz'
 import SinGlutenBlock from '@/components/SinGlutenBlock'
+import SeoInternalLinks from '@/components/SeoInternalLinks'
 
 export default function AlergenosClient() {
   const [data, setData] = useState<CartaAlergenosPayload | null>(null)
@@ -256,6 +257,8 @@ export default function AlergenosClient() {
             </p>
           </div>
         )}
+
+        <SeoInternalLinks className="mt-10 max-w-4xl mx-auto" />
       </div>
     </div>
   )
