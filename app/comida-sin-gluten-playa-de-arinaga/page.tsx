@@ -40,7 +40,7 @@ const sections = [
   {
     eyebrow: 'Cercanía',
     title: 'Para elegir con tranquilidad',
-    text: 'Nuestro objetivo es que las personas celíacas puedan mirar la vitrina y elegir qué les apetece, con información clara y un equipo cercano para resolver dudas.',
+    text: 'Nuestro objetivo es que cualquier cliente pueda mirar la vitrina y elegir qué le apetece, con información clara para quien necesita evitar el gluten y un equipo cercano para resolver dudas.',
   },
 ]
 

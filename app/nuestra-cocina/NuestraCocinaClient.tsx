@@ -7,30 +7,44 @@ export default function NuestraCocinaClient() {
   return (
     <div className="pt-32 pb-20 px-4 sm:px-6 lg:px-8">
       <div className="max-w-6xl mx-auto">
-        {/* H1 visible */}
-        <h1 className="text-4xl md:text-5xl font-bold text-slate-800 mb-6 tracking-tight text-center md:text-left">
-          Nuestra cocina 100 % sin gluten
-        </h1>
-        <p className="text-xl text-slate-600 max-w-3xl mb-10 leading-relaxed text-center md:text-left">
-          Método, organización y control para ofrecer comida casera sin gluten con regularidad, sabor y confianza.
-        </p>
-
-        {/* Imagen cabecera */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="relative aspect-[16/9] rounded-lg overflow-hidden mb-16 bg-slate-100 shadow-sm"
-        >
-          <Image
-            src="/images/cocina-emplatado.webp"
-            alt="Cocina y emplatado en AriMar FoodLab"
-            fill
-            className="object-cover"
-            sizes="(max-width: 768px) 100vw, 1024px"
-            priority
-          />
-        </motion.div>
+        <header className="relative overflow-hidden rounded-3xl border border-primary-100 bg-gradient-to-br from-primary-50 via-white to-slate-50 px-6 py-10 md:px-10 md:py-12 mb-16 shadow-sm">
+          <div className="grid gap-8 lg:grid-cols-[1fr_420px] lg:items-center">
+            <div className="text-center lg:text-left">
+              <p className="text-sm font-semibold uppercase tracking-wide text-primary-700 mb-3">
+                Cocina para todos
+              </p>
+              <h1 className="text-4xl md:text-5xl font-bold text-slate-800 mb-5 tracking-tight">
+                Nuestra cocina 100 % sin gluten
+              </h1>
+              <p className="text-lg md:text-xl text-slate-600 leading-relaxed">
+                Método, organización y control para ofrecer comida casera con regularidad, sabor y confianza.
+                Sin carta aparte: una cocina pensada desde el origen para que todos elijan de la misma vitrina.
+              </p>
+              <div className="mt-6 flex flex-wrap justify-center gap-2 lg:justify-start">
+                {['Método', 'Rotación diaria', 'Etiqueta clara', 'Sabor de casa'].map((item) => (
+                  <span key={item} className="rounded-full border border-primary-100 bg-white/80 px-4 py-2 text-sm font-semibold text-primary-800 shadow-sm">
+                    {item}
+                  </span>
+                ))}
+              </div>
+            </div>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              className="relative aspect-[4/3] rounded-3xl overflow-hidden bg-slate-100 shadow-md"
+            >
+              <Image
+                src="/images/cocina-emplatado.webp"
+                alt="Cocina y emplatado en AriMar FoodLab"
+                fill
+                className="object-cover"
+                sizes="(max-width: 1024px) 100vw, 420px"
+                priority
+              />
+            </motion.div>
+          </div>
+        </header>
 
         <section
           className="mb-20 rounded-2xl border border-primary-100 bg-primary-50/50 px-6 py-8 md:px-10"
@@ -41,8 +55,8 @@ export default function NuestraCocinaClient() {
           </h2>
           <p className="text-slate-600 leading-relaxed max-w-3xl">
             La cocina de AriMar no funciona como una cocina mixta con algunas opciones adaptadas. Nuestro
-            modelo de trabajo parte de una carta sin gluten, procesos organizados, etiquetado de elaboraciones
-            y control diario de producción.
+            modelo de trabajo parte de una carta sin gluten para todos, procesos organizados, etiquetado de
+            elaboraciones y control diario de producción.
           </p>
         </section>
 

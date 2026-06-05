@@ -16,19 +16,27 @@ export default function Home() {
 
       {/* Sin gluten desde el origen */}
       <section className="py-16 md:py-20 px-4 sm:px-6 lg:px-8 bg-white" aria-labelledby="sin-gluten-home-heading">
-        <div className="max-w-4xl mx-auto text-center">
+        <div className="max-w-5xl mx-auto rounded-3xl border border-primary-100 bg-gradient-to-br from-primary-50 via-white to-emerald-50 px-6 py-10 md:px-10 text-center shadow-sm">
+          <p className="text-sm font-semibold uppercase tracking-wide text-primary-700 mb-3">Comida para todos</p>
           <h2 id="sin-gluten-home-heading" className="text-3xl md:text-4xl font-bold text-slate-800 mb-6 tracking-tight">
-            Aquí no preguntas qué puedes comer. Preguntas qué te apetece.
+            Aquí no hay carta aparte. Toda la carta es para elegir.
           </h2>
-          <p className="text-lg md:text-xl text-slate-600 leading-relaxed mb-8">
-            AriMar no es un local con algunas opciones adaptadas. Somos un establecimiento 100 % sin gluten:
-            nuestra carta, nuestra freiduría y nuestras elaboraciones están pensadas desde el principio sin gluten.
-            Cocinamos para familias, trabajadores, turistas y personas celíacas que quieren comer bien sin estar
-            preguntando cada detalle.
+          <p className="text-lg md:text-xl text-slate-600 leading-relaxed mb-8 max-w-3xl mx-auto">
+            AriMar no es un local solo para celíacos. Es una casa de comidas para todo el mundo donde no trabajamos
+            con ingredientes con gluten. Familias, trabajadores, vecinos, turistas y quien necesita evitar el gluten
+            pueden mirar la misma vitrina y decidir qué les apetece.
           </p>
+          <div className="grid gap-3 sm:grid-cols-3 mb-8 text-left">
+            {['Una sola carta', 'Freiduría 100 % sin gluten', 'Alérgenos claros'].map((item) => (
+              <div key={item} className="rounded-2xl border border-white/80 bg-white/80 px-4 py-4 shadow-sm">
+                <p className="font-semibold text-slate-800">{item}</p>
+                <p className="text-sm text-slate-600 mt-1">Sin secciones escondidas ni opciones de segunda.</p>
+              </div>
+            ))}
+          </div>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
-              href="/carta"
+              href="https://r.qamarero.com/arimar?mode=PICKUP"
               className="inline-flex justify-center px-8 py-3 bg-primary-500 text-white text-sm md:text-base font-semibold rounded-lg hover:bg-primary-600 transition-colors shadow-sm"
             >
               Ver carta 100 % sin gluten
@@ -53,7 +61,7 @@ export default function Home() {
             AriMar es una casa de comidas y freiduría moderna de comida casera 100 % sin gluten para llevar en Playa de Arinaga, Gran Canaria. Nace para dar respuesta a los ritmos de vida actuales y a la demanda de una comida casera, equilibrada y fácil de recoger, pensada para quienes quieren comer bien sin dedicar cada día tiempo a cocinar.
           </p>
           <p className="text-lg md:text-xl text-slate-600 leading-relaxed text-center">
-            Queremos que ese tiempo pueda invertirse en lo que de verdad importa: la familia, la crianza, el deporte, el descanso, el ocio o, simplemente, llegar a casa con la tranquilidad de tener la comida resuelta, sin renunciar a la calidad ni a una carta elaborada sin gluten.
+            Queremos que ese tiempo pueda invertirse en lo que de verdad importa: la familia, la crianza, el deporte, el descanso, el ocio o, simplemente, llegar a casa con la comida resuelta, sin renunciar a la calidad ni a una carta elaborada sin gluten para todos.
           </p>
         </div>
       </section>
@@ -121,7 +129,7 @@ export default function Home() {
             <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm text-left">
               <h3 className="text-lg font-semibold text-slate-800 mb-2 tracking-tight">Información clara</h3>
               <p className="text-sm text-slate-600 leading-relaxed">
-                Etiquetas con ingredientes y alérgenos. Somos un establecimiento 100 % sin gluten: toda la carta apta para celíacos.
+                Etiquetas con ingredientes y alérgenos. Somos un establecimiento 100 % sin gluten: una sola carta para todos, con información clara para elegir.
               </p>
             </div>
             <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm text-left">
@@ -212,7 +220,7 @@ export default function Home() {
               </Link>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Link
-                  href="/carta"
+                  href="https://r.qamarero.com/arimar?mode=PICKUP"
                   className="inline-block px-8 py-3 border border-primary-200 text-primary-700 text-sm md:text-base font-semibold rounded-lg hover:bg-primary-50 transition-colors"
                 >
                   Ver carta 100 % sin gluten

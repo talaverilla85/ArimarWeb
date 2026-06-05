@@ -23,13 +23,13 @@ export const metadata: Metadata = {
 const sections = [
   {
     eyebrow: 'Base del proyecto',
-    title: 'Una freiduría pensada para personas celíacas',
+    title: 'Una freiduría para todos, sin gluten',
     text: 'AriMar es un establecimiento 100 % sin gluten en Playa de Arinaga. No trabajamos con ingredientes con gluten y toda la carta está elaborada sin gluten, incluyendo nuestras elaboraciones de freiduría.',
   },
   {
     eyebrow: 'Freír con tranquilidad',
     title: 'La freiduría importa',
-    text: 'Sabemos que la freiduría es uno de los puntos más delicados para muchas personas celíacas cuando comen fuera. Por eso nuestro planteamiento no es adaptar unos pocos platos, sino trabajar desde una cocina y una carta 100 % sin gluten.',
+    text: 'Sabemos que la freiduría es uno de los puntos más delicados para quien necesita evitar el gluten. Por eso nuestro planteamiento no es adaptar unos pocos platos, sino trabajar desde una cocina y una carta 100 % sin gluten para todos.',
   },
   {
     eyebrow: 'No es una esquina de la carta',
@@ -144,7 +144,7 @@ export default function FreiduriaSinGlutenGranCanariaPage() {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
-                href="/carta"
+                href="https://r.qamarero.com/arimar?mode=PICKUP"
                 className="inline-flex justify-center px-8 py-3 bg-primary-500 text-white text-sm md:text-base font-semibold rounded-lg hover:bg-primary-600 transition-colors shadow-md"
               >
                 Ver carta 100% sin gluten

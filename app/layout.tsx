@@ -42,7 +42,7 @@ export const metadata: Metadata = {
     apple: '/apple-touch-icon.png',
   },
   description:
-    'Casa de comidas y freiduría 100 % sin gluten en Playa de Arinaga, Gran Canaria. Platos preparados, raciones y comida casera para llevar pensada para personas celíacas.',
+    'Casa de comidas y freiduría 100 % sin gluten en Playa de Arinaga, Gran Canaria. Platos preparados, raciones y comida casera para todos, con una carta elaborada sin gluten.',
   openGraph: {
     title: 'AriMar - Comida casera y freiduría 100 % sin gluten en Gran Canaria',
     description:

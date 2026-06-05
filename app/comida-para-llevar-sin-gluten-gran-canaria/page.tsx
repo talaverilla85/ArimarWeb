@@ -24,7 +24,7 @@ const sections = [
   {
     eyebrow: 'Día a día',
     title: 'Una solución práctica para el día a día',
-    text: 'AriMar está pensado para familias, trabajadores, vecinos, turistas y personas celíacas que quieren resolver la comida sin cocinar y sin tener que preguntar qué parte de la carta pueden elegir.',
+    text: 'AriMar está pensado para familias, trabajadores, vecinos, turistas y personas que quieren resolver la comida sin cocinar. Una sola carta para todos, elaborada sin gluten desde el origen.',
   },
   {
     eyebrow: 'Vitrina y raciones',
@@ -144,7 +144,7 @@ export default function ComidaParaLlevarSinGlutenGranCanariaPage() {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
-                href="/carta"
+                href="https://r.qamarero.com/arimar?mode=PICKUP"
                 className="inline-flex justify-center px-8 py-3 bg-primary-500 text-white text-sm md:text-base font-semibold rounded-lg hover:bg-primary-600 transition-colors shadow-md"
               >
                 Ver carta 100% sin gluten

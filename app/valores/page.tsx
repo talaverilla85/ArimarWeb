@@ -22,8 +22,8 @@ const valueCards = [
     icon: 'check',
   },
   {
-    title: 'Comer sin miedo también es calidad',
-    text: 'Una persona celíaca no debería conformarse con una opción aislada ni comer con dudas. Por eso apostamos por un establecimiento 100 % sin gluten, cercano y práctico.',
+    title: 'Una carta para todos',
+    text: 'No hacemos una carta aparte ni una opción aislada. Cocinamos sin ingredientes con gluten para que todo el mundo elija de la misma vitrina.',
     icon: 'heart',
   },
   {
@@ -55,7 +55,7 @@ const valueCards = [
 
 const expectList = [
   'Trato cercano y claro.',
-  'Establecimiento 100 % sin gluten — toda la carta apta para celíacos.',
+  'Establecimiento 100 % sin gluten - una sola carta para todos.',
   'Platos que cambian según producción y temporada.',
   'Etiquetado con ingredientes y alérgenos.',
   'Cocina con método, orden y limpieza.',
@@ -115,12 +115,15 @@ export default function ValoresPage() {
     <div className="pt-32 pb-20 px-4 sm:px-6 lg:px-8">
       <div className="max-w-4xl mx-auto">
         {/* Hero */}
-        <header className="text-center mb-12">
+        <header className="relative overflow-hidden rounded-3xl border border-primary-100 bg-gradient-to-br from-primary-50 via-white to-emerald-50 px-6 py-10 md:px-10 mb-16 text-center shadow-sm">
+          <p className="text-sm font-semibold uppercase tracking-wide text-primary-700 mb-3">
+            Lo que manda en AriMar
+          </p>
           <h1 className="text-4xl md:text-5xl font-bold text-slate-800 mb-4 tracking-tight">
             Nuestros valores
           </h1>
           <p className="text-xl text-slate-600 max-w-2xl mx-auto leading-relaxed">
-            Lo que prometemos cuando no nos estás mirando: método, cercanía, respeto por el producto y una carta 100 % sin gluten pensada desde el origen.
+            Método, cercanía, respeto por el producto y una carta 100 % sin gluten pensada para todos.
           </p>
           <div className="relative aspect-video rounded-2xl overflow-hidden mt-10 bg-slate-100 shadow-md">
             <Image
@@ -137,13 +140,13 @@ export default function ValoresPage() {
         {/* Valores principales */}
         <section className="mb-20" aria-labelledby="manda-heading">
           <h2 id="manda-heading" className="text-2xl md:text-3xl font-bold text-slate-800 mb-10 tracking-tight text-center">
-            Lo que manda en nuestra cocina sin gluten
+            Lo que manda en nuestra cocina
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {valueCards.map((card) => (
               <div
                 key={card.title}
-                className="bg-white rounded-2xl p-6 shadow-sm border border-slate-200/80 flex flex-col"
+                className="bg-white rounded-2xl p-6 shadow-sm border border-slate-200/80 flex flex-col hover:shadow-md transition-shadow"
               >
                 <div className="w-12 h-12 bg-primary-50 rounded-xl flex items-center justify-center mb-4">
                   <Icon name={card.icon} />
@@ -186,7 +189,7 @@ export default function ValoresPage() {
               Ver ubicación
             </Link>
             <Link
-              href="/carta"
+              href="https://r.qamarero.com/arimar?mode=PICKUP"
               className="w-full sm:w-auto inline-flex justify-center px-8 py-3.5 border-2 border-slate-300 text-slate-700 font-semibold rounded-xl hover:border-slate-400 hover:bg-slate-50 transition-colors"
             >
               Carta 100% sin gluten

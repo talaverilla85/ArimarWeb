@@ -7,6 +7,10 @@ import { motion } from 'framer-motion'
 import { cartaFaqTeasers, faqCanonicalPath } from '@/lib/faqContent'
 import SeoInternalLinks from '@/components/SeoInternalLinks'
 
+const SIN_GLUTEN_IMAGE = '/images/sin-gluten-ari.png'
+const SIN_GLUTEN_ALT =
+  'Ari presenta el simbolo sin gluten: AriMar es un establecimiento 100 % sin gluten'
+
 const categoriesSeo = [
   'Platos del día',
   'Pollo asado',
@@ -99,15 +103,34 @@ export default function CartaClient() {
 
       <div className="pt-32 pb-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-6xl mx-auto">
-          <header className="text-center mb-10 pb-6 border-b border-slate-200/70">
-            <h1 className="text-4xl md:text-5xl font-bold text-slate-800 mb-4 tracking-tight">
-              Carta 100 % sin gluten en Playa de Arinaga
-            </h1>
-            <p className="text-lg text-slate-600 max-w-2xl mx-auto leading-relaxed">
-              En AriMar toda la carta es sin gluten. Preparamos platos de cuchara, pollo asado,
-              guisos, arroces, pastas, fritos, postres y raciones para llevar, con una rotación
-              diaria según producción, temporada y disponibilidad.
-            </p>
+          <header className="relative overflow-hidden rounded-3xl border border-primary-100 bg-gradient-to-br from-primary-50 via-white to-amber-50 px-6 py-10 md:px-10 md:py-12 mb-12 shadow-sm">
+            <div className="relative grid gap-8 md:grid-cols-[1fr_200px] md:items-center">
+              <div className="text-center md:text-left">
+                <p className="text-sm font-semibold uppercase tracking-wide text-primary-700 mb-3">
+                  Una sola carta para todos
+                </p>
+                <h1 className="text-4xl md:text-5xl font-bold text-slate-800 mb-4 tracking-tight">
+                  Carta 100 % sin gluten en Playa de Arinaga
+                </h1>
+                <p className="text-lg text-slate-600 max-w-2xl leading-relaxed">
+                  En AriMar toda la carta es sin gluten: platos de cuchara, pollo asado, guisos, arroces,
+                  pastas, fritos, postres y raciones para llevar. No es una carta especial; es nuestra forma
+                  de cocinar para todo el mundo.
+                </p>
+              </div>
+              <div className="mx-auto w-40 md:w-48">
+                <div className="rounded-3xl border border-white/80 bg-white/90 p-3 shadow-md">
+                  <Image
+                    src={SIN_GLUTEN_IMAGE}
+                    alt={SIN_GLUTEN_ALT}
+                    width={240}
+                    height={200}
+                    className="h-auto w-full object-contain"
+                    priority
+                  />
+                </div>
+              </div>
+            </div>
           </header>
 
           <section
@@ -119,8 +142,8 @@ export default function CartaClient() {
             </h2>
             <p className="text-slate-700 leading-relaxed max-w-3xl">
               No tenemos una pequeña selección adaptada. AriMar nace como establecimiento 100 % sin gluten
-              para que puedas elegir entre nuestras elaboraciones sin tener que preguntar qué parte de la carta
-              puedes comer.
+              para que cualquier cliente pueda elegir entre las mismas elaboraciones y quien evita el gluten
+              no tenga que preguntar qué parte de la carta puede comer.
             </p>
           </section>
 

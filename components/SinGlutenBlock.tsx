@@ -29,7 +29,7 @@ export default function SinGlutenBlock({ variant = 'card', className = '' }: Sin
           <div className="text-left">
             <p className="text-base font-bold text-primary-700 md:text-lg">Establecimiento 100 % sin gluten</p>
             <p className="mt-1 text-sm text-slate-600 leading-snug">
-              Toda nuestra carta está elaborada sin gluten, pensada para celíacos.
+              Toda nuestra carta está elaborada sin gluten: comida para todos, también para quien necesita evitar el gluten.
             </p>
           </div>
         </div>
@@ -74,7 +74,7 @@ export default function SinGlutenBlock({ variant = 'card', className = '' }: Sin
             Establecimiento 100 % sin gluten
           </h2>
           <p className="mt-2 text-slate-600 leading-relaxed">
-            Toda nuestra carta está elaborada sin gluten, pensada para que las personas celíacas puedan comer
+            Toda nuestra carta está elaborada sin gluten: comida casera para todos, con información clara para elegir
             con tranquilidad. En la puerta del local verás este mismo distintivo.
           </p>
         </div>

@@ -44,7 +44,7 @@ export const siteFaqItems: FaqItem[] = [
   {
     question: '¿Sois un establecimiento sin gluten?',
     answer:
-      'Sí. AriMar es un establecimiento 100 % sin gluten en Playa de Arinaga, Gran Canaria: no trabajamos con ingredientes con gluten y toda la carta está elaborada sin gluten, pensada para que las personas celíacas puedan elegir con tranquilidad.',
+      'Sí. AriMar es un establecimiento 100 % sin gluten en Playa de Arinaga, Gran Canaria: no trabajamos con ingredientes con gluten y toda la carta está elaborada sin gluten: comida para todos, con información clara para que quien evita el gluten pueda elegir con tranquilidad.',
   },
   {
     question: '¿Tenéis opciones vegetarianas?',

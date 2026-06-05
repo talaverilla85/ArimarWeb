@@ -25,13 +25,24 @@ export default function ContactoPage() {
     <div className="pt-32 pb-20 px-4 sm:px-6 lg:px-8">
       <div className="max-w-4xl mx-auto">
         {/* Hero */}
-        <header className="text-center mb-14">
+        <header className="relative overflow-hidden rounded-3xl border border-primary-100 bg-gradient-to-br from-primary-50 via-white to-sky-50 px-6 py-10 md:px-10 mb-14 text-center shadow-sm">
+          <p className="text-sm font-semibold uppercase tracking-wide text-primary-700 mb-3">
+            Playa de Arinaga - Recogida en local
+          </p>
           <h1 className="text-4xl md:text-5xl font-bold text-slate-800 mb-4 tracking-tight">
             Ubicación y horario
           </h1>
-          <p className="text-xl text-slate-600 max-w-2xl mx-auto">
-            Estamos en Playa de Arinaga, Gran Canaria. Si buscas comida casera y freiduría 100 % sin gluten para llevar, escríbenos o ven a ver la vitrina.
+          <p className="text-xl text-slate-600 max-w-2xl mx-auto leading-relaxed">
+            Estamos en Playa de Arinaga, Gran Canaria. Ven a ver una vitrina de comida casera para todos,
+            elaborada sin gluten desde el origen.
           </p>
+          <div className="mt-6 flex flex-wrap justify-center gap-2">
+            {['Avenida Polizón 67', 'Todos los días', '11:30 - 16:00', 'Sin comedor'].map((item) => (
+              <span key={item} className="rounded-full border border-primary-100 bg-white/80 px-4 py-2 text-sm font-semibold text-primary-800 shadow-sm">
+                {item}
+              </span>
+            ))}
+          </div>
         </header>
 
         {/* Sin gluten */}
@@ -48,7 +59,7 @@ export default function ContactoPage() {
                   WhatsApp
                 </h2>
                 <p className="text-slate-600 leading-relaxed mb-4">
-                  Es la forma más rápida de hablar con nosotros sobre carta sin gluten, encargos o dudas de alérgenos.
+                  Es la forma más rápida de hablar con nosotros sobre carta, encargos o dudas de alérgenos.
                 </p>
                 <p className="text-slate-500 text-sm mb-6">
                   Si es para un día concreto, dinos hora aproximada y lo preparamos.
@@ -178,7 +189,7 @@ export default function ContactoPage() {
                 Hablar por WhatsApp
               </a>
               <Link
-                href="/carta"
+                href="https://r.qamarero.com/arimar?mode=PICKUP"
                 className="w-full sm:w-auto inline-flex justify-center px-8 py-4 border-2 border-slate-300 text-slate-700 font-semibold rounded-lg hover:border-slate-400 hover:bg-slate-50 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-400 focus-visible:ring-offset-2"
               >
                 Carta 100% sin gluten

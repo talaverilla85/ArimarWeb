@@ -34,7 +34,7 @@ export default function Header() {
                   : 'text-slate-600 hover:text-slate-800'
               }`}
             >
-              Para celíacos
+              Sin gluten
             </Link>
             <Link
               href="/nuestra-cocina"
@@ -127,7 +127,7 @@ export default function Header() {
                     : 'text-slate-600 hover:text-slate-800'
                 }`}
               >
-                Para celíacos
+                Sin gluten
               </Link>
               <Link
                 href="/nuestra-cocina"
