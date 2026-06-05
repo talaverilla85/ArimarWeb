@@ -35,7 +35,7 @@ export default function HeroSection() {
         </div>
 
         <div className="flex flex-col sm:flex-row flex-wrap gap-3 justify-center mb-10">
-          {['100 % sin gluten', 'Freiduría sin gluten', 'Comida casera para llevar'].map((item) => (
+          {['Vitrina diaria', 'Recogida en local', 'Playa de Arinaga'].map((item) => (
             <div
               key={item}
               className="px-4 py-2 rounded-full border border-white/25 bg-white/10 text-white/90 text-sm md:text-base backdrop-blur-sm shadow-sm"
@@ -52,20 +52,6 @@ export default function HeroSection() {
           >
             Pedir
           </Link>
-          <div className="flex flex-col sm:flex-row gap-3 justify-center">
-            <Link
-              href="/carta"
-              className="inline-block px-8 py-3 border border-white/40 text-white text-sm md:text-base font-semibold rounded-lg hover:bg-white/10 transition-colors"
-            >
-              Ver carta 100 % sin gluten
-            </Link>
-            <Link
-              href="/contacto"
-              className="inline-block px-8 py-3 border border-white/40 text-white text-sm md:text-base font-semibold rounded-lg hover:bg-white/10 transition-colors"
-            >
-              Ver ubicación
-            </Link>
-          </div>
         </div>
       </div>
     </section>
