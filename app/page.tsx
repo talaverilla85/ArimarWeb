@@ -34,13 +34,7 @@ export default function Home() {
               </div>
             ))}
           </div>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link
-              href="https://r.qamarero.com/arimar?mode=PICKUP"
-              className="inline-flex justify-center px-8 py-3 bg-primary-500 text-white text-sm md:text-base font-semibold rounded-lg hover:bg-primary-600 transition-colors shadow-sm"
-            >
-              Ver carta 100 % sin gluten
-            </Link>
+          <div className="flex justify-center">
             <Link
               href="/contacto"
               className="inline-flex justify-center px-8 py-3 border border-primary-200 text-primary-700 text-sm md:text-base font-semibold rounded-lg hover:bg-primary-50 transition-colors"
