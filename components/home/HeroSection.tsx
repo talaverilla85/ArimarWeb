@@ -45,12 +45,18 @@ export default function HeroSection() {
           ))}
         </div>
 
-        <div className="flex flex-col items-center gap-3">
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
           <Link
             href="/proximamente"
             className="inline-block px-8 py-4 bg-primary-500 text-white text-lg font-semibold rounded-lg hover:bg-primary-600 transition-colors shadow-lg"
           >
             Pedir
+          </Link>
+          <Link
+            href="https://r.qamarero.com/arimar?mode=PICKUP"
+            className="inline-block px-8 py-4 border border-white/40 bg-white/10 text-white text-lg font-semibold rounded-lg hover:bg-white/20 transition-colors shadow-lg backdrop-blur-sm"
+          >
+            Ver platos disponibles
           </Link>
         </div>
       </div>
