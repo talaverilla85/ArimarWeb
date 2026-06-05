@@ -59,7 +59,7 @@ export default function PreguntasFrecuentesPage() {
           </ul>
 
           <p className="mt-12 text-center text-slate-600 text-sm">
-            <Link href="/carta" className="text-primary-600 font-semibold hover:underline">
+            <Link href="/hoy" className="text-primary-600 font-semibold hover:underline">
               Ver carta 100% sin gluten
             </Link>
             {' · '}

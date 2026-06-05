@@ -189,7 +189,7 @@ export default function ContactoPage() {
                 Hablar por WhatsApp
               </a>
               <Link
-                href="https://r.qamarero.com/arimar?mode=PICKUP"
+                href="/hoy"
                 className="w-full sm:w-auto inline-flex justify-center px-8 py-4 border-2 border-slate-300 text-slate-700 font-semibold rounded-lg hover:border-slate-400 hover:bg-slate-50 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-400 focus-visible:ring-offset-2"
               >
                 Carta 100% sin gluten

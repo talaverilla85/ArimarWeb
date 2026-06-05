@@ -53,7 +53,7 @@ export default function HeroSection() {
             Pedir
           </Link>
           <Link
-            href="https://r.qamarero.com/arimar?mode=PICKUP"
+            href="/hoy"
             className="inline-block px-8 py-4 bg-primary-500 text-white text-lg font-semibold rounded-lg hover:bg-primary-600 transition-colors shadow-lg"
           >
             Ver platos disponibles

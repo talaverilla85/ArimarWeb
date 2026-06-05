@@ -152,7 +152,7 @@ export default function PollosAsadosArinagaPage() {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
-                href="/carta"
+                href="/hoy"
                 className="inline-flex justify-center px-8 py-3 bg-primary-500 text-white text-sm md:text-base font-semibold rounded-lg hover:bg-primary-600 transition-colors shadow-md"
               >
                 Ver carta 100% sin gluten

@@ -214,7 +214,7 @@ export default function Home() {
               </Link>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Link
-                  href="https://r.qamarero.com/arimar?mode=PICKUP"
+                  href="/hoy"
                   className="inline-block px-8 py-3 border border-primary-200 text-primary-700 text-sm md:text-base font-semibold rounded-lg hover:bg-primary-50 transition-colors"
                 >
                   Ver carta 100 % sin gluten
