@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import SinGlutenBlock from '@/components/SinGlutenBlock'
+import { siteConfig } from '@/lib/siteConfig'
 
 export default function HeroSection() {
   return (
@@ -47,7 +48,7 @@ export default function HeroSection() {
 
         <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
           <Link
-            href="/proximamente"
+            href={siteConfig.pedirPath}
             className="inline-block px-8 py-4 bg-primary-500 text-white text-lg font-semibold rounded-lg hover:bg-primary-600 transition-colors shadow-lg"
           >
             Pedir

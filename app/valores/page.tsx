@@ -195,10 +195,10 @@ export default function ValoresPage() {
               Carta 100% sin gluten
             </Link>
             <Link
-              href="/proximamente"
-              className="w-full sm:w-auto inline-flex justify-center px-6 py-3 text-slate-600 font-medium rounded-xl hover:bg-slate-100 transition-colors"
+              href="/hoy"
+              className="w-full sm:w-auto inline-flex justify-center px-8 py-3.5 bg-primary-500 text-white font-semibold rounded-xl hover:bg-primary-600 transition-colors shadow-md"
             >
-              Pedir (próximamente)
+              Pedir
             </Link>
           </div>
         </div>

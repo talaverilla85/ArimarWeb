@@ -150,8 +150,8 @@ export default function ComidaParaLlevarSinGlutenGranCanariaPage() {
                 Ver carta 100% sin gluten
               </Link>
               <Link
-                href="/proximamente"
-                className="inline-flex justify-center px-8 py-3 border border-white/25 text-white text-sm md:text-base font-semibold rounded-lg hover:bg-white/10 transition-colors"
+                href="/hoy"
+                className="inline-flex justify-center px-8 py-3 bg-primary-500 text-white text-sm md:text-base font-semibold rounded-lg hover:bg-primary-600 transition-colors shadow-md"
               >
                 Pedir
               </Link>

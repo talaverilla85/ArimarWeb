@@ -24,7 +24,7 @@ export const siteFaqItems: FaqItem[] = [
   {
     question: '¿Cómo hago un pedido o encargo para recoger?',
     answer:
-      'Puedes pasar por el local y elegir en la vitrina del día, o hacer tu pedido (incluido online cuando activemos el canal) y recoger a la hora que mejor te encaje. Para dudas o encargos especiales también puedes escribirnos por WhatsApp.',
+      'Puedes pasar por el local y elegir en la vitrina del día, o pedir online desde la web (botón Pedir o página /hoy) y recoger en el local a la hora que elijas. Para dudas o encargos especiales también puedes escribirnos por WhatsApp.',
   },
   {
     question: '¿Dónde está AriMar y cómo recojo el pedido?',
@@ -59,7 +59,7 @@ export const siteFaqItems: FaqItem[] = [
   {
     question: '¿Puedo pedir online?',
     answer:
-      'Muy pronto podrás pedir desde esta web (enlace a la tienda online). Mientras tanto, puedes contactarnos por WhatsApp para consultas e incidencias.',
+      'Sí. Usa el botón Pedir de la web o entra en arimarfoodlab.es/hoy: te llevará a nuestra tienda online para elegir platos y hora de recogida en el local. Para consultas también puedes escribirnos por WhatsApp.',
   },
   {
     question: '¿Dónde comer en Playa de Arinaga si quiero comida casera para llevar?',

@@ -207,7 +207,7 @@ export default function Home() {
             </p>
             <div className="flex flex-col items-center gap-4">
               <Link
-                href="/proximamente"
+                href="/hoy"
                 className="inline-block px-8 py-3 bg-primary-500 text-white text-sm md:text-base font-semibold rounded-lg hover:bg-primary-600 transition-colors shadow-md"
               >
                 Pedir

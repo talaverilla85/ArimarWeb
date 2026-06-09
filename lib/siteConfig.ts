@@ -33,6 +33,9 @@ export const siteConfig = {
 
   /** Reseñas Google (redirección estable desde /opinar para QRs y enlaces) */
   googleReviewUrl: 'https://g.page/r/CeX-Jjg5eIoPEBM/review',
+
+  /** Ruta interna: redirige a la tienda online (Qamarero) vía /hoy */
+  pedirPath: '/hoy',
 } as const
 
 /**

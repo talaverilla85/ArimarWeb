@@ -6,6 +6,7 @@ import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { cartaFaqTeasers, faqCanonicalPath } from '@/lib/faqContent'
 import SeoInternalLinks from '@/components/SeoInternalLinks'
+import { siteConfig } from '@/lib/siteConfig'
 
 const SIN_GLUTEN_IMAGE = '/images/sin-gluten-ari.png'
 const SIN_GLUTEN_ALT =
@@ -91,7 +92,7 @@ export default function CartaClient() {
     <>
       <div className="fixed bottom-6 right-6 z-40">
         <Link
-          href="/proximamente"
+          href={siteConfig.pedirPath}
           className="px-6 py-3 bg-primary-500 text-white font-semibold rounded-full shadow-lg hover:bg-primary-600 transition-colors flex items-center gap-2"
         >
           <span>Pedir ahora</span>

@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useState } from 'react'
 import Logo from './Logo'
+import { siteConfig } from '@/lib/siteConfig'
 
 export default function Header() {
   const pathname = usePathname()
@@ -80,7 +81,7 @@ export default function Header() {
 
           <div className="flex items-center gap-4">
             <Link
-              href="/proximamente"
+              href={siteConfig.pedirPath}
               className="px-4 py-2 md:px-6 md:py-2.5 bg-primary-500 text-white text-sm font-semibold rounded-lg hover:bg-primary-600 transition-colors shadow-sm"
             >
               Pedir

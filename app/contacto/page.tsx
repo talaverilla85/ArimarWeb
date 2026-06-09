@@ -195,10 +195,10 @@ export default function ContactoPage() {
                 Carta 100% sin gluten
               </Link>
               <Link
-                href="/proximamente"
-                className="text-slate-500 text-sm font-medium hover:text-slate-700 hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 rounded"
+                href="/hoy"
+                className="text-primary-600 text-sm font-semibold hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 rounded"
               >
-                Pedir (próximamente)
+                Pedir
               </Link>
             </div>
           </div>
