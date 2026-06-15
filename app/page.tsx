@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import GoogleReviewsSection from '@/components/GoogleReviewsSection'
 import LeaveReviewCta from '@/components/LeaveReviewCta'
 import HeroSection from '@/components/home/HeroSection'
 import { faqCanonicalPath, homeFaqTeasers } from '@/lib/faqContent'
@@ -238,6 +239,8 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      <GoogleReviewsSection />
     </>
   )
 }

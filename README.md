@@ -72,6 +72,19 @@ La página pública `/alergenos` y la API interna `/api/carta-alergenos` obtiene
 
 Probar: `http://localhost:3000/alergenos` y `http://localhost:3000/api/carta-alergenos` (JSON con `elaboraciones` y `actualizadoEn`). La respuesta se cachea ~10 minutos en el edge.
 
+### Reseñas de Google (home)
+
+La sección al final de la home obtiene nota, total y hasta 5 reseñas vía **Places API** (servidor).
+
+| Variable | Dónde |
+|----------|--------|
+| `GOOGLE_PLACES_API_KEY` | Google Cloud → Places API → clave restringida a servidor |
+| `GOOGLE_PLACE_ID` | Opcional; si se omite, se busca por nombre y dirección |
+
+- **Vercel:** añadir variables y redeploy.
+- **Local:** `Web/.env.local` con la clave y `npm run dev`.
+- Probar: `http://localhost:3000/api/google-reviews` (JSON) o la home.
+
 **Si en Vercel no carga:** el dominio de Gestión debe ser **accesible desde internet** (registro DNS + túnel Cloudflare activo). Prueba desde fuera: `curl -X POST "https://TU-DOMINIO/api-backend/auth/login" -H "Content-Type: application/json" -d '{"email":"...","password":"..."}'`. Tras cambiar variables en Vercel, haz **Redeploy**.
 
 ## Estructura del Proyecto
