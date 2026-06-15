@@ -85,7 +85,9 @@ La sección al final de la home obtiene nota, total y hasta 5 reseñas vía **Pl
 - **Local:** `Web/.env.local` con la clave y `npm run dev`.
 - Probar: `http://localhost:3000/api/google-reviews` (JSON) o la home.
 
-**Si en Vercel no carga:** el dominio de Gestión debe ser **accesible desde internet** (registro DNS + túnel Cloudflare activo). Prueba desde fuera: `curl -X POST "https://TU-DOMINIO/api-backend/auth/login" -H "Content-Type: application/json" -d '{"email":"...","password":"..."}'`. Tras cambiar variables en Vercel, haz **Redeploy**.
+**Si no aparecen reseñas:** activa Places API en Google Cloud, revisa la clave y haz redeploy. Opcionalmente define `GOOGLE_PLACE_ID` si la búsqueda automática no encuentra el negocio.
+
+**Si en Vercel no carga la carta de alérgenos:** el dominio de Gestión debe ser **accesible desde internet** (registro DNS + túnel Cloudflare activo). Prueba desde fuera: `curl -X POST "https://TU-DOMINIO/api-backend/auth/login" -H "Content-Type: application/json" -d '{"email":"...","password":"..."}'`. Tras cambiar variables en Vercel, haz **Redeploy**.
 
 ## Estructura del Proyecto
 
