@@ -5,7 +5,7 @@ import { siteConfig } from '@/lib/siteConfig'
 export const metadata: Metadata = {
   title: 'Deja tu opinión | AriMar FoodLab',
   description:
-    'Cuéntanos tu experiencia en AriMar FoodLab. Tu reseña en Google nos ayuda a seguir mejorando nuestra comida casera 100 % sin gluten en Playa de Arinaga.',
+    'Cuéntanos tu experiencia en AriMar: comida, servicio y ambiente. Tu reseña en Google ayuda a quien busca opciones en Playa de Arinaga.',
   robots: { index: false, follow: true },
   alternates: {
     canonical: '/opinar',
@@ -37,8 +37,13 @@ export default function OpinarPage() {
             ¿Te ha gustado AriMar?
           </h1>
           <p className="text-base md:text-lg text-slate-600 leading-relaxed max-w-lg mx-auto">
-            Si has probado nuestra comida casera y freiduría 100 % sin gluten, nos encantaría que compartieras tu
-            experiencia en Google. Nos ayuda a mejorar y a que más personas nos conozcan.
+            Si ya nos has visitado, cuéntanos en Google cómo fue tu experiencia en conjunto: la comida, el trato, la
+            recogida, el local… Un comentario sincero ayuda a quienes buscan dónde comer en Arinaga a saber qué se van
+            a encontrar cuando vengan.
+          </p>
+          <p className="text-base md:text-lg text-slate-600 leading-relaxed max-w-lg mx-auto mt-4">
+            Si puedes, añade fotos a tu reseña — la vitrina, tu plato o el momento —. Así otras personas pueden
+            imaginarse mejor la visita.
           </p>
         </header>
 
@@ -52,7 +57,8 @@ export default function OpinarPage() {
           </a>
 
           <p className="text-center text-sm text-slate-500 leading-relaxed px-2">
-            Solo te llevará un minuto. Necesitarás una cuenta de Google para publicar la valoración.
+            Solo te llevará un minuto. Necesitarás una cuenta de Google; en el formulario podrás escribir tu comentario
+            y subir fotos.
           </p>
 
           <div className="pt-6 border-t border-slate-200 flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-stretch sm:items-center">

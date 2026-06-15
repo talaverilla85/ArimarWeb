@@ -10,7 +10,8 @@ export default function LeaveReviewCta({ variant = 'card', className = '' }: Lea
     return (
       <div className={`text-center ${className}`}>
         <p className="text-slate-600 text-sm md:text-base mb-4">
-          ¿Ya nos has visitado? Nos encantaría saber qué te ha parecido.
+          ¿Ya nos has visitado? Cuéntanos cómo fue la experiencia — comida, servicio y ambiente — y ayuda a quien busca
+          opciones a saber qué encontrará aquí.
         </p>
         <Link
           href="/opinar"
@@ -37,7 +38,8 @@ export default function LeaveReviewCta({ variant = 'card', className = '' }: Lea
         ¿Te ha gustado AriMar?
       </h2>
       <p className="text-slate-600 leading-relaxed max-w-xl mx-auto mb-6 text-sm md:text-base">
-        Si ya has probado nuestra comida, tu opinión en Google nos ayuda mucho y solo te llevará un minuto.
+        Si ya nos conoces, deja tu opinión en Google sobre la comida, el trato y la experiencia en general. Ayudas a
+        quien busca dónde comer en Arinaga a saber qué le espera — y si puedes, añade fotos.
       </p>
       <Link
         href="/opinar"
