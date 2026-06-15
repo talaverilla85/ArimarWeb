@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import Image from 'next/image'
+import LeaveReviewCta from '@/components/LeaveReviewCta'
 import SinGlutenBlock from '@/components/SinGlutenBlock'
 import { getWhatsAppUrl, siteConfig } from '@/lib/siteConfig'
 import { faqCanonicalPath } from '@/lib/faqContent'
@@ -165,6 +166,11 @@ export default function ContactoPage() {
               *En días especiales puede variar. Actualizamos en Google Maps.*
             </p>
           </div>
+        </section>
+
+        {/* Reseñas */}
+        <section className="mb-16" aria-label="Deja tu opinión">
+          <LeaveReviewCta />
         </section>
 
         {/* CTA final: ¿Hablamos? */}

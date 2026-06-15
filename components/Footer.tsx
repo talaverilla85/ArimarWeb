@@ -91,6 +91,14 @@ export default function Footer() {
                   Preguntas frecuentes
                 </Link>
               </li>
+              <li>
+                <Link
+                  href="/opinar"
+                  className="text-sm text-slate-600 underline underline-offset-2 hover:text-primary-500 hover:decoration-2 focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 focus-visible:outline-none rounded transition-colors"
+                >
+                  Deja tu opinión
+                </Link>
+              </li>
             </ul>
           </div>
 

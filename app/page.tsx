@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import LeaveReviewCta from '@/components/LeaveReviewCta'
 import HeroSection from '@/components/home/HeroSection'
 import { faqCanonicalPath, homeFaqTeasers } from '@/lib/faqContent'
 
@@ -192,6 +193,13 @@ export default function Home() {
               Ver todas las preguntas frecuentes
             </Link>
           </p>
+        </div>
+      </section>
+
+      {/* Opinión de clientes */}
+      <section className="py-12 md:py-16 px-4 sm:px-6 lg:px-8 bg-white" aria-label="Deja tu opinión">
+        <div className="max-w-4xl mx-auto">
+          <LeaveReviewCta />
         </div>
       </section>
 
