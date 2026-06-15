@@ -111,12 +111,11 @@ export default function CartaClient() {
                   Una sola carta para todos
                 </p>
                 <h1 className="text-4xl md:text-5xl font-bold text-slate-800 mb-4 tracking-tight">
-                  Carta 100 % sin gluten en Playa de Arinaga
+                  Carta
                 </h1>
                 <p className="text-lg text-slate-600 max-w-2xl leading-relaxed">
-                  En AriMar toda la carta es sin gluten: platos de cuchara, pollo asado, guisos, arroces,
-                  pastas, fritos, postres y raciones para llevar. No es una carta especial; es nuestra forma
-                  de cocinar para todo el mundo.
+                  Platos de cuchara, pollo asado, guisos, arroces, pastas, fritos, postres y raciones para llevar.
+                  No es una carta especial: es nuestra forma de cocinar para todo el mundo, también apta para celíacos.
                 </p>
               </div>
               <div className="mx-auto w-40 md:w-48">
@@ -139,12 +138,12 @@ export default function CartaClient() {
             aria-labelledby="vitrina-sin-gluten-heading"
           >
             <h2 id="vitrina-sin-gluten-heading" className="text-2xl md:text-3xl font-bold text-slate-800 mb-4 tracking-tight">
-              Toda la vitrina es sin gluten
+              Una sola vitrina para todos
             </h2>
             <p className="text-slate-700 leading-relaxed max-w-3xl">
-              No tenemos una pequeña selección adaptada. AriMar nace como establecimiento 100 % sin gluten
-              para que cualquier cliente pueda elegir entre las mismas elaboraciones y quien evita el gluten
-              no tenga que preguntar qué parte de la carta puede comer.
+              No tenemos una pequeña selección adaptada ni carta aparte. Toda la carta está elaborada sin gluten para
+              que cualquier cliente elija entre las mismas elaboraciones — y quien evita el gluten no tenga que
+              preguntar qué puede comer.
             </p>
           </section>
 
@@ -210,13 +209,12 @@ export default function CartaClient() {
             aria-labelledby="carta-seo-heading"
           >
             <h2 id="carta-seo-heading" className="text-2xl md:text-3xl font-bold text-slate-800 mb-4 tracking-tight">
-              Una carta 100 % sin gluten pensada para el día a día
+              Carta de rotación diaria
             </h2>
             <p className="text-slate-700 leading-relaxed max-w-3xl mb-6">
-              En AriMar trabajamos con una carta de rotación diaria sin ingredientes con gluten para
-              que siempre encuentres opciones variadas y caseras según temporada y producción. Así
-              puedes elegir entre platos de cuchara, elaboraciones más ligeras, propuestas para compartir
-              o algo dulce para completar tu comida.
+              Trabajamos con una carta que cambia según temporada y producción para que siempre encuentres opciones
+              variadas y caseras. Puedes elegir entre platos de cuchara, elaboraciones más ligeras, propuestas para
+              compartir o algo dulce para completar tu comida.
             </p>
             <div className="mt-4 rounded-2xl bg-white/80 px-4 py-4 sm:px-5 sm:py-5">
               <p className="text-xs font-semibold tracking-wide text-slate-500 uppercase mb-3">

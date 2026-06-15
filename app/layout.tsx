@@ -36,17 +36,17 @@ const jsonLd = {
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://arimarfoodlab.es'),
-  title: 'AriMar - Comida casera y freiduría 100 % sin gluten en Gran Canaria',
+  title: 'AriMar - Comida casera y freiduría en Playa de Arinaga, Gran Canaria',
   icons: {
     icon: '/favicon.ico',
     apple: '/apple-touch-icon.png',
   },
   description:
-    'Casa de comidas y freiduría 100 % sin gluten en Playa de Arinaga, Gran Canaria. Platos preparados, raciones y comida casera para todos, con una carta elaborada sin gluten.',
+    'Casa de comidas y freiduría en Playa de Arinaga, Gran Canaria. Comida casera para llevar, apta para celíacos y pensada para todo el mundo.',
   openGraph: {
-    title: 'AriMar - Comida casera y freiduría 100 % sin gluten en Gran Canaria',
+    title: 'AriMar - Comida casera y freiduría en Playa de Arinaga',
     description:
-      'Establecimiento 100 % sin gluten en Playa de Arinaga, Gran Canaria: comida casera, freiduría, platos preparados y raciones para llevar.',
+      'Comida casera, freiduría y platos preparados para llevar en Playa de Arinaga. Carta apta para celíacos.',
     url: 'https://arimarfoodlab.es/',
     type: 'website',
   },

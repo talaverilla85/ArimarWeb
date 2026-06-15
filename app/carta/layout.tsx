@@ -3,16 +3,16 @@ import type { Metadata } from 'next'
 const domain = 'https://www.arimarfoodlab.es'
 
 export const metadata: Metadata = {
-  title: 'Carta 100 % sin gluten en Playa de Arinaga | AriMar FoodLab',
+  title: 'Carta de comida casera | AriMar FoodLab – Playa de Arinaga',
   description:
-    'Carta 100 % sin gluten en Playa de Arinaga, Gran Canaria. Platos preparados, freiduría sin gluten, comida casera, raciones para llevar, potajes, guisos y postres.',
+    'Carta de comida casera y freiduría en Playa de Arinaga, Gran Canaria. Establecimiento apto para celíacos: platos preparados, raciones para llevar, potajes, guisos y postres.',
   alternates: {
     canonical: `${domain}/carta`,
   },
   openGraph: {
-    title: 'Carta 100 % sin gluten en Playa de Arinaga | AriMar FoodLab',
+    title: 'Carta de comida casera | AriMar FoodLab – Playa de Arinaga',
     description:
-      'Comida casera y freiduría 100 % sin gluten para llevar en Playa de Arinaga, Gran Canaria.',
+      'Comida casera y freiduría para llevar en Playa de Arinaga. Carta apta para celíacos, pensada para todos.',
     type: 'website',
     url: `${domain}/carta`,
   },

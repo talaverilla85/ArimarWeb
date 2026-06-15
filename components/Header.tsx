@@ -25,17 +25,7 @@ export default function Header() {
                   : 'text-slate-600 hover:text-slate-800'
               }`}
             >
-              Carta 100% sin gluten
-            </Link>
-            <Link
-              href="/sin-gluten-gran-canaria"
-              className={`text-sm font-medium transition-colors ${
-                pathname === '/sin-gluten-gran-canaria'
-                  ? 'text-slate-800'
-                  : 'text-slate-600 hover:text-slate-800'
-              }`}
-            >
-              Sin gluten
+              Carta
             </Link>
             <Link
               href="/nuestra-cocina"
@@ -117,18 +107,7 @@ export default function Header() {
                     : 'text-slate-600 hover:text-slate-800'
                 }`}
               >
-                Carta 100% sin gluten
-              </Link>
-              <Link
-                href="/sin-gluten-gran-canaria"
-                onClick={() => setMobileMenuOpen(false)}
-                className={`text-base font-medium transition-colors ${
-                  pathname === '/sin-gluten-gran-canaria'
-                    ? 'text-slate-800'
-                    : 'text-slate-600 hover:text-slate-800'
-                }`}
-              >
-                Sin gluten
+                Carta
               </Link>
               <Link
                 href="/nuestra-cocina"

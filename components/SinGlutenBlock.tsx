@@ -27,9 +27,9 @@ export default function SinGlutenBlock({ variant = 'card', className = '' }: Sin
             priority
           />
           <div className="text-left">
-            <p className="text-base font-bold text-primary-700 md:text-lg">Establecimiento 100 % sin gluten</p>
+            <p className="text-base font-bold text-primary-700 md:text-lg">Apta para celíacos</p>
             <p className="mt-1 text-sm text-slate-600 leading-snug">
-              Toda nuestra carta está elaborada sin gluten: comida para todos, también para quien necesita evitar el gluten.
+              Toda la carta está elaborada sin gluten. Comida para todos, no una carta aparte.
             </p>
           </div>
         </div>
@@ -48,9 +48,9 @@ export default function SinGlutenBlock({ variant = 'card', className = '' }: Sin
           className="h-auto w-36 object-contain sm:w-40"
         />
         <div className="text-center sm:text-left">
-          <p className="text-lg font-bold text-primary-800">Establecimiento 100 % sin gluten</p>
+          <p className="text-lg font-bold text-primary-800">Apta para celíacos</p>
           <p className="mt-1 text-sm text-slate-600 leading-relaxed max-w-md">
-            Toda nuestra carta está elaborada sin gluten. El mismo logo que verás en nuestra puerta.
+            Toda la carta está elaborada sin gluten. El mismo distintivo que verás en nuestra puerta.
           </p>
         </div>
       </div>
@@ -71,11 +71,11 @@ export default function SinGlutenBlock({ variant = 'card', className = '' }: Sin
         />
         <div className="text-center md:text-left">
           <h2 className="text-xl font-bold text-primary-800 md:text-2xl tracking-tight">
-            Establecimiento 100 % sin gluten
+            Apta para celíacos, pensada para todos
           </h2>
           <p className="mt-2 text-slate-600 leading-relaxed">
-            Toda nuestra carta está elaborada sin gluten: comida casera para todos, con información clara para elegir
-            con tranquilidad. En la puerta del local verás este mismo distintivo.
+            Toda la carta está elaborada sin gluten: comida casera para elegir con tranquilidad. En la puerta del
+            local verás este mismo distintivo.
           </p>
         </div>
       </div>

@@ -128,7 +128,7 @@ export default function ContactoPage() {
             <h3 className="text-lg font-semibold text-slate-800 mt-8 mb-3">Cómo llegar</h3>
             <ul className="list-disc pl-6 space-y-2 text-slate-600 leading-relaxed mb-8">
               <li>Recogida en local (sin comedor).</li>
-              <li>Establecimiento 100 % sin gluten — busca nuestro distintivo en la puerta.</li>
+              <li>Apto para celíacos — busca nuestro distintivo en la puerta.</li>
               <li>No trabajamos con ingredientes con gluten e informamos del resto de alérgenos.</li>
               <li>Acceso rápido desde la avenida principal.</li>
               <li>Si vienes de la playa, estás a un paseo.</li>
@@ -180,7 +180,7 @@ export default function ContactoPage() {
               ¿Hablamos?
             </h2>
             <p className="text-slate-600 max-w-xl mx-auto mb-8">
-              Si quieres reservar para un día concreto o preguntar qué hay hoy en nuestra vitrina 100 % sin gluten, escríbenos por WhatsApp.
+              Si quieres reservar para un día concreto o preguntar qué hay hoy en vitrina, escríbenos por WhatsApp.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center flex-wrap">
               <a
@@ -195,10 +195,10 @@ export default function ContactoPage() {
                 Hablar por WhatsApp
               </a>
               <Link
-                href="/hoy"
+                href="/carta"
                 className="w-full sm:w-auto inline-flex justify-center px-8 py-4 border-2 border-slate-300 text-slate-700 font-semibold rounded-lg hover:border-slate-400 hover:bg-slate-50 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-400 focus-visible:ring-offset-2"
               >
-                Carta 100% sin gluten
+                Ver carta
               </Link>
               <Link
                 href="/hoy"
@@ -217,7 +217,7 @@ export default function ContactoPage() {
           </h2>
           <div className="max-w-3xl space-y-4 text-slate-600 leading-relaxed text-sm md:text-base">
             <p>
-              Freiduría y comida casera 100 % sin gluten para llevar en Playa de Arinaga (Agüimes, Gran Canaria). Recogida en local, sin comedor: Avenida Polizón 67. Horario habitual: todos los días 11:30 – 16:00 (consulta arriba por si hubiera cambios puntuales).
+              Freiduría y comida casera para llevar en Playa de Arinaga (Agüimes, Gran Canaria). Recogida en local, sin comedor: Avenida Polizón 67. Carta apta para celíacos, pensada para todos. Horario habitual: todos los días 11:30 – 16:00 (consulta arriba por si hubiera cambios puntuales).
             </p>
             <p>
               Para dudas sobre carta, alérgenos, pedidos o encargos, tenemos una página de{' '}

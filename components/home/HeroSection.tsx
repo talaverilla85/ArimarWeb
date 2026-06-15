@@ -20,15 +20,14 @@ export default function HeroSection() {
       </div>
       <div className="relative z-20 max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8 animate-fade-in-up">
         <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 leading-tight">
-          AriMar: comida casera y freiduría 100 % sin gluten en Gran Canaria
+          AriMar: comida casera y freiduría en Playa de Arinaga
         </h1>
         <p className="text-sm md:text-base text-white/80 mb-4 tracking-wide uppercase">
-          Tu disfruta, nosotros cocinamos. · Playa de Arinaga · Gran Canaria
+          Tu disfruta, nosotros cocinamos. · Gran Canaria
         </p>
         <p className="text-lg md:text-xl text-white/85 mb-6 max-w-2xl mx-auto leading-relaxed">
-          En Playa de Arinaga hemos creado un establecimiento donde toda la carta es sin gluten:
-          platos preparados, freiduría, comida casera y raciones para llevar pensadas para que
-          puedas elegir con tranquilidad.
+          Casa de comidas para llevar pensada para todo el mundo: platos preparados, freiduría, vitrina del día
+          y raciones caseras. Una sola carta — también apta para celíacos.
         </p>
 
         <div className="mb-8">
