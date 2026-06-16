@@ -39,6 +39,9 @@ export const siteConfig = {
 
   /** Ruta interna: redirige a la tienda online (Qamarero) vía /hoy */
   pedirPath: '/hoy',
+
+  instagramUrl: 'https://www.instagram.com/arimarfoodlab/',
+  facebookUrl: 'https://www.facebook.com/AriMarFoodLab/',
 } as const
 
 /**

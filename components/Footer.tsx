@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import Logo from './Logo'
+import SocialLinks from './SocialLinks'
 import { siteConfig } from '@/lib/siteConfig'
 
 const phoneDisplay = siteConfig.whatsappPhoneDisplay
@@ -26,16 +27,8 @@ export default function Footer() {
               <a href={`tel:${siteConfig.whatsappPhoneE164}`} className="text-primary-600 underline underline-offset-2 hover:decoration-2 focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 focus-visible:outline-none rounded">
                 {phoneDisplay}
               </a>
-              {' · '}
-              <a
-                href="https://www.instagram.com/arimarfoodlab/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-primary-600 underline underline-offset-2 hover:decoration-2 focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 focus-visible:outline-none rounded"
-              >
-                Instagram @arimarfoodlab
-              </a>
             </p>
+            <SocialLinks className="mt-4" listClassName="text-sm text-slate-600" />
           </div>
 
           <div>

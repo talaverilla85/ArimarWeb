@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import GoogleReviewsSection from '@/components/GoogleReviewsSection'
 import LeaveReviewCta from '@/components/LeaveReviewCta'
+import SocialLinks from '@/components/SocialLinks'
 import HeroSection from '@/components/home/HeroSection'
 import { faqCanonicalPath, homeFaqTeasers } from '@/lib/faqContent'
 
@@ -237,6 +238,19 @@ export default function Home() {
               </div>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* Redes sociales */}
+      <section className="py-10 md:py-12 px-4 sm:px-6 lg:px-8 bg-slate-50" aria-labelledby="redes-sociales-heading">
+        <div className="max-w-4xl mx-auto text-center">
+          <h2 id="redes-sociales-heading" className="text-xl md:text-2xl font-bold text-slate-800 mb-4 tracking-tight">
+            Síguenos
+          </h2>
+          <p className="text-slate-600 text-sm md:text-base mb-5">
+            Novedades, vitrina del día y el día a día en AriMar.
+          </p>
+          <SocialLinks className="items-center" listClassName="text-base" />
         </div>
       </section>
 
