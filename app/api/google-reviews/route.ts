@@ -1,7 +1,8 @@
 import { NextResponse } from 'next/server'
 import { GOOGLE_REVIEWS_CACHE_SECONDS, getGoogleReviews } from '@/lib/googleReviews'
 
-export const revalidate = GOOGLE_REVIEWS_CACHE_SECONDS
+/** Debe ser literal para Next.js segment config (6 h, ver GOOGLE_REVIEWS_CACHE_SECONDS). */
+export const revalidate = 21_600
 
 export async function GET() {
   const data = await getGoogleReviews()
