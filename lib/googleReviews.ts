@@ -107,7 +107,7 @@ async function findPlaceNearby(apiKey: string): Promise<string | null> {
 }
 
 async function resolvePlaceId(apiKey: string): Promise<{ placeId: string | null; detail?: string }> {
-  const configured = process.env.GOOGLE_PLACE_ID?.trim()
+  const configured = process.env.GOOGLE_PLACE_ID?.trim() || siteConfig.googlePlaceId
   if (configured) return { placeId: configured }
 
   for (const query of PLACE_QUERIES) {
@@ -190,7 +190,7 @@ const getCachedGoogleReviews = unstable_cache(
     if (!result.ok) throw new Error(`${result.reason}:${result.detail ?? ''}`)
     return result.data
   },
-  ['arimar-google-reviews-v3'],
+  ['arimar-google-reviews-v4'],
   { revalidate: GOOGLE_REVIEWS_CACHE_SECONDS },
 )
 

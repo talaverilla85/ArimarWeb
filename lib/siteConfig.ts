@@ -34,6 +34,9 @@ export const siteConfig = {
   /** Reseñas Google (redirección estable desde /opinar para QRs y enlaces) */
   googleReviewUrl: 'https://g.page/r/CeX-Jjg5eIoPEBM/review',
 
+  /** Place ID de Google Maps (público; obtenido del enlace de reseñas del negocio) */
+  googlePlaceId: 'ChIJ94XCWqShQAwR5f4mODl4ig8',
+
   /** Ruta interna: redirige a la tienda online (Qamarero) vía /hoy */
   pedirPath: '/hoy',
 } as const
