@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { buildFaqPageJsonLd, faqCanonicalPath, siteFaqItems } from '@/lib/faqContent'
+import JsonLdScript from '@/components/JsonLdScript'
 
 export const metadata: Metadata = {
   title: 'Preguntas frecuentes sin gluten | AriMar FoodLab – Playa de Arinaga',
@@ -23,10 +24,7 @@ const faqJsonLd = buildFaqPageJsonLd(siteFaqItems)
 export default function PreguntasFrecuentesPage() {
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
-      />
+      <JsonLdScript data={faqJsonLd} />
       <div className="pt-32 pb-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-3xl mx-auto">
           <header className="mb-12 text-center md:text-left">

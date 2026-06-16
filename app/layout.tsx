@@ -2,37 +2,11 @@ import type { Metadata } from 'next'
 import './globals.css'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
-import { siteConfig } from '@/lib/siteConfig'
+import JsonLdScript from '@/components/JsonLdScript'
+import { buildRestaurantJsonLd } from '@/lib/restaurantJsonLd'
 import CookieConsent from '@/components/CookieConsent'
 
-const jsonLd = {
-  '@context': 'https://schema.org',
-  '@type': ['LocalBusiness', 'Restaurant'],
-  name: 'AriMar FoodLab',
-  description: 'Casa de comidas y freiduría 100 % sin gluten en Playa de Arinaga, Gran Canaria. Comida casera sin gluten, platos preparados, raciones para llevar e información de alérgenos para elegir con tranquilidad.',
-  url: `https://${siteConfig.domain}`,
-  telephone: siteConfig.whatsappPhoneDisplay,
-  address: {
-    '@type': 'PostalAddress',
-    streetAddress: siteConfig.address.street,
-    postalCode: siteConfig.address.postalCode,
-    addressLocality: siteConfig.address.locality,
-    addressRegion: siteConfig.address.province,
-    addressCountry: 'ES',
-  },
-  geo: {
-    '@type': 'GeoCoordinates',
-    latitude: 27.857688,
-    longitude: -15.414344,
-  },
-  openingHoursSpecification: {
-    '@type': 'OpeningHoursSpecification',
-    dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
-    opens: '11:30',
-    closes: '16:00',
-  },
-  servesCuisine: ['Comida casera', 'Freiduría', 'Takeaway', 'Sin gluten'],
-}
+const restaurantJsonLd = buildRestaurantJsonLd()
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://arimarfoodlab.es'),
@@ -61,10 +35,7 @@ export default function RootLayout({
   return (
     <html lang="es">
       <head>
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-        />
+        <JsonLdScript data={restaurantJsonLd} />
       </head>
       <body className="bg-slate-50 text-slate-800 antialiased relative">
         <CookieConsent />

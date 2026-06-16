@@ -1,5 +1,7 @@
 import type { Metadata } from 'next'
 import dynamic from 'next/dynamic'
+import JsonLdScript from '@/components/JsonLdScript'
+import { RESTAURANT_ID } from '@/lib/restaurantJsonLd'
 import { siteConfig } from '@/lib/siteConfig'
 
 const CartaClient = dynamic(() => import('./CartaClient'), { ssr: true })
@@ -22,38 +24,22 @@ export const metadata: Metadata = {
   },
 }
 
-function buildJsonLd() {
-  return {
-    '@context': 'https://schema.org',
-    '@type': 'Restaurant',
-    name: 'AriMar FoodLab',
-    description:
-      'Comida casera para llevar en Playa de Arinaga, Agüimes. Carta diaria con potajes, cremas, pastas, arroces, guisos y postres.',
-    address: {
-      '@type': 'PostalAddress',
-      streetAddress: siteConfig.address.street,
-      addressLocality: siteConfig.address.locality,
-      addressRegion: siteConfig.address.municipality + ', ' + siteConfig.address.region,
-      addressCountry: 'ES',
-    },
-    url: 'https://www.arimarfoodlab.es/carta',
-    hasMenu: {
-      '@type': 'Menu',
-      name: 'Carta AriMar FoodLab',
-      description: 'Carta de comida para llevar que varía según el día. Incluye potajes, cremas, pastas, arroces, guisos, vegetales y postres.',
-    },
-  }
+const menuJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Menu',
+  name: 'Carta AriMar FoodLab',
+  url: `https://${siteConfig.domain}/carta`,
+  description:
+    'Carta de comida para llevar que varía según el día. Incluye potajes, cremas, pastas, arroces, guisos, vegetales y postres.',
+  provider: {
+    '@id': RESTAURANT_ID,
+  },
 }
 
 export default function CartaPage() {
-  const jsonLd = buildJsonLd()
-
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
+      <JsonLdScript data={menuJsonLd} />
       <CartaClient />
     </>
   )
