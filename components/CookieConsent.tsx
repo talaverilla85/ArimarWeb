@@ -6,27 +6,79 @@ type ConsentState = 'unknown' | 'accepted' | 'rejected'
 
 const GA_MEASUREMENT_ID = 'G-49P4CL0T8K'
 
+function installConversionTracking() {
+  if (typeof window === 'undefined') return
+  if ((window as any).arimarTrackingInstalled) return
+
+  const handler = (event: MouseEvent) => {
+    const target = event.target as HTMLElement | null
+    const anchor = target?.closest('a') as HTMLAnchorElement | null
+    if (!anchor) return
+
+    const href = anchor.getAttribute('href') || ''
+    const absoluteHref = anchor.href || href
+    let eventName: string | null = null
+
+    if (href.startsWith('tel:')) {
+      eventName = 'click_llamar'
+    } else if (absoluteHref.includes('wa.me/')) {
+      eventName = 'click_whatsapp'
+    } else if (
+      absoluteHref.includes('google.com/maps') ||
+      absoluteHref.includes('maps.google.com') ||
+      absoluteHref.includes('goo.gl/maps')
+    ) {
+      eventName = 'click_maps'
+    } else if (
+      href === '/hoy' ||
+      href === '/pedir' ||
+      absoluteHref.includes('r.qamarero.com/arimar')
+    ) {
+      eventName = 'click_pedir'
+    } else if (
+      href === '/opinar' ||
+      absoluteHref.includes('g.page/r/') ||
+      absoluteHref.includes('search.google.com/local/writereview')
+    ) {
+      eventName = 'click_resena'
+    }
+
+    if (!eventName || typeof (window as any).gtag !== 'function') return
+
+    ;(window as any).gtag('event', eventName, {
+      link_url: absoluteHref,
+      link_text: anchor.textContent?.trim().slice(0, 120) || undefined,
+      page_location: window.location.href,
+      transport_type: 'beacon',
+    })
+  }
+
+  document.addEventListener('click', handler, true)
+  ;(window as any).arimarTrackingInstalled = true
+}
+
 function loadGA4() {
   if (typeof window === 'undefined') return
 
-  if ((window as any).ga4Loaded) return
+  if (!(window as any).ga4Loaded) {
+    const script = document.createElement('script')
+    script.async = true
+    script.src = `https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`
+    document.head.appendChild(script)
 
-  const script = document.createElement('script')
-  script.async = true
-  script.src = `https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`
-  document.head.appendChild(script)
+    ;(window as any).dataLayer = (window as any).dataLayer || []
+    ;(window as any).gtag =
+      (window as any).gtag ||
+      function gtag() {
+        ;(window as any).dataLayer.push(arguments)
+      }
 
-  ;(window as any).dataLayer = (window as any).dataLayer || []
-  ;(window as any).gtag =
-    (window as any).gtag ||
-    function gtag() {
-      ;(window as any).dataLayer.push(arguments)
-    }
+    ;(window as any).gtag('js', new Date())
+    ;(window as any).gtag('config', GA_MEASUREMENT_ID)
+    ;(window as any).ga4Loaded = true
+  }
 
-  ;(window as any).gtag('js', new Date())
-  ;(window as any).gtag('config', GA_MEASUREMENT_ID)
-
-  ;(window as any).ga4Loaded = true
+  installConversionTracking()
 }
 
 export default function CookieConsent() {
@@ -98,4 +150,3 @@ export default function CookieConsent() {
     </div>
   )
 }
-
