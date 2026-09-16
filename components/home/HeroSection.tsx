@@ -9,7 +9,7 @@ export default function HeroSection() {
       <div className="absolute inset-0 z-0">
         <Image
           src="/images/hero-variedad-tuppers.webp"
-          alt="Variedad de tuppers con comida"
+          alt="Comida casera para llevar de AriMar en Playa de Arinaga"
           fill
           className="object-cover"
           priority
@@ -19,15 +19,18 @@ export default function HeroSection() {
         <div className="absolute inset-0 bg-gradient-to-b from-black/30 to-black/50 z-10" />
       </div>
       <div className="relative z-20 max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8 animate-fade-in-up">
+        <p className="text-sm md:text-base text-white/85 mb-3 tracking-wide uppercase font-semibold">
+          ¿Buscas dónde comer en Playa de Arinaga?
+        </p>
         <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 leading-tight">
           AriMar: comida casera y freiduría 100% sin gluten en Playa de Arinaga
         </h1>
         <p className="text-sm md:text-base text-white/80 mb-4 tracking-wide uppercase">
-          Tu disfruta, nosotros cocinamos. · Gran Canaria
+          Tú disfruta, nosotros cocinamos. · Gran Canaria
         </p>
         <p className="text-lg md:text-xl text-white/85 mb-6 max-w-2xl mx-auto leading-relaxed">
-          Casa de comidas para llevar pensada para todo el mundo: platos preparados, freiduría, vitrina del día
-          y raciones caseras. Una sola carta, elaborada 100% sin gluten.
+          Comida para llevar en Arinaga con platos preparados, freiduría, vitrina del día y raciones caseras.
+          Una sola carta para todos, elaborada 100% sin gluten.
         </p>
 
         <div className="mb-8">
@@ -50,13 +53,13 @@ export default function HeroSection() {
             href={siteConfig.pedirPath}
             className="inline-block px-8 py-4 bg-primary-500 text-white text-lg font-semibold rounded-lg hover:bg-primary-600 transition-colors shadow-lg"
           >
-            Pedir
+            Pedir online
           </Link>
           <Link
-            href="/hoy"
-            className="inline-block px-8 py-4 bg-primary-500 text-white text-lg font-semibold rounded-lg hover:bg-primary-600 transition-colors shadow-lg"
+            href="/carta"
+            className="inline-block px-8 py-4 border border-white/70 bg-white/10 text-white text-lg font-semibold rounded-lg hover:bg-white/20 transition-colors shadow-lg backdrop-blur-sm"
           >
-            Ver platos disponibles
+            Ver carta
           </Link>
         </div>
       </div>
