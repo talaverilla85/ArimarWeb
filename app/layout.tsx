@@ -10,17 +10,17 @@ const restaurantJsonLd = buildRestaurantJsonLd()
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://arimarfoodlab.es'),
-  title: 'AriMar - Comida casera y freiduría en Playa de Arinaga, Gran Canaria',
+  title: 'AriMar | Comida casera y freiduría 100% sin gluten en Arinaga',
   icons: {
     icon: '/favicon.ico',
     apple: '/apple-touch-icon.png',
   },
   description:
-    'Casa de comidas y freiduría en Playa de Arinaga, Gran Canaria. Comida casera para llevar, apta para celíacos y pensada para todo el mundo.',
+    'Casa de comidas y freiduría 100% sin gluten en Playa de Arinaga, Gran Canaria. Comida casera para llevar, pollos asados, fritos, guisos, arroces y postres.',
   openGraph: {
-    title: 'AriMar - Comida casera y freiduría en Playa de Arinaga',
+    title: 'AriMar | Comida casera y freiduría 100% sin gluten en Arinaga',
     description:
-      'Comida casera, freiduría y platos preparados para llevar en Playa de Arinaga. Carta apta para celíacos.',
+      'Comida casera, freiduría y platos preparados 100% sin gluten para llevar en Playa de Arinaga, Gran Canaria.',
     url: 'https://arimarfoodlab.es/',
     type: 'website',
   },
@@ -55,4 +55,3 @@ export default function RootLayout({
     </html>
   )
 }
-
