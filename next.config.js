@@ -3,6 +3,15 @@ const nextConfig = {
   images: {
     formats: ['image/avif', 'image/webp'],
   },
+  async redirects() {
+    return [
+      {
+        source: '/proximamente',
+        destination: '/hoy',
+        permanent: true,
+      },
+    ]
+  },
   // Inline critical CSS en el HTML para reducir la cadena crítica (HTML → CSS)
   experimental: {
     inlineCss: true,
@@ -12,5 +21,3 @@ const nextConfig = {
 }
 
 module.exports = nextConfig
-
-
