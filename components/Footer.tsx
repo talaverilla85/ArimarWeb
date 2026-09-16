@@ -22,7 +22,7 @@ export default function Footer() {
             <p className="text-slate-600 text-sm leading-relaxed" aria-label="Nombre, dirección y teléfono">
               <span className="font-semibold text-slate-800">AriMar FoodLab</span>
               {' · '}
-              {siteConfig.address.street}, local, {siteConfig.address.locality}
+              {siteConfig.address.street}, {siteConfig.address.locality}
               {' · '}
               <a href={`tel:${siteConfig.whatsappPhoneE164}`} className="text-primary-600 underline underline-offset-2 hover:decoration-2 focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 focus-visible:outline-none rounded">
                 {phoneDisplay}
@@ -37,120 +37,55 @@ export default function Footer() {
             </p>
             <ul className="space-y-2">
               <li>
-                <Link
-                  href="/carta"
-                  className="text-sm text-slate-600 underline underline-offset-2 hover:text-primary-500 hover:decoration-2 focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 focus-visible:outline-none rounded transition-colors"
-                >
-                  Carta
-                </Link>
+                <Link href="/carta" className="text-sm text-slate-600 underline underline-offset-2 hover:text-primary-500 hover:decoration-2 focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 focus-visible:outline-none rounded transition-colors">Carta</Link>
               </li>
               <li>
-                <Link
-                  href="/nuestra-cocina"
-                  className="text-sm text-slate-600 underline underline-offset-2 hover:text-primary-500 hover:decoration-2 focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 focus-visible:outline-none rounded transition-colors"
-                >
-                  Nuestra Cocina
-                </Link>
+                <Link href="/nuestra-cocina" className="text-sm text-slate-600 underline underline-offset-2 hover:text-primary-500 hover:decoration-2 focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 focus-visible:outline-none rounded transition-colors">Nuestra Cocina</Link>
               </li>
               <li>
-                <Link
-                  href="/valores"
-                  className="text-sm text-slate-600 underline underline-offset-2 hover:text-primary-500 hover:decoration-2 focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 focus-visible:outline-none rounded transition-colors"
-                >
-                  Valores
-                </Link>
+                <Link href="/valores" className="text-sm text-slate-600 underline underline-offset-2 hover:text-primary-500 hover:decoration-2 focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 focus-visible:outline-none rounded transition-colors">Valores</Link>
               </li>
               <li>
-                <Link
-                  href="/contacto"
-                  className="text-sm text-slate-600 underline underline-offset-2 hover:text-primary-500 hover:decoration-2 focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 focus-visible:outline-none rounded transition-colors"
-                >
-                  Ver ubicación
-                </Link>
+                <Link href="/contacto" className="text-sm text-slate-600 underline underline-offset-2 hover:text-primary-500 hover:decoration-2 focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 focus-visible:outline-none rounded transition-colors">Ver ubicación</Link>
               </li>
               <li>
-                <Link
-                  href="/preguntas-frecuentes"
-                  className="text-sm text-slate-600 underline underline-offset-2 hover:text-primary-500 hover:decoration-2 focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 focus-visible:outline-none rounded transition-colors"
-                >
-                  Preguntas frecuentes
-                </Link>
+                <Link href="/preguntas-frecuentes" className="text-sm text-slate-600 underline underline-offset-2 hover:text-primary-500 hover:decoration-2 focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 focus-visible:outline-none rounded transition-colors">Preguntas frecuentes</Link>
               </li>
               <li>
-                <Link
-                  href="/opinar"
-                  className="text-sm text-slate-600 underline underline-offset-2 hover:text-primary-500 hover:decoration-2 focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 focus-visible:outline-none rounded transition-colors"
-                >
-                  Deja tu opinión
-                </Link>
+                <Link href="/opinar" className="text-sm text-slate-600 underline underline-offset-2 hover:text-primary-500 hover:decoration-2 focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 focus-visible:outline-none rounded transition-colors">Deja tu opinión</Link>
               </li>
             </ul>
           </div>
 
           <div>
-            <p className="text-sm font-semibold text-slate-800 mb-4 uppercase tracking-wide">
-              Legal
-            </p>
+            <p className="text-sm font-semibold text-slate-800 mb-4 uppercase tracking-wide">Legal</p>
             <ul className="space-y-2">
               <li>
-                <Link
-                  href="/alergenos"
-                  className="text-sm text-slate-600 underline underline-offset-2 hover:text-primary-500 hover:decoration-2 focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 focus-visible:outline-none rounded transition-colors"
-                >
-                  Carta de alérgenos
-                </Link>
+                <Link href="/alergenos" className="text-sm text-slate-600 underline underline-offset-2 hover:text-primary-500 hover:decoration-2 focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 focus-visible:outline-none rounded transition-colors">Carta de alérgenos</Link>
               </li>
               <li>
-                <Link
-                  href="/legal/aviso-legal"
-                  className="text-sm text-slate-600 underline underline-offset-2 hover:text-primary-500 hover:decoration-2 focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 focus-visible:outline-none rounded transition-colors"
-                >
-                  Aviso Legal
-                </Link>
+                <Link href="/legal/aviso-legal" className="text-sm text-slate-600 underline underline-offset-2 hover:text-primary-500 hover:decoration-2 focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 focus-visible:outline-none rounded transition-colors">Aviso Legal</Link>
               </li>
               <li>
-                <Link
-                  href="/legal/privacidad"
-                  className="text-sm text-slate-600 underline underline-offset-2 hover:text-primary-500 hover:decoration-2 focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 focus-visible:outline-none rounded transition-colors"
-                >
-                  Privacidad
-                </Link>
+                <Link href="/legal/privacidad" className="text-sm text-slate-600 underline underline-offset-2 hover:text-primary-500 hover:decoration-2 focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 focus-visible:outline-none rounded transition-colors">Privacidad</Link>
               </li>
               <li>
-                <Link
-                  href="/legal/cookies"
-                  className="text-sm text-slate-600 underline underline-offset-2 hover:text-primary-500 hover:decoration-2 focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 focus-visible:outline-none rounded transition-colors"
-                >
-                  Cookies
-                </Link>
+                <Link href="/legal/cookies" className="text-sm text-slate-600 underline underline-offset-2 hover:text-primary-500 hover:decoration-2 focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 focus-visible:outline-none rounded transition-colors">Cookies</Link>
               </li>
               <li>
-                <Link
-                  href="/legal/pedidos-reembolsos"
-                  className="text-sm text-slate-600 underline underline-offset-2 hover:text-primary-500 hover:decoration-2 focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 focus-visible:outline-none rounded transition-colors"
-                >
-                  Pedidos y reembolsos
-                </Link>
+                <Link href="/legal/pedidos-reembolsos" className="text-sm text-slate-600 underline underline-offset-2 hover:text-primary-500 hover:decoration-2 focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 focus-visible:outline-none rounded transition-colors">Pedidos y reembolsos</Link>
               </li>
               <li>
-                <Link
-                  href="/legal/entrega-recogida"
-                  className="text-sm text-slate-600 underline underline-offset-2 hover:text-primary-500 hover:decoration-2 focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 focus-visible:outline-none rounded transition-colors"
-                >
-                  Entrega y recogida
-                </Link>
+                <Link href="/legal/entrega-recogida" className="text-sm text-slate-600 underline underline-offset-2 hover:text-primary-500 hover:decoration-2 focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 focus-visible:outline-none rounded transition-colors">Entrega y recogida</Link>
               </li>
             </ul>
           </div>
         </div>
 
         <div className="mt-8 md:mt-12 pt-8 border-t border-slate-200">
-          <p className="text-xs text-slate-500 text-center">
-            © {new Date().getFullYear()} AriMar FoodLab. Todos los derechos reservados.
-          </p>
+          <p className="text-xs text-slate-500 text-center">© {new Date().getFullYear()} AriMar FoodLab. Todos los derechos reservados.</p>
         </div>
       </div>
     </footer>
   )
 }
-
