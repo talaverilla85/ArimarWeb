@@ -37,9 +37,9 @@ const sections = [
     text: 'AriMar es un establecimiento 100 % sin gluten: toda la carta está elaborada sin gluten y no trabajamos con ingredientes con gluten. También informamos del resto de alérgenos presentes en cada elaboración.',
   },
   {
-    eyebrow: 'Cercanía',
-    title: 'Encargos y dudas por teléfono',
-    text: 'Si quieres preguntar qué hay hoy o consultar disponibilidad de pollos asados para recoger, puedes llamarnos. Te orientamos con cercanía para que elijas con tranquilidad.',
+    eyebrow: 'Disponibilidad',
+    title: 'Consulta lo disponible y pide online',
+    text: 'Puedes consultar la disponibilidad del día y hacer tu pedido online para recoger en AriMar.',
   },
 ]
 
@@ -116,10 +116,12 @@ export default function PollosAsadosArinagaPage() {
                 temporada y disponibilidad.
               </p>
             </div>
-            <div className="rounded-2xl bg-primary-50/70 border border-primary-100 px-5 py-5 text-center">
-              <p className="text-4xl font-bold text-primary-700">614</p>
-              <p className="mt-1 text-sm font-semibold text-slate-700">88 16 78 para llamar a AriMar</p>
-            </div>
+            <Link
+              href="/hoy"
+              className="rounded-2xl bg-primary-50/70 border border-primary-100 px-5 py-6 text-center font-bold text-primary-800 hover:bg-primary-100 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2"
+            >
+              Ver disponibilidad y pedir
+            </Link>
           </div>
         </section>
 
@@ -147,15 +149,14 @@ export default function PollosAsadosArinagaPage() {
               Ven a por tu pollo asado en Arinaga
             </h2>
             <p className="text-white/75 mb-8 leading-relaxed">
-              Estamos en {siteConfig.address.street}, {siteConfig.address.locality}. Consulta la carta, ven al local
-              o llámanos para resolver cualquier duda antes de venir.
+              Estamos en {siteConfig.address.street}, {siteConfig.address.locality}.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
                 href="/hoy"
                 className="inline-flex justify-center px-8 py-3 bg-primary-500 text-white text-sm md:text-base font-semibold rounded-lg hover:bg-primary-600 transition-colors shadow-md"
               >
-                Ver carta 100% sin gluten
+                Ver disponibilidad y pedir
               </Link>
               <Link
                 href="/contacto"
@@ -163,12 +164,6 @@ export default function PollosAsadosArinagaPage() {
               >
                 Cómo llegar
               </Link>
-              <a
-                href={`tel:${siteConfig.whatsappPhoneE164}`}
-                className="inline-flex justify-center px-8 py-3 border border-white/25 text-white text-sm md:text-base font-semibold rounded-lg hover:bg-white/10 transition-colors"
-              >
-                Llamar a AriMar
-              </a>
             </div>
           </div>
         </section>
