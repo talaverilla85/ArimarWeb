@@ -1,61 +1,118 @@
 import type { Metadata } from 'next'
-import Link from 'next/link'
 
 export const metadata: Metadata = {
   title: 'Croquetas caseras 100 % sin gluten en Gran Canaria | AriMar',
-  description: 'Descubre las croquetas artesanas sin gluten de AriMar: jamón, queso de cabra y cebolla, atún y piquillo, y pollo asado. Sin lactosa excepto la variedad de queso de cabra. Elaboradas a mano en Playa de Arinaga.',
+  description: 'Croquetas artesanas sin gluten y sin lactosa, excepto las de queso de cabra: jamón, queso de cabra y cebolla, atún y piquillo, y pollo asado. Raciones de 9 unidades en Playa de Arinaga.',
   alternates: { canonical: '/croquetas-sin-gluten-gran-canaria' },
 }
 
 const variedades = [
-  { nombre: 'Croquetas de jamón', lactosa: false, descripcion: 'Una de las grandes clásicas. El sabor del jamón se integra en una masa cremosa y suave, con el contraste de un rebozado dorado y crujiente.' },
-  { nombre: 'Croquetas de queso de cabra y cebolla', lactosa: true, descripcion: 'El carácter del queso de cabra se combina con la suavidad y el dulzor de la cebolla. Una variedad con personalidad propia y un interior especialmente cremoso.' },
-  { nombre: 'Croquetas de atún y pimientos del piquillo', lactosa: false, descripcion: 'Una combinación de sabores reconocibles: atún y piquillo en una masa delicada, equilibrada y pensada para disfrutar de ambos ingredientes.' },
-  { nombre: 'Croquetas de pollo asado', lactosa: false, descripcion: 'Aprovechamos el sabor del pollo asado para preparar una croqueta jugosa, de gusto profundo y textura cremosa.' },
+  {
+    numero: '01',
+    nombre: 'Jamón',
+    subtitulo: 'La clásica',
+    sinLactosa: true,
+    descripcion: 'El sabor del jamón se integra en una masa cremosa y suave, con el contraste de un exterior dorado y crujiente.',
+  },
+  {
+    numero: '02',
+    nombre: 'Queso de cabra y cebolla',
+    subtitulo: 'Con personalidad',
+    sinLactosa: false,
+    descripcion: 'El carácter del queso de cabra se combina con la suavidad y el dulzor de la cebolla. Una croqueta de sabor intenso y textura cremosa.',
+  },
+  {
+    numero: '03',
+    nombre: 'Atún y piquillo',
+    subtitulo: 'Sabores que combinan',
+    sinLactosa: true,
+    descripcion: 'Una combinación de atún y pimientos del piquillo en una masa delicada y equilibrada, pensada para disfrutar de ambos sabores.',
+  },
+  {
+    numero: '04',
+    nombre: 'Pollo asado',
+    subtitulo: 'De nuestra cocina',
+    sinLactosa: true,
+    descripcion: 'El sabor del pollo asado da lugar a una croqueta jugosa, con gusto profundo y un interior especialmente cremoso.',
+  },
 ]
 
 export default function Page() {
-  return <main className="bg-[#fafbf9]">
-    <section className="bg-slate-900 text-white px-6 py-20">
-      <div className="max-w-5xl mx-auto">
-        <p className="text-emerald-300 font-semibold uppercase tracking-widest mb-4">AriMar · Playa de Arinaga</p>
-        <h1 className="text-4xl md:text-6xl font-bold mb-6">Croquetas caseras 100 % sin gluten en Gran Canaria</h1>
-        <p className="text-xl text-slate-200 leading-relaxed max-w-3xl">Cuatro variedades elaboradas a mano, con un interior cremoso y un exterior crujiente. Todas sin gluten y, salvo las de queso de cabra, también sin lactosa.</p>
-        <a href="#variedades" className="inline-block mt-8 bg-emerald-600 rounded-lg px-7 py-3 font-semibold">Descubre nuestras variedades</a>
-      </div>
-    </section>
-    <section className="max-w-5xl mx-auto px-6 py-16">
-      <h2 className="text-3xl font-bold mb-5">Croquetas elaboradas a mano, de principio a fin</h2>
-      <div className="max-w-3xl space-y-4 text-slate-700 leading-relaxed text-lg">
-        <p>En AriMar preparamos nuestras croquetas a partir de una masa suave y cremosa, incorporando los ingredientes de cada variedad para que tengan un sabor reconocible y diferente.</p>
-        <p>Después viene el trabajo artesanal: damos forma a cada croqueta a mano y la rebozamos con ingredientes sin gluten. Al freírla buscamos el contraste que tanto nos gusta: una capa exterior crujiente y un interior delicado y cremoso.</p>
-        <p>Todas nuestras croquetas son sin gluten. Las de jamón, atún con piquillo y pollo asado también se elaboran sin lactosa; la variedad de queso de cabra es la excepción.</p>
-      </div>
-    </section>
-    <section id="variedades" className="bg-[#eaf2ee] px-6 py-16">
-      <div className="max-w-5xl mx-auto">
-        <h2 className="text-3xl font-bold mb-4">Nuestras cuatro variedades de croquetas sin gluten</h2>
-        <p className="text-slate-600 mb-10">Cada sabor tiene su propia personalidad. Estas son las cuatro variedades que preparamos en AriMar.</p>
-        <div className="grid md:grid-cols-2 gap-6">
-          {variedades.map((v, i) => <article key={v.nombre} className="rounded-2xl overflow-hidden bg-white border border-emerald-100 shadow-md shadow-emerald-950/5">
-            <div className="bg-emerald-50 min-h-44 flex items-center justify-center text-center text-slate-500 p-6">Fotografía real de AriMar pendiente</div>
-            <div className="p-7">
-              <p className="text-emerald-700 text-sm font-semibold mb-3">VARIEDAD {String(i + 1).padStart(2, '0')}</p>
-              <h3 className="text-2xl font-bold mb-3">{v.nombre}</h3><p className="text-sm font-semibold text-emerald-800 mb-4">Sin gluten · {v.lactosa ? 'Contiene lácteos (queso de cabra)' : 'Sin lactosa'}</p>
-              <p className="text-slate-600 leading-relaxed">{v.descripcion}</p>
-            </div>
-          </article>)}
+  return (
+    <main className="bg-[#fffdf8] text-[#283c31]">
+      <header className="overflow-hidden bg-[#f5e8d2] px-6 py-16 md:py-24">
+        <div className="mx-auto grid max-w-6xl items-center gap-12 md:grid-cols-[1.5fr_0.75fr]">
+          <div>
+            <p className="mb-6 text-xs font-bold uppercase tracking-[0.24em] text-[#876643]">Hechas a mano · Playa de Arinaga</p>
+            <h1 className="max-w-3xl text-4xl font-extrabold leading-[1.12] tracking-tight md:text-6xl">
+              Croquetas caseras <span className="text-[#a2643d]">100 % sin gluten</span> en Gran Canaria
+            </h1>
+            <p className="mt-7 max-w-3xl text-lg leading-relaxed text-[#62594b] md:text-xl">
+              Cuatro variedades elaboradas a mano. Cremosas por dentro, crujientes por fuera y, salvo las de queso de cabra, también sin lactosa.
+            </p>
+            <a href="#sabores" className="mt-9 inline-flex rounded-full bg-[#315840] px-7 py-3 font-semibold text-white hover:bg-[#254833]">Descubre los cuatro sabores ↓</a>
+          </div>
+          <div className="relative flex flex-col items-center justify-center border-[10px] border-double border-[#d7b88b] bg-[#fff7e9] px-6 py-12 text-center">
+            <p className="text-xs font-bold uppercase tracking-[0.21em] text-[#865f3e]">Nuestra ración</p>
+            <p className="mt-3 text-8xl font-black leading-none tracking-tight text-[#3c6149]">9</p>
+            <p className="mt-2 text-xl font-bold text-[#3c6149]">croquetas</p>
+            <p className="mt-6 max-w-xs border-t border-[#dabf98] pt-5 text-sm leading-relaxed text-[#6f6453]">También puedes consultarnos cantidades mayores.</p>
+          </div>
         </div>
-      </div>
-    </section>
-    <section className="max-w-5xl mx-auto px-6 py-16">
-      <h2 className="text-3xl font-bold mb-5">Nuestras croquetas, también para compartir</h2>
-      <p className="text-slate-600 max-w-3xl leading-relaxed mb-5">Nuestra ración habitual incluye 9 croquetas. Si necesitas una cantidad mayor para una reunión, celebración o evento, ponte en contacto con nosotros y estudiaremos tu encargo.</p>
-      <p className="text-slate-600 max-w-3xl leading-relaxed mb-8">También puedes consultar la disponibilidad de croquetas congeladas. En cualquier formato mantenemos el protagonismo de las cuatro variedades y su elaboración sin gluten. Recuerda que solo la variedad de queso de cabra contiene lácteos.</p>
-      <div className="flex flex-wrap gap-3">
-        <a href="mailto:info@arimarfoodlab.es?subject=Consulta%20sobre%20croquetas%20AriMar" className="rounded-lg border border-slate-300 px-6 py-3 font-semibold">Consultar disponibilidad</a>
-      </div>
-      <p className="text-sm text-slate-500 mt-8">Recogida en AriMar, Playa de Arinaga. La disponibilidad de variedades puede variar.</p>
-    </section>
-  </main>
+      </header>
+
+      <section className="mx-auto grid max-w-6xl gap-10 px-6 py-16 md:grid-cols-[0.8fr_1.3fr] md:gap-20 md:py-24">
+        <div>
+          <p className="mb-4 text-xs font-bold uppercase tracking-[0.19em] text-[#aa744d]">El secreto está en el cuidado</p>
+          <h2 className="text-3xl font-bold leading-tight md:text-4xl">Una croqueta de verdad, sin gluten.</h2>
+        </div>
+        <div className="space-y-5 text-lg leading-relaxed text-slate-600">
+          <p>Preparamos cada masa incorporando los ingredientes de su variedad. Buscamos una textura suave y cremosa sin renunciar al sabor de siempre.</p>
+          <p>Formamos las croquetas a mano y las rebozamos con ingredientes sin gluten. Al freírlas, el exterior queda crujiente y contrasta con el interior cremoso.</p>
+          <p className="border-l-4 border-[#c5905e] bg-[#fbf1e6] px-5 py-4 text-base text-[#655441]"><strong>Importante:</strong> todas las variedades son sin gluten. Las de jamón, atún y piquillo, y pollo asado también son sin lactosa. Las de queso de cabra y cebolla contienen lácteos.</p>
+        </div>
+      </section>
+
+      <section id="sabores" className="bg-[#edf3ec] px-6 py-16 md:py-24">
+        <div className="mx-auto max-w-6xl">
+          <div className="mb-12 flex flex-col justify-between gap-5 border-b-2 border-[#496f55] pb-7 md:flex-row md:items-end">
+            <div>
+              <p className="mb-4 text-xs font-bold uppercase tracking-[0.2em] text-[#497552]">La carta de croquetas</p>
+              <h2 className="text-3xl font-bold md:text-5xl">Cuatro sabores. Una misma filosofía.</h2>
+            </div>
+            <p className="text-sm font-semibold text-[#497552]">Todas sin gluten · 3 variedades sin lactosa</p>
+          </div>
+          <div className="grid gap-x-14 md:grid-cols-2">
+            {variedades.map((v) => (
+              <article key={v.numero} className="border-b border-[#c6d4c5] py-8 md:py-11">
+                <div className="mb-5 flex items-center justify-between gap-4">
+                  <p className="font-serif text-5xl italic text-[#8fac95]">{v.numero}</p>
+                  <span className={`rounded-full px-4 py-2 text-xs font-bold uppercase tracking-wide ${v.sinLactosa ? 'bg-white text-[#366846]' : 'bg-[#f7e4cf] text-[#805334]'}`}>
+                    {v.sinLactosa ? 'Sin gluten · Sin lactosa' : 'Sin gluten · Con lácteos'}
+                  </span>
+                </div>
+                <p className="mb-2 text-xs font-bold uppercase tracking-widest text-[#718575]">{v.subtitulo}</p>
+                <h3 className="mb-4 text-2xl font-extrabold md:text-3xl">{v.nombre}</h3>
+                <p className="max-w-lg leading-relaxed text-[#5c6a5f]">{v.descripcion}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="mx-auto grid max-w-6xl gap-10 px-6 py-16 md:grid-cols-[1fr_1fr] md:items-center md:gap-20 md:py-24">
+        <div>
+          <p className="mb-4 text-xs font-bold uppercase tracking-[0.2em] text-[#a16a42]">Para disfrutar a tu manera</p>
+          <h2 className="text-3xl font-bold md:text-4xl">Nueve croquetas. Cuatro sabores para elegir.</h2>
+          <p className="mt-6 leading-relaxed text-slate-600">Nuestra ración habitual es de 9 unidades. Para cantidades mayores o para consultar la disponibilidad de croquetas congeladas, ponte en contacto con AriMar.</p>
+        </div>
+        <div className="border-l-4 border-[#bd895a] bg-[#f8efdf] p-8 md:p-10">
+          <p className="mb-3 text-xs font-bold uppercase tracking-widest text-[#8a633f]">AriMar · Playa de Arinaga</p>
+          <p className="mb-7 text-xl font-semibold leading-relaxed">¿Quieres consultar variedades, cantidades o disponibilidad?</p>
+          <a href="mailto:info@arimarfoodlab.es?subject=Consulta%20sobre%20croquetas%20AriMar" className="inline-block rounded-full bg-[#315840] px-7 py-3 font-semibold text-white hover:bg-[#254833]">Pregúntanos por las croquetas →</a>
+          <p className="mt-5 text-xs leading-relaxed text-[#77695a]">La disponibilidad puede variar. Recogida en nuestro establecimiento.</p>
+        </div>
+      </section>
+    </main>
+  )
 }
