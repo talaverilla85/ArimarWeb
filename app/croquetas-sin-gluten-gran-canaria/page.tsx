@@ -49,9 +49,9 @@ export default function Page() {
       </div>
     </section>
     <section className="max-w-5xl mx-auto px-6 py-16">
-      <h2 className="text-3xl font-bold mb-5">Croquetas para disfrutar en casa o compartir</h2>
-      <p className="text-slate-600 max-w-3xl leading-relaxed mb-5">Puedes consultar las variedades y las raciones disponibles en AriMar. Estamos preparando información detallada sobre las unidades por ración para incorporarla a esta página.</p>
-      <p className="text-slate-600 max-w-3xl leading-relaxed mb-8">¿Preparas una celebración o tienes un negocio de hostelería o una tienda especializada? También puedes consultarnos opciones para eventos y suministro profesional.</p>
+      <h2 className="text-3xl font-bold mb-5">Raciones de 9 unidades, encargos grandes y croquetas congeladas</h2>
+      <p className="text-slate-600 max-w-3xl leading-relaxed mb-5">Nuestra ración habitual incluye 9 croquetas. Si necesitas una cantidad mayor para una reunión, celebración o evento, ponte en contacto con nosotros y estudiaremos tu encargo.</p>
+      <p className="text-slate-600 max-w-3xl leading-relaxed mb-8">También puedes consultarnos la posibilidad de adquirir nuestras croquetas congeladas, para conservarlas y prepararlas cuando las necesites. Los formatos y cantidades de venta congelada se concretan directamente con AriMar. Si tienes un negocio de hostelería o una tienda especializada, consúltanos las opciones de suministro profesional.</p>
       <div className="flex flex-wrap gap-3">
         <Link href="/comida-para-eventos-gran-canaria" className="rounded-lg bg-emerald-700 text-white px-6 py-3 font-semibold">Croquetas para celebraciones</Link>
         <Link href="/profesionales" className="rounded-lg border border-emerald-200 px-6 py-3 font-semibold text-emerald-800">Información para profesionales</Link>
