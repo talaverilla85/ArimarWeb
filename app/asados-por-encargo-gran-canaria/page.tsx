@@ -49,7 +49,7 @@ const platos = [
 
 export default function Page() {
   return (
-    <main className="bg-white">
+    <main className="bg-[#fafbf9]">
       <section className="bg-slate-900 text-white px-6 py-20">
         <div className="max-w-5xl mx-auto">
           <p className="text-emerald-300 font-semibold uppercase tracking-widest mb-4">AriMar · Playa de Arinaga</p>
@@ -64,12 +64,12 @@ export default function Page() {
         <p className="text-slate-600 text-lg mb-12 max-w-3xl">No todos los cortes se comportan igual en el horno. El tiempo, la temperatura y el acabado se adaptan a cada pieza para conseguir su mejor expresión.</p>
         <div className="space-y-14">
           {platos.map((plato, i) => (
-            <article key={plato.nombre} className="overflow-hidden rounded-3xl border border-slate-200 shadow-sm">
+            <article key={plato.nombre} className="overflow-hidden rounded-3xl border border-emerald-100 bg-white shadow-md shadow-slate-200/60">
               <div className="grid md:grid-cols-2">
                 <div className="bg-slate-100 min-h-72 flex items-center justify-center text-slate-500 text-center p-8" role="img" aria-label={`Fotografía real pendiente de ${plato.nombre}`}>
                   <span>Fotografía real de AriMar<br />pendiente de incorporar</span>
                 </div>
-                <div className="p-7 md:p-10 flex flex-col justify-center">
+                <div className="p-7 md:p-10 flex flex-col justify-center bg-emerald-50/60">
                   <p className="text-emerald-700 font-semibold text-sm uppercase tracking-widest mb-3">Especialidad {String(i + 1).padStart(2, '0')}</p>
                   <h3 className="text-3xl font-bold text-slate-900 mb-3">{plato.nombre}</h3>
                   <p className="text-lg font-medium text-emerald-800 mb-5">{plato.subtitulo}</p>
@@ -77,17 +77,17 @@ export default function Page() {
                   <p className="mt-6 text-sm font-semibold text-slate-700">{plato.formato}</p>
                 </div>
               </div>
-              <div className="grid md:grid-cols-3 gap-8 p-7 md:p-10 bg-white border-t border-slate-100">
+              <div className="grid md:grid-cols-3 gap-8 p-7 md:p-10 bg-[#f5f8f6] border-t border-emerald-100">
                 <div><h4 className="text-lg font-bold mb-3">Cómo lo elaboramos</h4><p className="text-slate-600 leading-relaxed">{plato.proceso}</p></div>
                 <div><h4 className="text-lg font-bold mb-3">El resultado</h4><p className="text-slate-600 leading-relaxed">{plato.resultado}</p></div>
                 <div><h4 className="text-lg font-bold mb-3">Cómo disfrutarlo</h4><p className="text-slate-600 leading-relaxed">{plato.servicio}</p></div>
               </div>
-              <div className="px-7 md:px-10 pb-8"><a href="#solicitud" className="font-semibold text-emerald-700">Consultar disponibilidad y presupuesto →</a></div>
+              <div className="px-7 md:px-10 py-6 bg-[#f5f8f6] border-t border-emerald-100"><a href="#solicitud" className="font-semibold text-emerald-700">Consultar disponibilidad y presupuesto →</a></div>
             </article>
           ))}
         </div>
       </section>
-      <section id="solicitud" className="bg-slate-50 px-6 py-16"><div className="max-w-3xl mx-auto"><SolicitudAsados /></div></section>
+      <section id="solicitud" className="bg-[#eaf2ee] px-6 py-16"><div className="max-w-3xl mx-auto"><SolicitudAsados /></div></section>
       <section className="max-w-5xl mx-auto px-6 py-14">
         <h2 className="text-2xl font-bold mb-4">Recogida en AriMar</h2>
         <p className="text-slate-600">Los encargos se recogen en nuestro establecimiento de Playa de Arinaga. La solicitud no constituye un pedido confirmado: contactaremos contigo para concretar disponibilidad, cantidades, precio y fecha.</p>
