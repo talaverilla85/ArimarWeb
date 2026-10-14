@@ -1,6 +1,6 @@
 'use client'
 import {useState, type FormEvent} from 'react'
-const productos=['Pata asada canaria','Costillas de cerdo asadas','Lomo de cerdo asado','Bondiola de cerdo asada']
+const productos=['Pata asada canaria (pieza entera)','Tiras de costilla de cerdo asadas','Lomo de cerdo asado (pieza entera)','Bondiola de cerdo asada']
 export default function SolicitudAsados(){
 const [selected,setSelected]=useState<Record<string,boolean>>({})
 const [qty,setQty]=useState<Record<string,string>>({})
