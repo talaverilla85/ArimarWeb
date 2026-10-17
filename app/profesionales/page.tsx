@@ -6,7 +6,7 @@ import { getWhatsAppUrl } from '@/lib/siteConfig'
 export const metadata: Metadata = {
   title: 'AriMar PRO | Cocina 100 % sin gluten para profesionales en Gran Canaria',
   description:
-    'Elaboraciones de cocina casera 100 % sin gluten para restaurantes, cafeterías y tiendas de Gran Canaria. Conoce AriMar PRO y consulta opciones de suministro.',
+    '¿Cuántas mesas pierdes por no ofrecer alternativas sin gluten? Descubre AriMar PRO: croquetas, lasaña, carnes asadas y otras elaboraciones para hostelería en Gran Canaria.',
   alternates: { canonical: '/profesionales' },
 }
 
@@ -54,12 +54,10 @@ export default function ProfesionalesPage() {
               </span>
             </div>
             <h1 className="max-w-2xl text-[2.65rem] font-bold leading-[1.12] tracking-tight text-slate-900 sm:text-5xl lg:text-[3.75rem]">
-              Una cocina <span className="text-primary-600">100 % sin gluten.</span>
-              <span className="mt-3 block">Más opciones para tu negocio.</span>
+              ¿Cuántas mesas has perdido por no tener <span className="text-primary-600">una opción sin gluten?</span>
             </h1>
             <p className="mt-7 max-w-xl text-lg leading-relaxed text-slate-600">
-              Llevamos el sabor de AriMar a restaurantes, cafeterías y tiendas especializadas.
-              Elaboraciones propias, cocina casera y una forma de trabajar cuidada, de principio a fin.
+              Cuando una persona celíaca no encuentra una alternativa adecuada, puede marcharse todo el grupo. AriMar PRO te ayuda a ampliar tu carta con elaboraciones de nuestra cocina 100 % sin gluten.
             </p>
             <div className="mt-9 flex flex-col gap-3 sm:flex-row">
               <a
@@ -93,6 +91,22 @@ export default function ProfesionalesPage() {
               <p className="mt-2 text-xl font-semibold">Comida de verdad, hecha con cuidado.</p>
             </div>
           </div>
+        </div>
+      </section>
+
+      <section className="bg-white px-5 py-16 sm:px-8 lg:px-12" aria-labelledby="situaciones-heading">
+        <div className="mx-auto max-w-6xl">
+          <p className="mb-3 text-sm font-bold uppercase tracking-[0.17em] text-primary-600">¿Te resulta familiar?</p>
+          <h2 id="situaciones-heading" className="max-w-3xl text-3xl font-bold text-slate-900 md:text-4xl">No siempre pierdes a un cliente. A veces pierdes a toda la mesa.</h2>
+          <div className="mt-9 grid gap-5 md:grid-cols-3">
+            {[
+              'Un grupo pregunta por opciones sin gluten y termina eligiendo otro restaurante.',
+              'Una persona celíaca solo encuentra una ensalada mientras los demás disfrutan de la carta.',
+              'Tu equipo no puede asegurar cómo se ha preparado o servido un plato.',
+            ].map((frase) => <div key={frase} className="rounded-2xl border border-primary-100 bg-[#f6faf8] p-6 text-lg leading-relaxed text-slate-700">{frase}</div>)}
+          </div>
+          <p className="mt-8 text-xl font-semibold text-primary-800">No necesitas transformar toda tu cocina para empezar a estudiar nuevas opciones.</p>
+          <p className="mt-3 max-w-4xl text-slate-600">Eso sí: recibir un producto elaborado sin gluten no basta por sí solo. La conservación, regeneración, manipulación y servicio en tu establecimiento deben prevenir la contaminación cruzada.</p>
         </div>
       </section>
 
@@ -136,55 +150,26 @@ export default function ProfesionalesPage() {
             </p>
           </div>
 
-          <div className="grid gap-6 md:grid-cols-[1.03fr_0.97fr]">
-            <article className="flex flex-col justify-between overflow-hidden rounded-3xl border border-primary-100 bg-white shadow-sm">
-              <div className="px-7 pb-9 pt-9 md:px-9 md:pt-11">
-                <p className="mb-4 text-xs font-bold uppercase tracking-[0.2em] text-primary-600">Nuestra freiduría</p>
-                <h3 className="text-3xl font-bold tracking-tight text-slate-900">Croquetas artesanas</h3>
-                <p className="mt-5 max-w-md leading-relaxed text-slate-600">
-                  Elaboradas a mano y 100 % sin gluten. Jamón, queso de cabra y cebolla, atún con piquillo y pollo asado: cuatro recetas con personalidad propia.
-                </p>
-                <p className="mt-4 text-sm text-slate-500">
-                  Las de jamón, atún y pollo asado son también sin lactosa. La variedad de queso de cabra contiene lácteos.
-                </p>
-              </div>
-              <Link
-                href="/croquetas-sin-gluten-gran-canaria"
-                className="flex items-center justify-between border-t border-primary-100 bg-primary-50 px-7 py-5 font-semibold text-primary-800 hover:bg-primary-100 md:px-9"
-              >
-                Descubre las cuatro variedades <span aria-hidden="true">↗</span>
-              </Link>
-            </article>
-
-            <article className="relative flex min-h-[380px] flex-col justify-end overflow-hidden rounded-3xl bg-slate-700 shadow-sm">
-              <Image
-                src="/images/carta-carne-estofada.webp"
-                alt="Plato de carne guisada entre las elaboraciones de AriMar"
-                fill
-                sizes="(max-width: 768px) 100vw, 48vw"
-                className="object-cover"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/40 to-transparent" />
-              <div className="relative z-10 p-7 text-white md:p-9">
-                <p className="mb-3 text-xs font-bold uppercase tracking-[0.19em] text-primary-100">Nuestra cocina de siempre</p>
-                <h3 className="text-3xl font-bold tracking-tight">Carnes y platos preparados</h3>
-                <p className="mt-4 max-w-md leading-relaxed text-white/90">
-                  Guisos y otras elaboraciones de cocina casera. Consultaremos contigo las opciones disponibles y los formatos adecuados para tu negocio.
-                </p>
-              </div>
-            </article>
+          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {[
+              { titulo: 'Costillas asadas a baja temperatura', detalle: 'Cocción lenta durante 14 horas. Una propuesta para terminar y servir según las condiciones acordadas.' },
+              { titulo: 'Pechuga de pollo rellena de crema de ciruelas', detalle: 'Una alternativa diferente para enriquecer la carta.' },
+              { titulo: 'Lasaña boloñesa', detalle: 'Una receta reconocible, pensada para facilitar una oferta más variada.' },
+              { titulo: 'Croquetas artesanas', detalle: 'Jamón, pollo asado, atún con piquillo y queso de cabra con cebolla caramelizada.' },
+              { titulo: 'Lomo de cerdo asado a baja temperatura', detalle: 'Carne asada con salsa, para valorar su incorporación a distintos servicios.' },
+              { titulo: 'Pulled pork', detalle: 'Cerdo desmenuzado, versátil para distintas propuestas gastronómicas.' },
+            ].map((producto, index) => (
+              <article key={producto.titulo} className="overflow-hidden rounded-2xl border border-primary-100 bg-white p-7 shadow-sm">
+                <span className="text-sm font-bold tracking-widest text-primary-600">{String(index + 1).padStart(2, '0')}</span>
+                <h3 className="mt-4 text-xl font-bold text-slate-900">{producto.titulo}</h3>
+                <p className="mt-3 leading-relaxed text-slate-600">{producto.detalle}</p>
+              </article>
+            ))}
           </div>
-
-          <div className="mt-7 flex flex-col justify-between gap-5 rounded-2xl border border-dashed border-primary-200 bg-white px-7 py-7 md:flex-row md:items-center md:px-9">
-            <div>
-              <h3 className="text-xl font-bold text-slate-900">El catálogo de elaboraciones está en preparación</h3>
-              <p className="mt-2 max-w-2xl leading-relaxed text-slate-600">
-                Incorporaremos el listado cuando hayamos concretado productos, formatos y disponibilidad. Mientras tanto, puedes consultarnos por una elaboración específica.
-              </p>
-            </div>
-            <a href={consultaEmail} className="shrink-0 font-bold text-primary-700 underline underline-offset-4 hover:text-primary-800">
-              Consultar productos →
-            </a>
+          <div className="mt-8 rounded-2xl border border-primary-200 bg-white p-7">
+            <h3 className="text-xl font-bold text-slate-900">Solicita nuestro catálogo profesional</h3>
+            <p className="mt-2 text-slate-600">Consulta presentaciones, conservación, disponibilidad y condiciones de suministro. Cada propuesta se estudia con tu negocio.</p>
+            <a href={consultaEmail} className="mt-4 inline-block font-bold text-primary-700 underline underline-offset-4">Solicitar información →</a>
           </div>
         </div>
       </section>
@@ -239,7 +224,7 @@ export default function ProfesionalesPage() {
           <div>
             <p className="mb-4 text-sm font-bold uppercase tracking-[0.18em] text-primary-100">¿Trabajamos juntos?</p>
             <h2 id="contacto-pro-heading" className="text-3xl font-bold leading-tight md:text-4xl">
-              Hablemos de lo que necesita tu negocio.
+              Que una persona sea celíaca no debería decidir dónde come todo el grupo.
             </h2>
             <p className="mt-5 max-w-xl text-lg leading-relaxed text-white/85">
               Cuéntanos qué elaboraciones te interesan. Estudiaremos contigo las cantidades, la conservación, la disponibilidad y las condiciones de suministro.
