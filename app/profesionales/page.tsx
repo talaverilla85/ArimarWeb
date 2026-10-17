@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { getWhatsAppUrl } from '@/lib/siteConfig'
 
 export const metadata: Metadata = {
-  title: 'AriMar PRO | Cocina 100 % sin gluten para profesionales en Gran Canaria',
+  title: 'Comida sin gluten para restaurantes en Gran Canaria | AriMar PRO',
   description:
     '¿Cuántas mesas pierdes por no ofrecer alternativas sin gluten? Descubre AriMar PRO: croquetas, lasaña, carnes asadas y otras elaboraciones para hostelería en Gran Canaria.',
   alternates: { canonical: '/profesionales' },
@@ -54,10 +54,10 @@ export default function ProfesionalesPage() {
               </span>
             </div>
             <h1 className="max-w-2xl text-[2.65rem] font-bold leading-[1.12] tracking-tight text-slate-900 sm:text-5xl lg:text-[3.75rem]">
-              ¿Cuántas mesas has perdido por no tener <span className="text-primary-600">una opción sin gluten?</span>
+              Comida <span className="text-primary-600">100 % sin gluten</span> para restaurantes y hostelería en Gran Canaria
             </h1>
             <p className="mt-7 max-w-xl text-lg leading-relaxed text-slate-600">
-              Cuando una persona celíaca no encuentra una alternativa adecuada, puede marcharse todo el grupo. AriMar PRO te ayuda a ampliar tu carta con elaboraciones de nuestra cocina 100 % sin gluten.
+              ¿Cuántas mesas has perdido por no tener una opción sin gluten? Cuando una persona celíaca no encuentra una alternativa adecuada, puede marcharse todo el grupo.
             </p>
             <div className="mt-9 flex flex-col gap-3 sm:flex-row">
               <a
@@ -70,7 +70,7 @@ export default function ProfesionalesPage() {
                 href="#elaboraciones"
                 className="inline-flex items-center justify-center rounded-xl border border-primary-200 bg-white px-6 py-3.5 font-semibold text-primary-700 transition-colors hover:bg-primary-50"
               >
-                Conoce nuestras elaboraciones
+                Ver productos
               </a>
             </div>
             <p className="mt-6 text-sm font-medium text-slate-500">
@@ -167,9 +167,9 @@ export default function ProfesionalesPage() {
             ))}
           </div>
           <div className="mt-8 rounded-2xl border border-primary-200 bg-white p-7">
-            <h3 className="text-xl font-bold text-slate-900">Solicita nuestro catálogo profesional</h3>
-            <p className="mt-2 text-slate-600">Consulta presentaciones, conservación, disponibilidad y condiciones de suministro. Cada propuesta se estudia con tu negocio.</p>
-            <a href={consultaEmail} className="mt-4 inline-block font-bold text-primary-700 underline underline-offset-4">Solicitar información →</a>
+            <h3 className="text-xl font-bold text-slate-900">Hablemos de tu negocio</h3>
+            <p className="mt-2 text-slate-600">Ya puedes conocer nuestras elaboraciones aquí. Si alguna encaja con tu negocio, consúltanos formatos, conservación, disponibilidad y condiciones de suministro.</p>
+            <a href={consultaEmail} className="mt-4 inline-block font-bold text-primary-700 underline underline-offset-4">Consultar condiciones →</a>
           </div>
         </div>
       </section>
