@@ -82,7 +82,7 @@ export default function Page() {
                 <div><h4 className="text-lg font-bold mb-3">El resultado</h4><p className="text-slate-600 leading-relaxed">{plato.resultado}</p></div>
                 <div><h4 className="text-lg font-bold mb-3">Cómo disfrutarlo</h4><p className="text-slate-600 leading-relaxed">{plato.servicio}</p></div>
               </div>
-              <div className="px-7 md:px-10 py-6 bg-[#f5f8f6] border-t border-emerald-100"><a href="#solicitud" className="font-semibold text-emerald-700">Consultar disponibilidad y presupuesto →</a></div>
+              <div className="px-7 md:px-10 py-6 bg-[#f5f8f6] border-t border-emerald-100 flex flex-wrap gap-5"><a href="#solicitud" className="font-semibold text-emerald-700">Consultar disponibilidad y presupuesto →</a>{i === 0 && <Link href="/pata-asada-gran-canaria" className="font-semibold text-emerald-800 underline underline-offset-4">Descubre nuestra pata asada canaria por encargo ↗</Link>}</div>
             </article>
           ))}
         </div>
