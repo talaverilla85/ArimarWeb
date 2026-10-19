@@ -75,6 +75,7 @@ export default function Page() {
                   <p className="text-lg font-medium text-emerald-800 mb-5">{plato.subtitulo}</p>
                   <p className="text-slate-600 leading-relaxed">{plato.introduccion}</p>
                   <p className="mt-6 text-sm font-semibold text-slate-700">{plato.formato}</p>
+                  {i === 0 && <Link href="/pata-asada-gran-canaria" className="mt-5 inline-flex w-fit items-center font-semibold text-primary-700 underline underline-offset-4 hover:text-primary-800">Conocer nuestra pata asada canaria →</Link>}
                 </div>
               </div>
               <div className="grid md:grid-cols-3 gap-8 p-7 md:p-10 bg-[#f5f8f6] border-t border-emerald-100">
