@@ -1,242 +1,307 @@
 import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
-import { getWhatsAppUrl } from '@/lib/siteConfig'
+import { getWhatsAppUrl, siteConfig } from '@/lib/siteConfig'
+import SolicitarPata from './SolicitarPata'
+
+const path = '/pata-asada-gran-canaria'
+const url = 'https://' + siteConfig.domain + path
+const photo = 'https://' + siteConfig.domain + '/images/pata-asada-canaria-arimar-real.jpg'
+const mensaje = 'Hola, AriMar. Quisiera información y presupuesto para encargar una pata asada canaria entera para una celebración. ¿Me podéis ayudar?'
+const whatsapp = getWhatsAppUrl(mensaje)
 
 export const metadata: Metadata = {
   title: 'Pata asada canaria por encargo en Gran Canaria | AriMar',
-  description:
-    'Encarga pata asada canaria entera, elaborada en la cocina 100 % sin gluten de AriMar. Recogida en Playa de Arinaga, Agüimes. Consulta disponibilidad y presupuesto.',
-  alternates: { canonical: '/pata-asada-gran-canaria' },
+  description: 'Pata asada canaria por encargo para toda Gran Canaria. 100 % sin gluten. Consulta desde Vecindario, Ingenio, Telde o Las Palmas. Recogida en AriMar.',
+  alternates: { canonical: path },
   openGraph: {
-    title: 'Pata asada canaria por encargo en Gran Canaria | AriMar',
-    description:
-      'La tradición de la pata asada canaria, hecha por encargo en AriMar. Se entrega entera y se recoge en Playa de Arinaga.',
     type: 'website',
+    url,
+    title: 'Pata asada canaria por encargo en Gran Canaria | AriMar',
+    description: 'Tu próxima celebración merece una buena pata asada. Elaboración propia, control de temperatura y recogida en Playa de Arinaga.',
+    locale: 'es_ES',
+    images: [{ url: photo, alt: 'Pata asada canaria de AriMar recién salida del horno' }],
   },
+  twitter: { card: 'summary_large_image', title: 'Pata asada por encargo en Gran Canaria | AriMar', images: [photo] },
 }
-
-const whatsapp = getWhatsAppUrl(
-  'Hola, quiero consultar una pata asada canaria entera por encargo para recoger en AriMar. ¿Me podéis indicar disponibilidad y presupuesto?',
-)
-
-const email =
-  'mailto:info@arimarfoodlab.es?subject=Pata%20asada%20canaria%20por%20encargo%20-%20Consulta'
 
 const preguntas = [
   {
-    pregunta: '¿Dónde puedo encargar pata asada canaria en Gran Canaria?',
-    respuesta:
-      'Puedes consultar la preparación de una pata asada canaria entera en AriMar, nuestra casa de comidas 100 % sin gluten en Playa de Arinaga (Agüimes). Los encargos se recogen en el establecimiento.',
+    q: '¿Dónde comprar pata asada canaria en Gran Canaria?',
+    a: 'Puedes comprar pata asada canaria por encargo en AriMar, en Avenida Polizón 67, Playa de Arinaga (Agüimes, Gran Canaria). La elaboramos en nuestra cocina 100 % sin gluten. Consulta disponibilidad y presupuesto por WhatsApp antes de acudir a recogerla.',
   },
   {
-    pregunta: '¿La pata asada se entrega entera o cortada?',
-    respuesta:
-      'La entregamos entera, sin cortar ni lonchear. Así puedes presentar la pieza y servirla en casa a tu gusto.',
+    q: '¿La pata asada se entrega entera o cortada?',
+    a: 'Se entrega la pieza entera, sin cortar ni lonchear. Puedes llevarla a tu celebración y servirla al grosor que prefieras.',
   },
   {
-    pregunta: '¿La pata asada de AriMar es sin gluten?',
-    respuesta:
-      'Sí. Elaboramos la pata en nuestra cocina dedicada a preparaciones 100 % sin gluten. Si necesitas información sobre ingredientes o algún otro alérgeno, consúltanos antes de confirmar el encargo.',
+    q: '¿Puedo encargarla desde Vecindario, Ingenio, Telde o Las Palmas de Gran Canaria?',
+    a: 'Sí. Recibimos consultas desde toda Gran Canaria, incluidas Vecindario, Pozo Izquierdo, Cruce de Arinaga, Agüimes, Ingenio, Carrizal, Telde y Las Palmas de Gran Canaria. Puedes organizar el encargo por WhatsApp desde tu municipio y recoger la pata en AriMar, Playa de Arinaga. No hacemos entregas a domicilio.',
   },
   {
-    pregunta: '¿Puedo encargarla para un cumpleaños o una reunión?',
-    respuesta:
-      'Sí, es una opción para celebraciones y comidas en grupo. Indícanos la fecha y el tipo de encuentro para que podamos valorar disponibilidad y tamaño de la pieza.',
+    q: '¿Con cuánta antelación tengo que pedirla?',
+    a: 'Es mejor consultar cuanto antes, especialmente si la necesitas para un fin de semana o una fecha señalada. Confirmaremos el plazo disponible para tu encargo.',
   },
   {
-    pregunta: '¿Cuánto cuesta una pata asada entera?',
-    respuesta:
-      'Te facilitaremos un presupuesto antes de confirmar el pedido. El importe depende de las características y el peso de la pieza acordada.',
+    q: '¿Cuánto cuesta una pata asada entera?',
+    a: 'El presupuesto depende del tamaño y del peso de la pieza, así como de la disponibilidad. Escríbenos con la fecha y el número de comensales y te informaremos antes de confirmar el pedido.',
   },
   {
-    pregunta: '¿La lleváis al lugar del evento?',
-    respuesta:
-      'No ofrecemos transporte ni servicio de corte en el evento. La pata se prepara por encargo para recoger en AriMar, en Playa de Arinaga.',
+    q: '¿De qué tamaño debo encargar la pata para mi celebración?',
+    a: 'Depende del número de comensales, de las guarniciones y del tamaño y rendimiento de la pieza. Dinos para cuántas personas es y te orientaremos sobre las opciones disponibles antes de confirmar el encargo.',
   },
+  {
+    q: '¿Es una pata asada sin gluten?',
+    a: 'Sí. La elaboramos en nuestra cocina de AriMar, que trabaja 100 % sin gluten. Si tienes otras alergias o necesidades alimentarias, indícanoslo antes de encargar.',
+  },
+  {
+    q: '¿Hacéis entrega a domicilio o catering para eventos?',
+    a: 'Nuestro servicio consiste en elaborar la pata por encargo para recoger en AriMar, Playa de Arinaga. No incluye transporte, corte en el evento ni personal de catering.',
+  },
+]
+
+const datosEstructurados = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'WebPage',
+      '@id': url + '#webpage',
+      name: 'Pata asada canaria por encargo en Gran Canaria',
+      url,
+      description: 'Pata asada canaria entera para celebraciones y recogida en AriMar, Playa de Arinaga.',
+      inLanguage: 'es-ES',
+      about: { '@id': url + '#servicio' },
+    },
+    {
+      '@type': 'Service',
+      '@id': url + '#servicio',
+      name: 'Elaboración de pata asada canaria por encargo',
+      serviceType: 'Preparación de pata asada canaria entera por encargo para celebraciones',
+      description: 'Elaboramos pata de cerdo asada con control de temperatura interior en nuestra cocina 100 % sin gluten. Se solicita presupuesto y se recoge la pieza entera en AriMar, Playa de Arinaga, Gran Canaria.',
+      image: photo,
+      provider: { '@id': 'https://' + siteConfig.domain + '/#restaurant' },
+      areaServed: { '@type': 'AdministrativeArea', name: 'Gran Canaria' },
+      availableChannel: {
+        '@type': 'ServiceChannel',
+        serviceLocation: {
+          '@type': 'Place',
+          name: 'AriMar FoodLab',
+          address: {
+            '@type': 'PostalAddress',
+            streetAddress: siteConfig.address.street,
+            addressLocality: siteConfig.address.locality,
+            addressRegion: siteConfig.address.province,
+            postalCode: siteConfig.address.postalCode,
+            addressCountry: 'ES',
+          },
+        },
+      },
+    },
+    {
+      '@type': 'BreadcrumbList',
+      '@id': url + '#migas',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'AriMar', item: 'https://' + siteConfig.domain + '/' },
+        { '@type': 'ListItem', position: 2, name: 'Pata asada canaria', item: url },
+      ],
+    },
+    {
+      '@type': 'FAQPage',
+      '@id': url + '#preguntas',
+      mainEntity: preguntas.map(({ q, a }) => ({
+        '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a },
+      })),
+    },
+  ],
+}
+
+const ventajas = [
+  { numero: '01', titulo: 'Corteza bien dorada', detalle: 'Buscamos ese contraste entre la superficie tostada y el interior de la pieza.' },
+  { numero: '02', titulo: 'El punto bajo control', detalle: 'Utilizamos la sonda de nuestro horno RATIONAL para seguir la temperatura interior durante el asado.' },
+  { numero: '03', titulo: 'Para compartir', detalle: 'Una pata entera pensada para cumpleaños, encuentros familiares y celebraciones.' },
+]
+
+const pasos = [
+  { numero: '01', titulo: 'Cuéntanos la ocasión', detalle: 'Dinos la fecha, el número aproximado de comensales y qué tienes en mente.' },
+  { numero: '02', titulo: 'Concretamos tu pieza', detalle: 'Te confirmamos disponibilidad, tamaño, precio y condiciones de recogida.' },
+  { numero: '03', titulo: 'Recógela en Arinaga', detalle: 'Preparamos el asado acordado para que lo recojas en nuestro local. Se entrega entero y sin lonchear.' },
 ]
 
 export default function PataAsadaPage() {
   return (
-    <main className="bg-[#fffdf9] pt-16 text-slate-800 md:pt-20">
-      <section className="overflow-hidden bg-[#edf7f5]">
-        <div className="mx-auto grid max-w-7xl gap-10 px-5 py-12 sm:px-8 md:grid-cols-[1.15fr_0.85fr] md:items-center md:gap-14 md:py-20 lg:px-12">
-          <div>
-            <p className="mb-5 text-xs font-bold uppercase tracking-[0.23em] text-primary-700">
-              AriMar · Especialidades por encargo
-            </p>
-            <h1 className="max-w-3xl text-4xl font-extrabold leading-[1.11] tracking-tight text-slate-900 sm:text-5xl lg:text-6xl">
-              Pata asada canaria <span className="text-primary-600">por encargo</span> en Gran Canaria
+    <div className="overflow-hidden bg-[#F8FAFC] text-[#1E293B] pt-20">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(datosEstructurados).replace(/</g, '\\u003c') }} />
+
+      <section className="relative overflow-hidden bg-[#1E293B] text-white" aria-labelledby="pata-h1">
+        <div className="absolute -right-20 -top-44 h-96 w-96 rounded-full border-[70px] border-[#207F85]/20" aria-hidden="true" />
+        <div className="relative mx-auto grid max-w-7xl lg:grid-cols-[1.08fr_0.92fr]">
+          <div className="flex flex-col justify-center px-6 py-16 md:px-12 md:py-24 lg:py-28">
+            <div className="flex flex-wrap items-center gap-3 text-xs font-bold uppercase tracking-[0.15em] text-[#B7E1E1]">
+              <span>AriMar · Playa de Arinaga</span><span className="h-1 w-1 rounded-full bg-[#B7E1E1]" /><span>Cocina 100 % sin gluten</span>
+            </div>
+            <h1 id="pata-h1" className="mt-8 max-w-3xl text-4xl font-black leading-[1.1] tracking-tight sm:text-5xl lg:text-[3.8rem]">
+              Pata asada <span className="text-[#80D0D1]">canaria</span> por encargo en Gran Canaria
             </h1>
-            <p className="mt-7 max-w-xl text-lg leading-relaxed text-slate-600 md:text-xl">
-              Una pieza para compartir, con el exterior bien dorado y la carne sabrosa por dentro.
-              La preparamos en la cocina 100 % sin gluten de AriMar y te la entregamos
-              <strong className="text-slate-800"> entera, sin cortar</strong>.
+            <p className="mt-7 max-w-2xl text-lg leading-relaxed text-[#E3EEEE] md:text-xl">
+              Piel dorada, carne jugosa y una pieza para reunir a los tuyos. Aceptamos consultas por encargo desde toda Gran Canaria para cumpleaños, reuniones y celebraciones. La preparamos en nuestra cocina 100 % sin gluten.
             </p>
-            <div className="mt-8 flex flex-wrap gap-3">
-              <a
-                href={whatsapp}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center justify-center rounded-xl bg-primary-500 px-7 py-4 font-bold text-white shadow-sm transition-colors hover:bg-primary-600"
-              >
-                Consultar mi encargo <span className="ml-2" aria-hidden="true">↗</span>
+            <div className="mt-9 flex flex-col gap-3 sm:flex-row">
+              <a href={whatsapp} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center rounded-xl bg-[#207F85] px-7 py-4 text-base font-extrabold text-white shadow-lg transition hover:bg-[#278F95] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">
+                Encargar pata asada <span className="ml-2" aria-hidden="true">↗</span>
               </a>
-              <a
-                href="#como-la-hacemos"
-                className="inline-flex items-center justify-center rounded-xl border border-primary-200 bg-white px-7 py-4 font-semibold text-primary-800 hover:bg-primary-50"
-              >
-                Conoce nuestra pata asada
-              </a>
+              <a href="#por-que-jugosa" className="inline-flex items-center justify-center rounded-xl border border-white/50 px-7 py-4 text-base font-bold text-white transition hover:bg-white/10">Descubre cómo la asamos ↓</a>
             </div>
-            <p className="mt-6 text-sm font-medium text-slate-500">
-              Recogida en Playa de Arinaga · Disponibilidad y presupuesto por confirmar
-            </p>
+            <p className="mt-6 text-sm leading-relaxed text-slate-300">Encargos para toda Gran Canaria · Recogida en Playa de Arinaga (Agüimes) · La solicitud no confirma el pedido.</p>
           </div>
-          <div className="relative isolate overflow-hidden rounded-[2rem] border border-primary-100 bg-white p-7 shadow-xl shadow-primary-900/10 sm:p-10">
-            <p className="text-xs font-bold uppercase tracking-[0.2em] text-primary-700">
-              El sello de la casa
-            </p>
-            <div className="mt-9 border-b border-primary-100 pb-10">
-              <p className="text-5xl font-extrabold leading-[1.09] tracking-tight text-primary-700 sm:text-6xl">
-                Entera.<br />Doradita.<br />Para compartir.
-              </p>
-            </div>
-            <div className="mt-7 flex items-center justify-between gap-4">
-              <div>
-                <p className="text-lg font-semibold text-slate-900">Pata asada de cerdo</p>
-                <p className="mt-1 text-sm text-slate-500">Tradición canaria · Elaboración por encargo</p>
-              </div>
-              <span className="shrink-0 rounded-full border border-primary-200 bg-primary-50 px-4 py-2 text-xs font-bold text-primary-800">
-                Sin gluten
-              </span>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section id="como-la-hacemos" className="px-5 py-16 sm:px-8 md:py-24 lg:px-12">
-        <div className="mx-auto grid max-w-6xl items-center gap-12 md:grid-cols-[0.9fr_1.1fr] md:gap-20">
-          <div className="relative min-h-[360px] overflow-hidden rounded-3xl bg-primary-50 shadow-sm md:min-h-[470px]">
+          <figure className="relative min-h-[360px] bg-[#F3F3EF] lg:min-h-[670px]">
             <Image
-              src="/images/cocina-rational.webp"
-              alt="Equipamiento de horno profesional utilizado en la cocina de AriMar"
-              fill
-              sizes="(max-width: 768px) 100vw, 44vw"
-              className="object-cover"
+              src="/images/pata-asada-canaria-arimar-real.jpg"
+              alt="Pata asada canaria auténtica de AriMar, con la piel dorada, recién salida del horno"
+              fill priority sizes="(max-width: 1024px) 100vw, 48vw"
+              className="object-cover object-center"
             />
-            <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-slate-950/70 to-transparent px-6 pb-6 pt-24 text-sm font-semibold text-white">
-              Nuestra cocina y el control de la cocción
-            </div>
-          </div>
-          <div>
-            <p className="mb-4 text-xs font-bold uppercase tracking-[0.2em] text-primary-700">
-              De nuestro horno a tu mesa
-            </p>
-            <h2 className="text-3xl font-bold leading-tight tracking-tight text-slate-900 md:text-4xl">
-              El punto de una buena pata asada se trabaja desde dentro.
-            </h2>
-            <p className="mt-6 text-lg leading-relaxed text-slate-600">
-              Asamos la pieza con un programa de horno y controlamos la temperatura interior mediante sonda.
-              Ese seguimiento nos ayuda a trabajar la cocción y mantener la jugosidad de la carne.
-            </p>
-            <p className="mt-5 leading-relaxed text-slate-600">
-              El acabado final busca ese exterior tostado tan característico de la pata asada canaria.
-              No la loncheamos: sale de AriMar como una pieza entera para que la presentes y cortes cuando vayas a servirla.
-            </p>
-            <div className="mt-8 border-l-4 border-primary-500 bg-primary-50 px-6 py-5">
-              <p className="text-lg font-bold text-primary-800">Una pieza, muchos momentos.</p>
-              <p className="mt-2 leading-relaxed text-slate-600">
-                Para una mesa familiar, un cumpleaños o una reunión especial. Consulta con nosotros las opciones disponibles para tu fecha.
-              </p>
-            </div>
-          </div>
+            <figcaption className="absolute bottom-5 left-5 right-5 rounded-xl bg-[#1E293B]/85 p-4 text-sm font-semibold text-white backdrop-blur-sm">
+              Nuestra pata asada, de verdad. Fotografía tomada en la cocina de AriMar.
+            </figcaption>
+          </figure>
         </div>
       </section>
 
-      <section className="bg-[#f3f8f7] px-5 py-16 sm:px-8 md:py-20 lg:px-12">
-        <div className="mx-auto max-w-6xl">
-          <p className="mb-4 text-xs font-bold uppercase tracking-[0.2em] text-primary-700">
-            Encargar es sencillo
-          </p>
-          <h2 className="max-w-2xl text-3xl font-bold tracking-tight text-slate-900 md:text-4xl">
-            Tú organizas el encuentro. Nosotros preparamos la pata.
+      <div className="border-b border-[#D9E8E8] bg-white">
+        <div className="mx-auto flex max-w-7xl flex-wrap gap-x-9 gap-y-3 px-6 py-5 text-sm font-bold text-[#207F85]">
+          <span>✓ Elaboración propia</span><span>✓ 100 % sin gluten</span><span>✓ Pieza entera para compartir</span><span>✓ Recogida en Playa de Arinaga</span>
+        </div>
+      </div>
+
+      <section className="mx-auto max-w-7xl px-6 py-20 md:py-28" aria-labelledby="celebrar-h2">
+        <div className="grid gap-10 lg:grid-cols-[0.7fr_1.3fr] lg:gap-20">
+          <div>
+            <p className="text-xs font-extrabold uppercase tracking-[0.18em] text-[#207F85]">La protagonista de la mesa</p>
+            <h2 id="celebrar-h2" className="mt-4 text-3xl font-black leading-tight md:text-5xl">Hay celebraciones que merecen una buena pata asada.</h2>
+          </div>
+          <div className="self-end">
+            <p className="text-lg leading-relaxed text-slate-600">Un cumpleaños, un almuerzo con amigos, una reunión familiar o una celebración de empresa. La pata asada canaria es una de esas elaboraciones que convierten el momento de servir en parte de la fiesta.</p>
+            <p className="mt-5 text-lg leading-relaxed text-slate-600">En AriMar la preparamos entera, con su piel bien dorada y controlando la cocción para cuidar el interior. Tú decides cuándo compartirla.</p>
+            <p className="mt-5 text-lg leading-relaxed text-slate-600"><strong className="text-[#1E293B]">¿Buscas comprar pata asada canaria en Gran Canaria?</strong> Recibimos encargos de familias y grupos de cualquier punto de la isla, no solo de Arinaga. Nos cuentas la fecha y cuántas personas vais a reuniros, concretamos la pieza y su presupuesto y la prepararemos para que la recojas en nuestro establecimiento de Playa de Arinaga.</p>
+            <Link href="/contacto" className="mt-7 inline-flex font-bold text-[#207F85] underline underline-offset-4">¿Organizas algo más grande? Consúltanos opciones para eventos ↗</Link>
+          </div>
+        </div>
+        <div className="mt-14 grid gap-4 md:grid-cols-3">
+          {ventajas.map((item) => (
+            <article key={item.numero} className="rounded-2xl border border-[#DFE9E9] bg-white p-7 shadow-sm">
+              <p className="mb-8 text-sm font-extrabold tracking-widest text-[#207F85]">{item.numero}</p>
+              <h3 className="text-xl font-extrabold">{item.titulo}</h3>
+              <p className="mt-3 leading-relaxed text-slate-600">{item.detalle}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="border-y border-[#D9E8E8] bg-[#F1F8F7] px-6 py-16 md:py-20" aria-labelledby="zonas-pata-heading">
+        <div className="mx-auto max-w-7xl">
+          <p className="text-xs font-extrabold uppercase tracking-[0.18em] text-[#207F85]">Encargos desde toda la isla</p>
+          <h2 id="zonas-pata-heading" className="mt-4 max-w-4xl text-3xl font-black leading-tight md:text-4xl">
+            ¿Vives en Vecindario, Ingenio, Telde o Las Palmas? También puedes encargar tu pata asada.
           </h2>
-          <div className="mt-12 grid gap-6 md:grid-cols-3">
-            {[
-              ['01', 'Cuéntanos la ocasión', 'Indícanos para qué día la necesitas y si es una comida familiar, celebración o reunión.'],
-              ['02', 'Concretamos el encargo', 'Revisamos disponibilidad, peso de la pieza y presupuesto antes de confirmar nada.'],
-              ['03', 'Recógela en AriMar', 'La tendrás preparada para recoger en nuestro local de Playa de Arinaga, sin cortar ni lonchear.'],
-            ].map(([numero, titulo, detalle]) => (
-              <article key={numero} className="border-t-2 border-primary-300 bg-white px-6 pb-8 pt-6 shadow-sm">
-                <p className="text-3xl font-light text-primary-500">{numero}</p>
-                <h3 className="mt-5 text-xl font-bold text-slate-900">{titulo}</h3>
-                <p className="mt-3 leading-relaxed text-slate-600">{detalle}</p>
-              </article>
-            ))}
+          <p className="mt-5 max-w-4xl text-lg leading-relaxed text-slate-600">
+            Puedes consultarnos desde cualquier municipio de Gran Canaria por WhatsApp. Preparamos la pieza entera
+            para tu celebración y acordamos contigo la fecha de recogida en nuestra casa de comidas de Playa de Arinaga.
+            <strong className="text-slate-800"> No tenemos puntos de recogida en otras localidades ni ofrecemos reparto a domicilio.</strong>
+          </p>
+          <div className="mt-9 grid gap-4 md:grid-cols-3">
+            <div className="rounded-2xl border border-[#D5E7E7] bg-white p-6">
+              <h3 className="text-lg font-extrabold text-[#1E293B]">Sureste de Gran Canaria</h3>
+              <p className="mt-3 leading-relaxed text-slate-600">Vecindario, Pozo Izquierdo, Cruce de Arinaga, Agüimes, Ingenio y Carrizal.</p>
+            </div>
+            <div className="rounded-2xl border border-[#D5E7E7] bg-white p-6">
+              <h3 className="text-lg font-extrabold text-[#1E293B]">Telde y alrededores</h3>
+              <p className="mt-3 leading-relaxed text-slate-600">También puedes reservar tu pata asada desde Telde y localidades próximas.</p>
+            </div>
+            <div className="rounded-2xl border border-[#D5E7E7] bg-white p-6">
+              <h3 className="text-lg font-extrabold text-[#1E293B]">Las Palmas y resto de la isla</h3>
+              <p className="mt-3 leading-relaxed text-slate-600">Atendemos consultas desde Las Palmas de Gran Canaria y otros municipios de la isla.</p>
+            </div>
           </div>
-          <div className="mt-9 flex flex-wrap gap-4">
-            <a
-              href={whatsapp}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="rounded-xl bg-primary-600 px-7 py-3.5 font-bold text-white hover:bg-primary-700"
-            >
-              Preguntar por WhatsApp ↗
-            </a>
-            <a
-              href={email}
-              className="rounded-xl border border-primary-200 bg-white px-7 py-3.5 font-semibold text-primary-800 hover:bg-primary-50"
-            >
-              Consultar por correo
-            </a>
+          <a href={whatsapp} target="_blank" rel="noopener noreferrer" className="mt-9 inline-flex rounded-xl bg-[#207F85] px-7 py-4 font-bold text-white transition hover:bg-[#18686D]">
+            Consultar pata asada para mi celebración ↗
+          </a>
+        </div>
+      </section>
+
+      <section id="por-que-jugosa" className="bg-white px-6 py-20 md:py-28" aria-labelledby="sonda-h2">
+        <div className="mx-auto grid max-w-7xl items-center gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:gap-20">
+          <div className="relative overflow-hidden rounded-3xl bg-[#EFF5F5]">
+            <Image src="/images/cocina-rational.webp" alt="Equipamiento RATIONAL de la cocina de AriMar, utilizado para controlar los asados" width={900} height={780} sizes="(max-width: 1024px) 100vw, 42vw" className="h-[360px] w-full object-cover md:h-[510px]" />
+            <p className="border-t border-[#CFE4E4] px-6 py-4 text-sm font-semibold text-[#207F85]">Nuestra cocina, nuestro proceso. Sin imágenes de catálogo.</p>
+          </div>
+          <div>
+            <p className="text-xs font-extrabold uppercase tracking-[0.18em] text-[#207F85]">Así cuidamos el asado</p>
+            <h2 id="sonda-h2" className="mt-4 text-3xl font-black leading-tight md:text-5xl">¿Por qué queda tan jugosa?</h2>
+            <p className="mt-6 text-lg leading-relaxed text-slate-600">Una buena pata asada no depende solo del tiempo que pasa en el horno. También importa saber qué está ocurriendo en el centro de la pieza.</p>
+            <p className="mt-5 text-lg leading-relaxed text-slate-600">Por eso trabajamos con la <strong className="text-[#1E293B]">sonda de temperatura interior de nuestro horno RATIONAL</strong>. Programamos el punto de cocción que buscamos y seguimos la temperatura de la carne durante el proceso. Ese control nos ayuda a evitar una cocción excesiva y a mantener la jugosidad, mientras cuidamos el acabado dorado de la piel.</p>
+            <div className="mt-8 border-l-4 border-[#207F85] bg-[#F8FAFC] p-6">
+              <p className="text-xl font-extrabold">No se trata de cocinar más. Se trata de cocinar en su punto.</p>
+              <p className="mt-2 text-sm text-slate-600">El resultado también depende de la pieza, de la preparación y del asado completo.</p>
+            </div>
           </div>
         </div>
       </section>
 
-      <section className="px-5 py-16 sm:px-8 md:py-20 lg:px-12" aria-labelledby="preguntas-pata">
-        <div className="mx-auto grid max-w-6xl gap-10 md:grid-cols-[0.75fr_1.25fr] md:gap-16">
-          <div>
-            <p className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-primary-700">
-              Todo claro antes de encargar
-            </p>
-            <h2 id="preguntas-pata" className="text-3xl font-bold tracking-tight text-slate-900 md:text-4xl">
-              Preguntas frecuentes sobre nuestra pata asada
-            </h2>
-            <p className="mt-5 leading-relaxed text-slate-600">
-              La recogida se realiza en AriMar, en Playa de Arinaga (Agüimes, Gran Canaria).
-            </p>
+      <section className="bg-[#E9F3F3] px-6 py-20 md:py-24" aria-labelledby="pasos-h2">
+        <div className="mx-auto max-w-7xl">
+          <div className="max-w-3xl">
+            <p className="text-xs font-extrabold uppercase tracking-[0.18em] text-[#207F85]">Cómo hacer tu encargo</p>
+            <h2 id="pasos-h2" className="mt-4 text-3xl font-black md:text-5xl">Pata asada para cumpleaños y eventos, sin complicaciones.</h2>
+            <p className="mt-5 text-lg text-slate-600">¿Quieres reservar una pata asada entera para llevar? Todo empieza con una consulta. Te ayudamos a concretar una pieza adecuada y un presupuesto antes de confirmar nada.</p>
           </div>
-          <div className="divide-y divide-primary-100 border-t-2 border-primary-300">
-            {preguntas.map(({ pregunta, respuesta }) => (
-              <article key={pregunta} className="py-6">
-                <h3 className="text-lg font-bold text-slate-900">{pregunta}</h3>
-                <p className="mt-3 leading-relaxed text-slate-600">{respuesta}</p>
-              </article>
+          <div className="mt-12 grid gap-5 md:grid-cols-3">
+            {pasos.map((p) => (
+              <div key={p.numero} className="rounded-2xl bg-white p-7 shadow-sm">
+                <span className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-[#207F85] text-lg font-black text-white">{p.numero}</span>
+                <h3 className="mt-7 text-xl font-extrabold">{p.titulo}</h3>
+                <p className="mt-3 leading-relaxed text-slate-600">{p.detalle}</p>
+              </div>
+            ))}
+          </div>
+          <p className="mt-8 text-sm leading-relaxed text-slate-600">Importante: ofrecemos elaboración y recogida en AriMar. No incluye transporte, servicio de sala, montaje ni corte de la pata en la celebración.</p>
+        </div>
+      </section>
+
+      <section className="px-6 py-20 md:py-28" aria-label="Solicita presupuesto de pata asada">
+        <div className="mx-auto max-w-3xl"><SolicitarPata /></div>
+      </section>
+
+      <section className="bg-white px-6 py-20 md:py-24" aria-labelledby="faq-h2">
+        <div className="mx-auto max-w-4xl">
+          <p className="text-xs font-extrabold uppercase tracking-[0.18em] text-[#207F85]">Antes de encargar</p>
+          <h2 id="faq-h2" className="mt-4 text-3xl font-black md:text-4xl">Preguntas frecuentes sobre nuestra pata asada</h2>
+          <div className="mt-9 divide-y divide-[#DAE7E7] border-y border-[#DAE7E7]">
+            {preguntas.map(({ q, a }) => (
+              <details key={q} className="group py-5">
+                <summary className="flex cursor-pointer list-none items-start justify-between gap-5 text-lg font-bold marker:hidden">
+                  <span>{q}</span><span className="text-2xl font-light text-[#207F85] transition group-open:rotate-45" aria-hidden="true">+</span>
+                </summary>
+                <p className="max-w-3xl pt-3 leading-relaxed text-slate-600">{a}</p>
+              </details>
             ))}
           </div>
         </div>
       </section>
 
-      <section className="border-t border-primary-100 bg-primary-700 px-5 py-14 text-white sm:px-8 md:py-18 lg:px-12">
-        <div className="mx-auto flex max-w-6xl flex-col gap-8 md:flex-row md:items-center md:justify-between">
+      <section className="bg-[#1E293B] px-6 py-16 text-white md:py-20" aria-labelledby="final-pata-h2">
+        <div className="mx-auto grid max-w-7xl items-center gap-10 md:grid-cols-[1fr_auto]">
           <div>
-            <p className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-primary-100">
-              Especialidades de AriMar
-            </p>
-            <h2 className="text-2xl font-bold md:text-3xl">¿Te apetece algo más para compartir?</h2>
-            <p className="mt-3 max-w-xl leading-relaxed text-white/85">
-              Además de la pata, también elaboramos costillas, lomo y bondiola por encargo.
-            </p>
+            <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#B7E1E1]">Tú disfruta, nosotros cocinamos</p>
+            <h2 id="final-pata-h2" className="mt-3 text-3xl font-black md:text-5xl">La próxima celebración puede tener sabor a AriMar.</h2>
+            <p className="mt-4 text-lg text-slate-200">Pregunta por nuestra pata asada canaria. Estamos en Avenida Polizón 67, Playa de Arinaga (Agüimes, Gran Canaria).</p>
+            <div className="mt-5 flex flex-wrap gap-5 text-sm">
+              <Link href="/contacto" className="font-semibold text-[#B7E1E1] underline underline-offset-4">Dónde estamos ↗</Link>
+              <Link href="/carta" className="font-semibold text-[#B7E1E1] underline underline-offset-4">Descubre nuestra carta ↗</Link>
+            </div>
           </div>
-          <Link
-            href="/asados-por-encargo-gran-canaria"
-            className="inline-flex shrink-0 items-center justify-center rounded-xl bg-white px-7 py-4 font-bold text-primary-800 hover:bg-primary-50"
-          >
-            Ver todos los asados →
-          </Link>
+          <a href={whatsapp} target="_blank" rel="noopener noreferrer" className="inline-flex justify-center rounded-xl bg-[#207F85] px-8 py-4 font-extrabold text-white transition hover:bg-[#278F95]">Consultar disponibilidad ↗</a>
         </div>
       </section>
-    </main>
+    </div>
   )
 }
