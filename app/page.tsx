@@ -89,6 +89,9 @@ export default function Home() {
           <p className="text-lg md:text-xl text-slate-600 leading-relaxed">
             En AriMar encontrarás platos del día, pollo asado, potajes, cremas, arroces, pastas, guisos, fritos y postres caseros. Una propuesta variada y cercana, propia de una freiduría moderna donde la cocina de siempre se adapta a una forma de comer más cómoda, práctica y actual.
           </p>
+          <p className="mt-5 text-base leading-relaxed text-slate-600">
+            ¿Preparas un cumpleaños o una reunión? También puedes <Link href="/pata-asada-gran-canaria" className="font-semibold text-primary-700 underline underline-offset-4 hover:text-primary-800">encargar nuestra pata asada canaria</Link> desde cualquier punto de Gran Canaria y recogerla en AriMar.
+          </p>
         </div>
       </section>
 
