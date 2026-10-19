@@ -11,8 +11,8 @@ const mensaje = 'Hola, AriMar. Quisiera información y presupuesto para encargar
 const whatsapp = getWhatsAppUrl(mensaje)
 
 export const metadata: Metadata = {
-  title: 'Pata asada por encargo en Gran Canaria | AriMar',
-  description: 'Pata asada canaria entera para cumpleaños, eventos y reuniones familiares. Jugosa, dorada y 100 % sin gluten. Encárgala y recógela en Playa de Arinaga, Agüimes.',
+  title: 'Pata asada canaria por encargo en Gran Canaria | AriMar',
+  description: '¿Buscas dónde comprar pata asada canaria en Gran Canaria? En AriMar la preparamos entera, 100 % sin gluten, para cumpleaños y eventos. Recogida en Playa de Arinaga.',
   alternates: { canonical: path },
   openGraph: {
     type: 'website',
@@ -27,12 +27,16 @@ export const metadata: Metadata = {
 
 const preguntas = [
   {
-    q: '¿Dónde puedo encargar pata asada en Gran Canaria?',
-    a: 'En AriMar preparamos pata asada canaria por encargo para recoger en nuestro local de Avenida Polizón 67, Playa de Arinaga, Agüimes. Puedes consultar disponibilidad por WhatsApp.',
+    q: '¿Dónde comprar pata asada canaria en Gran Canaria?',
+    a: 'Puedes comprar pata asada canaria por encargo en AriMar, en Avenida Polizón 67, Playa de Arinaga (Agüimes, Gran Canaria). La elaboramos en nuestra cocina 100 % sin gluten. Consulta disponibilidad y presupuesto por WhatsApp antes de acudir a recogerla.',
   },
   {
     q: '¿La pata asada se entrega entera o cortada?',
     a: 'Se entrega la pieza entera, sin cortar ni lonchear. Puedes llevarla a tu celebración y servirla al grosor que prefieras.',
+  },
+  {
+    q: '¿Puedo encargar una pata asada desde Vecindario, Carrizal, Telde o Las Palmas?',
+    a: 'Sí, puedes consultar tu encargo desde cualquier municipio de Gran Canaria. La pata se recoge en nuestro establecimiento de Playa de Arinaga; no realizamos el reparto a domicilio ni el corte durante el evento.',
   },
   {
     q: '¿Con cuánta antelación tengo que pedirla?',
@@ -158,6 +162,7 @@ export default function PataAsadaPage() {
           <div className="self-end">
             <p className="text-lg leading-relaxed text-slate-600">Un cumpleaños, un almuerzo con amigos, una reunión familiar o una celebración de empresa. La pata asada canaria es una de esas elaboraciones que convierten el momento de servir en parte de la fiesta.</p>
             <p className="mt-5 text-lg leading-relaxed text-slate-600">En AriMar la preparamos entera, con su piel bien dorada y controlando la cocción para cuidar el interior. Tú decides cuándo compartirla.</p>
+            <p className="mt-5 text-lg leading-relaxed text-slate-600"><strong className="text-[#1E293B]">¿Buscas comprar pata asada canaria en Gran Canaria?</strong> Puedes encargar una pieza completa y recogerla en Playa de Arinaga, cerca de Vecindario y Carrizal. También recibimos consultas desde Telde y otros municipios de la isla: concretamos la fecha, el tamaño y el presupuesto antes de preparar tu pedido.</p>
             <Link href="/comida-para-eventos-gran-canaria" className="mt-7 inline-flex font-bold text-[#207F85] underline underline-offset-4">¿Organizas algo más grande? Conoce nuestras opciones para eventos ↗</Link>
           </div>
         </div>
@@ -196,7 +201,7 @@ export default function PataAsadaPage() {
           <div className="max-w-3xl">
             <p className="text-xs font-extrabold uppercase tracking-[0.18em] text-[#207F85]">Cómo hacer tu encargo</p>
             <h2 id="pasos-h2" className="mt-4 text-3xl font-black md:text-5xl">Pata asada para cumpleaños y eventos, sin complicaciones.</h2>
-            <p className="mt-5 text-lg text-slate-600">Todo empieza con una consulta. Te ayudamos a concretar una pieza adecuada y un presupuesto antes de confirmar nada.</p>
+            <p className="mt-5 text-lg text-slate-600">¿Quieres reservar una pata asada entera para llevar? Todo empieza con una consulta. Te ayudamos a concretar una pieza adecuada y un presupuesto antes de confirmar nada.</p>
           </div>
           <div className="mt-12 grid gap-5 md:grid-cols-3">
             {pasos.map((p) => (
