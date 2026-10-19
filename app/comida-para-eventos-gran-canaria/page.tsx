@@ -56,7 +56,10 @@ export default function Page() {
           ))}
         </div>
         <div className="mt-8 text-right">
-          <Link href="/asados-por-encargo-gran-canaria" className="font-semibold text-[#426b50] underline decoration-[#d2a67e] underline-offset-8">Conoce nuestros asados por encargo ↗</Link>
+          <div className="flex flex-col items-end gap-3">
+            <Link href="/pata-asada-gran-canaria" className="font-semibold text-[#426b50] underline decoration-[#d2a67e] underline-offset-8">Pata asada canaria por encargo para tu celebración ↗</Link>
+            <Link href="/asados-por-encargo-gran-canaria" className="font-semibold text-[#426b50] underline decoration-[#d2a67e] underline-offset-8">Conoce todos nuestros asados por encargo ↗</Link>
+          </div>
         </div>
       </section>
 
