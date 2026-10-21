@@ -1,14 +1,12 @@
 import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
-import { getWhatsAppUrl, siteConfig } from '@/lib/siteConfig'
+import { siteConfig } from '@/lib/siteConfig'
 import SolicitarPata from './SolicitarPata'
 
 const path = '/pata-asada-gran-canaria'
 const url = 'https://' + siteConfig.domain + path
 const photo = 'https://' + siteConfig.domain + '/images/pata-asada-canaria-arimar-real.jpg'
-const mensaje = 'Hola, AriMar. Quisiera información y presupuesto para encargar una pata asada canaria entera para una celebración. ¿Me podéis ayudar?'
-const whatsapp = getWhatsAppUrl(mensaje)
 
 export const metadata: Metadata = {
   title: 'Pata asada canaria por encargo en Gran Canaria | AriMar',
@@ -40,15 +38,15 @@ const preguntas = [
   },
   {
     q: '¿Con cuánta antelación tengo que pedirla?',
-    a: 'Es mejor consultar cuanto antes, especialmente si la necesitas para un fin de semana o una fecha señalada. Confirmaremos el plazo disponible para tu encargo.',
+    a: 'El calendario habilita fechas desde dos días después para las solicitudes de lunes a jueves; las del viernes, sábado y domingo se habilitan a partir del martes siguiente. Son fechas para solicitar, no reservas confirmadas. Todas están sujetas a disponibilidad y pago anticipado.',
   },
   {
     q: '¿Cuánto cuesta una pata asada entera?',
-    a: 'El presupuesto depende del tamaño y del peso de la pieza, así como de la disponibilidad. Escríbenos con la fecha y el número de comensales y te informaremos antes de confirmar el pedido.',
+    a: 'Trabajamos con patas enteras por unidades. Selecciona una o dos patas y la fecha deseada; AriMar confirmará disponibilidad y precio total antes de enviarte un enlace seguro de pago. El pedido no queda confirmado hasta verificar el pago.',
   },
   {
-    q: '¿De qué tamaño debo encargar la pata para mi celebración?',
-    a: 'Depende del número de comensales, de las guarniciones y del tamaño y rendimiento de la pieza. Dinos para cuántas personas es y te orientaremos sobre las opciones disponibles antes de confirmar el encargo.',
+    q: '¿Cuántas patas puedo encargar para una fecha?',
+    a: 'AriMar prepara un máximo de dos patas asadas enteras por día, sumando todos los encargos. Puedes solicitar una o dos unidades, pero la fecha y la cantidad solo se confirman después de comprobar la disponibilidad y de recibir el pago anticipado.',
   },
   {
     q: '¿Es una pata asada sin gluten?',
@@ -122,9 +120,9 @@ const ventajas = [
 ]
 
 const pasos = [
-  { numero: '01', titulo: 'Cuéntanos la ocasión', detalle: 'Dinos la fecha, el número aproximado de comensales y qué tienes en mente.' },
-  { numero: '02', titulo: 'Concretamos tu pieza', detalle: 'Te confirmamos disponibilidad, tamaño, precio y condiciones de recogida.' },
-  { numero: '03', titulo: 'Recógela en Arinaga', detalle: 'Preparamos el asado acordado para que lo recojas en nuestro local. Se entrega entero y sin lonchear.' },
+  { numero: '01', titulo: 'Selecciona fecha y unidades', detalle: 'El calendario habilita fechas según nuestros plazos. Solicita una o dos patas enteras, según prefieras.' },
+  { numero: '02', titulo: 'Confirmamos el encargo', detalle: 'Comprobamos que queden unidades para ese día y acordamos precio total y hora de recogida. Después te enviamos un enlace de pago.' },
+  { numero: '03', titulo: 'Paga y recógela en AriMar', detalle: 'La reserva se confirma cuando comprobamos el pago. Recoge las patas enteras, sin cortar, a la hora acordada.' },
 ]
 
 export default function PataAsadaPage() {
@@ -146,12 +144,12 @@ export default function PataAsadaPage() {
               Piel dorada, carne jugosa y una pieza para reunir a los tuyos. Aceptamos consultas por encargo desde toda Gran Canaria para cumpleaños, reuniones y celebraciones. La preparamos en nuestra cocina 100 % sin gluten.
             </p>
             <div className="mt-9 flex flex-col gap-3 sm:flex-row">
-              <a href={whatsapp} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center rounded-xl bg-[#207F85] px-7 py-4 text-base font-extrabold text-white shadow-lg transition hover:bg-[#278F95] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">
-                Encargar pata asada <span className="ml-2" aria-hidden="true">↗</span>
+              <a href="#solicitar-presupuesto" className="inline-flex items-center justify-center rounded-xl bg-[#207F85] px-7 py-4 text-base font-extrabold text-white shadow-lg transition hover:bg-[#278F95] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">
+                Solicitar fecha y unidades <span className="ml-2" aria-hidden="true">↓</span>
               </a>
               <a href="#por-que-jugosa" className="inline-flex items-center justify-center rounded-xl border border-white/50 px-7 py-4 text-base font-bold text-white transition hover:bg-white/10">Descubre cómo la asamos ↓</a>
             </div>
-            <p className="mt-6 text-sm leading-relaxed text-slate-300">Encargos para toda Gran Canaria · Recogida en Playa de Arinaga (Agüimes) · La solicitud no confirma el pedido.</p>
+            <p className="mt-6 text-sm leading-relaxed text-slate-300">Encargos para toda Gran Canaria · Máximo 2 patas por fecha · Recogida en Playa de Arinaga · Reserva tras confirmar el pago.</p>
           </div>
           <figure className="relative min-h-[360px] bg-[#F3F3EF] lg:min-h-[670px]">
             <Image
@@ -222,8 +220,8 @@ export default function PataAsadaPage() {
               <p className="mt-3 leading-relaxed text-slate-600">Atendemos consultas desde Las Palmas de Gran Canaria y otros municipios de la isla.</p>
             </div>
           </div>
-          <a href={whatsapp} target="_blank" rel="noopener noreferrer" className="mt-9 inline-flex rounded-xl bg-[#207F85] px-7 py-4 font-bold text-white transition hover:bg-[#18686D]">
-            Consultar pata asada para mi celebración ↗
+          <a href="#solicitar-presupuesto" className="mt-9 inline-flex rounded-xl bg-[#207F85] px-7 py-4 font-bold text-white transition hover:bg-[#18686D]">
+            Elegir fecha y solicitar patas ↓
           </a>
         </div>
       </section>
@@ -252,7 +250,7 @@ export default function PataAsadaPage() {
           <div className="max-w-3xl">
             <p className="text-xs font-extrabold uppercase tracking-[0.18em] text-[#207F85]">Cómo hacer tu encargo</p>
             <h2 id="pasos-h2" className="mt-4 text-3xl font-black md:text-5xl">Pata asada para cumpleaños y eventos, sin complicaciones.</h2>
-            <p className="mt-5 text-lg text-slate-600">¿Quieres reservar una pata asada entera para llevar? Todo empieza con una consulta. Te ayudamos a concretar una pieza adecuada y un presupuesto antes de confirmar nada.</p>
+            <p className="mt-5 text-lg text-slate-600">¿Quieres comprar una o dos patas asadas enteras? Elige una fecha habilitada y envíanos tu solicitud. Comprobaremos disponibilidad para ese día y, si podemos atenderla, te confirmaremos precio y recogida antes de enviarte un enlace de pago.</p>
           </div>
           <div className="mt-12 grid gap-5 md:grid-cols-3">
             {pasos.map((p) => (
@@ -299,7 +297,7 @@ export default function PataAsadaPage() {
               <Link href="/carta" className="font-semibold text-[#B7E1E1] underline underline-offset-4">Descubre nuestra carta ↗</Link>
             </div>
           </div>
-          <a href={whatsapp} target="_blank" rel="noopener noreferrer" className="inline-flex justify-center rounded-xl bg-[#207F85] px-8 py-4 font-extrabold text-white transition hover:bg-[#278F95]">Consultar disponibilidad ↗</a>
+          <a href="#solicitar-presupuesto" className="inline-flex justify-center rounded-xl bg-[#207F85] px-8 py-4 font-extrabold text-white transition hover:bg-[#278F95]">Solicitar fecha y unidades ↓</a>
         </div>
       </section>
     </div>
