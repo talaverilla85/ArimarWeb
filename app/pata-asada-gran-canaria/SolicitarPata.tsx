@@ -58,7 +58,7 @@ export default function SolicitarPata() {
   const primerDia = primeraFechaRecogida(hoy)
   const diaValido = !!fecha && fecha >= primerDia
   const unidadesNumero = Number(unidades)
-  const unidadesValidas = Number.isSafeInteger(unidadesNumero) && unidadesNumero >= 1 && unidadesNumero <= 99
+  const unidadesValidas = Number.isSafeInteger(unidadesNumero) && unidadesNumero >= 1
 
   function enviar(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
@@ -103,7 +103,7 @@ export default function SolicitarPata() {
         </label>
         <label className="text-sm font-semibold text-[#1E293B]">
           Número de patas enteras
-          <input className={field} required type="number" inputMode="numeric" min={1} max={99} step={1} value={unidades} onChange={(e) => setUnidades(e.target.value)} />
+          <input className={field} required type="number" inputMode="numeric" min={1} step={1} value={unidades} onChange={(e) => setUnidades(e.target.value)} />
           <span className="mt-2 block text-xs font-normal leading-relaxed text-slate-500">Vendemos patas enteras por unidades, sin cortar ni lonchear. La cantidad está sujeta a confirmación de AriMar; no recomendamos cantidades según el número de personas.</span>
         </label>
 
