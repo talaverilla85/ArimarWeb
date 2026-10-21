@@ -3,16 +3,28 @@
 import { useEffect, useRef, useState, type FormEvent } from 'react'
 import { getWhatsAppUrl, siteConfig } from '@/lib/siteConfig'
 
-/** Fechas calculadas con el calendario de Canarias, no con la zona horaria del visitante. */
-function fechaHoyCanarias(): string {
+/**
+ * El día operativo de encargos se calcula en Canarias, independientemente
+ * de la zona horaria del visitante. Desde las 16:00:00 h de Canarias,
+ * se considera que la solicitud se presenta al día siguiente.
+ */
+function diaOperativoCanarias(): string {
   const parts = new Intl.DateTimeFormat('en-GB', {
     timeZone: 'Atlantic/Canary',
+    hourCycle: 'h23',
     year: 'numeric',
     month: '2-digit',
     day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
   }).formatToParts(new Date())
   const part = (type: string) => parts.find((p) => p.type === type)?.value ?? ''
-  return [part('year'), part('month'), part('day')].join('-')
+  const fechaCanarias = [part('year'), part('month'), part('day')].join('-')
+  if (Number(part('hour')) < 16) return fechaCanarias
+
+  const siguiente = new Date(fechaCanarias + 'T12:00:00Z')
+  siguiente.setUTCDate(siguiente.getUTCDate() + 1)
+  return siguiente.toISOString().slice(0, 10)
 }
 
 /**
@@ -39,7 +51,7 @@ function fechaLegible(value: string): string {
 }
 
 export default function SolicitarPata() {
-  const [hoy, setHoy] = useState(fechaHoyCanarias)
+  const [diaOperativo, setDiaOperativo] = useState(diaOperativoCanarias)
   const [nombre, setNombre] = useState('')
   const [fecha, setFecha] = useState('')
   const [unidades, setUnidades] = useState('1')
@@ -49,20 +61,20 @@ export default function SolicitarPata() {
   const dateInput = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
-    const actualizar = () => setHoy(fechaHoyCanarias())
+    const actualizar = () => setDiaOperativo(diaOperativoCanarias())
     actualizar()
-    const interval = window.setInterval(actualizar, 60_000)
+    const interval = window.setInterval(actualizar, 1_000)
     return () => window.clearInterval(interval)
   }, [])
 
-  const primerDia = primeraFechaRecogida(hoy)
+  const primerDia = primeraFechaRecogida(diaOperativo)
   const diaValido = !!fecha && fecha >= primerDia
   const unidadesNumero = Number(unidades)
   const unidadesValidas = Number.isSafeInteger(unidadesNumero) && unidadesNumero >= 1
 
   function enviar(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
-    const fechaMinimaActual = primeraFechaRecogida(fechaHoyCanarias())
+    const fechaMinimaActual = primeraFechaRecogida(diaOperativoCanarias())
     if (!fecha || fecha < fechaMinimaActual) {
       setErrorFecha('Esa fecha ya no admite solicitudes. Elige una de las fechas habilitadas.')
       setFecha('')
@@ -126,7 +138,7 @@ export default function SolicitarPata() {
           />
           <div id="pata-fecha-ayuda" className="mt-3 rounded-xl border border-[#D5E7E7] bg-[#F1F8F7] p-4 text-sm leading-relaxed text-[#1E293B]">
             <p className="font-bold text-[#207F85]">Primera fecha seleccionable: {fechaLegible(primerDia)}.</p>
-            <p className="mt-2">De lunes a jueves se habilitan fechas desde dos días después. Las solicitudes de viernes, sábado y domingo se habilitan desde el martes siguiente, por los plazos de suministro y elaboración.</p>
+            <p className="mt-2">Solicitudes hasta las 15:59 h (hora de Canarias): de lunes a jueves, recogida desde dos días después; de viernes a domingo, desde el martes siguiente. A partir de las 16:00 h, calculamos las fechas como si solicitaras al día siguiente.</p>
             <p className="mt-2 text-slate-600">Las fechas habilitadas cumplen el plazo mínimo previsto de suministro y elaboración. La fecha elegida es una solicitud: AriMar debe confirmar disponibilidad y horario antes de enviar el enlace de pago.</p>
           </div>
           {errorFecha && <p className="mt-2 text-sm font-semibold text-red-700" role="alert">{errorFecha}</p>}
