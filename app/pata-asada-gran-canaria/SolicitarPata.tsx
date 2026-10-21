@@ -88,6 +88,7 @@ export default function SolicitarPata() {
       'Nombre: ' + nombre.trim(),
       'Número de patas enteras solicitado: ' + unidadesNumero,
       'Fecha deseada de recogida: ' + fecha,
+      'Horario de recogida: 11:30–16:00 h (hora concreta pendiente de confirmación)',
       'Ocasión: ' + ocasion,
       'Observaciones: ' + (comentarios.trim() || 'Sin observaciones'),
       '',
@@ -138,6 +139,7 @@ export default function SolicitarPata() {
           />
           <p id="pata-fecha-ayuda" className="mt-2 text-sm leading-relaxed text-slate-600">
             Primera fecha seleccionable: <strong className="text-[#207F85]">{fechaLegible(primerDia)}</strong>. La fecha solicitada está sujeta a confirmación por WhatsApp.
+            <span className="mt-1 block font-semibold text-[#1E293B]">Horario de recogida: de 11:30 a 16:00 h. Confirmaremos la hora exacta contigo.</span>
           </p>
           {errorFecha && <p className="mt-2 text-sm font-semibold text-red-700" role="alert">{errorFecha}</p>}
         </div>
