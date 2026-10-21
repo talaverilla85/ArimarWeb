@@ -1,27 +1,87 @@
 'use client'
 
-import { useState, type FormEvent } from 'react'
-import { getWhatsAppUrl } from '@/lib/siteConfig'
+import { useEffect, useRef, useState, type FormEvent } from 'react'
+import { getWhatsAppUrl, siteConfig } from '@/lib/siteConfig'
+
+/** Fechas calculadas con el calendario de Canarias, no con la zona horaria del visitante. */
+function fechaHoyCanarias(): string {
+  const parts = new Intl.DateTimeFormat('en-GB', {
+    timeZone: 'Atlantic/Canary',
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+  }).formatToParts(new Date())
+  const part = (type: string) => parts.find((p) => p.type === type)?.value ?? ''
+  return [part('year'), part('month'), part('day')].join('-')
+}
+
+/**
+ * Lunes a jueves: fecha + 2 días naturales.
+ * Viernes, sábado y domingo: martes siguiente, por reposición del proveedor.
+ * Disponibilidad definitiva y hora de recogida: siempre confirmación humana.
+ */
+function primeraFechaRecogida(hoy: string): string {
+  const date = new Date(hoy + 'T12:00:00Z')
+  const weekday = date.getUTCDay()
+  const daysAhead = weekday === 5 ? 4 : weekday === 6 ? 3 : 2
+  date.setUTCDate(date.getUTCDate() + daysAhead)
+  return date.toISOString().slice(0, 10)
+}
+
+function fechaLegible(value: string): string {
+  return new Intl.DateTimeFormat('es-ES', {
+    timeZone: 'UTC',
+    weekday: 'long',
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+  }).format(new Date(value + 'T12:00:00Z'))
+}
 
 export default function SolicitarPata() {
+  const [hoy, setHoy] = useState(fechaHoyCanarias)
   const [nombre, setNombre] = useState('')
   const [fecha, setFecha] = useState('')
+  const [unidades, setUnidades] = useState('1')
   const [ocasion, setOcasion] = useState('Reunión familiar')
-  const [personas, setPersonas] = useState('')
   const [comentarios, setComentarios] = useState('')
+  const [errorFecha, setErrorFecha] = useState('')
+  const dateInput = useRef<HTMLInputElement>(null)
+
+  useEffect(() => {
+    const actualizar = () => setHoy(fechaHoyCanarias())
+    actualizar()
+    const interval = window.setInterval(actualizar, 60_000)
+    return () => window.clearInterval(interval)
+  }, [])
+
+  const primerDia = primeraFechaRecogida(hoy)
+  const diaValido = !!fecha && fecha >= primerDia
+  const unidadesNumero = Number(unidades)
+  const unidadesValidas = Number.isSafeInteger(unidadesNumero) && unidadesNumero >= 1
 
   function enviar(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
+    const fechaMinimaActual = primeraFechaRecogida(fechaHoyCanarias())
+    if (!fecha || fecha < fechaMinimaActual) {
+      setErrorFecha('Esa fecha ya no admite solicitudes. Elige una de las fechas habilitadas.')
+      setFecha('')
+      return
+    }
+    if (!unidadesValidas) return
+
     const lines = [
-      'Hola, AriMar. Quisiera consultar un encargo de pata asada canaria.',
+      'Hola, AriMar. Quisiera solicitar disponibilidad de pata asada canaria por encargo.',
       '',
       'Nombre: ' + nombre.trim(),
+      'Unidades de pata entera (sin cortar): ' + unidadesNumero,
       'Fecha deseada de recogida: ' + fecha,
       'Ocasión: ' + ocasion,
-      'Número aproximado de personas: ' + (personas || 'Por concretar'),
-      'Comentarios: ' + (comentarios.trim() || 'Sin observaciones'),
+      'Observaciones: ' + (comentarios.trim() || 'Sin observaciones'),
       '',
-      '¿Podéis indicarme disponibilidad, tamaño de la pieza y presupuesto?',
+      'Entiendo que la fecha y la cantidad requieren confirmación de AriMar.',
+      'Una vez confirmados disponibilidad, precio y recogida, espero vuestro enlace de pago anticipado.',
+      'La solicitud no constituye reserva ni pago.',
     ]
     window.location.href = getWhatsAppUrl(lines.join('\n'))
   }
@@ -32,19 +92,47 @@ export default function SolicitarPata() {
     <div className="overflow-hidden rounded-3xl border border-[#D7E7E8] bg-white shadow-xl shadow-[#1E293B]/10" id="solicitar-presupuesto">
       <div className="bg-[#1E293B] px-6 py-8 text-white md:px-9">
         <p className="mb-2 text-xs font-bold uppercase tracking-[0.2em] text-[#B7E1E1]">Encargos para celebraciones</p>
-        <h2 className="text-3xl font-extrabold tracking-tight md:text-4xl">¿Reservamos tu pata asada?</h2>
-        <p className="mt-3 leading-relaxed text-slate-200">Cuéntanos cuándo la necesitas y para cuántas personas. Te responderemos por WhatsApp con las opciones disponibles.</p>
+        <h2 className="text-3xl font-extrabold tracking-tight md:text-4xl">Solicita tus patas asadas</h2>
+        <p className="mt-3 leading-relaxed text-slate-200">Selecciona una fecha habilitada y el número de patas enteras que quieres encargar. AriMar confirmará disponibilidad, precio y recogida antes de enviarte el enlace de pago.</p>
       </div>
+
       <form onSubmit={enviar} className="grid gap-5 p-6 md:grid-cols-2 md:p-9">
         <label className="text-sm font-semibold text-[#1E293B]">
           Tu nombre
           <input className={field} required autoComplete="name" maxLength={80} value={nombre} onChange={(e) => setNombre(e.target.value)} placeholder="¿Cómo te llamas?" />
         </label>
         <label className="text-sm font-semibold text-[#1E293B]">
-          Fecha deseada de recogida
-          <input className={field} required type="date" value={fecha} onChange={(e) => setFecha(e.target.value)} />
+          Número de patas enteras
+          <input className={field} required type="number" inputMode="numeric" min={1} step={1} value={unidades} onChange={(e) => setUnidades(e.target.value)} />
+          <span className="mt-2 block text-xs font-normal leading-relaxed text-slate-500">Vendemos unidades completas, sin cortar ni lonchear. No calculamos raciones por comensal.</span>
         </label>
-        <label className="text-sm font-semibold text-[#1E293B]">
+
+        <div className="md:col-span-2">
+          <label htmlFor="pata-fecha" className="block text-sm font-semibold text-[#1E293B]">
+            Fecha deseada de recogida
+          </label>
+          <input
+            ref={dateInput}
+            id="pata-fecha"
+            className={field + ' cursor-pointer'}
+            required
+            type="date"
+            min={primerDia}
+            value={diaValido ? fecha : ''}
+            onClick={() => { try { dateInput.current?.showPicker?.() } catch { /* algunos navegadores abren su propio calendario */ } }}
+            onChange={(e) => { setFecha(e.target.value); setErrorFecha('') }}
+            aria-describedby="pata-fecha-ayuda"
+            aria-invalid={!!errorFecha}
+          />
+          <div id="pata-fecha-ayuda" className="mt-3 rounded-xl border border-[#D5E7E7] bg-[#F1F8F7] p-4 text-sm leading-relaxed text-[#1E293B]">
+            <p className="font-bold text-[#207F85]">Primera fecha seleccionable: {fechaLegible(primerDia)}.</p>
+            <p className="mt-2">De lunes a jueves se habilitan fechas desde dos días después. Las solicitudes de viernes, sábado y domingo se habilitan desde el martes siguiente, por los plazos de suministro y elaboración.</p>
+            <p className="mt-2 text-slate-600">El calendario indica fechas en las que podemos valorar tu solicitud; ninguna fecha queda reservada hasta que AriMar confirme disponibilidad y se complete el pago.</p>
+          </div>
+          {errorFecha && <p className="mt-2 text-sm font-semibold text-red-700" role="alert">{errorFecha}</p>}
+        </div>
+
+        <label className="text-sm font-semibold text-[#1E293B] md:col-span-2">
           Tipo de celebración
           <select className={field} value={ocasion} onChange={(e) => setOcasion(e.target.value)}>
             <option>Reunión familiar</option>
@@ -53,19 +141,31 @@ export default function SolicitarPata() {
             <option>Otra celebración</option>
           </select>
         </label>
-        <label className="text-sm font-semibold text-[#1E293B]">
-          Número aproximado de personas
-          <input className={field} type="number" inputMode="numeric" min={1} max={1000} value={personas} onChange={(e) => setPersonas(e.target.value)} placeholder="Ej.: 15" />
-        </label>
         <label className="text-sm font-semibold text-[#1E293B] md:col-span-2">
-          Cuéntanos algo más (opcional)
-          <textarea className={field} rows={3} maxLength={500} value={comentarios} onChange={(e) => setComentarios(e.target.value)} placeholder="Tamaño de la pieza, hora aproximada u otras dudas..." />
+          Observaciones (opcional)
+          <textarea className={field} rows={3} maxLength={500} value={comentarios} onChange={(e) => setComentarios(e.target.value)} placeholder="Indica cualquier necesidad concreta. La hora de recogida se confirmará contigo." />
         </label>
+
+        <aside className="md:col-span-2 rounded-2xl border border-[#D7E7E8] bg-[#F8FAFC] p-5">
+          <h3 className="text-lg font-extrabold text-[#1E293B]">Recogida y pago de tu encargo</h3>
+          <p className="mt-2 text-sm leading-relaxed text-slate-600">
+            Recogida únicamente en AriMar, Avenida Polizón 67, Playa de Arinaga (Agüimes). No realizamos reparto ni corte en el evento. La hora concreta se acuerda al confirmar el encargo.
+          </p>
+          <a href={siteConfig.mapsUrl} target="_blank" rel="noopener noreferrer" className="mt-3 inline-flex font-bold text-[#207F85] underline underline-offset-4">Ver cómo llegar en Google Maps ↗</a>
+          <ol className="mt-5 list-decimal space-y-2 pl-5 text-sm leading-relaxed text-slate-700">
+            <li>Solicitas fecha y número de patas por WhatsApp.</li>
+            <li>AriMar confirma disponibilidad, precio total y horario de recogida.</li>
+            <li>Te enviamos un enlace de pago para abonar el pedido por adelantado.</li>
+            <li>La reserva queda confirmada cuando se verifica el pago.</li>
+          </ol>
+        </aside>
+
         <div className="md:col-span-2">
-          <button type="submit" className="flex w-full items-center justify-center gap-2 rounded-xl bg-[#207F85] px-6 py-4 text-base font-extrabold text-white transition hover:bg-[#18686D] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#207F85]">
-            Consultar mi encargo por WhatsApp <span aria-hidden="true">↗</span>
+          <button type="submit" disabled={!diaValido || !unidadesValidas} className="flex w-full items-center justify-center gap-2 rounded-xl bg-[#207F85] px-6 py-4 text-base font-extrabold text-white transition hover:bg-[#18686D] disabled:cursor-not-allowed disabled:opacity-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#207F85]">
+            Enviar solicitud por WhatsApp <span aria-hidden="true">↗</span>
           </button>
-          <p className="mt-3 text-sm leading-relaxed text-slate-500">Se abrirá WhatsApp con tu consulta ya preparada. No se envía ni se confirma ningún pedido hasta que tú lo mandes y AriMar responda con disponibilidad y presupuesto.</p>
+          <p className="mt-3 text-sm leading-relaxed text-slate-500">Se abrirá WhatsApp con los datos ya preparados: deberás pulsar Enviar. Este formulario no cobra, no bloquea unidades ni confirma la reserva.</p>
+          <p className="mt-3 text-sm leading-relaxed text-slate-500">¿Necesitas una fecha anterior a las habilitadas? <a href={getWhatsAppUrl('Hola, AriMar. Quisiera consultar si excepcionalmente podéis preparar un encargo urgente de pata asada.')} target="_blank" rel="noopener noreferrer" className="font-semibold text-[#207F85] underline underline-offset-4">Consúltanos por WhatsApp</a>; estará sujeto a disponibilidad.</p>
         </div>
       </form>
     </div>
