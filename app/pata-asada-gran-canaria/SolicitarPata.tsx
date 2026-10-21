@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState, type FormEvent } from 'react'
-import { getWhatsAppUrl, siteConfig } from '@/lib/siteConfig'
+import { getWhatsAppUrl } from '@/lib/siteConfig'
 
 /**
  * El día operativo de encargos se calcula en Canarias, independientemente
@@ -105,7 +105,7 @@ export default function SolicitarPata() {
       <div className="bg-[#1E293B] px-6 py-8 text-white md:px-9">
         <p className="mb-2 text-xs font-bold uppercase tracking-[0.2em] text-[#B7E1E1]">Encargos para celebraciones</p>
         <h2 className="text-3xl font-extrabold tracking-tight md:text-4xl">Solicita tus patas asadas</h2>
-        <p className="mt-3 leading-relaxed text-slate-200">Elige una fecha disponible en el calendario e indica cuántas patas enteras deseas reservar. Enviaremos la solicitud por WhatsApp a AriMar; comprobaremos si podemos atenderla y te confirmaremos fecha, precio y horario antes del pago.</p>
+        <p className="mt-3 leading-relaxed text-slate-200">Selecciona la fecha de recogida y el número de patas enteras. Recibiremos tu solicitud por WhatsApp y te confirmaremos los detalles antes del pago.</p>
       </div>
 
       <form onSubmit={enviar} className="grid gap-5 p-6 md:grid-cols-2 md:p-9">
@@ -136,11 +136,9 @@ export default function SolicitarPata() {
             aria-describedby="pata-fecha-ayuda"
             aria-invalid={!!errorFecha}
           />
-          <div id="pata-fecha-ayuda" className="mt-3 rounded-xl border border-[#D5E7E7] bg-[#F1F8F7] p-4 text-sm leading-relaxed text-[#1E293B]">
-            <p className="font-bold text-[#207F85]">Primera fecha seleccionable: {fechaLegible(primerDia)}.</p>
-            <p className="mt-2">Solicitudes hasta las 15:59 h (hora de Canarias): de lunes a jueves, recogida desde dos días después; de viernes a domingo, desde el martes siguiente. A partir de las 16:00 h, calculamos las fechas como si solicitaras al día siguiente.</p>
-            <p className="mt-2 text-slate-600">Las fechas habilitadas cumplen el plazo mínimo previsto de suministro y elaboración. La fecha elegida es una solicitud: AriMar debe confirmar disponibilidad y horario antes de enviar el enlace de pago.</p>
-          </div>
+          <p id="pata-fecha-ayuda" className="mt-2 text-sm leading-relaxed text-slate-600">
+            Primera fecha seleccionable: <strong className="text-[#207F85]">{fechaLegible(primerDia)}</strong>. La fecha solicitada está sujeta a confirmación por WhatsApp.
+          </p>
           {errorFecha && <p className="mt-2 text-sm font-semibold text-red-700" role="alert">{errorFecha}</p>}
         </div>
 
@@ -157,20 +155,6 @@ export default function SolicitarPata() {
           Observaciones (opcional)
           <textarea className={field} rows={3} maxLength={500} value={comentarios} onChange={(e) => setComentarios(e.target.value)} placeholder="Indica cualquier necesidad concreta. La hora de recogida se confirmará contigo." />
         </label>
-
-        <aside className="md:col-span-2 rounded-2xl border border-[#D7E7E8] bg-[#F8FAFC] p-5">
-          <h3 className="text-lg font-extrabold text-[#1E293B]">Recogida y pago de tu encargo</h3>
-          <p className="mt-2 text-sm leading-relaxed text-slate-600">
-            Recogida únicamente en AriMar, Avenida Polizón 67, Playa de Arinaga (Agüimes). No realizamos reparto ni corte en el evento. La hora concreta se acuerda al confirmar el encargo.
-          </p>
-          <a href={siteConfig.mapsUrl} target="_blank" rel="noopener noreferrer" className="mt-3 inline-flex font-bold text-[#207F85] underline underline-offset-4">Ver cómo llegar en Google Maps ↗</a>
-          <ol className="mt-5 list-decimal space-y-2 pl-5 text-sm leading-relaxed text-slate-700">
-            <li>Solicitas fecha y número de patas por WhatsApp.</li>
-            <li>AriMar recibe tu solicitud por WhatsApp y, si podemos atenderla, te confirma por WhatsApp la fecha, el precio total y la hora de recogida.</li>
-            <li>Cuando aceptas las condiciones, te enviamos el enlace de pago para abonar el encargo por adelantado.</li>
-            <li>La reserva queda confirmada cuando se verifica el pago.</li>
-          </ol>
-        </aside>
 
         <div className="md:col-span-2">
           <button type="submit" disabled={!diaValido || !unidadesValidas} className="flex w-full items-center justify-center gap-2 rounded-xl bg-[#207F85] px-6 py-4 text-base font-extrabold text-white transition hover:bg-[#18686D] disabled:cursor-not-allowed disabled:opacity-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#207F85]">
