@@ -263,7 +263,7 @@ export default function PataAsadaPage() {
             ))}
           </div>
           <p className="mt-8 text-sm leading-relaxed text-slate-600">
-            <strong>Recogida en AriMar:</strong> Avenida Polizón 67, Playa de Arinaga (Agüimes). No realizamos reparto, servicio de sala, montaje ni corte en eventos.
+            <strong>Recogida en AriMar:</strong> Avenida Polizón 67, Playa de Arinaga (Agüimes), <strong>de 11:30 a 16:00 h</strong>, a la hora acordada. No realizamos reparto, servicio de sala, montaje ni corte en eventos.
             {' '}<a href={siteConfig.mapsUrl} target="_blank" rel="noopener noreferrer" className="font-bold text-[#207F85] underline underline-offset-4">Cómo llegar en Google Maps ↗</a>
           </p>
         </div>
