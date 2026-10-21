@@ -42,7 +42,7 @@ const preguntas = [
   },
   {
     q: '¿Cuánto cuesta una pata asada entera?',
-    a: 'Trabajamos con patas enteras vendidas por unidades. Elige la cantidad y una fecha del calendario. AriMar recibirá tu solicitud por WhatsApp y, si podemos atenderla, confirmaremos fecha, precio y recogida por el mismo medio antes de enviarte el enlace de pago. La reserva se confirma cuando verificamos el pago.',
+    a: 'Trabajamos con patas enteras vendidas por unidades. Elige la cantidad y una fecha del calendario. AriMar recibirá tu solicitud por WhatsApp, revisará la disponibilidad y te confirmará fecha, precio y recogida antes de enviarte el enlace de pago. La reserva se confirma cuando verificamos el pago.',
   },
   {
     q: '¿La pata asada se vende por unidades o por número de comensales?',
@@ -120,9 +120,10 @@ const ventajas = [
 ]
 
 const pasos = [
-  { numero: '01', titulo: 'Selecciona fecha y unidades', detalle: 'El calendario habilita fechas según nuestros plazos. Indica cuántas patas enteras quieres y envía la solicitud por WhatsApp.' },
-  { numero: '02', titulo: 'Te respondemos por WhatsApp', detalle: 'Revisamos la solicitud y, si es viable, confirmamos fecha, precio total y hora de recogida y enviamos el enlace de pago.' },
-  { numero: '03', titulo: 'Paga y recógela en AriMar', detalle: 'La reserva se confirma cuando comprobamos el pago. Recoge las patas enteras, sin cortar, a la hora acordada.' },
+  { numero: '01', titulo: 'Solicita tu reserva', detalle: 'Elige una fecha en el calendario, indica cuántas patas enteras quieres y envíanos la solicitud por WhatsApp.' },
+  { numero: '02', titulo: 'Confirmamos los detalles', detalle: 'Comprobamos la disponibilidad y te confirmamos por WhatsApp la fecha, el precio total y la hora de recogida.' },
+  { numero: '03', titulo: 'Recibes el enlace de pago', detalle: 'Te enviamos el enlace para pagar el encargo por adelantado.' },
+  { numero: '04', titulo: 'Reserva confirmada', detalle: 'Comprobamos el pago y dejamos confirmada la reserva. Recoge tus patas en AriMar a la hora acordada.' },
 ]
 
 export default function PataAsadaPage() {
@@ -250,18 +251,21 @@ export default function PataAsadaPage() {
           <div className="max-w-3xl">
             <p className="text-xs font-extrabold uppercase tracking-[0.18em] text-[#207F85]">Cómo hacer tu encargo</p>
             <h2 id="pasos-h2" className="mt-4 text-3xl font-black md:text-5xl">Pata asada para cumpleaños y eventos, sin complicaciones.</h2>
-            <p className="mt-5 text-lg text-slate-600">Elige una fecha habilitada, indica el número de patas asadas enteras y envíanos la solicitud por WhatsApp. Revisaremos si podemos atenderla y te confirmaremos fecha, horario y precio antes de enviar el enlace de pago. El encargo se reserva al verificar el pago.</p>
+            <p className="mt-5 text-lg text-slate-600">Solicita la fecha y el número de patas enteras que quieras. Nos encargamos de confirmar los detalles por WhatsApp y enviarte el enlace de pago para completar la reserva.</p>
           </div>
-          <div className="mt-12 grid gap-5 md:grid-cols-3">
+          <div className="mt-12 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
             {pasos.map((p) => (
-              <div key={p.numero} className="rounded-2xl bg-white p-7 shadow-sm">
+              <div key={p.numero} className="rounded-2xl bg-white p-6 shadow-sm">
                 <span className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-[#207F85] text-lg font-black text-white">{p.numero}</span>
                 <h3 className="mt-7 text-xl font-extrabold">{p.titulo}</h3>
                 <p className="mt-3 leading-relaxed text-slate-600">{p.detalle}</p>
               </div>
             ))}
           </div>
-          <p className="mt-8 text-sm leading-relaxed text-slate-600">Importante: ofrecemos elaboración y recogida en AriMar. No incluye transporte, servicio de sala, montaje ni corte de la pata en la celebración.</p>
+          <p className="mt-8 text-sm leading-relaxed text-slate-600">
+            <strong>Recogida en AriMar:</strong> Avenida Polizón 67, Playa de Arinaga (Agüimes). No realizamos reparto, servicio de sala, montaje ni corte en eventos.
+            {' '}<a href={siteConfig.mapsUrl} target="_blank" rel="noopener noreferrer" className="font-bold text-[#207F85] underline underline-offset-4">Cómo llegar en Google Maps ↗</a>
+          </p>
         </div>
       </section>
 
