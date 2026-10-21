@@ -58,7 +58,7 @@ export default function SolicitarPata() {
   const primerDia = primeraFechaRecogida(hoy)
   const diaValido = !!fecha && fecha >= primerDia
   const unidadesNumero = Number(unidades)
-  const unidadesValidas = Number.isSafeInteger(unidadesNumero) && unidadesNumero >= 1 && unidadesNumero <= 2
+  const unidadesValidas = Number.isSafeInteger(unidadesNumero) && unidadesNumero >= 1 && unidadesNumero <= 99
 
   function enviar(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
@@ -74,14 +74,14 @@ export default function SolicitarPata() {
       'Hola, AriMar. Quisiera solicitar disponibilidad de pata asada canaria por encargo.',
       '',
       'Nombre: ' + nombre.trim(),
-      'Unidades solicitadas (máximo 2 por fecha, sujeto a disponibilidad): ' + unidadesNumero,
+      'Número de patas enteras solicitado: ' + unidadesNumero,
       'Fecha deseada de recogida: ' + fecha,
       'Ocasión: ' + ocasion,
       'Observaciones: ' + (comentarios.trim() || 'Sin observaciones'),
       '',
       'Entiendo que la fecha y la cantidad requieren confirmación de AriMar.',
       'Una vez confirmados disponibilidad, precio y recogida, espero vuestro enlace de pago anticipado.',
-      'La solicitud no constituye reserva ni pago.',
+      'Mi solicitud de reserva queda pendiente de confirmación de AriMar y del pago.',
     ]
     window.location.href = getWhatsAppUrl(lines.join('\n'))
   }
@@ -93,7 +93,7 @@ export default function SolicitarPata() {
       <div className="bg-[#1E293B] px-6 py-8 text-white md:px-9">
         <p className="mb-2 text-xs font-bold uppercase tracking-[0.2em] text-[#B7E1E1]">Encargos para celebraciones</p>
         <h2 className="text-3xl font-extrabold tracking-tight md:text-4xl">Solicita tus patas asadas</h2>
-        <p className="mt-3 leading-relaxed text-slate-200">Selecciona una fecha habilitada y cuántas patas enteras deseas solicitar (1 o 2). Solo preparamos un máximo de dos unidades en total por fecha. AriMar revisará las solicitudes recibidas antes de autorizar el pago.</p>
+        <p className="mt-3 leading-relaxed text-slate-200">Elige una fecha disponible en el calendario e indica cuántas patas enteras deseas reservar. Enviaremos la solicitud por WhatsApp a AriMar; comprobaremos si podemos atenderla y te confirmaremos fecha, precio y horario antes del pago.</p>
       </div>
 
       <form onSubmit={enviar} className="grid gap-5 p-6 md:grid-cols-2 md:p-9">
@@ -103,8 +103,8 @@ export default function SolicitarPata() {
         </label>
         <label className="text-sm font-semibold text-[#1E293B]">
           Número de patas enteras
-          <select className={field} required value={unidades} onChange={(e) => setUnidades(e.target.value)}><option value="1">1 pata entera</option><option value="2">2 patas enteras</option></select>
-          <span className="mt-2 block text-xs font-normal leading-relaxed text-slate-500">Máximo 2 patas en total por día, entre todos los clientes. La solicitud no garantiza existencias; las confirmamos personalmente. Vendemos unidades completas, sin cortar ni lonchear.</span>
+          <input className={field} required type="number" inputMode="numeric" min={1} max={99} step={1} value={unidades} onChange={(e) => setUnidades(e.target.value)} />
+          <span className="mt-2 block text-xs font-normal leading-relaxed text-slate-500">Vendemos patas enteras por unidades, sin cortar ni lonchear. La cantidad está sujeta a confirmación de AriMar; no recomendamos cantidades según el número de personas.</span>
         </label>
 
         <div className="md:col-span-2">
@@ -127,7 +127,7 @@ export default function SolicitarPata() {
           <div id="pata-fecha-ayuda" className="mt-3 rounded-xl border border-[#D5E7E7] bg-[#F1F8F7] p-4 text-sm leading-relaxed text-[#1E293B]">
             <p className="font-bold text-[#207F85]">Primera fecha seleccionable: {fechaLegible(primerDia)}.</p>
             <p className="mt-2">De lunes a jueves se habilitan fechas desde dos días después. Las solicitudes de viernes, sábado y domingo se habilitan desde el martes siguiente, por los plazos de suministro y elaboración.</p>
-            <p className="mt-2 text-slate-600">El calendario indica fechas en las que podemos valorar tu solicitud. Puede haber días completos si ya se han reservado dos patas; ninguna fecha queda reservada hasta que AriMar compruebe disponibilidad y se complete el pago.</p>
+            <p className="mt-2 text-slate-600">Las fechas habilitadas cumplen el plazo mínimo previsto de suministro y elaboración. La fecha elegida es una solicitud: AriMar debe confirmar disponibilidad y horario antes de enviar el enlace de pago.</p>
           </div>
           {errorFecha && <p className="mt-2 text-sm font-semibold text-red-700" role="alert">{errorFecha}</p>}
         </div>
@@ -154,8 +154,8 @@ export default function SolicitarPata() {
           <a href={siteConfig.mapsUrl} target="_blank" rel="noopener noreferrer" className="mt-3 inline-flex font-bold text-[#207F85] underline underline-offset-4">Ver cómo llegar en Google Maps ↗</a>
           <ol className="mt-5 list-decimal space-y-2 pl-5 text-sm leading-relaxed text-slate-700">
             <li>Solicitas fecha y número de patas por WhatsApp.</li>
-            <li>AriMar comprueba el límite de 2 patas del día y confirma disponibilidad, precio total y horario de recogida.</li>
-            <li>Te enviamos un enlace de pago para abonar el pedido por adelantado.</li>
+            <li>AriMar recibe tu solicitud por WhatsApp y, si podemos atenderla, te confirma por WhatsApp la fecha, el precio total y la hora de recogida.</li>
+            <li>Cuando aceptas las condiciones, te enviamos el enlace de pago para abonar el encargo por adelantado.</li>
             <li>La reserva queda confirmada cuando se verifica el pago.</li>
           </ol>
         </aside>
@@ -164,7 +164,7 @@ export default function SolicitarPata() {
           <button type="submit" disabled={!diaValido || !unidadesValidas} className="flex w-full items-center justify-center gap-2 rounded-xl bg-[#207F85] px-6 py-4 text-base font-extrabold text-white transition hover:bg-[#18686D] disabled:cursor-not-allowed disabled:opacity-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#207F85]">
             Enviar solicitud por WhatsApp <span aria-hidden="true">↗</span>
           </button>
-          <p className="mt-3 text-sm leading-relaxed text-slate-500">Se abrirá WhatsApp con los datos preparados: deberás pulsar Enviar. Este formulario no consulta todavía un inventario por fecha, no bloquea unidades y no confirma la reserva. El enlace de pago se envía después de comprobar disponibilidad.</p>
+          <p className="mt-3 text-sm leading-relaxed text-slate-500">Se abrirá WhatsApp con tu solicitud preparada: deberás pulsar Enviar. El calendario no garantiza disponibilidad en tiempo real y no se cobra nada en esta página. AriMar confirmará por WhatsApp y enviará el enlace de pago después.</p>
           <p className="mt-3 text-sm leading-relaxed text-slate-500">¿Necesitas una fecha anterior a las habilitadas? <a href={getWhatsAppUrl('Hola, AriMar. Quisiera consultar si excepcionalmente podéis preparar un encargo urgente de pata asada.')} target="_blank" rel="noopener noreferrer" className="font-semibold text-[#207F85] underline underline-offset-4">Consúltanos por WhatsApp</a>; estará sujeto a disponibilidad.</p>
         </div>
       </form>
