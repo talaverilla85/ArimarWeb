@@ -42,11 +42,11 @@ const preguntas = [
   },
   {
     q: '¿Cuánto cuesta una pata asada entera?',
-    a: 'Trabajamos con patas enteras por unidades. Selecciona una o dos patas y la fecha deseada; AriMar confirmará disponibilidad y precio total antes de enviarte un enlace seguro de pago. El pedido no queda confirmado hasta verificar el pago.',
+    a: 'Trabajamos con patas enteras vendidas por unidades. Elige la cantidad y una fecha del calendario. AriMar recibirá tu solicitud por WhatsApp y, si podemos atenderla, confirmaremos fecha, precio y recogida por el mismo medio antes de enviarte el enlace de pago. La reserva se confirma cuando verificamos el pago.',
   },
   {
-    q: '¿Cuántas patas puedo encargar para una fecha?',
-    a: 'AriMar prepara un máximo de dos patas asadas enteras por día, sumando todos los encargos. Puedes solicitar una o dos unidades, pero la fecha y la cantidad solo se confirman después de comprobar la disponibilidad y de recibir el pago anticipado.',
+    q: '¿La pata asada se vende por unidades o por número de comensales?',
+    a: 'Se vende por unidades completas. Indica cuántas patas enteras deseas; no calculamos ni recomendamos cantidades en función de los comensales. Cada solicitud queda sujeta a confirmación de disponibilidad y posterior pago anticipado.',
   },
   {
     q: '¿Es una pata asada sin gluten?',
@@ -120,8 +120,8 @@ const ventajas = [
 ]
 
 const pasos = [
-  { numero: '01', titulo: 'Selecciona fecha y unidades', detalle: 'El calendario habilita fechas según nuestros plazos. Solicita una o dos patas enteras, según prefieras.' },
-  { numero: '02', titulo: 'Confirmamos el encargo', detalle: 'Comprobamos que queden unidades para ese día y acordamos precio total y hora de recogida. Después te enviamos un enlace de pago.' },
+  { numero: '01', titulo: 'Selecciona fecha y unidades', detalle: 'El calendario habilita fechas según nuestros plazos. Indica cuántas patas enteras quieres y envía la solicitud por WhatsApp.' },
+  { numero: '02', titulo: 'Te respondemos por WhatsApp', detalle: 'Revisamos la solicitud y, si es viable, confirmamos fecha, precio total y hora de recogida y enviamos el enlace de pago.' },
   { numero: '03', titulo: 'Paga y recógela en AriMar', detalle: 'La reserva se confirma cuando comprobamos el pago. Recoge las patas enteras, sin cortar, a la hora acordada.' },
 ]
 
@@ -149,7 +149,7 @@ export default function PataAsadaPage() {
               </a>
               <a href="#por-que-jugosa" className="inline-flex items-center justify-center rounded-xl border border-white/50 px-7 py-4 text-base font-bold text-white transition hover:bg-white/10">Descubre cómo la asamos ↓</a>
             </div>
-            <p className="mt-6 text-sm leading-relaxed text-slate-300">Encargos para toda Gran Canaria · Máximo 2 patas por fecha · Recogida en Playa de Arinaga · Reserva tras confirmar el pago.</p>
+            <p className="mt-6 text-sm leading-relaxed text-slate-300">Encargos para toda Gran Canaria · Cantidad por unidades enteras · Recogida en Playa de Arinaga · Reserva tras verificar el pago.</p>
           </div>
           <figure className="relative min-h-[360px] bg-[#F3F3EF] lg:min-h-[670px]">
             <Image
@@ -180,7 +180,7 @@ export default function PataAsadaPage() {
           <div className="self-end">
             <p className="text-lg leading-relaxed text-slate-600">Un cumpleaños, un almuerzo con amigos, una reunión familiar o una celebración de empresa. La pata asada canaria es una de esas elaboraciones que convierten el momento de servir en parte de la fiesta.</p>
             <p className="mt-5 text-lg leading-relaxed text-slate-600">En AriMar la preparamos entera, con su piel bien dorada y controlando la cocción para cuidar el interior. Tú decides cuándo compartirla.</p>
-            <p className="mt-5 text-lg leading-relaxed text-slate-600"><strong className="text-[#1E293B]">¿Buscas comprar pata asada canaria en Gran Canaria?</strong> Recibimos encargos de familias y grupos de cualquier punto de la isla, no solo de Arinaga. Nos cuentas la fecha y cuántas personas vais a reuniros, concretamos la pieza y su presupuesto y la prepararemos para que la recojas en nuestro establecimiento de Playa de Arinaga.</p>
+            <p className="mt-5 text-lg leading-relaxed text-slate-600"><strong className="text-[#1E293B]">¿Buscas comprar pata asada canaria en Gran Canaria?</strong> Recibimos solicitudes desde cualquier punto de la isla, no solo de Arinaga. Elige la fecha deseada y cuántas patas enteras quieres, y te confirmaremos la disponibilidad y el precio por WhatsApp. Una vez pagado el encargo, prepararemos las unidades acordadas para su recogida en Playa de Arinaga.</p>
             <Link href="/contacto" className="mt-7 inline-flex font-bold text-[#207F85] underline underline-offset-4">¿Organizas algo más grande? Consúltanos opciones para eventos ↗</Link>
           </div>
         </div>
@@ -250,7 +250,7 @@ export default function PataAsadaPage() {
           <div className="max-w-3xl">
             <p className="text-xs font-extrabold uppercase tracking-[0.18em] text-[#207F85]">Cómo hacer tu encargo</p>
             <h2 id="pasos-h2" className="mt-4 text-3xl font-black md:text-5xl">Pata asada para cumpleaños y eventos, sin complicaciones.</h2>
-            <p className="mt-5 text-lg text-slate-600">¿Quieres comprar una o dos patas asadas enteras? Elige una fecha habilitada y envíanos tu solicitud. Comprobaremos disponibilidad para ese día y, si podemos atenderla, te confirmaremos precio y recogida antes de enviarte un enlace de pago.</p>
+            <p className="mt-5 text-lg text-slate-600">Elige una fecha habilitada, indica el número de patas asadas enteras y envíanos la solicitud por WhatsApp. Revisaremos si podemos atenderla y te confirmaremos fecha, horario y precio antes de enviar el enlace de pago. El encargo se reserva al verificar el pago.</p>
           </div>
           <div className="mt-12 grid gap-5 md:grid-cols-3">
             {pasos.map((p) => (
