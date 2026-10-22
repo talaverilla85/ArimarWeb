@@ -74,6 +74,22 @@ export default function PrivacidadPage() {
           </section>
 
           <section className="mb-8">
+            <h2 className="text-2xl font-bold text-slate-800 mb-4">Analítica web</h2>
+            <p className="text-slate-600 leading-relaxed">
+              Utilizamos Google Analytics 4 (Google) para elaborar estadísticas de visitas y medir ciertas
+              interacciones con la web únicamente cuando usted acepta las cookies de análisis.
+              La base jurídica de este tratamiento es su consentimiento, que puede retirar en cualquier momento.
+              Si rechaza las cookies de análisis, Google Analytics no se activa desde nuestra web.
+            </p>
+            <p className="text-slate-600 leading-relaxed mt-4">
+              Puede modificar su elección y consultar las cookies, sus finalidades y su duración
+              desde nuestra{' '}<a href="/legal/cookies#preferencias" className="text-primary-700 underline">política de cookies</a>.
+              Para más información sobre el tratamiento de datos por Google consulte su{' '}
+              <a href="https://policies.google.com/privacy?hl=es" target="_blank" rel="noopener noreferrer" className="text-primary-700 underline">política de privacidad</a>.
+            </p>
+          </section>
+
+          <section className="mb-8">
             <h2 className="text-2xl font-bold text-slate-800 mb-4">5. Base Legal</h2>
             <p className="text-slate-600 leading-relaxed">
               El tratamiento de sus datos personales se basa en:
