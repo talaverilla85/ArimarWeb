@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { siteConfig } from '@/lib/siteConfig'
 
 export const metadata: Metadata = {
+  alternates: { canonical: '/legal/privacidad' },
   title: 'Política de Privacidad - AriMar',
   description: 'Política de privacidad de AriMar. Protección de datos personales.',
 }

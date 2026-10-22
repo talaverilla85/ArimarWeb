@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
+  alternates: { canonical: '/legal/cookies' },
   title: 'Política de Cookies - AriMar',
   description: 'Política de cookies de AriMar. Información sobre el uso de cookies en nuestro sitio web.',
 }

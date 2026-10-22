@@ -10,9 +10,6 @@ const restaurantJsonLd = buildRestaurantJsonLd()
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://arimarfoodlab.es'),
-  alternates: {
-    canonical: '/',
-  },
   title: 'AriMar | Comida casera y freiduría 100% sin gluten en Arinaga',
   icons: {
     icon: '/favicon.ico',

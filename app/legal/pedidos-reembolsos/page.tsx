@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { siteConfig } from '@/lib/siteConfig'
 
 export const metadata: Metadata = {
+  alternates: { canonical: '/legal/pedidos-reembolsos' },
   title: 'Anulación de pedidos, devoluciones y reembolsos - AriMar',
   description:
     'Política de anulación de pedidos, devoluciones y reembolsos de AriMar para pedidos de recogida en local.',

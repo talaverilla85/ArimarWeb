@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { siteConfig } from '@/lib/siteConfig'
 
 export const metadata: Metadata = {
+  alternates: { canonical: '/legal/aviso-legal' },
   title: 'Aviso Legal - AriMar',
   description: 'Aviso legal de AriMar. Información legal y términos de uso.',
 }
