@@ -50,7 +50,6 @@ const internalLinks = [
   { href: '/sin-gluten-gran-canaria', label: 'Comida 100% sin gluten en Gran Canaria' },
   { href: '/comida-para-llevar-sin-gluten-gran-canaria', label: 'Comida para llevar sin gluten' },
   { href: '/comida-sin-gluten-playa-de-arinaga', label: 'Sin gluten en Playa de Arinaga' },
-  { href: '/alergenos', label: 'Alérgenos' },
 ]
 
 export default function PollosAsadosArinagaPage() {

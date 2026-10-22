@@ -7,7 +7,6 @@ const seoLinks = [
   { href: '/comida-para-llevar-sin-gluten-gran-canaria', label: 'Comida para llevar sin gluten' },
   { href: '/comida-sin-gluten-playa-de-arinaga', label: 'Sin gluten en Playa de Arinaga' },
   { href: '/carta', label: 'Carta' },
-  { href: '/alergenos', label: 'Alérgenos' },
 ]
 
 export default function SeoInternalLinks({ className = '' }: { className?: string }) {
