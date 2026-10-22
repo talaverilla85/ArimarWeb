@@ -41,7 +41,7 @@ export default function HeroSection() {
         <div className="relative">
           <div className="relative aspect-[5/4] overflow-hidden rounded-[2rem] border-[6px] border-white bg-amber-50 shadow-2xl sm:aspect-[4/3] lg:aspect-[4/5]">
             <Image
-              src="/images/arimar-pollo-agridulce.webp"
+              src="/images/arimar-20261023-pollo-agridulce-hero.webp"
               alt="Pollo agridulce real de AriMar, elaborado en Playa de Arinaga"
               fill
               priority

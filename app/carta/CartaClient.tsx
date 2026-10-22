@@ -7,8 +7,8 @@ import SeoInternalLinks from '@/components/SeoInternalLinks'
 import { featuredDishes } from '@/lib/featuredDishes'
 import { siteConfig } from '@/lib/siteConfig'
 
-const hotDishes = featuredDishes.filter((dish) => ['pollo-agridulce', 'carne-fiesta', 'estofado-ternera'].includes(dish.id))
-const lighterDishes = featuredDishes.filter((dish) => ['poke-pollo', 'ensalada-col', 'crema-calabaza'].includes(dish.id))
+const hotDishes = featuredDishes.filter((dish) => ['pollo-agridulce', 'tortilla-papas', 'pollo-asado'].includes(dish.id))
+const lighterDishes = featuredDishes.filter((dish) => ['ensalada-mixta-aguacate', 'ensaladilla-rusa', 'vinagreta-marisco'].includes(dish.id))
 
 function DishTiles({ dishes }: { dishes: typeof featuredDishes }) {
   return (
@@ -56,8 +56,8 @@ export default function CartaClient() {
               </div>
             </div>
             <div className="relative aspect-[5/4] overflow-hidden rounded-[1.75rem] bg-white shadow-md">
-              <Image src="/images/arimar-poke-pollo.webp"
-                alt="Poke de pollo preparado por AriMar, con ingredientes de colores"
+              <Image src="/images/arimar-20261023-ensalada-mixta-aguacate-foco.webp"
+                alt="Ensalada mixta con aguacate, atun, huevo y verduras preparada por AriMar"
                 fill priority sizes="(max-width: 1024px) 100vw, 43vw" className="object-cover" />
               <div className="absolute bottom-4 left-4 rounded-xl bg-white/95 px-4 py-3 text-sm font-bold text-slate-900 shadow-sm">
                 Así se ve la comida de AriMar
@@ -120,7 +120,7 @@ export default function CartaClient() {
             <div className="mb-8 max-w-3xl">
               <p className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-primary-700">Fresco, ligero, diferente</p>
               <h2 id="frescos-carta-title" className="mb-4 text-3xl font-bold text-slate-900 md:text-4xl">
-                Ensaladas, poke y platos de cuchara
+                Ensaladas, platos fríos y propuestas frescas
               </h2>
               <p className="text-lg leading-relaxed text-slate-600">
                 También tenemos opciones frescas y elaboraciones más ligeras. En nuestra carta habitual
@@ -136,8 +136,8 @@ export default function CartaClient() {
 
           <section className="mb-16 grid items-center gap-8 overflow-hidden rounded-[2rem] bg-slate-900 text-white lg:grid-cols-2" aria-labelledby="asados-carta-title">
             <div className="relative aspect-[4/3] min-h-[290px] w-full lg:aspect-auto lg:h-full">
-              <Image src="/images/pata-asada-canaria-arimar-real.jpg"
-                alt="Pata asada canaria elaborada en AriMar para pedidos por encargo"
+              <Image src="/images/arimar-20261023-pata-asada.webp"
+                alt="Pata asada canaria de AriMar cortada y lista para recoger"
                 fill sizes="(max-width: 1024px) 100vw, 50vw" className="object-cover" />
             </div>
             <div className="px-7 pb-9 sm:px-10 lg:py-12 lg:pr-12">
