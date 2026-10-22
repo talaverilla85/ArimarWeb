@@ -64,9 +64,6 @@ export default function Footer() {
             <p className="text-sm font-semibold text-slate-800 mb-4 uppercase tracking-wide">Legal</p>
             <ul className="space-y-2">
               <li>
-                <Link href="/alergenos" className="text-sm text-slate-600 underline underline-offset-2 hover:text-primary-500 hover:decoration-2 focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 focus-visible:outline-none rounded transition-colors">Carta de alérgenos</Link>
-              </li>
-              <li>
                 <Link href="/legal/aviso-legal" className="text-sm text-slate-600 underline underline-offset-2 hover:text-primary-500 hover:decoration-2 focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 focus-visible:outline-none rounded transition-colors">Aviso Legal</Link>
               </li>
               <li>
