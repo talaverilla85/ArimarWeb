@@ -1,314 +1,188 @@
 'use client'
 
-import { useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { motion } from 'framer-motion'
 import { cartaFaqTeasers, faqCanonicalPath } from '@/lib/faqContent'
 import SeoInternalLinks from '@/components/SeoInternalLinks'
+import { featuredDishes } from '@/lib/featuredDishes'
 import { siteConfig } from '@/lib/siteConfig'
 
-const SIN_GLUTEN_IMAGE = '/images/sin-gluten-ari.png'
-const SIN_GLUTEN_ALT =
-  'Ari presenta el simbolo sin gluten: AriMar es un establecimiento 100 % sin gluten'
+const hotDishes = featuredDishes.filter((dish) => ['pollo-agridulce', 'carne-fiesta', 'estofado-ternera'].includes(dish.id))
+const lighterDishes = featuredDishes.filter((dish) => ['poke-pollo', 'ensalada-col', 'crema-calabaza'].includes(dish.id))
 
-const categoriesSeo = [
-  'Platos del día',
-  'Pollo asado',
-  'Potajes',
-  'Cremas',
-  'Arroces y pastas',
-  'Guisos y fritos',
-  'Raciones para llevar',
-  'Postres caseros',
-]
-
-const antojoButtons = [
-  { id: 'prisa' as const, label: 'Vengo con prisa' },
-  { id: 'cuchara' as const, label: 'Me apetece cuchara' },
-  { id: 'ligero' as const, label: 'Quiero algo ligero' },
-  { id: 'capricho' as const, label: 'Hoy toca capricho' },
-]
-
-const antojoToCategories: Record<string, string[]> = {
-  prisa: ['Platos del día', 'Arroces y pastas', 'Guisos y fritos'],
-  cuchara: ['Potajes', 'Cremas'],
-  ligero: ['Cremas', 'Platos del día'],
-  capricho: ['Postres caseros', 'Pollo asado'],
+function DishTiles({ dishes }: { dishes: typeof featuredDishes }) {
+  return (
+    <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      {dishes.map((dish) => (
+        <article key={dish.id} className="overflow-hidden rounded-3xl border border-slate-100 bg-white shadow-sm">
+          <div className="relative aspect-[4/3] overflow-hidden bg-slate-100">
+            <Image src={dish.image} alt={dish.alt} fill sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw" className="object-cover" />
+          </div>
+          <div className="p-5">
+            <p className="mb-2 text-xs font-bold uppercase tracking-widest text-primary-700">{dish.category}</p>
+            <h3 className="text-xl font-bold text-slate-900">{dish.name}</h3>
+            <p className="mt-2 text-sm leading-relaxed text-slate-600">{dish.description}</p>
+          </div>
+        </article>
+      ))}
+    </div>
+  )
 }
 
-const cartaItems = [
-  {
-    src: '/images/carta-crema.webp',
-    alt: 'Cremas y sopas del día en AriMar FoodLab, comida para llevar en Playa de Arinaga',
-    title: 'Cremas y sopas',
-    description: 'De cuchara, suaves y caseras, según el día.',
-  },
-  {
-    src: '/images/carta-potaje.webp',
-    alt: 'Potaje tradicional, comida casera para llevar en Agüimes',
-    title: 'Potajes',
-    description: 'Legumbres y verduras de temporada, como en casa.',
-  },
-  {
-    src: '/images/carta-pasta.webp',
-    alt: 'Arroces y pastas caseros para llevar, AriMar FoodLab Playa de Arinaga',
-    title: 'Arroces y pastas',
-    description: 'Platos de arroz y pasta listos para llevar.',
-  },
-  {
-    src: '/images/carta-carne-estofada.webp',
-    alt: 'Guisos y fritos caseros para llevar en Playa de Arinaga',
-    title: 'Guisos y fritos',
-    description: 'Carnes guisadas y frituras hechas al momento.',
-  },
-  {
-    src: '/images/carta-vegetal.webp',
-    alt: 'Pollo asado y acompañamientos para llevar en AriMar FoodLab',
-    title: 'Pollo asado',
-    description: 'Pollo asado y combinaciones pensadas para compartir.',
-  },
-  {
-    src: '/images/carta-postre-vaso.webp',
-    alt: 'Postres caseros en vaso, AriMar FoodLab',
-    title: 'Postres caseros',
-    description: 'Dulces caseros para cerrar la comida.',
-  },
-]
-
 export default function CartaClient() {
-  const [selectedAntojo, setSelectedAntojo] = useState<'prisa' | 'cuchara' | 'ligero' | 'capricho' | null>(null)
-  const highlightedCats = selectedAntojo ? antojoToCategories[selectedAntojo] ?? [] : []
-  const microtext =
-    highlightedCats.length === 0
-      ? null
-      : highlightedCats.length === 1
-        ? `Hoy te encaja: ${highlightedCats[0]}.`
-        : highlightedCats.length === 2
-          ? `Hoy te encaja: ${highlightedCats[0]} y ${highlightedCats[1]}.`
-          : `Hoy te encaja: ${highlightedCats[0]}, ${highlightedCats[1]} y ${highlightedCats[2]}.`
-
   return (
     <>
-      <div className="fixed bottom-6 right-6 z-40">
-        <Link
-          href={siteConfig.pedirPath}
-          className="px-6 py-3 bg-primary-500 text-white font-semibold rounded-full shadow-lg hover:bg-primary-600 transition-colors flex items-center gap-2"
-        >
-          <span>Pedir ahora</span>
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
-          </svg>
-        </Link>
-      </div>
-
-      <div className="pt-32 pb-20 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-6xl mx-auto">
-          <header className="relative overflow-hidden rounded-3xl border border-primary-100 bg-gradient-to-br from-primary-50 via-white to-amber-50 px-6 py-10 md:px-10 md:py-12 mb-12 shadow-sm">
-            <div className="relative grid gap-8 md:grid-cols-[1fr_200px] md:items-center">
-              <div className="text-center md:text-left">
-                <p className="text-sm font-semibold uppercase tracking-wide text-primary-700 mb-3">
-                  Una sola carta para todos
-                </p>
-                <h1 className="text-4xl md:text-5xl font-bold text-slate-800 mb-4 tracking-tight">
-                  Carta
-                </h1>
-                <p className="text-lg text-slate-600 max-w-2xl leading-relaxed">
-                  Platos de cuchara, pollo asado, guisos, arroces, pastas, fritos, postres y raciones para llevar.
-                  No es una carta especial: es nuestra forma de cocinar para todo el mundo, también apta para celíacos.
-                </p>
+      <div className="pt-28 pb-20 md:pt-32">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <header className="mb-14 grid items-center gap-8 overflow-hidden rounded-[2rem] bg-gradient-to-br from-primary-50 via-white to-amber-50 p-6 sm:p-10 lg:grid-cols-[1.05fr_0.95fr]">
+            <div>
+              <p className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-primary-700">La cocina de AriMar · Playa de Arinaga</p>
+              <h1 className="mb-6 text-4xl font-bold leading-tight tracking-tight text-slate-900 md:text-5xl">Nuestra carta. Comida casera para todos.</h1>
+              <p className="mb-5 text-lg leading-relaxed text-slate-700">
+                Ropa vieja, pollo agridulce, croquetas, tortillas, ensaladas, guisos y asados.
+                Toda nuestra cocina es <strong>100 % sin gluten</strong> y está pensada para llevar.
+              </p>
+              <p className="mb-8 leading-relaxed text-slate-600">
+                Tenemos elaboraciones habituales y otras que cambian con la producción. Las fotos muestran platos reales de AriMar,
+                no un listado de existencias en tiempo real.
+              </p>
+              <div className="flex flex-wrap gap-3">
+                <Link href={siteConfig.pedirPath} className="inline-flex rounded-xl bg-primary-500 px-7 py-3 font-bold text-white hover:bg-primary-600">
+                  Ver qué hay hoy y pedir <span aria-hidden="true" className="ml-2">→</span>
+                </Link>
+                <Link href="/contacto" className="inline-flex rounded-xl border border-primary-200 bg-white px-7 py-3 font-bold text-primary-700 hover:bg-primary-50">
+                  Visítanos
+                </Link>
               </div>
-              <div className="mx-auto w-40 md:w-48">
-                <div className="rounded-3xl border border-white/80 bg-white/90 p-3 shadow-md">
-                  <Image
-                    src={SIN_GLUTEN_IMAGE}
-                    alt={SIN_GLUTEN_ALT}
-                    width={240}
-                    height={200}
-                    className="h-auto w-full object-contain"
-                    priority
-                  />
-                </div>
+            </div>
+            <div className="relative aspect-[5/4] overflow-hidden rounded-[1.75rem] bg-white shadow-md">
+              <Image src="/images/arimar-poke-pollo.webp"
+                alt="Poke de pollo preparado por AriMar, con ingredientes de colores"
+                fill priority sizes="(max-width: 1024px) 100vw, 43vw" className="object-cover" />
+              <div className="absolute bottom-4 left-4 rounded-xl bg-white/95 px-4 py-3 text-sm font-bold text-slate-900 shadow-sm">
+                Así se ve la comida de AriMar
               </div>
             </div>
           </header>
 
-          <section
-            className="mb-16 bg-primary-50/70 border border-primary-100 rounded-3xl px-4 py-8 sm:px-8 shadow-sm"
-            aria-labelledby="vitrina-sin-gluten-heading"
-          >
-            <h2 id="vitrina-sin-gluten-heading" className="text-2xl md:text-3xl font-bold text-slate-800 mb-4 tracking-tight">
-              Una sola vitrina para todos
-            </h2>
-            <p className="text-slate-700 leading-relaxed max-w-3xl">
-              No tenemos una pequeña selección adaptada ni carta aparte. Toda la carta está elaborada sin gluten para
-              que cualquier cliente elija entre las mismas elaboraciones — y quien evita el gluten no tenga que
-              preguntar qué puede comer.
-            </p>
-          </section>
-
-          <section
-            className="mb-16 text-center bg-gradient-to-br from-primary-50/80 via-white to-primary-50/40 border border-primary-100/70 rounded-3xl px-4 py-8 sm:px-8 shadow-sm"
-            aria-labelledby="elige-antojo-heading"
-          >
-            <div className="inline-flex items-center gap-2 mb-3 px-3 py-1 rounded-full bg-white/80 border border-primary-100 text-xs font-semibold uppercase tracking-wide text-primary-700">
-              <span>Te ayudamos a elegir</span>
+          <section className="mb-16 scroll-mt-24" id="platos-caseros" aria-labelledby="platos-caseros-title">
+            <div className="mb-8 max-w-3xl">
+              <p className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-primary-700">De nuestra cocina</p>
+              <h2 id="platos-caseros-title" className="mb-4 text-3xl font-bold text-slate-900 md:text-4xl">
+                Platos de los que te resuelven la comida
+              </h2>
+              <p className="text-lg leading-relaxed text-slate-600">
+                Guisos, carnes y raciones con sabor casero. Además de estas elaboraciones, preparamos ropa vieja,
+                tortilla de papas, pollo asado y otros platos según la producción.
+              </p>
             </div>
-            <h2 id="elige-antojo-heading" className="text-2xl md:text-3xl font-bold text-slate-800 mb-2 tracking-tight">
-              Elige tu antojo
-            </h2>
-            <p className="text-slate-600 mb-8">Marca cómo vienes hoy y te sugerimos qué encaja mejor.</p>
-
-            <div className="flex flex-wrap justify-center gap-2 md:gap-3 mb-8" role="group" aria-label="Momento del día">
-              {antojoButtons.map((btn) => (
-                <button
-                  key={btn.id}
-                  type="button"
-                  aria-pressed={selectedAntojo === btn.id}
-                  onClick={() => setSelectedAntojo(selectedAntojo === btn.id ? null : btn.id)}
-                  className={`px-4 py-2.5 rounded-full border-2 text-sm md:text-base font-medium transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white ${
-                    selectedAntojo === btn.id
-                      ? 'border-primary-500 bg-primary-50 text-primary-800 shadow-sm'
-                      : 'border-slate-200 bg-white text-slate-700'
-                  }`}
-                >
-                  {btn.label}
-                </button>
+            <DishTiles dishes={hotDishes} />
+            <div className="mt-7 flex flex-wrap gap-3">
+              {['Ropa vieja', 'Tortilla de papas', 'Pollo asado', 'Garbanzada', 'Arroces'].map((name) => (
+                <span key={name} className="rounded-full border border-primary-100 bg-primary-50 px-4 py-2 text-sm font-semibold text-primary-800">
+                  {name}
+                </span>
               ))}
             </div>
+          </section>
 
-            <nav aria-label="Categorías recomendadas según tu elección">
-              <ul className="flex flex-wrap justify-center gap-2 md:gap-3 list-none pl-0 mb-4">
-                {categoriesSeo.map((cat) => {
-                  const isHighlighted = highlightedCats.includes(cat)
-                  return (
-                    <li key={cat}>
-                      <span
-                        className={`inline-block px-4 py-2 rounded-full border text-sm md:text-base transition-all duration-300 ${
-                          isHighlighted
-                            ? 'border-primary-400 bg-primary-50 text-primary-800 shadow-md ring-2 ring-primary-200 scale-105'
-                            : 'border-primary-100/70 bg-primary-50/60 text-primary-800/90'
-                        }`}
-                      >
-                        {cat}
-                      </span>
+          <section className="mb-16 overflow-hidden rounded-[2rem] bg-amber-50 px-6 py-10 sm:px-10" aria-labelledby="freiduria-carta-title">
+            <div className="grid items-start gap-10 lg:grid-cols-[1fr_1fr]">
+              <div>
+                <p className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-primary-700">El placer de la freiduría</p>
+                <h2 id="freiduria-carta-title" className="mb-5 text-3xl font-bold text-slate-900 md:text-4xl">
+                  Croquetas sin gluten, pero con todo el sabor.
+                </h2>
+                <p className="mb-5 text-lg leading-relaxed text-slate-700">
+                  Una freiduría dentro de una cocina concebida completamente sin gluten.
+                  Entre nuestras elaboraciones están las croquetas caseras, los torreznos y las frituras del día.
+                </p>
+                <Link href="/freiduria-sin-gluten-gran-canaria"
+                  className="inline-flex font-bold text-primary-700 underline-offset-4 hover:underline">
+                  Descubre nuestra freiduría <span aria-hidden="true" className="ml-2">→</span>
+                </Link>
+              </div>
+              <div className="rounded-3xl border border-amber-100 bg-white p-6 shadow-sm sm:p-8">
+                <h3 className="mb-5 text-xl font-bold text-slate-900">Sabores de croquetas AriMar</h3>
+                <ul className="grid gap-3 sm:grid-cols-2">
+                  {['Jamón serrano', 'Rulo de cabra y cebolla caramelizada', 'Atún y pimiento asado', 'Pollo asado'].map((name) => (
+                    <li key={name} className="flex items-start gap-3 border-b border-slate-100 pb-3 text-slate-700">
+                      <span className="mt-1 text-primary-700" aria-hidden="true">●</span>{name}
                     </li>
-                  )
-                })}
-              </ul>
-            </nav>
-            {microtext && (
-              <p className="text-slate-600 font-medium" aria-live="polite">
-                {microtext}
-              </p>
-            )}
+                  ))}
+                </ul>
+                <p className="mt-5 text-sm text-slate-500">Pregunta por los sabores disponibles en cada momento.</p>
+              </div>
+            </div>
           </section>
 
-          <section
-            className="mb-16 bg-amber-50/70 border border-amber-100 rounded-3xl px-4 py-8 sm:px-8 shadow-sm"
-            aria-labelledby="carta-seo-heading"
-          >
-            <h2 id="carta-seo-heading" className="text-2xl md:text-3xl font-bold text-slate-800 mb-4 tracking-tight">
-              Carta de rotación diaria
-            </h2>
-            <p className="text-slate-700 leading-relaxed max-w-3xl mb-6">
-              Trabajamos con una carta que cambia según temporada y producción para que siempre encuentres opciones
-              variadas y caseras. Puedes elegir entre platos de cuchara, elaboraciones más ligeras, propuestas para
-              compartir o algo dulce para completar tu comida.
+          <section className="mb-16 scroll-mt-24" id="ensaladas-y-ligeros" aria-labelledby="frescos-carta-title">
+            <div className="mb-8 max-w-3xl">
+              <p className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-primary-700">Fresco, ligero, diferente</p>
+              <h2 id="frescos-carta-title" className="mb-4 text-3xl font-bold text-slate-900 md:text-4xl">
+                Ensaladas, poke y platos de cuchara
+              </h2>
+              <p className="text-lg leading-relaxed text-slate-600">
+                También tenemos opciones frescas y elaboraciones más ligeras. En nuestra carta habitual
+                encontrarás ensaladas, ensaladilla, cremas y otros platos que varían según el día.
+              </p>
+            </div>
+            <DishTiles dishes={lighterDishes} />
+            <p className="mt-6 text-sm leading-relaxed text-slate-500">
+              Otras propuestas de nuestra cocina: ensalada César, ensalada mixta con aguacate, ensaladilla y papas arrugadas.
+              Consulta la disponibilidad actual antes de hacer tu pedido.
             </p>
-            <div className="mt-4 rounded-2xl bg-white/80 px-4 py-4 sm:px-5 sm:py-5">
-              <p className="text-xs font-semibold tracking-wide text-slate-500 uppercase mb-3">
-                Lo que solemos tener en vitrina
+          </section>
+
+          <section className="mb-16 grid items-center gap-8 overflow-hidden rounded-[2rem] bg-slate-900 text-white lg:grid-cols-2" aria-labelledby="asados-carta-title">
+            <div className="relative aspect-[4/3] min-h-[290px] w-full lg:aspect-auto lg:h-full">
+              <Image src="/images/pata-asada-canaria-arimar-real.jpg"
+                alt="Pata asada canaria elaborada en AriMar para pedidos por encargo"
+                fill sizes="(max-width: 1024px) 100vw, 50vw" className="object-cover" />
+            </div>
+            <div className="px-7 pb-9 sm:px-10 lg:py-12 lg:pr-12">
+              <p className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-primary-200">Encargos y ocasiones especiales</p>
+              <h2 id="asados-carta-title" className="mb-4 text-3xl font-bold md:text-4xl">Asados que merecen compartir mesa.</h2>
+              <p className="mb-6 text-lg leading-relaxed text-white/80">
+                Además del pollo asado, preparamos elaboraciones por encargo, como nuestra pata asada canaria.
+                Pide información y organiza la recogida en Playa de Arinaga.
               </p>
-              <ul className="flex flex-wrap gap-2 md:gap-3 list-none pl-0">
-                {categoriesSeo.map((cat) => (
-                  <li key={cat}>
-                    <span className="inline-block px-4 py-2 rounded-full border border-primary-100/70 bg-primary-50/70 text-sm md:text-base text-primary-800/90">
-                      {cat}
-                    </span>
-                  </li>
-                ))}
-              </ul>
+              <div className="flex flex-wrap gap-3">
+                <Link href="/pata-asada-gran-canaria" className="inline-flex rounded-xl bg-primary-500 px-6 py-3 font-semibold text-white hover:bg-primary-600">Pata asada por encargo</Link>
+                <Link href="/pollos-asados-arinaga" className="inline-flex rounded-xl border border-white/40 px-6 py-3 font-semibold text-white hover:bg-white/10">Pollos asados</Link>
+              </div>
             </div>
           </section>
 
-          <section className="mb-20" aria-labelledby="carta-visual-heading">
-            <h2 id="carta-visual-heading" className="sr-only">
-              Carta visual de AriMar FoodLab
+          <section className="mb-16 rounded-3xl border border-primary-100 bg-primary-50 px-6 py-8 text-center sm:px-10" aria-labelledby="disponibilidad-title">
+            <h2 id="disponibilidad-title" className="mb-3 text-2xl font-bold text-slate-900 md:text-3xl">
+              ¿Qué hay disponible hoy?
             </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {cartaItems.map((item, index) => (
-                <motion.article
-                  key={item.title}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: '-50px' }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
-                  className="group bg-white/95 rounded-2xl shadow-sm hover:shadow-md transition-shadow duration-300"
-                >
-                  <div className="relative aspect-[4/3] rounded-t-2xl overflow-hidden mb-3 bg-slate-100">
-                    <Image
-                      src={item.src}
-                      alt={item.alt}
-                      fill
-                      className="object-cover group-hover:scale-[1.02] transition-transform duration-500"
-                      sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                    />
-                  </div>
-                  <h3 className="px-3 text-lg font-semibold text-slate-800 mb-1 tracking-tight">
-                    {item.title}
-                  </h3>
-                  <p className="px-3 pb-4 text-sm text-slate-600">{item.description}</p>
-                </motion.article>
-              ))}
-            </div>
-          </section>
-
-          <p className="text-center mb-16">
-            <Link
-              href="/contacto"
-              className="text-primary-600 font-semibold hover:text-primary-700 hover:underline"
-            >
-              Horario y ubicación
+            <p className="mx-auto mb-6 max-w-2xl leading-relaxed text-slate-600">
+              Nuestra vitrina cambia. Consulta qué platos y raciones puedes pedir ahora y elige tu hora de recogida.
+              Si necesitas información sobre ingredientes o alérgenos de algún plato, habla con nuestro equipo antes de pedir.
+            </p>
+            <Link href={siteConfig.pedirPath} className="inline-flex rounded-xl bg-primary-500 px-7 py-3 font-bold text-white hover:bg-primary-600">
+              Ver disponibilidad y pedir <span aria-hidden="true" className="ml-2">→</span>
             </Link>
-          </p>
-
-          <section
-            className="max-w-3xl mx-auto bg-slate-50/80 border border-slate-200 rounded-3xl px-4 py-8 sm:px-8"
-            aria-labelledby="faq-heading"
-          >
-            <h2 id="faq-heading" className="text-2xl md:text-3xl font-bold text-slate-800 mb-3 tracking-tight">
-              Dudas sobre la carta
-            </h2>
-            <p className="text-slate-600 text-sm mb-6">
-              El listado completo de preguntas (horario, ubicación, alérgenos, pedidos…) está en la página de ayuda.
-            </p>
-            <ul className="space-y-5 list-none pl-0">
-              {cartaFaqTeasers.map((item) => (
-                <li
-                  key={item.question}
-                  className="bg-white/90 rounded-2xl border border-slate-200 px-4 py-4 shadow-xs"
-                >
-                  <h3 className="text-base font-semibold text-slate-900 mb-2">{item.question}</h3>
-                  <p className="text-sm text-slate-700 leading-relaxed">{item.answer}</p>
-                </li>
-              ))}
-            </ul>
-            <p className="mt-6 text-center">
-              <Link
-                href={faqCanonicalPath}
-                className="inline-flex text-primary-600 font-semibold hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 rounded"
-              >
-                Ver todas las preguntas frecuentes
-              </Link>
-              {' · '}
-              <Link href="/contacto" className="text-primary-600 font-semibold hover:underline">
-                Horario y ubicación
-              </Link>
-            </p>
           </section>
 
-          <SeoInternalLinks className="max-w-3xl mx-auto mt-10" />
+          <section className="mx-auto mb-12 max-w-3xl" aria-labelledby="faq-carta-title">
+            <h2 id="faq-carta-title" className="mb-4 text-2xl font-bold text-slate-900 md:text-3xl">Dudas sobre nuestra carta</h2>
+            <div className="divide-y divide-slate-200 border-y border-slate-200">
+              {cartaFaqTeasers.map((item) => (
+                <div key={item.question} className="py-5">
+                  <h3 className="mb-2 font-bold text-slate-900">{item.question}</h3>
+                  <p className="leading-relaxed text-slate-600">{item.answer}</p>
+                </div>
+              ))}
+            </div>
+            <Link href={faqCanonicalPath} className="mt-6 inline-flex font-semibold text-primary-700 underline-offset-4 hover:underline">
+              Todas las preguntas frecuentes <span aria-hidden="true" className="ml-2">→</span>
+            </Link>
+          </section>
+
+          <SeoInternalLinks className="mx-auto max-w-3xl" />
         </div>
       </div>
     </>
