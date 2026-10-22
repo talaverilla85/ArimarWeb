@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { siteConfig } from '@/lib/siteConfig'
 
 export const metadata: Metadata = {
+  alternates: { canonical: '/legal/privacidad' },
   title: 'Política de Privacidad - AriMar',
   description: 'Política de privacidad de AriMar. Protección de datos personales.',
 }
@@ -70,6 +71,22 @@ export default function PrivacidadPage() {
               <li>Cumplimiento de obligaciones legales</li>
               <li>Análisis estadístico y mejora de la experiencia del usuario</li>
             </ul>
+          </section>
+
+          <section className="mb-8">
+            <h2 className="text-2xl font-bold text-slate-800 mb-4">Analítica web</h2>
+            <p className="text-slate-600 leading-relaxed">
+              Utilizamos Google Analytics 4 (Google) para elaborar estadísticas de visitas y medir ciertas
+              interacciones con la web únicamente cuando usted acepta las cookies de análisis.
+              La base jurídica de este tratamiento es su consentimiento, que puede retirar en cualquier momento.
+              Si rechaza las cookies de análisis, Google Analytics no se activa desde nuestra web.
+            </p>
+            <p className="text-slate-600 leading-relaxed mt-4">
+              Puede modificar su elección y consultar las cookies, sus finalidades y su duración
+              desde nuestra{' '}<a href="/legal/cookies#preferencias" className="text-primary-700 underline">política de cookies</a>.
+              Para más información sobre el tratamiento de datos por Google consulte su{' '}
+              <a href="https://policies.google.com/privacy?hl=es" target="_blank" rel="noopener noreferrer" className="text-primary-700 underline">política de privacidad</a>.
+            </p>
           </section>
 
           <section className="mb-8">

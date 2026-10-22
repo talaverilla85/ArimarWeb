@@ -4,6 +4,7 @@ import Image from 'next/image'
 import { faqCanonicalPath } from '@/lib/faqContent'
 
 export const metadata: Metadata = {
+  alternates: { canonical: '/valores' },
   title: 'Valores de una cocina 100 % sin gluten | AriMar FoodLab',
   description:
     'Valores de AriMar FoodLab: establecimiento 100 % sin gluten, comida casera sin gluten, sabor honesto, etiqueta clara y cercanía en Playa de Arinaga, Gran Canaria.',

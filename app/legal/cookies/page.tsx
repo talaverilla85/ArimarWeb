@@ -1,8 +1,10 @@
 import type { Metadata } from 'next'
+import CookiePreferencesButton from '@/components/CookiePreferencesButton'
 
 export const metadata: Metadata = {
+  alternates: { canonical: '/legal/cookies' },
   title: 'Política de Cookies - AriMar',
-  description: 'Política de cookies de AriMar. Información sobre el uso de cookies en nuestro sitio web.',
+  description: 'Información sobre Google Analytics 4, las cookies utilizadas y cómo aceptar, rechazar o retirar el consentimiento en AriMar.',
 }
 
 export default function CookiesPage() {
@@ -14,6 +16,7 @@ export default function CookiesPage() {
         </h1>
         
         <div className="prose prose-lg max-w-none">
+          <p className="mb-6 text-sm text-slate-500">Actualizada el 22 de octubre de 2026.</p>
           <section className="mb-8">
             <h2 className="text-2xl font-bold text-slate-800 mb-4">1. ¿Qué son las Cookies?</h2>
             <p className="text-slate-600 leading-relaxed">
@@ -25,15 +28,37 @@ export default function CookiesPage() {
           </section>
 
           <section className="mb-8">
-            <h2 className="text-2xl font-bold text-slate-800 mb-4">2. Cookies que Utilizamos</h2>
+            <h2 className="text-2xl font-bold text-slate-800 mb-4">2. Cookies y tecnologías que utilizamos</h2>
             <p className="text-slate-600 leading-relaxed mb-4">
-              En nuestro sitio web utilizamos únicamente <strong>cookies técnicas</strong>, necesarias para el 
-              correcto funcionamiento del sitio (por ejemplo, sesión o preferencias de visualización). No utilizamos 
-              cookies de análisis, publicitarias ni de terceros.
+              La web de AriMar utiliza <strong>Google Analytics 4 (GA4) de Google</strong> para medir
+              estadísticas de visitas e interacciones, como clics en pedidos, WhatsApp o cómo llegar.
+              <strong> GA4 solamente se activa si acepta las cookies de análisis.</strong> Si las rechaza,
+              no cargamos el script de Google Analytics desde esta web.
             </p>
-            <p className="text-slate-600 leading-relaxed">
-              Son cookies que permiten la navegación a través de la página web y el uso de las opciones y servicios 
-              que en ella existen. No requieren consentimiento previo por ser estrictamente necesarias.
+            <div className="overflow-x-auto">
+              <table className="w-full min-w-[560px] border-collapse text-sm text-left text-slate-600">
+                <thead><tr className="bg-slate-100 text-slate-800">
+                  <th className="border border-slate-200 p-3">Tecnología</th>
+                  <th className="border border-slate-200 p-3">Finalidad</th>
+                  <th className="border border-slate-200 p-3">Duración orientativa</th>
+                </tr></thead>
+                <tbody>
+                  <tr><td className="border border-slate-200 p-3">_ga</td>
+                    <td className="border border-slate-200 p-3">Identificar visitantes de forma estadística (Google Analytics, solo con consentimiento).</td>
+                    <td className="border border-slate-200 p-3">Hasta 2 años.</td></tr>
+                  <tr><td className="border border-slate-200 p-3">_ga_*</td>
+                    <td className="border border-slate-200 p-3">Mantener el estado de las sesiones de análisis (Google Analytics, solo con consentimiento).</td>
+                    <td className="border border-slate-200 p-3">Hasta 2 años.</td></tr>
+                  <tr><td className="border border-slate-200 p-3">cookie_consent y cookie_consent_date</td>
+                    <td className="border border-slate-200 p-3">Recordar la decisión de aceptar o rechazar el análisis y cuándo se tomó. Se guardan en el almacenamiento local del navegador (no son cookies).</td>
+                    <td className="border border-slate-200 p-3">Hasta 24 meses, salvo que cambie su decisión o borre los datos del navegador.</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p className="text-slate-600 leading-relaxed mt-4">
+              No instalamos cookies de publicidad desde esta web. La duración efectiva depende también
+              del navegador y de la configuración de Google. Puede consultar la{' '}
+              <a href="https://support.google.com/analytics/answer/11397207?hl=es" target="_blank" rel="noopener noreferrer" className="text-primary-700 underline">información de Google Analytics sobre cookies</a>.
             </p>
           </section>
 
@@ -67,15 +92,22 @@ export default function CookiesPage() {
             </ul>
           </section>
 
-          <section className="mb-8">
-            <h2 className="text-2xl font-bold text-slate-800 mb-4">4. Consentimiento</h2>
-            <p className="text-slate-600 leading-relaxed">
-              Al navegar y continuar en nuestro sitio web estará consintiendo el uso de las cookies antes 
-              descritas, en las condiciones contenidas en la presente Política de Cookies.
+          <section className="mb-8 scroll-mt-32" id="preferencias">
+            <h2 className="text-2xl font-bold text-slate-800 mb-4">4. Consentimiento y preferencias</h2>
+            <p className="text-slate-600 leading-relaxed mb-4">
+              Puede aceptar o rechazar las cookies de análisis desde el aviso inicial.
+              Rechazarlas no impide navegar ni realizar pedidos. Continuar navegando por la web no supone aceptar.
             </p>
+            <p className="text-slate-600 leading-relaxed mb-4">
+              Puede cambiar su elección o retirar el consentimiento en cualquier momento desde este botón
+              o desde «Configurar cookies» en el pie de la página. Si retira su consentimiento,
+              detenemos la analítica y eliminamos las cookies de Google Analytics de este dominio
+              que sean accesibles desde su navegador.
+            </p>
+            <CookiePreferencesButton />
             <p className="text-slate-600 leading-relaxed mt-4">
-              Puede retirar su consentimiento en cualquier momento eliminando las cookies almacenadas en su 
-              navegador mediante la configuración del mismo, tal y como se ha indicado anteriormente.
+              La medición solo se reanudará si vuelve a aceptar las cookies de análisis.
+              También puede bloquear o eliminar cookies desde la configuración del navegador.
             </p>
           </section>
 

@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
+  alternates: { canonical: '/legal/entrega-recogida' },
   title: 'Datos de entrega y recogida - AriMar',
   description:
     'Información sobre recogida en local, plazos y costes de entrega para pedidos de AriMar.',

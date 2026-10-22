@@ -18,8 +18,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${baseUrl}/contacto`, changeFrequency: 'weekly', priority: 0.8 },
     { url: `${baseUrl}/alergenos`, changeFrequency: 'weekly', priority: 0.75 },
     { url: `${baseUrl}/preguntas-frecuentes`, changeFrequency: 'monthly', priority: 0.65 },
-    { url: `${baseUrl}/pedir`, changeFrequency: 'weekly', priority: 0.8 },
-    { url: `${baseUrl}/opinar`, changeFrequency: 'monthly', priority: 0.5 },
     { url: `${baseUrl}/legal/aviso-legal`, changeFrequency: 'yearly', priority: 0.3 },
     { url: `${baseUrl}/legal/privacidad`, changeFrequency: 'yearly', priority: 0.3 },
     { url: `${baseUrl}/legal/cookies`, changeFrequency: 'yearly', priority: 0.3 },

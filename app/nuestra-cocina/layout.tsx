@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 
-const domain = 'https://www.arimarfoodlab.es'
+const domain = 'https://arimarfoodlab.es'
 
 export const metadata: Metadata = {
   title: 'Nuestra cocina 100 % sin gluten | AriMar FoodLab – Gran Canaria',
