@@ -50,6 +50,12 @@ function fechaLegible(value: string): string {
   }).format(new Date(value + 'T12:00:00Z'))
 }
 
+/** Formato español para el mensaje de WhatsApp; el calendario mantiene YYYY-MM-DD. */
+function fechaWhatsApp(value: string): string {
+  const [year, month, day] = value.split('-')
+  return [day, month, year].join('/')
+}
+
 export default function SolicitarPata() {
   const [diaOperativo, setDiaOperativo] = useState(diaOperativoCanarias)
   const [nombre, setNombre] = useState('')
@@ -83,18 +89,13 @@ export default function SolicitarPata() {
     if (!unidadesValidas) return
 
     const lines = [
-      'Hola, AriMar. Quisiera solicitar disponibilidad de pata asada canaria por encargo.',
+      'Hola, AriMar. Quisiera reservar pata asada canaria.',
       '',
       'Nombre: ' + nombre.trim(),
-      'Número de patas enteras solicitado: ' + unidadesNumero,
-      'Fecha deseada de recogida: ' + fecha,
-      'Horario de recogida: 11:30–16:00 h (hora concreta pendiente de confirmación)',
+      'Cantidad: ' + unidadesNumero + (unidadesNumero === 1 ? ' pata entera' : ' patas enteras'),
+      'Fecha de recogida: ' + fechaWhatsApp(fecha),
       'Ocasión: ' + ocasion,
       'Observaciones: ' + (comentarios.trim() || 'Sin observaciones'),
-      '',
-      'Entiendo que la fecha y la cantidad requieren confirmación de AriMar.',
-      'Una vez confirmados disponibilidad, precio y recogida, espero vuestro enlace de pago anticipado.',
-      'Mi solicitud de reserva queda pendiente de confirmación de AriMar y del pago.',
     ]
     window.location.href = getWhatsAppUrl(lines.join('\n'))
   }
