@@ -93,8 +93,8 @@ export default function Home() {
       <section className="bg-slate-900 py-16 text-white md:py-20" aria-labelledby="asados-home-heading">
         <div className="mx-auto grid max-w-7xl items-center gap-10 px-4 sm:px-6 lg:grid-cols-2 lg:px-8">
           <div className="relative aspect-[5/4] overflow-hidden rounded-[2rem] bg-slate-800">
-            <Image src="/images/arimar-20261023-pata-asada.webp"
-              alt="Pata asada canaria cortada en bandeja para llevar de AriMar"
+            <Image src="/images/arimar-20261023-pata-horno.webp"
+              alt="Pata asada canaria de AriMar dentro del horno durante su preparacion"
               fill sizes="(max-width: 1024px) 100vw, 50vw" className="object-cover" />
           </div>
           <div>
