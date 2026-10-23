@@ -22,8 +22,8 @@ export default function Home() {
       <section className="bg-slate-50 py-16 md:py-24" aria-labelledby="comida-dia-a-dia-heading">
         <div className="mx-auto grid max-w-7xl items-center gap-9 px-4 sm:px-6 lg:grid-cols-2 lg:gap-14 lg:px-8">
           <div className="relative aspect-[5/4] overflow-hidden rounded-[2rem] border border-white bg-white shadow-lg">
-            <Image src="/images/hero-variedad-tuppers.webp"
-              alt="Selección de platos preparados y envases de comida casera para llevar de AriMar"
+            <Image src="/images/arimar-20261023-vitrina-arimar.webp"
+              alt="Vitrina de AriMar con platos preparados en envases etiquetados para llevar"
               fill sizes="(max-width: 1024px) 100vw, 48vw" className="object-cover" />
           </div>
           <div>
@@ -93,8 +93,8 @@ export default function Home() {
       <section className="bg-slate-900 py-16 text-white md:py-20" aria-labelledby="asados-home-heading">
         <div className="mx-auto grid max-w-7xl items-center gap-10 px-4 sm:px-6 lg:grid-cols-2 lg:px-8">
           <div className="relative aspect-[5/4] overflow-hidden rounded-[2rem] bg-slate-800">
-            <Image src="/images/pata-asada-canaria-arimar-real.jpg"
-              alt="Pata asada canaria preparada por AriMar para encargos"
+            <Image src="/images/arimar-20261023-pata-asada.webp"
+              alt="Pata asada canaria cortada en bandeja para llevar de AriMar"
               fill sizes="(max-width: 1024px) 100vw, 50vw" className="object-cover" />
           </div>
           <div>
