@@ -7,8 +7,8 @@ import SeoInternalLinks from '@/components/SeoInternalLinks'
 import { featuredDishes } from '@/lib/featuredDishes'
 import { siteConfig } from '@/lib/siteConfig'
 
-const hotDishes = featuredDishes.filter((dish) => ['pollo-agridulce', 'tortilla-papas', 'pollo-asado'].includes(dish.id))
-const lighterDishes = featuredDishes.filter((dish) => ['ensalada-mixta-aguacate', 'ensaladilla-rusa', 'vinagreta-marisco'].includes(dish.id))
+const hotDishes = featuredDishes.filter((dish) => ['pollo-agridulce', 'ropa-vieja', 'pollo-asado'].includes(dish.id))
+const lighterDishes = featuredDishes.filter((dish) => ['ensalada-mixta-aguacate', 'poke-pollo', 'vinagreta-marisco'].includes(dish.id))
 
 function DishTiles({ dishes }: { dishes: typeof featuredDishes }) {
   return (
@@ -56,8 +56,8 @@ export default function CartaClient() {
               </div>
             </div>
             <div className="relative aspect-[5/4] overflow-hidden rounded-[1.75rem] bg-white shadow-md">
-              <Image src="/images/arimar-20261023-ensalada-mixta-aguacate-foco.webp"
-                alt="Ensalada mixta con aguacate, atun, huevo y verduras preparada por AriMar"
+              <Image src="/images/arimar-20261023-ensalada-fresca-aguacate.webp"
+                alt="Ensalada mixta con aguacate, atun, huevo y verduras en cuenco kraft de AriMar"
                 fill priority sizes="(max-width: 1024px) 100vw, 43vw" className="object-cover" />
               <div className="absolute bottom-4 left-4 rounded-xl bg-white/95 px-4 py-3 text-sm font-bold text-slate-900 shadow-sm">
                 Así se ve la comida de AriMar
@@ -72,13 +72,13 @@ export default function CartaClient() {
                 Platos de los que te resuelven la comida
               </h2>
               <p className="text-lg leading-relaxed text-slate-600">
-                Guisos, carnes y raciones con sabor casero. Además de estas elaboraciones, preparamos ropa vieja,
-                tortilla de papas, pollo asado y otros platos según la producción.
+                Guisos, carnes y raciones con sabor casero. Además de estas elaboraciones, preparamos
+                tortilla de papas, carne fiesta, estofados y otros platos según la producción.
               </p>
             </div>
             <DishTiles dishes={hotDishes} />
             <div className="mt-7 flex flex-wrap gap-3">
-              {['Ropa vieja', 'Tortilla de papas', 'Pollo asado', 'Garbanzada', 'Arroces'].map((name) => (
+              {['Tortilla de papas', 'Carne fiesta', 'Estofado de ternera', 'Garbanzada', 'Arroces'].map((name) => (
                 <span key={name} className="rounded-full border border-primary-100 bg-primary-50 px-4 py-2 text-sm font-semibold text-primary-800">
                   {name}
                 </span>
@@ -136,8 +136,8 @@ export default function CartaClient() {
 
           <section className="mb-16 grid items-center gap-8 overflow-hidden rounded-[2rem] bg-slate-900 text-white lg:grid-cols-2" aria-labelledby="asados-carta-title">
             <div className="relative aspect-[4/3] min-h-[290px] w-full lg:aspect-auto lg:h-full">
-              <Image src="/images/arimar-20261023-pata-asada.webp"
-                alt="Pata asada canaria de AriMar cortada y lista para recoger"
+              <Image src="/images/arimar-20261023-pata-horno.webp"
+                alt="Pata asada canaria de AriMar en el horno durante su preparacion"
                 fill sizes="(max-width: 1024px) 100vw, 50vw" className="object-cover" />
             </div>
             <div className="px-7 pb-9 sm:px-10 lg:py-12 lg:pr-12">
