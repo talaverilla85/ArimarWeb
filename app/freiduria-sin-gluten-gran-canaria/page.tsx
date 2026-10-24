@@ -126,6 +126,16 @@ export default function FreiduriaSinGlutenGranCanariaPage() {
             </p>
           </div>
 
+          <div className="mb-7 flex flex-wrap items-center justify-between gap-5 rounded-2xl border border-primary-100 bg-white px-6 py-5 shadow-sm sm:px-8">
+            <div>
+              <p className="text-xs font-bold uppercase tracking-[0.16em] text-primary-700">
+                Ración de croquetas
+              </p>
+              <p className="mt-1 text-lg font-bold text-slate-800">9 unidades</p>
+            </div>
+            <p className="text-3xl font-extrabold tracking-tight text-slate-900" aria-label="7 euros">7 €</p>
+          </div>
+
           <div className="grid overflow-hidden rounded-[2rem] border border-primary-100 bg-primary-50/60 sm:grid-cols-2">
             {croquetas.map((item) => (
               <article key={item.number}
@@ -172,6 +182,13 @@ export default function FreiduriaSinGlutenGranCanariaPage() {
                 También preparamos propuestas como nuestros fingers de pollo estilo Kentucky,
                 torreznos y otras frituras según la producción de cada día.
               </p>
+              <div className="mb-7 flex flex-wrap items-center justify-between gap-5 rounded-2xl border border-white/20 bg-white/10 px-5 py-4">
+                <div>
+                  <p className="text-sm font-semibold text-white">Ración de pollo estilo Kentucky</p>
+                  <p className="mt-1 text-lg font-bold text-white">280–300 g</p>
+                </div>
+                <p className="text-3xl font-extrabold tracking-tight text-white" aria-label="7 euros">7 €</p>
+              </div>
               <p className="mb-8 leading-relaxed text-white/70">
                 Las imágenes muestran elaboraciones reales de nuestra cocina, no un inventario en tiempo real.
                 Si has venido por algo concreto, comprueba primero qué tenemos disponible.
