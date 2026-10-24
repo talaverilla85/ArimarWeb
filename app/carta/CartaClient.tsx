@@ -101,6 +101,10 @@ export default function CartaClient() {
                   className="inline-flex font-bold text-primary-700 underline-offset-4 hover:underline">
                   Descubre nuestra freiduría <span aria-hidden="true" className="ml-2">→</span>
                 </Link>
+                <Link href="/croquetas-sin-gluten-gran-canaria"
+                  className="ml-0 mt-4 inline-flex font-bold text-primary-700 underline-offset-4 hover:underline sm:ml-6 sm:mt-0">
+                  Croquetas: sabores y raciones <span aria-hidden="true" className="ml-2">→</span>
+                </Link>
               </div>
               <div className="rounded-3xl border border-amber-100 bg-white p-6 shadow-sm sm:p-8">
                 <h3 className="mb-5 text-xl font-bold text-slate-900">Sabores de croquetas AriMar</h3>

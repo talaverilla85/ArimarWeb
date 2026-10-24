@@ -9,6 +9,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${baseUrl}/sin-gluten-gran-canaria`, changeFrequency: 'weekly', priority: 0.95 },
     { url: `${baseUrl}/en/gluten-free-gran-canaria`, changeFrequency: 'weekly', priority: 0.9 },
     { url: `${baseUrl}/freiduria-sin-gluten-gran-canaria`, changeFrequency: 'weekly', priority: 0.85 },
+    { url: `${baseUrl}/croquetas-sin-gluten-gran-canaria`, changeFrequency: 'weekly', priority: 0.85 },
     { url: `${baseUrl}/comida-para-llevar-sin-gluten-gran-canaria`, changeFrequency: 'weekly', priority: 0.85 },
     { url: `${baseUrl}/comida-sin-gluten-playa-de-arinaga`, changeFrequency: 'weekly', priority: 0.85 },
     { url: `${baseUrl}/pollos-asados-arinaga`, changeFrequency: 'weekly', priority: 0.85 },
