@@ -41,7 +41,7 @@ const croquetas = [
   },
   {
     number: '03',
-    name: 'Atún y pimiento del piquillo',
+    name: 'Atún y pimiento asado',
     description: 'Una combinación con personalidad y sabor a cocina de casa.',
   },
   {
@@ -148,6 +148,16 @@ export default function FreiduriaSinGlutenGranCanariaPage() {
                 <p className="leading-relaxed text-slate-600">{item.description}</p>
               </article>
             ))}
+          </div>
+          <div className="mt-8 flex flex-col gap-4 rounded-2xl border border-amber-100 bg-amber-50 px-6 py-6 sm:flex-row sm:items-center sm:justify-between">
+            <p className="max-w-xl leading-relaxed text-slate-700">
+              <strong className="text-slate-900">¿Quieres saber qué lleva cada sabor?</strong>{' '}
+              Conoce nuestras croquetas, sus ingredientes protagonistas y cómo pedirlas.
+            </p>
+            <Link href="/croquetas-sin-gluten-gran-canaria"
+              className="inline-flex shrink-0 items-center justify-center rounded-xl bg-primary-500 px-5 py-3 text-sm font-bold text-white transition-colors hover:bg-primary-600">
+              Descubre nuestras croquetas <span className="ml-2" aria-hidden="true">→</span>
+            </Link>
           </div>
           <p className="mt-5 text-sm text-slate-500">
             Los productos contienen otros ingredientes y pueden presentar otros alérgenos.
