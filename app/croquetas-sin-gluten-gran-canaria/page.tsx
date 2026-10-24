@@ -36,7 +36,7 @@ const sabores = [
     number: '02',
     title: 'Queso de cabra y cebolla caramelizada',
     description: 'El queso semicurado de Agüimes pone el carácter y la cebolla caramelizada aporta el contrapunto dulce. Los unimos en una masa de leche sin lactosa y harina de maíz, con la sal justa para que destaque el sabor del queso.',
-    allergenNote: 'Leche',
+    allergenNote: 'Leche · Lactosa (por el queso)',
   },
   {
     number: '03',
@@ -48,7 +48,7 @@ const sabores = [
     number: '04',
     title: 'Pollo asado',
     description: 'Desmigamos nuestro pollo asado y lo incorporamos a una masa de leche sin lactosa y harina de maíz. El fondo de pollo potencia el sabor del asado y la sal termina de redondear una croqueta que sabe a cocina de casa.',
-    allergenNote: 'Leche',
+    allergenNote: 'Leche · Sulfitos',
   },
 ]
 
@@ -134,12 +134,8 @@ export default function CroquetasSinGlutenGranCanariaPage() {
               <p className="leading-relaxed text-slate-600">{sabor.description}</p>
               <div className="mt-6 border-t border-primary-100 pt-4">
                 <p className="text-sm leading-relaxed text-slate-700">
-                  <span className="font-bold text-slate-900">Alérgenos identificados en los ingredientes descritos: </span>
+                  <span className="font-bold text-slate-900">Alérgenos e intolerancias: </span>
                   {sabor.allergenNote}.
-                </p>
-                <p className="mt-2 text-xs leading-relaxed text-slate-500">
-                  Información parcial; falta validar empanado, ingredientes secundarios y declaración completa.
-                  Consúltanos antes de pedir si tienes una alergia.
                 </p>
               </div>
             </article>
