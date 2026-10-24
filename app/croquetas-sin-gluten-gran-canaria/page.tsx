@@ -30,21 +30,29 @@ const sabores = [
     number: '01',
     title: 'Jamón serrano',
     description: 'Un sabor clásico, de los que siempre apetece volver a pedir.',
+    principales: ['Jamón serrano', 'Leche sin lactosa', 'Maíz', 'Margarina', 'Nuez moscada'],
+    consulta: 'las croquetas de jamón serrano',
   },
   {
     number: '02',
     title: 'Rulo de cabra y cebolla caramelizada',
     description: 'El carácter del queso de cabra con el contrapunto de la cebolla.',
+    principales: ['Queso de cabra', 'Cebolla caramelizada', 'Leche sin lactosa', 'Maíz', 'Margarina'],
+    consulta: 'las croquetas de rulo de cabra y cebolla caramelizada',
   },
   {
     number: '03',
     title: 'Atún y pimiento asado',
     description: 'Una combinación con mucho sabor y personalidad.',
+    principales: ['Atún', 'Pimiento asado', 'Leche sin lactosa', 'Maíz', 'Margarina'],
+    consulta: 'las croquetas de atún y pimiento asado',
   },
   {
     number: '04',
     title: 'Pollo asado',
     description: 'El sabor de nuestro pollo asado también en forma de croqueta.',
+    principales: ['Pollo asado', 'Jugo del pollo asado', 'Leche sin lactosa', 'Maíz', 'Margarina', 'Nuez moscada'],
+    consulta: 'las croquetas de pollo asado',
   },
 ]
 
@@ -128,12 +136,38 @@ export default function CroquetasSinGlutenGranCanariaPage() {
               <p className="mb-8 text-sm font-extrabold tracking-[0.18em] text-primary-700">{sabor.number} / 04</p>
               <h3 className="mb-3 text-2xl font-bold leading-tight text-slate-900">{sabor.title}</h3>
               <p className="leading-relaxed text-slate-600">{sabor.description}</p>
+              <div className="mt-6 border-t border-primary-100 pt-5">
+                <h4 className="mb-3 text-sm font-bold text-slate-900">Ingredientes principales</h4>
+                <p className="text-sm leading-relaxed text-slate-600">
+                  {sabor.principales.join(' · ')}
+                </p>
+                <p className="mt-2 text-xs leading-relaxed text-slate-500">
+                  Composición orientativa de fichas anteriores, pendiente de actualización.
+                  No incluye necesariamente todos los ingredientes, el empanado ni trazas.
+                </p>
+              </div>
+              <div className="mt-5 rounded-xl border border-amber-200 bg-amber-50 p-4">
+                <p className="text-sm font-bold text-slate-900">Alérgenos: pendientes de validación</p>
+                <p className="mt-2 text-sm leading-relaxed text-slate-700">
+                  Esta relación de ingredientes no sirve para decidir si el producto es
+                  adecuado para una alergia. Confirma la información completa antes de comprar.
+                </p>
+                <a
+                  href={getWhatsAppUrl('Hola, AriMar. Quisiera confirmar los ingredientes y alérgenos de ' + sabor.consulta + ' antes de pedir.')}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-3 inline-flex text-sm font-bold text-primary-800 underline underline-offset-4 hover:text-primary-700"
+                >
+                  Consultar alérgenos de este sabor <span className="ml-1" aria-hidden="true">→</span>
+                </a>
+              </div>
             </article>
           ))}
         </div>
         <p className="mt-6 text-sm leading-relaxed text-slate-500">
-          Los nombres de los sabores señalan los ingredientes protagonistas;
-          no son una lista completa de ingredientes ni de alérgenos.
+          Versión de revisión basada en fichas anteriores de obrador. Las composiciones
+          y declaraciones de alérgenos definitivas se incorporarán cuando estén
+          validadas las recetas actuales en ARIST.
         </p>
       </section>
 
