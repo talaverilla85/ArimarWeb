@@ -141,11 +141,6 @@ export default function CroquetasSinGlutenGranCanariaPage() {
             </article>
           ))}
         </div>
-        <p className="mt-6 text-sm leading-relaxed text-slate-500">
-          Estas descripciones explican cómo elaboramos cada sabor, pero no constituyen una lista
-          exhaustiva de ingredientes ni una declaración definitiva de alérgenos.
-          Hasta validar las fichas completas de ARIST, consúltanos si tienes alguna alergia.
-        </p>
       </section>
 
       <section className="bg-slate-900 py-16 text-white md:py-20" aria-labelledby="ingredientes-title">
