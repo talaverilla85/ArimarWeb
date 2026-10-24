@@ -109,7 +109,7 @@ export default function CartaClient() {
               <div className="rounded-3xl border border-amber-100 bg-white p-6 shadow-sm sm:p-8">
                 <h3 className="mb-5 text-xl font-bold text-slate-900">Sabores de croquetas AriMar</h3>
                 <ul className="grid gap-3 sm:grid-cols-2">
-                  {['Jamón serrano', 'Rulo de cabra y cebolla caramelizada', 'Atún y pimiento asado', 'Pollo asado'].map((name) => (
+                  {['Jamón serrano', 'Queso de cabra y cebolla caramelizada', 'Atún y pimiento del piquillo', 'Pollo asado'].map((name) => (
                     <li key={name} className="flex items-start gap-3 border-b border-slate-100 pb-3 text-slate-700">
                       <span className="mt-1 text-primary-700" aria-hidden="true">●</span>{name}
                     </li>

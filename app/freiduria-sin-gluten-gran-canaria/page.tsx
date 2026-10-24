@@ -36,12 +36,12 @@ const croquetas = [
   },
   {
     number: '02',
-    name: 'Rulo de cabra y cebolla caramelizada',
+    name: 'Queso de cabra y cebolla caramelizada',
     description: 'Un contraste de sabores para los que buscan algo diferente.',
   },
   {
     number: '03',
-    name: 'Atún y pimiento asado',
+    name: 'Atún y pimiento del piquillo',
     description: 'Una combinación con personalidad y sabor a cocina de casa.',
   },
   {

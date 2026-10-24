@@ -6,7 +6,7 @@ import { getWhatsAppUrl, siteConfig } from '@/lib/siteConfig'
 export const metadata: Metadata = {
   title: 'Croquetas sin gluten en Gran Canaria | AriMar FoodLab',
   description:
-    'Croquetas caseras sin gluten: jamón serrano, cabra y cebolla, atún y piquillo o pollo asado. Ración de 9 unidades por 7 €. Recogida en Playa de Arinaga.',
+    'Croquetas caseras sin gluten: jamón serrano, queso de cabra y cebolla, atún y piquillo o pollo asado. Ración de 9 unidades por 7 €. Recogida en Playa de Arinaga.',
   alternates: { canonical: '/croquetas-sin-gluten-gran-canaria' },
   openGraph: {
     title: 'Croquetas caseras sin gluten | AriMar, Gran Canaria',
@@ -29,22 +29,26 @@ const sabores = [
   {
     number: '01',
     title: 'Jamón serrano',
-    description: 'Un sabor clásico, de los que siempre apetece volver a pedir.',
+    description: 'Incorporamos virutas de jamón serrano a una masa suave elaborada con leche sin lactosa y harina de maíz. La sal y un toque de nuez moscada redondean ese sabor clásico de las croquetas de siempre.',
+    allergenNote: 'Leche',
   },
   {
     number: '02',
-    title: 'Rulo de cabra y cebolla caramelizada',
-    description: 'El carácter del queso de cabra con el contrapunto de la cebolla.',
+    title: 'Queso de cabra y cebolla caramelizada',
+    description: 'El queso semicurado de Agüimes pone el carácter y la cebolla caramelizada aporta el contrapunto dulce. Los unimos en una masa de leche sin lactosa y harina de maíz, con la sal justa para que destaque el sabor del queso.',
+    allergenNote: 'Leche',
   },
   {
     number: '03',
-    title: 'Atún y pimiento asado',
-    description: 'Una combinación con mucho sabor y personalidad.',
+    title: 'Atún y pimiento del piquillo',
+    description: 'El atún en aceite y el pimiento del piquillo se encuentran en una masa preparada con leche sin lactosa y harina de maíz. La sal equilibra una combinación con sabor marinero y el toque delicado del pimiento.',
+    allergenNote: 'Leche y Pescado',
   },
   {
     number: '04',
     title: 'Pollo asado',
-    description: 'El sabor de nuestro pollo asado también en forma de croqueta.',
+    description: 'Desmigamos nuestro pollo asado y lo incorporamos a una masa de leche sin lactosa y harina de maíz. El fondo de pollo potencia el sabor del asado y la sal termina de redondear una croqueta que sabe a cocina de casa.',
+    allergenNote: 'Leche',
   },
 ]
 
@@ -71,8 +75,8 @@ export default function CroquetasSinGlutenGranCanariaPage() {
                 <span className="mt-2 block text-primary-700">Las de siempre, para todos.</span>
               </h1>
               <p className="mb-5 max-w-2xl text-lg leading-relaxed text-slate-700 md:text-xl">
-                De jamón serrano, de pollo asado, de atún y pimiento asado o de queso de cabra
-                y cebolla caramelizada. Cuatro maneras de disfrutar un clásico,
+                De jamón serrano, de pollo asado, de atún y pimiento del piquillo o de queso de cabra
+                con cebolla caramelizada. Cuatro maneras de disfrutar un clásico,
                 elaborado en nuestra cocina 100 % sin gluten.
               </p>
               <p className="mb-8 max-w-2xl leading-relaxed text-slate-600">
@@ -128,12 +132,23 @@ export default function CroquetasSinGlutenGranCanariaPage() {
               <p className="mb-8 text-sm font-extrabold tracking-[0.18em] text-primary-700">{sabor.number} / 04</p>
               <h3 className="mb-3 text-2xl font-bold leading-tight text-slate-900">{sabor.title}</h3>
               <p className="leading-relaxed text-slate-600">{sabor.description}</p>
+              <div className="mt-6 border-t border-primary-100 pt-4">
+                <p className="text-sm leading-relaxed text-slate-700">
+                  <span className="font-bold text-slate-900">Alérgenos identificados en los ingredientes descritos: </span>
+                  {sabor.allergenNote}.
+                </p>
+                <p className="mt-2 text-xs leading-relaxed text-slate-500">
+                  Información parcial; falta validar empanado, ingredientes secundarios y declaración completa.
+                  Consúltanos antes de pedir si tienes una alergia.
+                </p>
+              </div>
             </article>
           ))}
         </div>
         <p className="mt-6 text-sm leading-relaxed text-slate-500">
-          Los nombres de los sabores señalan los ingredientes protagonistas;
-          no son una lista completa de ingredientes ni de alérgenos.
+          Estas descripciones explican cómo elaboramos cada sabor, pero no constituyen una lista
+          exhaustiva de ingredientes ni una declaración definitiva de alérgenos.
+          Hasta validar las fichas completas de ARIST, consúltanos si tienes alguna alergia.
         </p>
       </section>
 
