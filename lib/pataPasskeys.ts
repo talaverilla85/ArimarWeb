@@ -47,13 +47,20 @@ export async function consumeChallenge(request:Request,purpose:'register'|'login
  RETURNING challenge`
  return records.length?String(records[0].challenge):null
 }
+function ownPublicKey(encoded:string):Uint8Array<ArrayBuffer>{
+ const bytes=Buffer.from(encoded,'base64')
+ const memory=new ArrayBuffer(bytes.byteLength)
+ const view=new Uint8Array(memory)
+ view.set(bytes)
+ return view
+}
 export type StoredPasskey={
- id:string;publicKey:Uint8Array;counter:number;
+ id:string;publicKey:Uint8Array<ArrayBuffer>;counter:number;
  transports:AuthenticatorTransportFuture[];deviceType:string;backedUp:boolean
 }
 function fromRow(row:Record<string,unknown>):StoredPasskey{
  return {
-  id:String(row.id),publicKey:Uint8Array.from(Buffer.from(String(row.public_key_b64),'base64')),
+  id:String(row.id),publicKey:ownPublicKey(String(row.public_key_b64)),
   counter:Number(row.sign_counter),
   transports:Array.isArray(row.transports)?row.transports as AuthenticatorTransportFuture[]:[],
   deviceType:String(row.device_type),backedUp:Boolean(row.backed_up)
