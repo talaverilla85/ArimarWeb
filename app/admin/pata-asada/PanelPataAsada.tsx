@@ -4,7 +4,22 @@ type Day={date:string;capacity:number;occupied:number;available:number;blocked:b
 type Order={id:string;date:string;quantity:number;name:string;phone:string|null;email:string|null;status:string;source:string;notes:string|null}
 const input='w-full rounded-xl border border-slate-300 px-3 py-2 text-slate-900 focus:border-teal-700 focus:outline-none'
 function dayCanary(){const p=new Intl.DateTimeFormat('en-CA',{timeZone:'Atlantic/Canary',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(new Date());const f=(t:string)=>p.find(x=>x.type===t)?.value||'';return [f('year'),f('month'),f('day')].join('-')}
-function plus(date:string,n:number){const d=new Date(date+'T12:00:00Z');d.setUTCDate(d.getUTCDate()+n);return d.toISOString().slice(0,10)}
+function monthBounds(month:string){
+ const start=month+'-01'
+ const d=new Date(start+'T12:00:00Z')
+ d.setUTCMonth(d.getUTCMonth()+1)
+ d.setUTCDate(0)
+ return {from:start,to:d.toISOString().slice(0,10)}
+}
+function shiftMonth(month:string,amount:number){
+ const d=new Date(month+'-01T12:00:00Z')
+ d.setUTCMonth(d.getUTCMonth()+amount)
+ return d.toISOString().slice(0,7)
+}
+function monthLabel(month:string){
+ const label=new Intl.DateTimeFormat('es-ES',{timeZone:'UTC',month:'long',year:'numeric'}).format(new Date(month+'-01T12:00:00Z'))
+ return label.charAt(0).toLocaleUpperCase('es-ES')+label.slice(1)
+}
 async function api(path:string,options?:RequestInit){
  const response=await fetch('/api/pata-asada/admin/'+path,{cache:'no-store',credentials:'same-origin',...options,
  headers:{...(options?.body?{'Content-Type':'application/json'}:{}),...(options?.headers||{})}})
@@ -17,6 +32,8 @@ export default function PanelPataAsada(){
  const [authenticated,setAuthenticated]=useState<boolean|null>(null)
  const [password,setPassword]=useState('')
  const [selected,setSelected]=useState(today)
+ const [viewMonth,setViewMonth]=useState(()=>dayCanary().slice(0,7))
+ const [loadingCalendar,setLoadingCalendar]=useState(false)
  const [days,setDays]=useState<Day[]>([])
  const [orders,setOrders]=useState<Order[]>([])
  const [capacity,setCapacity]=useState(3)
@@ -27,16 +44,26 @@ export default function PanelPataAsada(){
  const [quantity,setQuantity]=useState(1)
  const [message,setMessage]=useState('')
  const [loading,setLoading]=useState(false)
- async function refresh(){
-  const from=today,to=plus(today,30)
+ async function refresh(month=viewMonth){
+  const {from,to}=monthBounds(month)
   const [d,o]=await Promise.all([api('days?from='+from+'&to='+to),api('orders?from='+from+'&to='+to)])
-  setDays(d.days);setOrders(o.orders)
+  if(month===viewMonth){setDays(d.days);setOrders(o.orders)}
  }
  useEffect(()=>{api('session').then(d=>setAuthenticated(d.authenticated)).catch(()=>setAuthenticated(false))},[])
  useEffect(()=>{
-  if(authenticated)refresh().catch(e=>setMessage(e.message))
- // eslint-disable-next-line react-hooks/exhaustive-deps
- },[authenticated])
+  if(!authenticated)return
+  let active=true
+  const {from,to}=monthBounds(viewMonth)
+  setLoadingCalendar(true)
+  setDays([])
+  setOrders([])
+  setMessage('')
+  Promise.all([api('days?from='+from+'&to='+to),api('orders?from='+from+'&to='+to)])
+   .then(([d,o])=>{if(active){setDays(d.days);setOrders(o.orders)}})
+   .catch(e=>{if(active)setMessage(e instanceof Error?e.message:'Error al cargar el mes')})
+   .finally(()=>{if(active)setLoadingCalendar(false)})
+  return ()=>{active=false}
+ },[authenticated,viewMonth])
  useEffect(()=>{
   const d=days.find(x=>x.date===selected)
   setCapacity(d?.capacity??3);setBlocked(d?.blocked??false);setNote(d?.note??'')
@@ -47,7 +74,15 @@ export default function PanelPataAsada(){
   catch(e){setMessage(e instanceof Error?e.message:'Error desconocido')}
   finally{setLoading(false)}
  }
+ function navigateMonth(month:string){
+  if(!/^\d{4}-(0[1-9]|1[0-2])$/.test(month))return
+  setViewMonth(month)
+  setSelected(month===today.slice(0,7)?today:month+'-01')
+ }
  const current=days.find(x=>x.date===selected)
+ const historical=selected<today
+ const {from:monthStart}=monthBounds(viewMonth)
+ const leadDays=(new Date(monthStart+'T12:00:00Z').getUTCDay()+6)%7
  const selectedOrders=orders.filter(x=>x.date===selected)
  if(authenticated===null)return <main className="mx-auto min-h-[70vh] max-w-5xl px-6 pb-20 pt-36">Comprobando acceso…</main>
  if(!authenticated)return <main className="mx-auto min-h-[75vh] max-w-lg px-6 pb-20 pt-36">
@@ -73,23 +108,57 @@ export default function PanelPataAsada(){
    <button className="rounded-xl border px-4 py-2 text-sm" onClick={()=>action(async()=>{await api('session',{method:'DELETE'});setAuthenticated(false)})}>Salir</button>
   </div>
   {message&&<p role="status" className="my-5 rounded-xl border bg-slate-50 p-3 text-sm">{message}</p>}
-  <section className="mt-7 rounded-2xl border bg-white p-5 shadow-sm">
-   <h2 className="text-xl font-extrabold">Calendario · Próximos 31 días</h2>
-   <div className="mt-4 grid grid-cols-4 gap-2 sm:grid-cols-7">
-    {days.map(d=><button key={d.date} type="button" onClick={()=>setSelected(d.date)}
-     className={'rounded-xl border p-2 text-left transition '+(selected===d.date?'border-teal-700 ring-2 ring-teal-700':'border-slate-200')+(d.blocked?' bg-slate-200':d.available===0?' bg-rose-50':d.available===3?' bg-teal-50':' bg-amber-50')}>
-      <span className="block text-xs font-medium text-slate-600">{d.date.slice(5)}</span>
-      <span className="block text-lg font-black">{d.blocked?'×':d.available}</span>
-      <span className="block text-[11px]">{d.blocked?'Bloqueado':'libres / '+d.capacity}</span>
-     </button>)}
+  <section className="mt-7 rounded-2xl border bg-white p-4 shadow-sm sm:p-6">
+   <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+    <div>
+     <h2 className="text-xl font-extrabold">Calendario de disponibilidad</h2>
+     <p className="mt-1 text-sm text-slate-600">Consulta y planifica cualquier mes. Elige un día para gestionarlo.</p>
+    </div>
+    <button type="button" onClick={()=>navigateMonth(today.slice(0,7))}
+     className="self-start rounded-lg border border-teal-700 px-3 py-2 text-sm font-semibold text-teal-800 hover:bg-teal-50">
+     Ir a este mes
+    </button>
+   </div>
+   <div className="mt-5 flex flex-wrap items-center justify-between gap-3 rounded-xl bg-slate-50 p-3">
+    <button type="button" onClick={()=>navigateMonth(shiftMonth(viewMonth,-1))}
+     aria-label="Mes anterior" className="rounded-lg border bg-white px-3 py-2 font-bold hover:bg-slate-100">‹ <span className="hidden sm:inline">Anterior</span></button>
+    <div className="flex flex-col items-center gap-2 sm:flex-row sm:gap-3">
+     <strong aria-live="polite" className="text-base font-extrabold sm:text-lg">{monthLabel(viewMonth)}</strong>
+     <input type="month" value={viewMonth} aria-label="Elegir mes y año"
+      onChange={e=>navigateMonth(e.target.value)}
+      className="max-w-[165px] rounded-lg border border-slate-300 bg-white px-2 py-1.5 text-sm text-slate-800"/>
+    </div>
+    <button type="button" onClick={()=>navigateMonth(shiftMonth(viewMonth,1))}
+     aria-label="Mes siguiente" className="rounded-lg border bg-white px-3 py-2 font-bold hover:bg-slate-100"><span className="hidden sm:inline">Siguiente</span> ›</button>
+   </div>
+   <div className="mt-4 grid grid-cols-7 gap-1 text-center text-xs font-bold text-slate-600 sm:gap-2">
+    {['Lun','Mar','Mié','Jue','Vie','Sáb','Dom'].map(w=><div key={w} className="py-1">{w}</div>)}
+   </div>
+   {loadingCalendar
+    ? <p className="py-10 text-center text-slate-600" role="status">Cargando disponibilidad del mes…</p>
+    : <div className="grid grid-cols-7 gap-1 sm:gap-2">
+      {Array.from({length:leadDays},(_,i)=><div key={'blank-'+i} aria-hidden="true"/>)}
+      {days.map(d=><button key={d.date} type="button" onClick={()=>setSelected(d.date)}
+       aria-pressed={selected===d.date}
+       aria-label={d.date+': '+(d.blocked?'fecha bloqueada':d.available+' patas disponibles de '+d.capacity)}
+       className={'min-h-20 rounded-xl border p-1.5 text-center transition hover:border-teal-600 sm:min-h-24 sm:p-2 '+(selected===d.date?'border-teal-700 ring-2 ring-teal-700':'border-slate-200')+(d.blocked?' bg-slate-200':d.available===0?' bg-rose-50':d.available===3?' bg-teal-50':' bg-amber-50')}>
+        <span className="block text-sm font-bold sm:text-base">{Number(d.date.slice(-2))}</span>
+        <span className="mt-1 block text-base font-black sm:text-xl">{d.blocked?'×':d.available}</span>
+        <span className="block text-[9px] leading-tight sm:text-xs">{d.blocked?'Bloqueado':d.available===0?'Completo':'libres'}</span>
+       </button>)}
+     </div>}
+   <div className="mt-4 flex flex-wrap gap-3 text-xs text-slate-600">
+    <span>🟢 3 disponibles</span><span>🟡 1 o 2 disponibles</span>
+    <span>🔴 Completo</span><span>⚪ Bloqueado</span>
    </div>
   </section>
   <div className="mt-6 grid gap-6 lg:grid-cols-2">
    <section className="rounded-2xl border bg-white p-5">
     <h2 className="text-xl font-extrabold">Configurar fecha</h2>
     <label className="mt-4 block text-sm font-semibold">Fecha
-     <input className={input+' mt-2'} type="date" min={today} value={selected} onChange={e=>setSelected(e.target.value)}/>
+     <input className={input+' mt-2'} type="date" max="9999-12-31" value={selected} onChange={e=>{const date=e.target.value;setSelected(date);if(date&&date.slice(0,7)!==viewMonth)setViewMonth(date.slice(0,7))}}/>
     </label>
+    {historical&&<p className="mt-3 text-sm font-semibold text-amber-800">Fecha pasada: solo consulta, no admite nuevos encargos ni cambios.</p>}
     <p className="mt-3 text-sm text-slate-600">Ya ocupadas: <strong>{current?.occupied??0}</strong> · Libres: <strong>{current?.available??'—'}</strong></p>
     <label className="mt-4 block text-sm font-semibold">Capacidad máxima
      <select className={input+' mt-2'} value={capacity} onChange={e=>setCapacity(Number(e.target.value))}>
@@ -100,7 +169,7 @@ export default function PanelPataAsada(){
     <label className="mt-4 block text-sm font-semibold">Nota interna
      <input className={input+' mt-2'} value={note} maxLength={250} onChange={e=>setNote(e.target.value)} placeholder="Festivo, falta de proveedor…"/>
     </label>
-    <button disabled={loading||!selected} onClick={()=>action(async()=>{await api('days',{method:'PATCH',body:JSON.stringify({date:selected,capacity,blocked,note})})})}
+    <button disabled={loading||loadingCalendar||historical||!current} onClick={()=>action(async()=>{await api('days',{method:'PATCH',body:JSON.stringify({date:selected,capacity,blocked,note})})})}
      className="mt-5 rounded-xl bg-[#207F85] px-5 py-3 font-bold text-white disabled:opacity-50">Guardar disponibilidad</button>
    </section>
    <section className="rounded-2xl border bg-white p-5">
@@ -122,7 +191,7 @@ export default function PanelPataAsada(){
       </select>
      </label>
      <p className="text-sm">Importe del encargo: <strong>{quantity*90} €</strong> (el panel no cobra).</p>
-     <button disabled={loading||!selected} className="rounded-xl bg-[#207F85] px-5 py-3 font-bold text-white disabled:opacity-50">Registrar encargo</button>
+     <button disabled={loading||loadingCalendar||historical||!current} className="rounded-xl bg-[#207F85] px-5 py-3 font-bold text-white disabled:opacity-50">Registrar encargo</button>
     </form>
    </section>
   </div>
