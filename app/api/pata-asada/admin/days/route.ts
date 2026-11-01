@@ -20,7 +20,7 @@ export async function PATCH(request:Request){
  try{
   const a=await parseBody(request),date=a.date,capacity=a.capacity,blocked=a.blocked,note=str(a.note??'',250)
   if(!dateISO(date)||date<operationalDay()||date>shiftDate(operationalDay(),365)
-   ||!Number.isInteger(capacity)||Number(capacity)<0||Number(capacity)>3
+   ||typeof capacity!=='number'||!Number.isInteger(capacity)||Number(capacity)<0||Number(capacity)>3
    ||typeof blocked!=='boolean'||note===null)
    return NextResponse.json({error:'Datos incorrectos'},{status:400,headers:noStore})
   await configureDay({date,capacity:Number(capacity),blocked,note})

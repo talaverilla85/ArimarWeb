@@ -14,7 +14,7 @@ export async function POST(request:Request){
   const name=str(a.name,100),email=str(a.email,254),phone=str(a.phone,30),notes=str(a.notes??'',500)
   const key=a.key
   if(!dateISO(date)||date<firstPickupDate()||date>shiftDate(operationalDay(),62)
-   ||!Number.isInteger(quantity)||Number(quantity)<1||Number(quantity)>3
+   ||typeof quantity!=='number'||!Number.isInteger(quantity)||Number(quantity)<1||Number(quantity)>3
    ||!name||name.length<2||!email||!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)
    ||!phone||phone.replace(/\D/g,'').length<6
    ||notes===null||typeof key!=='string'
