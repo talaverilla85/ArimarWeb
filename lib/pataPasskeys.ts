@@ -53,7 +53,7 @@ export type StoredPasskey={
 }
 function fromRow(row:Record<string,unknown>):StoredPasskey{
  return {
-  id:String(row.id),publicKey:new Uint8Array(Buffer.from(String(row.public_key_b64),'base64')),
+  id:String(row.id),publicKey:Uint8Array.from(Buffer.from(String(row.public_key_b64),'base64')),
   counter:Number(row.sign_counter),
   transports:Array.isArray(row.transports)?row.transports as AuthenticatorTransportFuture[]:[],
   deviceType:String(row.device_type),backedUp:Boolean(row.backed_up)
