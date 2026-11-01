@@ -231,7 +231,7 @@ export default function PanelPataAsada(){
       Los pedidos quedan guardados en la base de datos. Aquí aparecen los cobrados online y los confirmados manualmente; nunca las solicitudes pendientes de pago.
      </p>
     </div>
-    <button type="button" disabled={loadingOrders} onClick={()=>{void loadUpcoming();void refresh(viewMonth)}}
+    <button type="button" disabled={loadingOrders} onClick={()=>{void refresh(viewMonth).catch(e=>setMessage(e instanceof Error?e.message:'Error al actualizar'))}}
       className="rounded-xl border border-teal-700 px-4 py-2 text-sm font-bold text-teal-800 hover:bg-teal-50 disabled:opacity-50">
       Actualizar lista
     </button>
