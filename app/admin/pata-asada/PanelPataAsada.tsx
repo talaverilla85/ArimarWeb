@@ -1,5 +1,5 @@
 'use client'
-import {useEffect,useState} from 'react'
+import {useEffect,useRef,useState} from 'react'
 type Day={date:string;capacity:number;occupied:number;available:number;blocked:boolean;note:string|null}
 type Order={id:string;date:string;quantity:number;name:string;phone:string|null;email:string|null;status:string;source:string;notes:string|null;amountCents?:number}
 const input='w-full rounded-xl border border-slate-300 px-3 py-2 text-slate-900 focus:border-teal-700 focus:outline-none'
@@ -34,6 +34,10 @@ export default function PanelPataAsada(){
  const [selected,setSelected]=useState(today)
  const [viewMonth,setViewMonth]=useState(()=>dayCanary().slice(0,7))
  const [loadingCalendar,setLoadingCalendar]=useState(false)
+ const [configOpen,setConfigOpen]=useState(false)
+ const [configError,setConfigError]=useState('')
+ const closeDialogButton=useRef<HTMLButtonElement>(null)
+ const previousFocus=useRef<HTMLElement|null>(null)
  const [days,setDays]=useState<Day[]>([])
  const [orders,setOrders]=useState<Order[]>([])
  const [upcomingOrders,setUpcomingOrders]=useState<Order[]>([])
@@ -68,6 +72,16 @@ export default function PanelPataAsada(){
   await loadUpcoming()
  }
  useEffect(()=>{api('session').then(d=>setAuthenticated(d.authenticated)).catch(()=>setAuthenticated(false))},[])
+ useEffect(()=>{
+  if(!configOpen)return
+  const originalOverflow=document.body.style.overflow
+  document.body.style.overflow='hidden'
+  closeDialogButton.current?.focus()
+  return ()=>{
+   document.body.style.overflow=originalOverflow
+   previousFocus.current?.focus()
+  }
+ },[configOpen])
  useEffect(()=>{if(authenticated)void loadUpcoming()},[authenticated])
  useEffect(()=>{
   if(!authenticated)return
@@ -92,6 +106,48 @@ export default function PanelPataAsada(){
   try{await fn();await refresh();setMessage('Cambios guardados correctamente.')}
   catch(e){setMessage(e instanceof Error?e.message:'Error desconocido')}
   finally{setLoading(false)}
+ }
+ function openDateConfig(date:string){
+  const day=days.find(d=>d.date===date)
+  if(!day)return
+  previousFocus.current=document.activeElement instanceof HTMLElement?document.activeElement:null
+  setSelected(date)
+  setCapacity(day.capacity)
+  setBlocked(day.blocked)
+  setNote(day.note??'')
+  setConfigError('')
+  setConfigOpen(true)
+ }
+ function closeDateConfig(){
+  if(loading)return
+  setConfigOpen(false)
+  setConfigError('')
+ }
+ async function saveDateConfig(){
+  if(loading||loadingCalendar||historical||!current)return
+  setLoading(true)
+  setConfigError('')
+  try{
+   await api('days',{method:'PATCH',body:JSON.stringify({date:selected,capacity,blocked,note})})
+   await refresh()
+   setMessage('Disponibilidad del '+readableDate(selected)+' guardada correctamente.')
+   setConfigOpen(false)
+  }catch(e){
+   setConfigError(e instanceof Error?e.message:'No se pudo actualizar la fecha')
+  }finally{
+   setLoading(false)
+  }
+ }
+ function handleDialogKeys(e:React.KeyboardEvent<HTMLDivElement>){
+  if(e.key==='Escape'){e.preventDefault();closeDateConfig();return}
+  if(e.key!=='Tab')return
+  const focusable=e.currentTarget.querySelectorAll<HTMLElement>(
+   'button:not([disabled]),input:not([disabled]),select:not([disabled]),textarea:not([disabled]),[tabindex]:not([tabindex="-1"])'
+  )
+  if(!focusable.length)return
+  const first=focusable[0],last=focusable[focusable.length-1]
+  if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus()}
+  else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus()}
  }
  function navigateMonth(month:string){
   if(!/^\d{4}-(0[1-9]|1[0-2])$/.test(month))return
@@ -165,7 +221,7 @@ export default function PanelPataAsada(){
     ? <p className="py-10 text-center text-slate-600" role="status">Cargando disponibilidad del mes…</p>
     : <div className="grid grid-cols-7 gap-1 sm:gap-2">
       {Array.from({length:leadDays},(_,i)=><div key={'blank-'+i} aria-hidden="true"/>)}
-      {days.map(d=><button key={d.date} type="button" onClick={()=>setSelected(d.date)}
+      {days.map(d=><button key={d.date} type="button" onClick={()=>openDateConfig(d.date)}
        aria-pressed={selected===d.date}
        aria-label={d.date+': '+(d.blocked?'fecha bloqueada':d.available+' patas disponibles de '+d.capacity)}
        className={'min-h-20 rounded-xl border p-1.5 text-center transition hover:border-teal-600 sm:min-h-24 sm:p-2 '+(selected===d.date?'border-teal-700 ring-2 ring-teal-700':'border-slate-200')+(d.blocked?' bg-slate-200':d.available===0?' bg-rose-50':d.available===3?' bg-teal-50':' bg-amber-50')}>
@@ -179,30 +235,16 @@ export default function PanelPataAsada(){
     <span>🔴 Completo</span><span>⚪ Bloqueado</span>
    </div>
   </section>
-  <div className="mt-6 grid gap-6 lg:grid-cols-2">
-   <section className="rounded-2xl border bg-white p-5">
-    <h2 className="text-xl font-extrabold">Configurar fecha</h2>
-    <label className="mt-4 block text-sm font-semibold">Fecha
-     <input className={input+' mt-2'} type="date" max="9999-12-31" value={selected} onChange={e=>{const date=e.target.value;setSelected(date);if(date&&date.slice(0,7)!==viewMonth)setViewMonth(date.slice(0,7))}}/>
-    </label>
-    {historical&&<p className="mt-3 text-sm font-semibold text-amber-800">Fecha pasada: solo consulta, no admite nuevos encargos ni cambios.</p>}
-    <p className="mt-3 text-sm text-slate-600">Ya ocupadas: <strong>{current?.occupied??0}</strong> · Libres: <strong>{current?.available??'—'}</strong></p>
-    <label className="mt-4 block text-sm font-semibold">Capacidad máxima
-     <select className={input+' mt-2'} value={capacity} onChange={e=>setCapacity(Number(e.target.value))}>
-      {[0,1,2,3].map(n=><option key={n} value={n}>{n} {n===1?'pata':'patas'}</option>)}
-     </select>
-    </label>
-    <label className="mt-4 flex items-center gap-3 text-sm font-semibold"><input type="checkbox" checked={blocked} onChange={e=>setBlocked(e.target.checked)}/> Fecha bloqueada</label>
-    <label className="mt-4 block text-sm font-semibold">Nota interna
-     <input className={input+' mt-2'} value={note} maxLength={250} onChange={e=>setNote(e.target.value)} placeholder="Festivo, falta de proveedor…"/>
-    </label>
-    <button disabled={loading||loadingCalendar||historical||!current} onClick={()=>action(async()=>{await api('days',{method:'PATCH',body:JSON.stringify({date:selected,capacity,blocked,note})})})}
-     className="mt-5 rounded-xl bg-[#207F85] px-5 py-3 font-bold text-white disabled:opacity-50">Guardar disponibilidad</button>
-   </section>
-   <section className="rounded-2xl border bg-white p-5">
+  <div className="mt-6">
+   <section className="rounded-2xl border bg-white p-5 shadow-sm sm:p-6">
     <h2 className="text-xl font-extrabold">Añadir encargo manual</h2>
-    <p className="mt-2 text-sm text-slate-600">Pedidos gestionados por WhatsApp o teléfono. Ocupan unidades inmediatamente.</p>
-    <form className="mt-4 space-y-4" onSubmit={e=>{e.preventDefault();action(async()=>{
+    <p className="mt-2 text-sm text-slate-600">Pedidos gestionados por WhatsApp o teléfono. Ocupan unidades inmediatamente y aparecen en la lista de encargos.</p>
+    <label className="mt-4 block text-sm font-semibold">Fecha de recogida
+     <input className={input+' mt-2'} type="date" min={today} value={selected}
+      onChange={e=>{const date=e.target.value;setSelected(date);if(date&&date.slice(0,7)!==viewMonth)setViewMonth(date.slice(0,7))}}/>
+    </label>
+    <p className="mt-2 text-sm text-slate-600">Disponibles para esa fecha: <strong>{current?.available??'—'}</strong> de {current?.capacity??3} {current?.blocked?'· Día bloqueado':''}</p>
+    <form className="mt-5 grid gap-4 sm:grid-cols-2" onSubmit={e=>{e.preventDefault();action(async()=>{
      await api('manual',{method:'POST',body:JSON.stringify({date:selected,quantity,name,phone,notes:''})})
      setName('');setPhone('')
     })}}>
@@ -217,8 +259,8 @@ export default function PanelPataAsada(){
        {[1,2,3].map(n=><option key={n}>{n}</option>)}
       </select>
      </label>
-     <p className="text-sm">Importe del encargo: <strong>{quantity*90} €</strong> (el panel no cobra).</p>
-     <button disabled={loading||loadingCalendar||historical||!current} className="rounded-xl bg-[#207F85] px-5 py-3 font-bold text-white disabled:opacity-50">Registrar encargo</button>
+     <p className="text-sm sm:col-span-2">Importe del encargo: <strong>{quantity*90} €</strong> (el panel no cobra).</p>
+     <button disabled={loading||loadingCalendar||historical||!current||current.blocked||quantity>current.available} className="rounded-xl bg-[#207F85] px-5 py-3 font-bold text-white disabled:opacity-50 sm:col-span-2 sm:justify-self-start">Registrar encargo</button>
     </form>
    </section>
   </div>
@@ -298,5 +340,87 @@ export default function PanelPataAsada(){
     Para ver pagos pendientes o incidencias se mantiene el registro administrativo por fecha.
    </p>
   </section>
+
+  {configOpen&&current&&<div className="fixed inset-0 z-[110] flex items-center justify-center bg-slate-950/70 px-3 py-4 sm:px-6"
+   onMouseDown={e=>{if(e.target===e.currentTarget)closeDateConfig()}}>
+    <div role="dialog" aria-modal="true" aria-labelledby="pata-config-title"
+     aria-describedby="pata-config-description" onKeyDown={handleDialogKeys}
+     className="w-full max-w-xl max-h-[92dvh] overflow-y-auto rounded-3xl bg-white text-slate-800 shadow-2xl"
+    >
+     <div className="sticky top-0 z-10 flex items-start justify-between gap-4 border-b border-slate-100 bg-white px-5 py-5 sm:px-7">
+      <div>
+       <p className="text-xs font-extrabold uppercase tracking-widest text-teal-800">Disponibilidad · AriMar</p>
+       <h2 id="pata-config-title" className="mt-1 text-xl font-extrabold sm:text-2xl">
+        {readableDate(selected)}
+       </h2>
+       <p id="pata-config-description" className="mt-1 text-sm text-slate-600">
+        {historical?'Consulta de una fecha anterior.': 'Modifica la capacidad o bloquea este día.'}
+       </p>
+      </div>
+      <button ref={closeDialogButton} type="button" onClick={closeDateConfig} disabled={loading}
+       aria-label="Cerrar configuración de fecha"
+       className="flex h-10 w-10 flex-none items-center justify-center rounded-full bg-slate-100 text-2xl font-bold text-slate-700 hover:bg-slate-200 disabled:opacity-50">×</button>
+     </div>
+     <div className="space-y-5 px-5 py-5 sm:px-7">
+      <div className="grid grid-cols-3 gap-2 text-center">
+       <div className="rounded-xl bg-slate-50 p-3">
+        <p className="text-2xl font-black">{current.capacity}</p>
+        <p className="mt-1 text-xs text-slate-600">Capacidad</p>
+       </div>
+       <div className="rounded-xl bg-amber-50 p-3">
+        <p className="text-2xl font-black">{current.occupied}</p>
+        <p className="mt-1 text-xs text-slate-600">Ocupadas</p>
+       </div>
+       <div className="rounded-xl bg-teal-50 p-3">
+        <p className="text-2xl font-black">{current.available}</p>
+        <p className="mt-1 text-xs text-slate-600">Disponibles</p>
+       </div>
+      </div>
+      {current.blocked&&<p className="rounded-xl bg-slate-100 p-3 text-sm font-bold">Este día está bloqueado para nuevos encargos.</p>}
+      <label className="block text-sm font-semibold">
+       Capacidad máxima de esta fecha
+       <select className={input+' mt-2'} value={capacity} disabled={historical||loading}
+        onChange={e=>setCapacity(Number(e.target.value))}>
+        {[0,1,2,3].map(n=><option key={n} value={n}>{n} {n===1?'pata':'patas'}</option>)}
+       </select>
+      </label>
+      <label className="flex items-center gap-3 text-sm font-semibold">
+       <input type="checkbox" checked={blocked} disabled={historical||loading}
+        onChange={e=>setBlocked(e.target.checked)} className="h-5 w-5 accent-teal-700"/>
+       Bloquear esta fecha para nuevos encargos
+      </label>
+      <label className="block text-sm font-semibold">
+       Nota interna (opcional)
+       <textarea className={input+' mt-2'} rows={2} maxLength={250} value={note}
+        disabled={historical||loading} onChange={e=>setNote(e.target.value)}
+        placeholder="Festivo, falta de proveedor, motivo del bloqueo…"/>
+      </label>
+      <div className="rounded-xl border border-slate-200 p-3">
+       <h3 className="text-sm font-bold">Encargos registrados para este día</h3>
+       {orders.filter(o=>o.date===selected).length===0
+        ?<p className="mt-2 text-sm text-slate-500">Todavía no hay encargos.</p>
+        :<div className="mt-2 divide-y">
+         {orders.filter(o=>o.date===selected).map(o=><div key={o.id} className="flex justify-between gap-3 py-2 text-sm">
+          <div><span className="font-semibold">{o.name}</span>
+           <p className="text-xs text-slate-500">{o.status==='PAID'?'Pagado':o.status==='MANUAL_CONFIRMED'?'Manual confirmado':o.status}</p>
+          </div>
+          <strong>{o.quantity} {o.quantity===1?'pata':'patas'}</strong>
+         </div>)}
+        </div>}
+      </div>
+      {configError&&<p role="alert" className="rounded-xl bg-rose-50 p-3 text-sm font-semibold text-rose-800">{configError}</p>}
+      {historical&&<p className="text-sm font-semibold text-amber-800">La configuración de fechas pasadas no se puede modificar.</p>}
+     </div>
+     <div className="sticky bottom-0 flex justify-end gap-3 border-t border-slate-100 bg-white px-5 py-4 sm:px-7">
+      <button type="button" onClick={closeDateConfig} disabled={loading}
+       className="rounded-xl border border-slate-300 px-4 py-3 text-sm font-bold disabled:opacity-50">Cerrar</button>
+      {!historical&&<button type="button" disabled={loading||loadingCalendar||capacity<current.occupied}
+       onClick={()=>{void saveDateConfig()}}
+       className="rounded-xl bg-[#207F85] px-5 py-3 text-sm font-extrabold text-white hover:bg-[#18686D] disabled:opacity-50">
+       {loading?'Guardando…':'Guardar cambios'}
+      </button>}
+     </div>
+    </div>
+   </div>}
  </main>
 }
