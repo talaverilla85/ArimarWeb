@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState, type FormEvent } from 'react'
 import { getWhatsAppUrl } from '@/lib/siteConfig'
+import { PATA_PRECIO_EUR, PATA_PESO_FINAL_KG_APROX, PATA_PESO_CRUDO_KG_APROX, PATA_MAX_UNIDADES_DIA } from '@/lib/pataAsadaConfig'
 
 /**
  * El día operativo de encargos se calcula en Canarias, independientemente
@@ -76,7 +77,8 @@ export default function SolicitarPata() {
   const primerDia = primeraFechaRecogida(diaOperativo)
   const diaValido = !!fecha && fecha >= primerDia
   const unidadesNumero = Number(unidades)
-  const unidadesValidas = Number.isSafeInteger(unidadesNumero) && unidadesNumero >= 1
+  const unidadesValidas = Number.isSafeInteger(unidadesNumero) && unidadesNumero >= 1 && unidadesNumero <= PATA_MAX_UNIDADES_DIA
+  const importeTotal = unidadesValidas ? unidadesNumero * PATA_PRECIO_EUR : 0
 
   function enviar(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
@@ -93,6 +95,8 @@ export default function SolicitarPata() {
       '',
       'Nombre: ' + nombre.trim(),
       'Cantidad: ' + unidadesNumero + (unidadesNumero === 1 ? ' pata entera' : ' patas enteras'),
+      'Importe: ' + PATA_PRECIO_EUR + ' € por unidad. Total: ' + importeTotal + ' €.',
+      'Peso aprox.: ' + PATA_PESO_FINAL_KG_APROX + ' kg TERMINADA CON HUESO por pieza (' + PATA_PESO_CRUDO_KG_APROX + ' kg en crudo).',
       'Fecha de recogida: ' + fechaWhatsApp(fecha),
       'Ocasión: ' + ocasion,
       'Observaciones: ' + (comentarios.trim() || 'Sin observaciones'),
@@ -107,7 +111,7 @@ export default function SolicitarPata() {
       <div className="bg-[#1E293B] px-6 py-8 text-white md:px-9">
         <p className="mb-2 text-xs font-bold uppercase tracking-[0.2em] text-[#B7E1E1]">Encargos para celebraciones</p>
         <h2 className="text-3xl font-extrabold tracking-tight md:text-4xl">Solicita tus patas asadas</h2>
-        <p className="mt-3 leading-relaxed text-slate-200">Selecciona la fecha de recogida y el número de patas enteras. Recibiremos tu solicitud por WhatsApp y te confirmaremos los detalles antes del pago.</p>
+        <p className="mt-3 leading-relaxed text-slate-200">90 € por pata entera. Peso final aproximado: 7,5 kg una vez asada y con hueso. Selecciona fecha y cantidad; confirmaremos la disponibilidad antes del pago.</p>
       </div>
 
       <form onSubmit={enviar} className="grid gap-5 p-6 md:grid-cols-2 md:p-9">
@@ -117,8 +121,8 @@ export default function SolicitarPata() {
         </label>
         <label className="text-sm font-semibold text-[#1E293B]">
           Número de patas enteras
-          <input className={field} required type="number" inputMode="numeric" min={1} step={1} value={unidades} onChange={(e) => setUnidades(e.target.value)} />
-          <span className="mt-2 block text-xs font-normal leading-relaxed text-slate-500">Vendemos patas enteras por unidades, sin cortar ni lonchear. La cantidad está sujeta a confirmación de AriMar; no recomendamos cantidades según el número de personas.</span>
+          <input className={field} required type="number" inputMode="numeric" min={1} max={PATA_MAX_UNIDADES_DIA} step={1} value={unidades} onChange={(e) => setUnidades(e.target.value)} />
+          <span className="mt-2 block text-xs font-normal leading-relaxed text-slate-500">Hasta 3 patas por fecha, sujeto a disponibilidad real. De momento la confirmamos personalmente por WhatsApp; el calendario no descuenta unidades automáticamente. Se entregan enteras y con hueso.</span>
         </label>
 
         <div className="md:col-span-2">
@@ -159,6 +163,11 @@ export default function SolicitarPata() {
           <textarea className={field} rows={3} maxLength={500} value={comentarios} onChange={(e) => setComentarios(e.target.value)} placeholder="Indica cualquier necesidad concreta. La hora de recogida se confirmará contigo." />
         </label>
 
+        <div className="md:col-span-2 rounded-2xl border border-[#D7E7E8] bg-[#F1F8F7] px-5 py-5">
+          <p className="text-sm font-semibold text-[#207F85]">Precio cerrado: {PATA_PRECIO_EUR} € por pata entera</p>
+          <p className="mt-1 text-2xl font-extrabold text-[#1E293B]">Total: {importeTotal} €</p>
+          <p className="mt-2 text-sm text-slate-600">Peso aproximado por pieza: {PATA_PESO_FINAL_KG_APROX.toLocaleString('es-ES')} kg <strong>terminada y con hueso</strong>, desde unos {PATA_PESO_CRUDO_KG_APROX.toLocaleString('es-ES')} kg en crudo. Peso variable según la pieza. No se cobra nada desde este formulario.</p>
+        </div>
         <div className="md:col-span-2">
           <button type="submit" disabled={!diaValido || !unidadesValidas} className="flex w-full items-center justify-center gap-2 rounded-xl bg-[#207F85] px-6 py-4 text-base font-extrabold text-white transition hover:bg-[#18686D] disabled:cursor-not-allowed disabled:opacity-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#207F85]">
             Enviar solicitud por WhatsApp <span aria-hidden="true">↗</span>

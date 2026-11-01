@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
 import { siteConfig } from '@/lib/siteConfig'
+import { PATA_PRECIO_EUR } from '@/lib/pataAsadaConfig'
 import SolicitarPata from './SolicitarPata'
 
 const path = '/pata-asada-gran-canaria'
@@ -10,13 +11,13 @@ const photo = 'https://' + siteConfig.domain + '/images/pata-asada-canaria-arima
 
 export const metadata: Metadata = {
   title: 'Pata asada canaria por encargo en Gran Canaria | AriMar',
-  description: 'Pata asada canaria por encargo para toda Gran Canaria. 100 % sin gluten. Consulta desde Vecindario, Ingenio, Telde o Las Palmas. Recogida en AriMar.',
+  description: 'Pata asada canaria entera por encargo en Gran Canaria: 90 € la pieza. Unos 7,5 kg una vez asada y con hueso. Recogida en Playa de Arinaga.',
   alternates: { canonical: path },
   openGraph: {
     type: 'website',
     url,
     title: 'Pata asada canaria por encargo en Gran Canaria | AriMar',
-    description: 'Tu próxima celebración merece una buena pata asada. Elaboración propia, control de temperatura y recogida en Playa de Arinaga.',
+    description: 'Pata asada entera por 90 €. Aproximadamente 7,5 kg ya terminada y con hueso. Elaboración propia y recogida en Playa de Arinaga.',
     locale: 'es_ES',
     images: [{ url: photo, alt: 'Pata asada canaria de AriMar recién salida del horno' }],
   },
@@ -26,11 +27,11 @@ export const metadata: Metadata = {
 const preguntas = [
   {
     q: '¿Dónde comprar pata asada canaria en Gran Canaria?',
-    a: 'Puedes comprar pata asada canaria por encargo en AriMar, en Avenida Polizón 67, Playa de Arinaga (Agüimes, Gran Canaria). La elaboramos en nuestra cocina 100 % sin gluten. Consulta disponibilidad y presupuesto por WhatsApp antes de acudir a recogerla.',
+    a: 'Puedes encargar una pata asada entera por 90 € en AriMar, Playa de Arinaga (Agüimes, Gran Canaria). Una vez asada pesa unos 7,5 kg con hueso. Consulta disponibilidad de fecha por WhatsApp antes de acudir a recogerla.',
   },
   {
     q: '¿La pata asada se entrega entera o cortada?',
-    a: 'Se entrega la pieza entera, sin cortar ni lonchear. Puedes llevarla a tu celebración y servirla al grosor que prefieras.',
+    a: 'Se entrega asada y entera, con hueso, sin cortar ni lonchear. Los aproximadamente 7,5 kg corresponden a la pieza terminada e incluyen el hueso, no son peso de carne deshuesada.',
   },
   {
     q: '¿Puedo encargarla desde Vecindario, Ingenio, Telde o Las Palmas de Gran Canaria?',
@@ -42,7 +43,11 @@ const preguntas = [
   },
   {
     q: '¿Cuánto cuesta una pata asada entera?',
-    a: 'Trabajamos con patas enteras vendidas por unidades. Elige la cantidad y una fecha del calendario. AriMar recibirá tu solicitud por WhatsApp, revisará la disponibilidad y te confirmará fecha, precio y recogida antes de enviarte el enlace de pago. La reserva se confirma cuando verificamos el pago.',
+    a: '90 € por pata entera. Peso aproximado: 7,5 kg una vez asada, CON HUESO. Parte de unos 10,5 kg en crudo; el peso final puede variar ligeramente. Confirmamos fecha y disponibilidad por WhatsApp antes de facilitar el enlace de pago.',
+  },
+  {
+    q: '¿Los 7,5 kg son en crudo o una vez terminada?',
+    a: 'Son unos 7,5 kg después de asar la pata, con el hueso incluido. Su peso inicial ronda los 10,5 kg en crudo. No equivale a 7,5 kg de carne deshuesada y puede variar según la pieza.',
   },
   {
     q: '¿La pata asada se vende por unidades o por número de comensales?',
@@ -68,20 +73,27 @@ const datosEstructurados = {
       url,
       description: 'Pata asada canaria entera para celebraciones y recogida en AriMar, Playa de Arinaga.',
       inLanguage: 'es-ES',
-      about: { '@id': url + '#servicio' },
+      about: { '@id': url + '#producto' },
     },
     {
-      '@type': 'Service',
-      '@id': url + '#servicio',
-      name: 'Elaboración de pata asada canaria por encargo',
-      serviceType: 'Preparación de pata asada canaria entera por encargo para celebraciones',
-      description: 'Elaboramos pata de cerdo asada con control de temperatura interior en nuestra cocina 100 % sin gluten. Se solicita presupuesto y se recoge la pieza entera en AriMar, Playa de Arinaga, Gran Canaria.',
+      '@type': 'Product',
+      '@id': url + '#producto',
+      name: 'Pata asada canaria entera por encargo',
+      description: 'Pata asada entera, 90 € por pieza. Peso final aproximado de 7,5 kg una vez asada, con hueso incluido (unos 10,5 kg en crudo). Recogida en Playa de Arinaga, Gran Canaria.',
       image: photo,
-      provider: { '@id': 'https://' + siteConfig.domain + '/#restaurant' },
-      areaServed: { '@type': 'AdministrativeArea', name: 'Gran Canaria' },
-      availableChannel: {
-        '@type': 'ServiceChannel',
-        serviceLocation: {
+      brand: { '@type': 'Brand', name: 'AriMar' },
+      additionalProperty: [
+        { '@type': 'PropertyValue', name: 'Peso aproximado final asado con hueso', value: '7,5 kg' },
+        { '@type': 'PropertyValue', name: 'Peso aproximado inicial en crudo', value: '10,5 kg' },
+      ],
+      offers: {
+        '@type': 'Offer',
+        price: PATA_PRECIO_EUR,
+        priceCurrency: 'EUR',
+        url,
+        availability: 'https://schema.org/PreOrder',
+        seller: { '@id': 'https://' + siteConfig.domain + '/#restaurant' },
+        availableAtOrFrom: {
           '@type': 'Place',
           name: 'AriMar FoodLab',
           address: {
@@ -121,7 +133,7 @@ const ventajas = [
 
 const pasos = [
   { numero: '01', titulo: 'Solicita tu reserva', detalle: 'Elige una fecha en el calendario, indica cuántas patas enteras quieres y envíanos la solicitud por WhatsApp.' },
-  { numero: '02', titulo: 'Confirmamos los detalles', detalle: 'Comprobamos la disponibilidad y te confirmamos por WhatsApp la fecha, el precio total y la hora de recogida.' },
+  { numero: '02', titulo: 'Confirmamos los detalles', detalle: 'Comprobamos la disponibilidad y te confirmamos por WhatsApp la fecha, la cantidad y la hora de recogida. El precio es 90 € por pata entera.' },
   { numero: '03', titulo: 'Recibes el enlace de pago', detalle: 'Te enviamos el enlace para pagar el encargo por adelantado.' },
   { numero: '04', titulo: 'Reserva confirmada', detalle: 'Comprobamos el pago y dejamos confirmada la reserva. Recoge tus patas en AriMar a la hora acordada.' },
 ]
@@ -144,6 +156,11 @@ export default function PataAsadaPage() {
             <p className="mt-7 max-w-2xl text-lg leading-relaxed text-[#E3EEEE] md:text-xl">
               Piel dorada, carne jugosa y una pieza para reunir a los tuyos. Aceptamos consultas por encargo desde toda Gran Canaria para cumpleaños, reuniones y celebraciones. La preparamos en nuestra cocina 100 % sin gluten.
             </p>
+            <div className="mt-7 rounded-2xl border border-[#80D0D1]/40 bg-white/10 p-5">
+              <p className="text-4xl font-black text-white">90 € <span className="text-base font-semibold text-slate-200">por pata entera</span></p>
+              <p className="mt-2 text-base font-bold text-[#B7E1E1]">Peso final aproximado: 7,5 kg ya asada y con hueso</p>
+              <p className="mt-1 text-sm leading-relaxed text-slate-200">Pieza de unos 10,5 kg en crudo. Se entrega entera, sin deshuesar ni lonchear. El peso puede variar ligeramente.</p>
+            </div>
             <div className="mt-9 flex flex-col gap-3 sm:flex-row">
               <a href="#solicitar-presupuesto" className="inline-flex items-center justify-center rounded-xl bg-[#207F85] px-7 py-4 text-base font-extrabold text-white shadow-lg transition hover:bg-[#278F95] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">
                 Solicitar fecha y unidades <span className="ml-2" aria-hidden="true">↓</span>
@@ -181,7 +198,7 @@ export default function PataAsadaPage() {
           <div className="self-end">
             <p className="text-lg leading-relaxed text-slate-600">Un cumpleaños, un almuerzo con amigos, una reunión familiar o una celebración de empresa. La pata asada canaria es una de esas elaboraciones que convierten el momento de servir en parte de la fiesta.</p>
             <p className="mt-5 text-lg leading-relaxed text-slate-600">En AriMar la preparamos entera, con su piel bien dorada y controlando la cocción para cuidar el interior. Tú decides cuándo compartirla.</p>
-            <p className="mt-5 text-lg leading-relaxed text-slate-600"><strong className="text-[#1E293B]">¿Buscas comprar pata asada canaria en Gran Canaria?</strong> Recibimos solicitudes desde cualquier punto de la isla, no solo de Arinaga. Elige la fecha deseada y cuántas patas enteras quieres, y te confirmaremos la disponibilidad y el precio por WhatsApp. Una vez pagado el encargo, prepararemos las unidades acordadas para su recogida en Playa de Arinaga.</p>
+            <p className="mt-5 text-lg leading-relaxed text-slate-600"><strong className="text-[#1E293B]">¿Buscas comprar pata asada canaria en Gran Canaria?</strong> Recibimos solicitudes desde cualquier punto de la isla, no solo de Arinaga. Elige la fecha deseada y cuántas patas enteras quieres, y te confirmaremos la disponibilidad y la hora de recogida por WhatsApp. El precio es 90 € por unidad. Una vez pagado el encargo, prepararemos las unidades acordadas para su recogida en Playa de Arinaga.</p>
             <Link href="/contacto" className="mt-7 inline-flex font-bold text-[#207F85] underline underline-offset-4">¿Organizas algo más grande? Consúltanos opciones para eventos ↗</Link>
           </div>
         </div>
