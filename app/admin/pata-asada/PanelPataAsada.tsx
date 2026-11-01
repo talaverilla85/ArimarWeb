@@ -31,6 +31,10 @@ async function api(path:string,options?:RequestInit){
 export default function PanelPataAsada(){
  const today=dayCanary()
  const [authenticated,setAuthenticated]=useState<boolean|null>(null)
+ const [passkeysEnabled,setPasskeysEnabled]=useState(false)
+ const [passkeyOnly,setPasskeyOnly]=useState(false)
+ const [passkeyBusy,setPasskeyBusy]=useState(false)
+ const [passkeyMessage,setPasskeyMessage]=useState('')
  const [password,setPassword]=useState('')
  const [selected,setSelected]=useState(today)
  const [viewMonth,setViewMonth]=useState(()=>dayCanary().slice(0,7))
@@ -72,7 +76,11 @@ export default function PanelPataAsada(){
   if(month===viewMonth){setDays(d.days);setOrders(o.orders)}
   await loadUpcoming()
  }
- useEffect(()=>{api('session').then(d=>setAuthenticated(d.authenticated)).catch(()=>setAuthenticated(false))},[])
+ useEffect(()=>{api('session').then(d=>{
+  setAuthenticated(d.authenticated)
+  setPasskeysEnabled(Boolean(d.passkeysEnabled))
+  setPasskeyOnly(Boolean(d.passkeyOnly))
+ }).catch(()=>setAuthenticated(false))},[])
  useEffect(()=>{
   if(!configOpen)return
   const originalOverflow=document.body.style.overflow
@@ -150,6 +158,30 @@ export default function PanelPataAsada(){
   if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus()}
   else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus()}
  }
+ async function registerPasskey(){
+  setPasskeyBusy(true);setPasskeyMessage('')
+  try{
+   const options=await api('passkey/register/options',{method:'POST'})
+   const {startRegistration}=await import('@simplewebauthn/browser')
+   const credential=await startRegistration({optionsJSON:options})
+   const answer=await api('passkey/register/verify',{method:'POST',body:JSON.stringify(credential)})
+   setPasskeyMessage(answer.deviceType==='singleDevice'
+    ?'Credencial registrada: vinculada al dispositivo. Ya puedes probar el acceso con huella o PIN.'
+    :'Passkey registrada. Advertencia: puede sincronizarse con otros dispositivos de tu cuenta; aún no es un bloqueo exclusivo de este móvil.')
+  }catch(e){setPasskeyMessage(e instanceof Error?e.message:'No se pudo registrar la passkey')}
+  finally{setPasskeyBusy(false)}
+ }
+ async function loginPasskey(){
+  setPasskeyBusy(true);setPasskeyMessage('')
+  try{
+   const options=await api('passkey/login/options',{method:'POST'})
+   const {startAuthentication}=await import('@simplewebauthn/browser')
+   const credential=await startAuthentication({optionsJSON:options})
+   await api('passkey/login/verify',{method:'POST',body:JSON.stringify(credential)})
+   setAuthenticated(true)
+  }catch(e){setPasskeyMessage(e instanceof Error?e.message:'No se pudo verificar la passkey')}
+  finally{setPasskeyBusy(false)}
+ }
  function navigateMonth(month:string){
   if(!/^\d{4}-(0[1-9]|1[0-2])$/.test(month))return
   setViewMonth(month)
@@ -174,12 +206,17 @@ export default function PanelPataAsada(){
    <p className="text-xs font-bold uppercase tracking-widest text-teal-700">AriMar · Gestión interna</p>
    <h1 className="mt-3 text-3xl font-black text-slate-900">Patas asadas</h1>
    <p className="my-5 text-sm text-slate-600">Panel privado de disponibilidad y reservas. No activa cobros.</p>
-   <form onSubmit={e=>{e.preventDefault();action(async()=>{await api('session',{method:'POST',body:JSON.stringify({password})});setAuthenticated(true);setPassword('')})}}>
+   {!passkeyOnly&&<form onSubmit={e=>{e.preventDefault();action(async()=>{await api('session',{method:'POST',body:JSON.stringify({password})});setAuthenticated(true);setPassword('')})}}>
     <label className="block text-sm font-semibold">Clave de administración
      <input className={input+' mt-2'} type="password" autoComplete="current-password" required value={password} onChange={e=>setPassword(e.target.value)}/>
     </label>
     <button disabled={loading} className="mt-5 w-full rounded-xl bg-[#207F85] px-5 py-3 font-bold text-white disabled:opacity-50">Entrar</button>
-   </form>
+   </form>}
+   {passkeysEnabled&&<button type="button" disabled={passkeyBusy} onClick={()=>{void loginPasskey()}}
+    className="mt-4 w-full rounded-xl border border-[#207F85] px-5 py-3 font-bold text-teal-900 disabled:opacity-50">
+    {passkeyBusy?'Verificando…':'Entrar con huella o PIN'}
+   </button>}
+   {passkeyMessage&&<p role="status" className="mt-4 text-sm font-medium text-slate-700">{passkeyMessage}</p>}
    {message&&<p role="alert" className="mt-4 text-sm text-rose-700">{message}</p>}
   </div>
  </main>
@@ -192,6 +229,15 @@ export default function PanelPataAsada(){
    <button className="rounded-xl border px-4 py-2 text-sm" onClick={()=>action(async()=>{await api('session',{method:'DELETE'});setAuthenticated(false)})}>Salir</button>
   </div>
   <InstallPataAdmin/>
+  {passkeysEnabled&&<div className="mt-4 rounded-xl border border-teal-200 bg-white p-4">
+   <p className="font-bold text-teal-900">Acceso con huella o PIN del teléfono</p>
+   <p className="mt-1 text-sm text-slate-600">Registra una passkey en este móvil. Tras comprobar que puedes entrar, se podrá desactivar el acceso por contraseña desde el servidor.</p>
+   <button type="button" disabled={passkeyBusy} onClick={()=>{void registerPasskey()}}
+    className="mt-3 rounded-lg bg-[#207F85] px-4 py-2 text-sm font-bold text-white disabled:opacity-50">
+    {passkeyBusy?'Registrando…':'Registrar este dispositivo'}
+   </button>
+   {passkeyMessage&&<p role="status" className="mt-2 text-sm text-slate-700">{passkeyMessage}</p>}
+  </div>}
   {message&&<p role="status" className="my-5 rounded-xl border bg-slate-50 p-3 text-sm">{message}</p>}
   <section className="mt-7 rounded-2xl border bg-white p-4 shadow-sm sm:p-6">
    <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
