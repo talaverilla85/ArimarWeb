@@ -1,7 +1,7 @@
 'use client'
 import {useEffect,useState} from 'react'
 type Day={date:string;capacity:number;occupied:number;available:number;blocked:boolean;note:string|null}
-type Order={id:string;date:string;quantity:number;name:string;phone:string|null;email:string|null;status:string;source:string;notes:string|null}
+type Order={id:string;date:string;quantity:number;name:string;phone:string|null;email:string|null;status:string;source:string;notes:string|null;amountCents?:number}
 const input='w-full rounded-xl border border-slate-300 px-3 py-2 text-slate-900 focus:border-teal-700 focus:outline-none'
 function dayCanary(){const p=new Intl.DateTimeFormat('en-CA',{timeZone:'Atlantic/Canary',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(new Date());const f=(t:string)=>p.find(x=>x.type===t)?.value||'';return [f('year'),f('month'),f('day')].join('-')}
 function monthBounds(month:string){
@@ -36,6 +36,12 @@ export default function PanelPataAsada(){
  const [loadingCalendar,setLoadingCalendar]=useState(false)
  const [days,setDays]=useState<Day[]>([])
  const [orders,setOrders]=useState<Order[]>([])
+ const [upcomingOrders,setUpcomingOrders]=useState<Order[]>([])
+ const [nextOrderCursor,setNextOrderCursor]=useState<string|null>(null)
+ const [loadingOrders,setLoadingOrders]=useState(false)
+ const [ordersError,setOrdersError]=useState('')
+ const [orderView,setOrderView]=useState<'upcoming'|'month'>('upcoming')
+ const [selectedOnly,setSelectedOnly]=useState(false)
  const [capacity,setCapacity]=useState(3)
  const [blocked,setBlocked]=useState(false)
  const [note,setNote]=useState('')
@@ -44,12 +50,25 @@ export default function PanelPataAsada(){
  const [quantity,setQuantity]=useState(1)
  const [message,setMessage]=useState('')
  const [loading,setLoading]=useState(false)
+ async function loadUpcoming(cursor:string|null=null,append=false){
+  setLoadingOrders(true)
+  setOrdersError('')
+  try{
+   const q=cursor?'?cursor='+encodeURIComponent(cursor):''
+   const result=await api('upcoming'+q)
+   setUpcomingOrders(prev=>append?[...prev,...result.orders]:result.orders)
+   setNextOrderCursor(result.nextCursor)
+  }catch(e){setOrdersError(e instanceof Error?e.message:'No se pudo consultar los encargos')}
+  finally{setLoadingOrders(false)}
+ }
  async function refresh(month=viewMonth){
   const {from,to}=monthBounds(month)
   const [d,o]=await Promise.all([api('days?from='+from+'&to='+to),api('orders?from='+from+'&to='+to)])
   if(month===viewMonth){setDays(d.days);setOrders(o.orders)}
+  await loadUpcoming()
  }
  useEffect(()=>{api('session').then(d=>setAuthenticated(d.authenticated)).catch(()=>setAuthenticated(false))},[])
+ useEffect(()=>{if(authenticated)void loadUpcoming()},[authenticated])
  useEffect(()=>{
   if(!authenticated)return
   let active=true
@@ -83,7 +102,15 @@ export default function PanelPataAsada(){
  const historical=selected<today
  const {from:monthStart}=monthBounds(viewMonth)
  const leadDays=(new Date(monthStart+'T12:00:00Z').getUTCDay()+6)%7
- const selectedOrders=orders.filter(x=>x.date===selected)
+ const confirmedForMonth=orders.filter(o=>o.status==='PAID'||o.status==='MANUAL_CONFIRMED')
+  .sort((a,b)=>a.date.localeCompare(b.date)||a.id.localeCompare(b.id))
+ const shownOrders=(orderView==='upcoming'?upcomingOrders:confirmedForMonth)
+  .filter(o=>orderView!=='month'||!selectedOnly||o.date===selected)
+ const shownUnits=shownOrders.reduce((total,o)=>total+o.quantity,0)
+ function readableDate(date:string){
+  return new Intl.DateTimeFormat('es-ES',{timeZone:'UTC',weekday:'short',
+   day:'numeric',month:'short',year:'numeric'}).format(new Date(date+'T12:00:00Z'))
+ }
  if(authenticated===null)return <main className="mx-auto min-h-[70vh] max-w-5xl px-6 pb-20 pt-36">Comprobando acceso…</main>
  if(!authenticated)return <main className="mx-auto min-h-[75vh] max-w-lg px-6 pb-20 pt-36">
   <div className="rounded-3xl border bg-white p-8 shadow-lg">
@@ -195,14 +222,81 @@ export default function PanelPataAsada(){
     </form>
    </section>
   </div>
-  <section className="mt-6 rounded-2xl border bg-white p-5">
-   <h2 className="text-xl font-extrabold">Encargos del {selected}</h2>
-   {selectedOrders.length===0?<p className="mt-3 text-sm text-slate-600">No hay encargos registrados para este día.</p>:
-    <div className="mt-4 divide-y">{selectedOrders.map(o=><article key={o.id} className="flex flex-wrap justify-between gap-3 py-3">
-     <div><strong>{o.name}</strong><p className="text-sm text-slate-500">{o.phone||o.email||'Sin contacto'} · {o.source==='MANUAL'?'Encargo manual':'Solicitud online'}</p></div>
-     <div className="text-right"><strong>{o.quantity} {o.quantity===1?'pata':'patas'}</strong>
-      <p className="text-xs text-slate-600">{o.status==='MANUAL_CONFIRMED'?'Confirmado manualmente':o.status}</p></div>
-    </article>)}</div>}
+  <section className="mt-6 rounded-2xl border bg-white p-5 shadow-sm sm:p-6">
+   <div className="flex flex-wrap items-start justify-between gap-3">
+    <div>
+     <p className="text-xs font-bold uppercase tracking-widest text-teal-800">Producción · Patas asadas</p>
+     <h2 className="mt-1 text-2xl font-extrabold">Lista de encargos confirmados</h2>
+     <p className="mt-2 max-w-2xl text-sm text-slate-600">
+      Los pedidos quedan guardados en la base de datos. Aquí aparecen los cobrados online y los confirmados manualmente; nunca las solicitudes pendientes de pago.
+     </p>
+    </div>
+    <button type="button" disabled={loadingOrders} onClick={()=>{void loadUpcoming();void refresh(viewMonth)}}
+      className="rounded-xl border border-teal-700 px-4 py-2 text-sm font-bold text-teal-800 hover:bg-teal-50 disabled:opacity-50">
+      Actualizar lista
+    </button>
+   </div>
+   <div className="mt-5 flex flex-wrap gap-2" role="group" aria-label="Vista de encargos">
+    <button type="button" onClick={()=>setOrderView('upcoming')}
+      aria-pressed={orderView==='upcoming'}
+      className={'rounded-xl px-4 py-2 text-sm font-bold '+(orderView==='upcoming'?'bg-[#207F85] text-white':'border bg-slate-50 text-slate-700')}>
+      Próximos encargos
+    </button>
+    <button type="button" onClick={()=>setOrderView('month')}
+      aria-pressed={orderView==='month'}
+      className={'rounded-xl px-4 py-2 text-sm font-bold '+(orderView==='month'?'bg-[#207F85] text-white':'border bg-slate-50 text-slate-700')}>
+      Mes seleccionado ({monthLabel(viewMonth)})
+    </button>
+   </div>
+   {orderView==='month'&&<label className="mt-4 flex items-center gap-2 text-sm font-medium">
+    <input type="checkbox" checked={selectedOnly} onChange={e=>setSelectedOnly(e.target.checked)}/>
+    Solo el día {readableDate(selected)}
+   </label>}
+   <div className="mt-4 flex flex-wrap items-center gap-4 rounded-xl bg-slate-50 p-3 text-sm">
+    <span><strong>{shownOrders.length}</strong> encargos mostrados</span>
+    <span><strong>{shownUnits}</strong> patas en total</span>
+    <span className="text-slate-600">{orderView==='upcoming'?'Ordenados por fecha de recogida':'Periodo: '+monthLabel(viewMonth)}</span>
+   </div>
+   {ordersError&&orderView==='upcoming'&&<p role="alert" className="mt-4 text-sm font-semibold text-rose-700">{ordersError}</p>}
+   {(loadingOrders&&orderView==='upcoming'&&upcomingOrders.length===0)|| (loadingCalendar&&orderView==='month')
+    ?<p role="status" className="py-7 text-center text-sm text-slate-600">Cargando encargos…</p>
+    :shownOrders.length===0
+     ?<p className="mt-4 rounded-xl border border-dashed p-6 text-center text-sm text-slate-600">
+      No hay encargos confirmados en esta vista.
+     </p>
+     :<div className="mt-3 divide-y divide-slate-200">
+      {shownOrders.map(o=><article key={o.id} className="grid gap-3 py-4 sm:grid-cols-[1.4fr_1.2fr_0.7fr_auto] sm:items-center">
+       <div className="min-w-0">
+        <p className="text-base font-extrabold text-slate-900">{o.name}</p>
+        <p className="text-xs text-slate-500">Ref. {o.id.slice(0,8).toUpperCase()}</p>
+        {o.phone&&<a href={'tel:'+o.phone} className="text-sm font-medium text-teal-800 underline">{o.phone}</a>}
+       </div>
+       <div>
+        <p className="font-bold">{readableDate(o.date)}</p>
+        <p className="text-xs text-slate-500">Recogida en AriMar</p>
+       </div>
+       <div>
+        <p className="font-bold">{o.quantity} {o.quantity===1?'pata':'patas'}</p>
+        <p className="text-sm text-slate-600">{((o.amountCents??o.quantity*9000)/100).toLocaleString('es-ES',{style:'currency',currency:'EUR'})}</p>
+       </div>
+       <div>
+        <span className={'inline-block rounded-full px-3 py-1 text-xs font-bold '+(o.status==='PAID'?'bg-teal-100 text-teal-900':'bg-amber-100 text-amber-900')}>
+         {o.status==='PAID'?'Pago confirmado':'Confirmado manualmente'}
+        </span>
+        <p className="mt-1 text-xs text-slate-500">{o.source==='MANUAL'?'WhatsApp / teléfono':'Reserva online'}</p>
+       </div>
+       {o.notes&&<p className="text-xs text-slate-600 sm:col-span-4">Observaciones: {o.notes}</p>}
+      </article>)}
+     </div>}
+   {orderView==='upcoming'&&nextOrderCursor&&<button type="button"
+    onClick={()=>{void loadUpcoming(nextOrderCursor,true)}} disabled={loadingOrders}
+    className="mt-5 w-full rounded-xl border border-teal-700 px-5 py-3 text-sm font-bold text-teal-800 hover:bg-teal-50 disabled:opacity-50">
+    {loadingOrders?'Cargando…':'Cargar más encargos'}
+   </button>}
+   <p className="mt-4 text-xs leading-relaxed text-slate-500">
+    Los encargos introducidos manualmente cuentan para producción, pero su estado no acredita el cobro.
+    Para ver pagos pendientes o incidencias se mantiene el registro administrativo por fecha.
+   </p>
   </section>
  </main>
 }
