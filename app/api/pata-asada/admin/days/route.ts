@@ -1,7 +1,7 @@
 import {NextResponse} from 'next/server'
 import {validAdmin,validOrigin} from '@/lib/pataReservasAdmin'
 import {getDays,configureDay,reservationsReady} from '@/lib/pataReservasDb'
-import {dateISO,dateRange,shiftDate,operationalDay} from '@/lib/pataReservasDates'
+import {dateISO,dateRange,operationalDay} from '@/lib/pataReservasDates'
 import {fail,noStore,parseBody,rejectOrigin,unauthorized,unavailable,str} from '@/lib/pataReservasHttp'
 export const dynamic='force-dynamic'
 export async function GET(request:Request){
@@ -19,7 +19,7 @@ export async function PATCH(request:Request){
  if(!validOrigin(request))return rejectOrigin()
  try{
   const a=await parseBody(request),date=a.date,capacity=a.capacity,blocked=a.blocked,note=str(a.note??'',250)
-  if(!dateISO(date)||date<operationalDay()||date>shiftDate(operationalDay(),365)
+  if(!dateISO(date)||date<operationalDay()
    ||typeof capacity!=='number'||!Number.isInteger(capacity)||Number(capacity)<0||Number(capacity)>3
    ||typeof blocked!=='boolean'||note===null)
    return NextResponse.json({error:'Datos incorrectos'},{status:400,headers:noStore})
