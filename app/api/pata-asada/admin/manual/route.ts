@@ -1,7 +1,7 @@
 import {NextResponse} from 'next/server'
 import {validAdmin,validOrigin} from '@/lib/pataReservasAdmin'
 import {manualBooking,reservationsReady} from '@/lib/pataReservasDb'
-import {dateISO,operationalDay,shiftDate} from '@/lib/pataReservasDates'
+import {dateISO,operationalDay} from '@/lib/pataReservasDates'
 import {fail,noStore,parseBody,rejectOrigin,str,unauthorized,unavailable} from '@/lib/pataReservasHttp'
 export const dynamic='force-dynamic'
 export async function POST(request:Request){
@@ -11,7 +11,7 @@ export async function POST(request:Request){
  try{
   const a=await parseBody(request),date=a.date,quantity=a.quantity
   const name=str(a.name,100),phone=str(a.phone??'',30),notes=str(a.notes??'',500)
-  if(!dateISO(date)||date<operationalDay()||date>shiftDate(operationalDay(),365)
+  if(!dateISO(date)||date<operationalDay()
    ||typeof quantity!=='number'||!Number.isInteger(quantity)||Number(quantity)<1||Number(quantity)>3
    ||!name||name.length<2||phone===null||notes===null)
   return NextResponse.json({error:'Datos incorrectos'},{status:400,headers:noStore})
