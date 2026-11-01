@@ -25,3 +25,12 @@ export function dateRange(from:unknown,to:unknown,limit=62):boolean {
  const days=Math.round((Date.parse(to+'T12:00:00Z')-Date.parse(from+'T12:00:00Z'))/86400000)
  return days<=limit
 }
+
+/** Día civil en Canarias (sin el corte operativo de las 16:00). */
+export function todayCanary():string {
+ const parts=new Intl.DateTimeFormat('en-GB',{
+  timeZone:'Atlantic/Canary',year:'numeric',month:'2-digit',day:'2-digit'
+ }).formatToParts(new Date())
+ const get=(type:string)=>parts.find(p=>p.type===type)?.value??''
+ return [get('year'),get('month'),get('day')].join('-')
+}

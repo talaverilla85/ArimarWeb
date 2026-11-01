@@ -59,3 +59,59 @@ export async function getOrders(from:string,to:string) {
  FROM pata_orders WHERE pickup_date BETWEEN ${from}::date AND ${to}::date
  ORDER BY pickup_date,created_at DESC LIMIT 500`
 }
+
+
+/**
+ * Encargos aptos para cocina: pagos MONEI confirmados o encargos
+ * introducidos expresamente por el personal. Nunca HELD/PAYMENT_PENDING.
+ * Orden estable (fecha de recogida, fecha de creación, id) para paginación.
+ */
+export type ConfirmedPataOrder = {
+ id:string;date:string;quantity:number;name:string;
+ phone:string|null;email:string|null;notes:string|null;
+ source:'WEB'|'MANUAL';status:'PAID'|'MANUAL_CONFIRMED';
+ created:string;amountCents:number;
+}
+function normalizeConfirmed(row:Record<string,unknown>):ConfirmedPataOrder {
+ return {
+  id:String(row.id),date:String(row.date),quantity:Number(row.quantity),
+  name:String(row.name),phone:row.phone==null?null:String(row.phone),
+  email:row.email==null?null:String(row.email),notes:row.notes==null?null:String(row.notes),
+  source:row.source as ConfirmedPataOrder['source'],
+  status:row.status as ConfirmedPataOrder['status'],
+  created:String(row.created),amountCents:Number(row.amount_cents)
+ }
+}
+export type PataOrderCursor = {date:string;created:string;id:string}
+export async function getUpcomingConfirmedOrders(
+ from:string,cursor:PataOrderCursor|null,limit=40
+):Promise<{orders:ConfirmedPataOrder[];next:PataOrderCursor|null}>{
+ const sql=db()
+ const cursorDate=cursor?.date??null
+ const cursorCreated=cursor?.created??null
+ const cursorId=cursor?.id??null
+ const rows=await sql`SELECT id::text AS id,pickup_date::text AS date,quantity,
+  customer_name AS name,customer_phone AS phone,customer_email AS email,
+  notes,source,status,created_at::text AS created,amount_cents
+  FROM pata_orders
+  WHERE pickup_date>=${from}::date AND status IN ('PAID','MANUAL_CONFIRMED')
+  AND (${cursorDate}::date IS NULL
+   OR (pickup_date,created_at,id) > (${cursorDate}::date,${cursorCreated}::timestamptz,${cursorId}::uuid))
+  ORDER BY pickup_date ASC,created_at ASC,id ASC LIMIT ${limit+1}`
+ const more=rows.length>limit
+ const orders=rows.slice(0,limit).map(r=>normalizeConfirmed(r as Record<string,unknown>))
+ const last=orders.at(-1)
+ return {orders,next:more&&last?{date:last.date,created:last.created,id:last.id}:null}
+}
+
+export async function getConfirmedOrdersForIntegration(from:string,to:string) {
+ const sql=db()
+ const rows=await sql`SELECT id::text AS id,pickup_date::text AS date,quantity,
+  customer_name AS name,customer_phone AS phone,customer_email AS email,
+  notes,source,status,created_at::text AS created,amount_cents
+  FROM pata_orders
+  WHERE pickup_date BETWEEN ${from}::date AND ${to}::date
+   AND status IN ('PAID','MANUAL_CONFIRMED')
+  ORDER BY pickup_date,created_at,id LIMIT 500`
+ return rows.map(r=>normalizeConfirmed(r as Record<string,unknown>))
+}
