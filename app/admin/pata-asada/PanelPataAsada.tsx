@@ -1,5 +1,6 @@
 'use client'
 import {useEffect,useRef,useState} from 'react'
+import InstallPataAdmin from './InstallPataAdmin'
 type Day={date:string;capacity:number;occupied:number;available:number;blocked:boolean;note:string|null}
 type Order={id:string;date:string;quantity:number;name:string;phone:string|null;email:string|null;status:string;source:string;notes:string|null;amountCents?:number}
 const input='w-full rounded-xl border border-slate-300 px-3 py-2 text-slate-900 focus:border-teal-700 focus:outline-none'
@@ -190,6 +191,7 @@ export default function PanelPataAsada(){
    </div>
    <button className="rounded-xl border px-4 py-2 text-sm" onClick={()=>action(async()=>{await api('session',{method:'DELETE'});setAuthenticated(false)})}>Salir</button>
   </div>
+  <InstallPataAdmin/>
   {message&&<p role="status" className="my-5 rounded-xl border bg-slate-50 p-3 text-sm">{message}</p>}
   <section className="mt-7 rounded-2xl border bg-white p-4 shadow-sm sm:p-6">
    <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
