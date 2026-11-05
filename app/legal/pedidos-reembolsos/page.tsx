@@ -22,8 +22,10 @@ export default function PedidosReembolsosPage() {
           <section className="mb-8">
             <h2 className="text-2xl font-bold text-slate-800 mb-4">1. Ámbito y canal de compra</h2>
             <p className="text-slate-600 leading-relaxed">
-              Los pedidos se realizan desde nuestra web y se formalizan en la plataforma externa de pedidos
-              online (Qamarero), con modalidad exclusiva de recogida en local.
+              Los pedidos habituales de nuestra carta se tramitan mediante la plataforma de pedidos
+              online (Qamarero), con recogida en el local. Los encargos especiales de pata asada
+              se solicitan por WhatsApp y solo quedan confirmados tras comunicar la disponibilidad
+              y verificar el pago anticipado. No se realizan envíos a domicilio.
             </p>
           </section>
 
