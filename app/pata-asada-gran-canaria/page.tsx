@@ -93,6 +93,14 @@ const datosEstructurados = {
         url,
         availability: 'https://schema.org/PreOrder',
         seller: { '@id': 'https://' + siteConfig.domain + '/#restaurant' },
+        // Producto alimentario perecedero: la política ya publicada distingue
+        // las devoluciones ordinarias de las incidencias justificadas.
+        hasMerchantReturnPolicy: {
+          '@type': 'MerchantReturnPolicy',
+          applicableCountry: 'ES',
+          returnPolicyCategory: 'https://schema.org/MerchantReturnNotPermitted',
+          merchantReturnLink: 'https://' + siteConfig.domain + '/legal/pedidos-reembolsos',
+        },
         availableAtOrFrom: {
           '@type': 'Place',
           name: 'AriMar FoodLab',
@@ -168,6 +176,12 @@ export default function PataAsadaPage() {
               <a href="#por-que-jugosa" className="inline-flex items-center justify-center rounded-xl border border-white/50 px-7 py-4 text-base font-bold text-white transition hover:bg-white/10">Descubre cómo la asamos ↓</a>
             </div>
             <p className="mt-6 text-sm leading-relaxed text-slate-300">Encargos para toda Gran Canaria · Cantidad por unidades enteras · Recogida en Playa de Arinaga · Reserva tras verificar el pago.</p>
+            <p className="mt-3 text-sm leading-relaxed text-slate-300">
+              Recogida exclusiva en el local, sin envíos a domicilio. Consulta las{' '}
+              <Link href="/legal/pedidos-reembolsos" className="font-semibold text-[#B7E1E1] underline underline-offset-4">
+                condiciones de anulación y reembolso
+              </Link>.
+            </p>
           </div>
           <figure className="relative min-h-[360px] bg-[#F3F3EF] lg:min-h-[670px]">
             <Image
