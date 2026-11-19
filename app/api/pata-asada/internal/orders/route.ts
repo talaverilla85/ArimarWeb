@@ -19,7 +19,7 @@ export async function GET(request:Request){
   if(view==='detail'){
    return NextResponse.json({
     version:1,from,to,orders:confirmed.map(o=>({
-     id:o.id,pickupDate:o.date,quantity:o.quantity,
+     id:o.id,reference:o.reference,pickupDate:o.date,quantity:o.quantity,
      customerName:o.name,source:o.source,status:o.status,
      amountCents:o.amountCents,notes:o.notes
     }))
