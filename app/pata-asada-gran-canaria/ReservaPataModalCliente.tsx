@@ -53,7 +53,7 @@ async function fetchAvailability(from:string,to:string,signal?:AbortSignal){
  }
  return entries
 }
-const input='mt-1.5 w-full rounded-xl border border-[#C7DFE0] bg-white px-3.5 py-3 text-[#1E293B] outline-none focus:border-[#207F85] focus:ring-2 focus:ring-[#207F85]/20'
+const input='mt-1.5 w-full min-h-12 rounded-xl border border-[#C7DFE0] bg-white px-4 py-3 text-base text-[#1E293B] outline-none focus:border-[#207F85] focus:ring-2 focus:ring-[#207F85]/20'
 
 export default function ReservaPataModalCliente(){
  const [businessDay,setBusinessDay]=useState(canaryBusinessDay)
@@ -68,7 +68,6 @@ export default function ReservaPataModalCliente(){
  const [email,setEmail]=useState('')
  const [phone,setPhone]=useState('')
  const [quantity,setQuantity]=useState(1)
- const [occasion,setOccasion]=useState('Reunión familiar')
  const [notes,setNotes]=useState('')
  const [error,setError]=useState('')
  const [submitting,setSubmitting]=useState(false)
@@ -76,8 +75,6 @@ export default function ReservaPataModalCliente(){
  const dialogRef=useRef<HTMLDivElement|null>(null)
  const closeRef=useRef<HTMLButtonElement|null>(null)
  const previousFocus=useRef<HTMLElement|null>(null)
- const open=useRef(false)
- open.current=modalOpen
 
  const startDate=firstPickup(businessDay)
  const endDate=addDays(businessDay,62)
@@ -197,7 +194,7 @@ export default function ReservaPataModalCliente(){
      method:'POST',headers:{'Content-Type':'application/json'},cache:'no-store',
      body:JSON.stringify({
       date:selected,quantity,name:customerName.trim(),email:email.trim(),
-      phone:phone.trim(),notes:[occasion,notes].filter(Boolean).join(' · ').slice(0,500),key
+      phone:phone.trim(),notes:notes.trim().slice(0,400),key
      })
     })
     const hold=await reserve.json() as {id?:string;checkoutToken?:string;error?:string}
@@ -227,7 +224,6 @@ export default function ReservaPataModalCliente(){
     'Total previsto: '+total+' € ('+PATA_PRECIO_EUR+' €/unidad)',
     'Peso por pata: '+PATA_PESO_FINAL_KG_APROX+' kg aprox. ya asada CON HUESO ('+
        PATA_PESO_CRUDO_KG_APROX+' kg aprox. en crudo)',
-    'Tipo de celebración: '+occasion,
     'Observaciones: '+(notes.trim()||'Sin observaciones'),
     '',
     'Solicitud pendiente de confirmación por AriMar. No es una reserva pagada.'
@@ -239,29 +235,29 @@ export default function ReservaPataModalCliente(){
  }
 
  return <div id="solicitar-presupuesto" className="overflow-hidden rounded-3xl border border-[#D7E7E8] bg-white shadow-xl shadow-[#1E293B]/10">
-  <header className="bg-[#1E293B] px-5 py-7 text-white sm:px-9 sm:py-9">
+  <header className="bg-[#1E293B] px-4 py-6 text-white sm:px-9 sm:py-9">
    <p className="text-xs font-extrabold uppercase tracking-[0.2em] text-[#B7E1E1]">Encargos · AriMar 100 % sin gluten</p>
-   <h2 className="mt-2 text-2xl font-extrabold tracking-tight sm:text-3xl">¿Qué día recoges tu pata asada?</h2>
+   <h2 className="mt-2 text-2xl font-extrabold leading-tight tracking-tight sm:text-3xl">¿Qué día recoges tu pata asada?</h2>
    <p className="mt-3 max-w-2xl text-sm leading-relaxed text-slate-200 sm:text-base">
     Elige una fecha disponible para abrir tu reserva. La pata se entrega entera y con hueso, por 90 € la unidad.
    </p>
   </header>
-  <div className="px-4 py-5 sm:px-9 sm:py-8">
-   <div className="grid gap-3 text-sm sm:grid-cols-3">
+  <div className="px-3 py-4 sm:px-9 sm:py-8">
+   <div className="grid grid-cols-2 gap-2 text-sm sm:grid-cols-3 sm:gap-3">
     <div className="rounded-xl bg-[#F1F8F7] p-3">
      <span className="block text-xs text-[#207F85]">Precio por pata entera</span>
      <strong className="mt-1 block text-lg text-[#1E293B]">90 €</strong>
     </div>
     <div className="rounded-xl bg-[#F1F8F7] p-3">
-     <span className="block text-xs text-[#207F85]">Peso una vez asada</span>
-     <strong className="mt-1 block text-lg text-[#1E293B]">≈ 7,5 kg con hueso</strong>
-    </div>
-    <div className="rounded-xl bg-[#F1F8F7] p-3">
      <span className="block text-xs text-[#207F85]">Recogida en AriMar</span>
      <strong className="mt-1 block text-lg text-[#1E293B]">11:30–16:00</strong>
     </div>
+    <div className="col-span-2 rounded-xl bg-[#F1F8F7] px-3 py-2.5 sm:col-span-1 sm:p-3">
+     <span className="block text-xs text-[#207F85]">Peso una vez asada, con hueso</span>
+     <strong className="mt-1 block text-base text-[#1E293B] sm:text-lg">≈ 7,5 kg</strong>
+    </div>
    </div>
-   <div className="mt-6">
+   <div className="mt-4 sm:mt-6">
     <h3 className="text-base font-bold text-[#1E293B]">Selecciona una fecha</h3>
     <p className="mt-1 text-sm text-slate-600">Pulsa un día disponible para indicar las unidades y tus datos.</p>
     <CalendarioPataCliente
@@ -282,12 +278,12 @@ export default function ReservaPataModalCliente(){
    </div>
   </div>
 
-  {modalOpen&&<div className="fixed inset-0 z-[150] flex items-center justify-center bg-[#101c29]/75 px-3 py-3 sm:px-5"
+  {modalOpen&&<div className="fixed inset-0 z-[150] flex items-center justify-center bg-[#101c29]/75 sm:px-5 sm:py-5"
    onMouseDown={e=>{if(e.target===e.currentTarget)closeModal()}}>
    <div ref={dialogRef} role="dialog" aria-modal="true" aria-labelledby="pata-reserva-title"
      aria-describedby="pata-reserva-description" onKeyDown={modalKeys}
-     className="flex max-h-[94dvh] w-full max-w-xl flex-col overflow-hidden rounded-3xl bg-white text-[#1E293B] shadow-2xl">
-    <div className="flex shrink-0 items-start justify-between gap-3 border-b border-[#D7E7E8] px-5 py-4 sm:px-7 sm:py-5">
+     className="flex h-[100dvh] w-full max-w-xl flex-col overflow-hidden bg-white text-[#1E293B] shadow-2xl sm:h-auto sm:max-h-[92dvh] sm:rounded-3xl">
+    <div className="flex shrink-0 items-start justify-between gap-3 border-b border-[#D7E7E8] px-4 py-3 sm:px-7 sm:py-5">
      <div>
       <p className="text-xs font-extrabold uppercase tracking-[0.12em] text-[#207F85]">Tu reserva · AriMar</p>
       <h3 id="pata-reserva-title" className="mt-1 text-lg font-extrabold sm:text-2xl">Pata asada por encargo</h3>
@@ -295,18 +291,18 @@ export default function ReservaPataModalCliente(){
      </div>
      <button ref={closeRef} type="button" onClick={closeModal} disabled={submitting}
       aria-label="Cerrar formulario de reserva"
-      className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-slate-100 text-2xl text-[#1E293B] hover:bg-slate-200 disabled:opacity-50">×</button>
+      className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-slate-100 text-2xl text-[#1E293B] hover:bg-slate-200 disabled:opacity-50">×</button>
     </div>
     <form onSubmit={submit} className="flex min-h-0 flex-1 flex-col">
-     <div className="space-y-4 overflow-y-auto overscroll-contain px-5 py-5 sm:px-7">
-      <div className="rounded-xl border border-[#C7DFE0] bg-[#F1F8F7] p-4">
+     <div className="min-h-0 flex-1 space-y-4 overflow-y-auto overscroll-contain px-4 py-4 sm:px-7 sm:py-5">
+      <div className="rounded-xl border border-[#C7DFE0] bg-[#F1F8F7] p-3 sm:p-4">
        <div className="flex items-start justify-between gap-3">
         <div>
          <p className="text-xs font-semibold uppercase tracking-wide text-[#207F85]">Fecha de recogida</p>
          <p className="mt-1 text-sm font-extrabold capitalize">{displayDay(selected)}</p>
          <p className="mt-1 text-xs text-slate-600">11:30–16:00 · {siteConfig.address.locality}</p>
         </div>
-        <button type="button" onClick={closeModal} className="shrink-0 text-xs font-bold text-[#207F85] underline">Cambiar día</button>
+        <button type="button" onClick={closeModal} className="min-h-11 shrink-0 rounded-lg px-2 text-sm font-bold text-[#207F85] underline">Cambiar día</button>
        </div>
        <p className="mt-3 text-xs font-medium text-[#207F85]">
         {modalBusy?'Comprobando unidades disponibles…':
@@ -332,33 +328,32 @@ export default function ReservaPataModalCliente(){
 
       <div className="grid gap-4 sm:grid-cols-2">
        <label className="block text-sm font-semibold sm:col-span-2">Nombre y apellidos
-        <input className={input} value={customerName} required autoComplete="name" maxLength={100}
+        <input className={input} value={customerName} required autoComplete="name" maxLength={100} enterKeyHint="next"
          placeholder="Nombre de quien recoge" disabled={submitting}
          onChange={e=>changeData(()=>setCustomerName(e.target.value))}/>
        </label>
        <label className="block text-sm font-semibold">Correo electrónico
-        <input className={input} type="email" required autoComplete="email" maxLength={254}
+        <input className={input} type="email" inputMode="email" autoCapitalize="none" spellCheck={false} enterKeyHint="next" required autoComplete="email" maxLength={254}
          value={email} placeholder="tu@correo.es" disabled={submitting}
          onChange={e=>changeData(()=>setEmail(e.target.value))}/>
        </label>
        <label className="block text-sm font-semibold">Teléfono
-        <input className={input} type="tel" required autoComplete="tel" maxLength={30}
+        <input className={input} type="tel" inputMode="tel" enterKeyHint="done" required autoComplete="tel" maxLength={30}
          value={phone} placeholder="600 000 000" disabled={submitting}
          onChange={e=>changeData(()=>setPhone(e.target.value))}/>
        </label>
       </div>
-      <label className="block text-sm font-semibold">Tipo de celebración <span className="font-normal text-slate-500">(opcional)</span>
-       <select className={input} value={occasion} disabled={submitting}
-        onChange={e=>changeData(()=>setOccasion(e.target.value))}>
-        <option>Reunión familiar</option><option>Cumpleaños</option>
-        <option>Evento de empresa</option><option>Otra celebración</option>
-       </select>
-      </label>
-      <label className="block text-sm font-semibold">Observaciones <span className="font-normal text-slate-500">(opcional)</span>
-       <textarea className={input} rows={2} maxLength={400} disabled={submitting}
-        value={notes} onChange={e=>changeData(()=>setNotes(e.target.value))}
-        placeholder="¿Algo que debamos saber?"/>
-      </label>
+      <details className="rounded-xl border border-[#D7E7E8] px-3 py-1">
+       <summary className="flex min-h-11 cursor-pointer list-none items-center justify-between gap-2 text-sm font-semibold text-[#207F85]">
+        Añadir observaciones <span className="text-xs font-normal text-slate-500">(opcional) +</span>
+       </summary>
+       <label className="block pb-3 text-sm font-semibold">
+        Observaciones para AriMar
+        <textarea className={input} rows={2} maxLength={400} disabled={submitting}
+         value={notes} onChange={e=>changeData(()=>setNotes(e.target.value))}
+         placeholder="¿Hay algo importante que debamos saber?"/>
+       </label>
+      </details>
       <p className="text-xs leading-relaxed text-slate-500">
        Pieza entera, sin deshuesar ni cortar. Peso aproximado de {PATA_PESO_FINAL_KG_APROX.toLocaleString('es-ES')} kg terminada con hueso.
        Solo recogida en local. Consulta nuestra <Link className="font-bold text-[#207F85] underline"
@@ -367,13 +362,14 @@ export default function ReservaPataModalCliente(){
       </p>
       {error&&<p role="alert" className="rounded-xl bg-rose-50 p-3 text-sm font-semibold text-rose-800">{error}</p>}
      </div>
-     <footer className="shrink-0 border-t border-[#D7E7E8] bg-white px-5 py-4 sm:px-7">
-      <div className="flex items-center justify-between gap-3">
+     <footer className="shrink-0 border-t border-[#D7E7E8] bg-white px-4 pt-3 sm:px-7 sm:py-4"
+       style={{paddingBottom:'calc(0.75rem + env(safe-area-inset-bottom))'}}>
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
        <div><p className="text-xs text-slate-500">Total {quantity===1?'por 1 pata':'por '+quantity+' patas'}</p>
         <strong className="text-2xl font-extrabold">{total} €</strong></div>
        <button type="submit"
         disabled={submitting||modalBusy||!modalUnits||modalUnits<quantity}
-        className="min-h-12 rounded-xl bg-[#207F85] px-5 py-3 text-sm font-extrabold text-white hover:bg-[#18686D] disabled:cursor-not-allowed disabled:opacity-50 sm:text-base">
+        className="min-h-14 w-full rounded-xl bg-[#207F85] px-5 py-3 text-base font-extrabold text-white hover:bg-[#18686D] disabled:cursor-not-allowed disabled:opacity-50 sm:min-h-12 sm:w-auto">
         {submitting?'Comprobando…':PAYMENT_TEST?'Reservar y pagar (pruebas)':'Solicitar por WhatsApp'}
        </button>
       </div>
