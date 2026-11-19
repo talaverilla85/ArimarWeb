@@ -75,7 +75,6 @@ function SolicitarPataLegacy() {
   const checkoutRequestKey=useRef<string|null>(null)
   const [fecha, setFecha] = useState('')
   const [unidades, setUnidades] = useState('1')
-  const [ocasion, setOcasion] = useState('Reunión familiar')
   const [comentarios, setComentarios] = useState('')
   const [errorFecha, setErrorFecha] = useState('')
   const [disponibilidad,setDisponibilidad]=useState<Record<string,number>>({})
@@ -170,7 +169,7 @@ function SolicitarPataLegacy() {
           body:JSON.stringify({
             key,date:fecha,quantity:unidadesNumero,name:nombre.trim(),
             email:correo.trim(),phone:telefono.trim(),
-            notes:[ocasion,comentarios].filter(Boolean).join(' · ').slice(0,500)
+            notes:comentarios.trim().slice(0,500)
           }),cache:'no-store'
         })
         const reservation=await reserve.json() as {id?:string;checkoutToken?:string;error?:string}
@@ -200,7 +199,6 @@ function SolicitarPataLegacy() {
         'Importe: ' + PATA_PRECIO_EUR + ' € por unidad. Total: ' + importeTotal + ' €.',
         'Peso aprox.: ' + PATA_PESO_FINAL_KG_APROX + ' kg TERMINADA CON HUESO por pieza (' + PATA_PESO_CRUDO_KG_APROX + ' kg en crudo).',
         'Fecha de recogida: ' + fechaWhatsApp(fecha),
-        'Ocasión: ' + ocasion,
         'Observaciones: ' + (comentarios.trim() || 'Sin observaciones'),
         'Esta solicitud queda pendiente de confirmación y pago; no constituye reserva automática.',
       ]
@@ -275,15 +273,6 @@ function SolicitarPataLegacy() {
           {errorFecha && <p className="mt-2 text-sm font-semibold text-red-700" role="alert">{errorFecha}</p>}
         </div>
 
-        <label className="text-sm font-semibold text-[#1E293B] md:col-span-2">
-          Tipo de celebración
-          <select className={field} value={ocasion} onChange={(e) => updateBookingFields(()=>setOcasion(e.target.value))}>
-            <option>Reunión familiar</option>
-            <option>Cumpleaños</option>
-            <option>Evento de empresa</option>
-            <option>Otra celebración</option>
-          </select>
-        </label>
         <label className="text-sm font-semibold text-[#1E293B] md:col-span-2">
           Observaciones (opcional)
           <textarea className={field} rows={3} maxLength={500} value={comentarios} onChange={(e) => updateBookingFields(()=>setComentarios(e.target.value))} placeholder="Indica cualquier necesidad concreta. La hora de recogida se confirmará contigo." />
