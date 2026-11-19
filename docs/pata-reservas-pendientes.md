@@ -29,3 +29,10 @@
 - Las referencias anteriores ya generadas se conservan para no renumerar pedidos históricos. Los números no tienen que ser consecutivos en la lista de pagos online porque pueden incluir encargos manuales.
 - Migraciones: \`004_short_references.sql\` y \`005_payment_timestamp_reference.sql\` (ya aplicadas solo en Neon sandbox). El correo/outbox utiliza la referencia tras confirmar pago.
 
+
+## Interfaz de cliente «calendario primero» (preview)
+- Ruta de vista previa: \`/pata-asada-gran-canaria\` en la rama \`feature/pata-reservas-monei-sandbox\`.
+- La página muestra calendario como interfaz principal. Al tocar un día disponible abre modal con fecha, unidades (máximo disponible, 3), nombre, correo, teléfono, ocasión opcional, observaciones, precio 90 €/pata y horario de recogida 11:30–16:00.
+- El modal se puede cerrar con la X, pulsando fuera y con Escape (si no está procesando); recupera el foco. Se revisa la disponibilidad al abrir y al enviar; en caso de agotarse, bloquea la solicitud.
+- **Mientras MONEI no esté activado** el botón real dice \`Solicitar por WhatsApp\`. Una vez esté validado el entorno seguro de MONEI, el mismo modal cambiará a \`Reservar y pagar (pruebas)\` (solo preview). No afirmar que hay pago confirmado ni correo hasta que se pruebe el proveedor.
+- La web de producción mantiene el formulario original con WhatsApp. La alternancia depende de \`NEXT_PUBLIC_PATA_CALENDAR_PREVIEW\` (solo en rama preview). No modificar canonical ni JSON-LD.
