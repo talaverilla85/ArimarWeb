@@ -35,17 +35,17 @@ export default function CalendarioPataCliente({
  return <div className="mt-2 rounded-2xl border border-[#C7DFE0] bg-white p-3 sm:p-5">
   <div className="flex flex-wrap items-center justify-between gap-2">
    <button type="button" disabled={!left||status==='loading'} onClick={()=>setMonth(monthShift(month,-1))}
-    aria-label="Mes anterior" className="rounded-lg border border-[#C7DFE0] px-3 py-2 font-bold text-[#207F85] disabled:opacity-30">‹</button>
-   <div className="flex flex-col items-center gap-2 sm:flex-row">
-    <strong aria-live="polite" className="text-base font-extrabold text-[#1E293B]">{titleFor(month)}</strong>
+    aria-label="Mes anterior" className="flex h-12 w-12 items-center justify-center rounded-xl border border-[#C7DFE0] text-2xl font-bold text-[#207F85] disabled:opacity-30">‹</button>
+   <div className="flex min-w-0 flex-col items-center gap-1 sm:flex-row sm:gap-2">
+    <strong aria-live="polite" className="text-lg font-extrabold text-[#1E293B] sm:text-base">{titleFor(month)}</strong>
     <input type="month" aria-label="Elegir mes" value={month} min={firstMonth} max={lastMonth}
       onChange={e=>{if(e.target.value>=firstMonth&&e.target.value<=lastMonth)setMonth(e.target.value)}}
-      className="max-w-[158px] rounded-lg border border-slate-200 px-2 py-1 text-xs text-slate-700"/>
+      className="hidden max-w-[158px] rounded-lg border border-slate-200 px-2 py-1 text-xs text-slate-700 sm:block"/>
    </div>
    <button type="button" disabled={!right||status==='loading'} onClick={()=>setMonth(monthShift(month,1))}
-    aria-label="Mes siguiente" className="rounded-lg border border-[#C7DFE0] px-3 py-2 font-bold text-[#207F85] disabled:opacity-30">›</button>
+    aria-label="Mes siguiente" className="flex h-12 w-12 items-center justify-center rounded-xl border border-[#C7DFE0] text-2xl font-bold text-[#207F85] disabled:opacity-30">›</button>
   </div>
-  <div className="mt-4 grid grid-cols-7 gap-1 text-center text-xs font-bold text-slate-500 sm:gap-2">
+  <div className="mt-3 grid grid-cols-7 gap-1 text-center text-xs font-bold text-slate-500 sm:mt-4 sm:gap-2">
    {['L','M','X','J','V','S','D'].map((d,i)=><span key={i} className="py-1">{d}</span>)}
   </div>
   {status==='loading'?
@@ -62,22 +62,22 @@ export default function CalendarioPataCliente({
       const date=month+'-'+String(i+1).padStart(2,'0')
       const leftUnits=available[date]??0
       const selectable=date>=from&&date<=to&&quantity>0&&leftUnits>=quantity
-      if(!selectable) return <div key={date} aria-hidden="true" className="min-h-12 sm:min-h-16"/>
+      if(!selectable) return <div key={date} aria-hidden="true" className="min-h-[52px] sm:min-h-16"/>
       return <button type="button" key={date} onClick={()=>onSelect(date)}
        aria-pressed={value===date}
        aria-label={date+': '+leftUnits+' patas disponibles'}
-       className={'flex min-h-12 flex-col items-center justify-center rounded-xl border px-1 py-2 text-sm font-extrabold transition hover:border-[#207F85] sm:min-h-16 '+(value===date
+       className={'flex min-h-[52px] flex-col items-center justify-center rounded-xl border px-1 py-2 text-sm font-extrabold transition hover:border-[#207F85] sm:min-h-16 '+(value===date
         ?'border-[#207F85] bg-[#207F85] text-white ring-2 ring-[#80D0D1]'
         :'border-[#C7DFE0] bg-[#F1F8F7] text-[#1E293B]')}>
        <span>{i+1}</span>
-       <span className={'mt-0.5 text-[10px] font-medium '+(value===date?'text-white':'text-[#207F85]')}>{leftUnits} libres</span>
+       <span className={'mt-0.5 text-[11px] font-medium '+(value===date?'text-white':'text-[#207F85]')}>{leftUnits} libres</span>
       </button>
      })}
     </div>
     {visibleCount===0&&<p className="mt-4 rounded-xl bg-amber-50 p-3 text-sm text-amber-900" role="status">
      No hay fechas disponibles este mes para {quantity} {quantity===1?'pata':'patas'}. Consulta otro mes o reduce la cantidad.
     </p>}
-    <p className="mt-4 text-xs leading-relaxed text-slate-600">
+    <p className="mt-3 text-xs leading-relaxed text-slate-600">
      Solo aparecen los días que admiten la cantidad solicitada. Las fechas bloqueadas o completas no se muestran.
     </p>
    </>
