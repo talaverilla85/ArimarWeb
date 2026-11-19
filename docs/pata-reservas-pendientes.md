@@ -21,3 +21,11 @@
 - \`NEXT_PUBLIC_PATA_CALENDAR_PREVIEW\` solo en entorno preview de la rama, no producción.
 - \`PATA_PUBLIC_HOLDS_ENABLED=false\` hasta implementar checkout/caducidad/conciliación.
 - El calendario de la página pública y la base de prueba pueden tener encargos **ficticios**. No reutilizar sin limpieza verificada en producción.
+
+## Referencia corta de reserva (aplicado en Neon de pruebas)
+- Formato final: **PA-DDMMAA-NNNN**, ejemplo \`PA-191126-0001\`. Contador PostgreSQL atómico que se reinicia cada día; incrementa por todas las reservas confirmadas, nunca por meras consultas/retenciones.
+- Reserva WEB: se asigna solo después del webhook \`SUCCEEDED\` verificado y no se muestra el identificador temporal del pedido. La fecha corresponde a \`updatedAt\` de MONEI (Unix segundos), convertido a hora de Canarias. Si el proveedor no proporciona un instante válido, se usa la hora de confirmación del servidor.
+- Encargo MANUAL: puede recibir el mismo formato al registrarse, pero **la fecha representa la confirmación manual, NO acredita que esté pagado**. Debe figurar como \`MANUAL_CONFIRMED\`.
+- Las referencias anteriores ya generadas se conservan para no renumerar pedidos históricos. Los números no tienen que ser consecutivos en la lista de pagos online porque pueden incluir encargos manuales.
+- Migraciones: \`004_short_references.sql\` y \`005_payment_timestamp_reference.sql\` (ya aplicadas solo en Neon sandbox). El correo/outbox utiliza la referencia tras confirmar pago.
+
