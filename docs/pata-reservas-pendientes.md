@@ -32,7 +32,15 @@
 
 ## Interfaz de cliente «calendario primero» (preview)
 - Ruta de vista previa: \`/pata-asada-gran-canaria\` en la rama \`feature/pata-reservas-monei-sandbox\`.
-- La página muestra calendario como interfaz principal. Al tocar un día disponible abre modal con fecha, unidades (máximo disponible, 3), nombre, correo, teléfono, ocasión opcional, observaciones, precio 90 €/pata y horario de recogida 11:30–16:00.
+- La página muestra calendario como interfaz principal. Al tocar un día disponible abre modal con fecha, unidades (máximo disponible, 3), nombre, correo, teléfono, observaciones opcionales plegadas, precio 90 €/pata y horario de recogida 11:30–16:00. **Sin campo «Tipo de celebración»**.
 - El modal se puede cerrar con la X, pulsando fuera y con Escape (si no está procesando); recupera el foco. Se revisa la disponibilidad al abrir y al enviar; en caso de agotarse, bloquea la solicitud.
 - **Mientras MONEI no esté activado** el botón real dice \`Solicitar por WhatsApp\`. Una vez esté validado el entorno seguro de MONEI, el mismo modal cambiará a \`Reservar y pagar (pruebas)\` (solo preview). No afirmar que hay pago confirmado ni correo hasta que se pruebe el proveedor.
 - La web de producción mantiene el formulario original con WhatsApp. La alternancia depende de \`NEXT_PUBLIC_PATA_CALENDAR_PREVIEW\` (solo en rama preview). No modificar canonical ni JSON-LD.
+
+## Optimización móvil de la reserva (preview)
+- Modal a pantalla completa en móviles, desplazamiento solo del contenido y barra inferior fija con total y botón principal a ancho completo.
+- Campos táctiles de al menos 48 px y fuente de 16 px para evitar el zoom automático de Safari iOS, teclado contextual para email/teléfono y autocompletado.
+- Navegación del calendario con flechas grandes de 48 px y días pulsables de al menos 52 px; selector de mes avanzado visible en escritorio.
+- Información del producto condensada para dar prioridad al calendario. Observaciones opcionales plegadas para reducir fricción.
+- Retirar el campo `Tipo de celebración` tanto del modal como del formulario alternativo, sin enviar ese dato a WhatsApp ni a los endpoints de pedidos.
+- Mantener revisión de fecha/stock y el bloqueo de pagos reales: no habilitar MONEI hasta realizar pruebas de extremo a extremo y resolver el callback protegido por Vercel.
