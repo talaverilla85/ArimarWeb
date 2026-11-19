@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState, type FormEvent } from 'react'
 import { getWhatsAppUrl } from '@/lib/siteConfig'
 import CalendarioPataCliente from './CalendarioPataCliente'
+import ReservaPataModalCliente from './ReservaPataModalCliente'
 import { PATA_PRECIO_EUR, PATA_PESO_FINAL_KG_APROX, PATA_PESO_CRUDO_KG_APROX, PATA_MAX_UNIDADES_DIA } from '@/lib/pataAsadaConfig'
 
 /**
@@ -66,7 +67,7 @@ function sumarDias(fecha:string,n:number):string {
  d.setUTCDate(d.getUTCDate()+n)
  return d.toISOString().slice(0,10)
 }
-export default function SolicitarPata() {
+function SolicitarPataLegacy() {
   const [diaOperativo, setDiaOperativo] = useState(diaOperativoCanarias)
   const [nombre, setNombre] = useState('')
   const [correo,setCorreo]=useState('')
@@ -307,4 +308,9 @@ export default function SolicitarPata() {
       </form>
     </div>
   )
+}
+
+// Preview only: public production keeps the existing WhatsApp flow and SEO.
+export default function SolicitarPata(){
+ return CALENDARIO_PREVIEW?<ReservaPataModalCliente/>:<SolicitarPataLegacy/>
 }
