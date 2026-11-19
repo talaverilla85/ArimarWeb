@@ -11,9 +11,15 @@ BEGIN
  END IF;
  RETURN NEW;
 END $$;
-DROP TRIGGER IF EXISTS trg_pata_reference ON pata_orders;
-CREATE TRIGGER trg_pata_reference BEFORE INSERT ON pata_orders
-FOR EACH ROW EXECUTE FUNCTION pata_make_reference();
+DO $trigger$
+BEGIN
+ IF NOT EXISTS(SELECT 1 FROM pg_trigger WHERE tgname='trg_pata_reference'
+   AND tgrelid='pata_orders'::regclass) THEN
+  CREATE TRIGGER trg_pata_reference BEFORE INSERT ON pata_orders
+  FOR EACH ROW EXECUTE FUNCTION pata_make_reference();
+ END IF;
+END
+$trigger$;
 UPDATE pata_orders SET reservation_reference='PA-' || to_char(pickup_date,'YYYYMMDD')
  || '-' || upper(substr(replace(id::text,'-',''),1,12))
 WHERE reservation_reference IS NULL;
