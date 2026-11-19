@@ -23,7 +23,11 @@ export async function POST(request:Request){
  try{
   const result=await applyMoneiPayment({
    orderId:data.orderId,paymentId:data.id,status:data.status,
-   amount:data.amount,currency:'EUR',livemode:false,hash:callbackHash(raw)
+   amount:data.amount,currency:'EUR',livemode:false,hash:callbackHash(raw),
+   paidUnix:typeof data.updatedAt==='number' && Number.isSafeInteger(data.updatedAt)
+    && data.updatedAt>=1577836800
+    && data.updatedAt<=Math.floor(Date.now()/1000)+300
+      ?data.updatedAt:null
   })
   return NextResponse.json({received:true,result},{headers:noStore})
  }catch(e){
