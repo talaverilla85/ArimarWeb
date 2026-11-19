@@ -19,7 +19,7 @@ export const siteFaqItems: FaqItem[] = [
   {
     question: '¿La carta es fija o cambia?',
     answer:
-      'La carta 100 % sin gluten rota cada día según temporada y producción. Solemos tener platos de cuchara (potajes, cremas), pastas, arroces, guisos, opciones vegetales y postres, además de platos del día y pollo asado cuando toca.',
+      'La carta 100 % sin gluten rota cada día según temporada y producción. Solemos tener platos de cuchara (potajes, cremas), pastas, arroces, guisos, opciones vegetales y postres, además de pollo asado a diario, sujeto a existencias.',
   },
   {
     question: '¿Cómo hago un pedido o encargo para recoger?',
@@ -54,7 +54,7 @@ export const siteFaqItems: FaqItem[] = [
   {
     question: '¿Hacéis pollo asado?',
     answer:
-      'Sí, el pollo asado es uno de los platos que solemos ofrecer según el día y la producción.',
+      'Sí, preparamos pollo asado todos los días. Las unidades pueden agotarse; consulta la disponibilidad en la web antes de desplazarte.',
   },
   {
     question: '¿Puedo pedir online?',

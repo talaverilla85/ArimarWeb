@@ -56,7 +56,7 @@ export default function FeaturedDishesCarousel() {
                 <h3 className="mb-2 text-xl font-bold text-slate-900">{dish.name}</h3>
                 <p className="min-h-12 text-sm leading-relaxed text-slate-600">{dish.description}</p>
                 <Link href={dish.href} className="mt-4 inline-flex items-center gap-2 font-semibold text-primary-700 underline-offset-4 hover:underline">
-                  {dish.id === 'pata-asada' ? 'Ver encargos' : 'Ver carta'} <span aria-hidden="true">→</span>
+                  {dish.id === 'pata-asada' ? 'Ver encargos' : dish.id === 'pollo-asado' ? 'Ver pollo asado' : 'Ver carta'} <span aria-hidden="true">→</span>
                 </Link>
               </div>
             </article>

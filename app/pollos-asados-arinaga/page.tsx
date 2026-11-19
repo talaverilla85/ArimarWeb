@@ -1,20 +1,19 @@
 import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
-import { SIN_GLUTEN_ALT, SIN_GLUTEN_IMAGE } from '@/components/SinGlutenBlock'
 import { siteConfig } from '@/lib/siteConfig'
 
 export const metadata: Metadata = {
-  title: 'Pollos asados en Arinaga | AriMar FoodLab',
+  title: 'Pollo asado en Arinaga para llevar | AriMar',
   description:
-    'Pollos asados para llevar en Playa de Arinaga. AriMar ofrece comida casera, freiduría y platos preparados 100% sin gluten en Gran Canaria.',
+    'Pollo asado para llevar en Playa de Arinaga, todos los días y 100 % sin gluten. Consulta disponibilidad, pide online y recoge en Avenida Polizón 67.',
   alternates: {
     canonical: '/pollos-asados-arinaga',
   },
   openGraph: {
-    title: 'Pollos asados en Arinaga | AriMar FoodLab',
+    title: 'Pollo asado en Arinaga para llevar | AriMar',
     description:
-      'Pollos asados para llevar en Playa de Arinaga, dentro de una propuesta de comida casera 100% sin gluten en Gran Canaria.',
+      'Pollo asado todos los días en Playa de Arinaga, 100 % sin gluten. Pídelo online para recoger en AriMar, Avenida Polizón 67.',
     type: 'website',
     url: 'https://arimarfoodlab.es/pollos-asados-arinaga',
   },
@@ -24,7 +23,7 @@ const sections = [
   {
     eyebrow: 'Para llevar',
     title: 'Pollo asado para resolver la comida',
-    text: 'En AriMar preparamos pollos asados para llevar en Playa de Arinaga dentro de nuestra propuesta de comida casera. Una opción práctica para casa, el trabajo, la playa o esos días en los que no apetece cocinar.',
+    text: 'Preparamos pollo asado a diario en Playa de Arinaga para que resuelvas la comida de casa, del trabajo o de un día de playa. Consulta las unidades disponibles y recógelo en el local.',
   },
   {
     eyebrow: 'Arinaga',
@@ -39,11 +38,11 @@ const sections = [
   {
     eyebrow: 'Disponibilidad',
     title: 'Consulta lo disponible y pide online',
-    text: 'Puedes consultar la disponibilidad del día y hacer tu pedido online para recoger en AriMar.',
+    text: 'Preparamos pollo asado todos los días, sujeto a existencias. Consulta lo que queda disponible, haz tu pedido online y recógelo en AriMar.',
   },
 ]
 
-const highlights = ['Pollo asado Arinaga', 'Para llevar', '100 % sin gluten', 'Playa de Arinaga']
+const highlights = ['Pollo asado a diario', 'Para llevar', '100 % sin gluten', 'Playa de Arinaga']
 
 const internalLinks = [
   { href: '/carta', label: 'Carta 100% sin gluten' },
@@ -71,12 +70,20 @@ export default function PollosAsadosArinagaPage() {
                 Tu disfruta, nosotros cocinamos.
               </p>
               <h1 className="text-4xl md:text-5xl font-bold text-slate-800 mb-5 tracking-tight">
-                Pollos asados en Playa de Arinaga
+                Pollo asado para llevar en Playa de Arinaga
               </h1>
               <p className="text-lg md:text-xl text-slate-600 leading-relaxed">
-                Pollos asados para llevar en Arinaga dentro de una casa de comidas 100 % sin gluten:
-                comida casera, freiduría, platos preparados y raciones para recoger en el local.
+                Pollo asado todos los días y 100 % sin gluten. Comprueba la disponibilidad,
+                haz tu pedido online y recógelo en AriMar, Avenida Polizón 67.
               </p>
+              <div className="mt-6">
+                <Link
+                  href="/hoy"
+                  className="inline-flex min-h-12 items-center justify-center rounded-xl bg-primary-600 px-6 py-3 font-semibold text-white shadow-sm transition-colors hover:bg-primary-700"
+                >
+                  Consultar disponibilidad y pedir
+                </Link>
+              </div>
               <div className="mt-6 flex flex-wrap justify-center gap-2 md:justify-start">
                 {highlights.map((item) => (
                   <span
@@ -88,14 +95,14 @@ export default function PollosAsadosArinagaPage() {
                 ))}
               </div>
             </div>
-            <div className="mx-auto w-44 md:w-52">
-              <div className="rounded-3xl border border-white/80 bg-white/90 p-3 shadow-md">
+            <div className="mx-auto w-full max-w-sm md:max-w-none">
+              <div className="relative aspect-[4/5] overflow-hidden rounded-3xl border-4 border-white shadow-xl">
                 <Image
-                  src={SIN_GLUTEN_IMAGE}
-                  alt={SIN_GLUTEN_ALT}
-                  width={260}
-                  height={220}
-                  className="h-auto w-full object-contain"
+                  src="/images/arimar-20261023-pollos-asados.webp"
+                  alt="Pollos asados de AriMar en el horno de nuestra cocina, para recoger en Playa de Arinaga"
+                  fill
+                  sizes="(max-width: 768px) 80vw, 220px"
+                  className="object-cover"
                   priority
                 />
               </div>
@@ -110,9 +117,9 @@ export default function PollosAsadosArinagaPage() {
                 Pollo asado, comida casera y vitrina diaria
               </h2>
               <p className="text-slate-600 leading-relaxed">
-                Si buscas pollo asado para llevar en Arinaga, AriMar combina esa idea de comida cómoda con una
-                vitrina de elaboraciones caseras 100 % sin gluten. La carta rota según producción diaria,
-                temporada y disponibilidad.
+                Si buscas pollo asado para llevar en Arinaga, en AriMar lo preparamos a diario en
+                una cocina 100 % sin gluten. Consulta las unidades disponibles antes de desplazarte;
+                también puedes elegir otras elaboraciones de nuestra vitrina del día.
               </p>
             </div>
             <Link

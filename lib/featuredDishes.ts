@@ -37,7 +37,7 @@ export const featuredDishes: FeaturedDish[] = [
     image: '/images/arimar-20261023-pollos-asados.webp',
     alt: 'Pollos asados de AriMar dentro del horno de cocina',
     category: 'Asados',
-    description: 'Pollo asado preparado en nuestra cocina.',
+    description: 'Pollo asado todos los días, para recoger en Playa de Arinaga.',
     href: '/pollos-asados-arinaga',
   },
   {
