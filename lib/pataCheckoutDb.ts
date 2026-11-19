@@ -15,10 +15,10 @@ export async function attachPayment(code:string,paymentId:string,url:string,amou
 }
 export async function applyMoneiPayment(p:{
  orderId:string;paymentId:string;status:string;amount:number;currency:string;
- livemode:boolean;hash:string
+ livemode:boolean;hash:string;paidUnix:number|null
 }){
  const rows=await sql()`SELECT pata_apply_monei_event(${p.orderId},${p.paymentId},
- ${p.status},${p.amount},${p.currency},${p.livemode},${p.hash}::char(64)) AS result`
+ ${p.status},${p.amount},${p.currency},${p.livemode},${p.hash}::char(64),${p.paidUnix}::bigint) AS result`
  return String(rows[0].result)
 }
 export type EmailJob={
