@@ -58,7 +58,7 @@ export default function PollosAsadosArinagaPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbs) }}
       />
 
-      <main className="overflow-hidden bg-white pb-20 text-slate-900">
+      <div className="overflow-hidden bg-white pb-20 text-slate-900">
         {/* Producto primero: el visitante ve el pollo, lo que incluye y el precio. */}
         <section className="relative overflow-hidden bg-gradient-to-br from-[#f6faf9] via-white to-[#fff9f0] pt-28 pb-14 md:pt-36 md:pb-24">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -296,7 +296,7 @@ export default function PollosAsadosArinagaPage() {
             </Link>
           </div>
         </section>
-      </main>
+      </div>
     </>
   )
 }
