@@ -2,7 +2,7 @@
 import {useEffect,useRef,useState} from 'react'
 import InstallPataAdmin from './InstallPataAdmin'
 type Day={date:string;capacity:number;occupied:number;available:number;blocked:boolean;note:string|null}
-type Order={id:string;date:string;quantity:number;name:string;phone:string|null;email:string|null;status:string;source:string;notes:string|null;amountCents?:number}
+type Order={id:string;date:string;quantity:number;name:string;reference?:string;phone:string|null;email:string|null;status:string;source:string;notes:string|null;amountCents?:number}
 const input='w-full rounded-xl border border-slate-300 px-3 py-2 text-slate-900 focus:border-teal-700 focus:outline-none'
 function dayCanary(){const p=new Intl.DateTimeFormat('en-CA',{timeZone:'Atlantic/Canary',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(new Date());const f=(t:string)=>p.find(x=>x.type===t)?.value||'';return [f('year'),f('month'),f('day')].join('-')}
 function monthBounds(month:string){
@@ -358,7 +358,7 @@ export default function PanelPataAsada(){
       {shownOrders.map(o=><article key={o.id} className="grid gap-3 py-4 sm:grid-cols-[1.4fr_1.2fr_0.7fr_auto] sm:items-center">
        <div className="min-w-0">
         <p className="text-base font-extrabold text-slate-900">{o.name}</p>
-        <p className="text-xs text-slate-500">Ref. {o.id.slice(0,8).toUpperCase()}</p>
+        <p className="text-xs text-slate-500">Ref. {o.reference||o.id.slice(0,8).toUpperCase()}</p>
         {o.phone&&<a href={'tel:'+o.phone} className="text-sm font-medium text-teal-800 underline">{o.phone}</a>}
        </div>
        <div>
@@ -450,7 +450,7 @@ export default function PanelPataAsada(){
         :<div className="mt-2 divide-y">
          {orders.filter(o=>o.date===selected).map(o=><div key={o.id} className="flex justify-between gap-3 py-2 text-sm">
           <div><span className="font-semibold">{o.name}</span>
-           <p className="text-xs text-slate-500">{o.status==='PAID'?'Pagado':o.status==='MANUAL_CONFIRMED'?'Manual confirmado':o.status}</p>
+           <p className="text-xs text-slate-500">{o.reference} · {o.status==='PAID'?'Pagado':o.status==='MANUAL_CONFIRMED'?'Manual confirmado':o.status}</p>
           </div>
           <strong>{o.quantity} {o.quantity===1?'pata':'patas'}</strong>
          </div>)}
