@@ -192,15 +192,15 @@ function SolicitarPataLegacy() {
         return
       }
       const lines = [
-        'Hola, AriMar. Quisiera solicitar pata asada canaria.',
+        'Hola, AriMar. Quiero encargar pata asada.',
         '',
-        'Nombre: ' + nombre.trim(),
-        'Cantidad: ' + unidadesNumero + (unidadesNumero === 1 ? ' pata entera' : ' patas enteras'),
-        'Importe: ' + PATA_PRECIO_EUR + ' € por unidad. Total: ' + importeTotal + ' €.',
-        'Peso aprox.: ' + PATA_PESO_FINAL_KG_APROX + ' kg TERMINADA CON HUESO por pieza (' + PATA_PESO_CRUDO_KG_APROX + ' kg en crudo).',
-        'Fecha de recogida: ' + fechaWhatsApp(fecha),
-        'Observaciones: ' + (comentarios.trim() || 'Sin observaciones'),
-        'Esta solicitud queda pendiente de confirmación y pago; no constituye reserva automática.',
+        '*Fecha de recogida:* ' + fechaWhatsApp(fecha),
+        '*Cantidad:* ' + unidadesNumero + (unidadesNumero === 1 ? ' pata entera' : ' patas enteras'),
+        '*Total:* ' + importeTotal + ' €',
+        '*Nombre:* ' + nombre.trim(),
+        ...(comentarios.trim()?['*Observaciones:* ' + comentarios.trim()]:[]),
+        '',
+        '¿Me confirmáis la disponibilidad y cómo puedo realizar el pago? Gracias.',
       ]
       window.location.href = getWhatsAppUrl(lines.join('\n'))
     }catch(error){
