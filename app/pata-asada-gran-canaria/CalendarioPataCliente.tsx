@@ -31,7 +31,7 @@ export default function CalendarioPataCliente({
  const visibleCount=Array.from({length:maxDay},(_,i)=>{
   const date=month+'-'+String(i+1).padStart(2,'0')
   return date>=from&&date<=to&&((available[date]??0)>=quantity) ? 1:0
- }).reduce((a,b)=>a+b,0)
+ }).reduce<number>((a,b)=>a+b,0)
  return <div className="mt-2 rounded-2xl border border-[#C7DFE0] bg-white p-3 sm:p-5">
   <div className="flex flex-wrap items-center justify-between gap-2">
    <button type="button" disabled={!left||status==='loading'} onClick={()=>setMonth(monthShift(month,-1))}
