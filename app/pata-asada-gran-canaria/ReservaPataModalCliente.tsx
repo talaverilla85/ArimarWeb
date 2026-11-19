@@ -214,19 +214,18 @@ export default function ReservaPataModalCliente(){
     return
    }
    const lines=[
-    'Hola, AriMar. Quisiera solicitar pata asada canaria.',
+    'Hola, AriMar. Quiero encargar pata asada.',
     '',
-    'Nombre: '+customerName.trim(),
-    'Correo: '+email.trim(),
-    'Teléfono: '+phone.trim(),
-    'Fecha de recogida: '+whatsAppDay(selected),
-    'Número de patas enteras: '+quantity,
-    'Total previsto: '+total+' € ('+PATA_PRECIO_EUR+' €/unidad)',
-    'Peso por pata: '+PATA_PESO_FINAL_KG_APROX+' kg aprox. ya asada CON HUESO ('+
-       PATA_PESO_CRUDO_KG_APROX+' kg aprox. en crudo)',
-    'Observaciones: '+(notes.trim()||'Sin observaciones'),
+    '*Fecha de recogida:* '+whatsAppDay(selected),
+    '*Cantidad:* '+quantity+(quantity===1?' pata entera':' patas enteras'),
+    '*Total:* '+total+' €',
     '',
-    'Solicitud pendiente de confirmación por AriMar. No es una reserva pagada.'
+    '*Nombre:* '+customerName.trim(),
+    '*Teléfono:* '+phone.trim(),
+    '*Correo:* '+email.trim(),
+    ...(notes.trim()?['*Observaciones:* '+notes.trim()]:[]),
+    '',
+    '¿Me confirmáis la disponibilidad y cómo puedo realizar el pago? Gracias.'
    ]
    window.location.href=getWhatsAppUrl(lines.join('\n'))
   }catch(e){
