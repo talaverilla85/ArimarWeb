@@ -1,8 +1,9 @@
 'use client'
 import {useEffect,useRef,useState} from 'react'
 import InstallPataAdmin from './InstallPataAdmin'
+import Link from 'next/link'
 type Day={date:string;capacity:number;occupied:number;available:number;blocked:boolean;note:string|null}
-type Order={id:string;date:string;quantity:number;name:string;reference?:string;phone:string|null;email:string|null;status:string;source:string;notes:string|null;amountCents?:number}
+type Order={id:string;date:string;quantity:number;name:string;reference?:string;staffCreator?:string|null;phone:string|null;email:string|null;status:string;source:string;notes:string|null;amountCents?:number}
 const input='w-full rounded-xl border border-slate-300 px-3 py-2 text-slate-900 focus:border-teal-700 focus:outline-none'
 function dayCanary(){const p=new Intl.DateTimeFormat('en-CA',{timeZone:'Atlantic/Canary',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(new Date());const f=(t:string)=>p.find(x=>x.type===t)?.value||'';return [f('year'),f('month'),f('day')].join('-')}
 function monthBounds(month:string){
@@ -108,6 +109,16 @@ export default function PanelPataAsada(){
   catch(e){setMessage(e instanceof Error?e.message:'Error desconocido')}
   finally{setLoading(false)}
  }
+ async function cancelOrder(order:Order){
+  if(order.source!=='MANUAL'||order.status!=='MANUAL_CONFIRMED'||loading)return
+  const reason=window.prompt('Motivo de anulación de '+(order.reference||'este encargo')+':')
+  if(reason===null)return
+  if(reason.trim().length<5){setMessage('Indica un motivo de al menos cinco caracteres.');return}
+  if(!window.confirm('¿Anular el encargo '+(order.reference||'')+' y devolver sus '+order.quantity+' unidades al calendario? Esto NO realiza devoluciones de dinero.'))return
+  await action(async()=>{
+   await api('cancel',{method:'POST',body:JSON.stringify({id:order.id,reason:reason.trim()})})
+  })
+ }
  function openDateConfig(date:string){
   const day=days.find(d=>d.date===date)
   if(!day)return
@@ -159,11 +170,11 @@ export default function PanelPataAsada(){
  const historical=selected<today
  const {from:monthStart}=monthBounds(viewMonth)
  const leadDays=(new Date(monthStart+'T12:00:00Z').getUTCDay()+6)%7
- const confirmedForMonth=orders.filter(o=>o.status==='PAID'||o.status==='MANUAL_CONFIRMED')
+ const confirmedForMonth=orders.filter(o=>o.status==='PAID'||o.status==='MANUAL_CONFIRMED'||o.status==='CANCELED')
   .sort((a,b)=>a.date.localeCompare(b.date)||a.id.localeCompare(b.id))
  const shownOrders=(orderView==='upcoming'?upcomingOrders:confirmedForMonth)
   .filter(o=>orderView!=='month'||!selectedOnly||o.date===selected)
- const shownUnits=shownOrders.reduce((total,o)=>total+o.quantity,0)
+ const shownUnits=shownOrders.reduce((total,o)=>total+(o.status==='CANCELED'?0:o.quantity),0)
  function readableDate(date:string){
   return new Intl.DateTimeFormat('es-ES',{timeZone:'UTC',weekday:'short',
    day:'numeric',month:'short',year:'numeric'}).format(new Date(date+'T12:00:00Z'))
@@ -189,7 +200,12 @@ export default function PanelPataAsada(){
     <h1 className="mt-2 text-3xl font-black">Disponibilidad de pata asada</h1>
     <p className="mt-2 text-sm text-slate-600">Máximo 3 por fecha · Precio 90 € · Los pagos online aún están desactivados.</p>
    </div>
-   <button className="rounded-xl border px-4 py-2 text-sm" onClick={()=>action(async()=>{await api('session',{method:'DELETE'});setAuthenticated(false)})}>Salir</button>
+   <div className="flex flex-wrap items-center gap-2">
+    <Link href="/mostrador/pata-asada" className="inline-flex min-h-11 items-center rounded-xl border border-[#207F85] px-4 py-2 text-sm font-bold text-[#207F85]">
+     Acceso de mostrador
+    </Link>
+    <button className="min-h-11 rounded-xl border px-4 py-2 text-sm" onClick={()=>action(async()=>{await api('session',{method:'DELETE'});setAuthenticated(false)})}>Salir</button>
+   </div>
   </div>
   <InstallPataAdmin/>
   {message&&<p role="status" className="my-5 rounded-xl border bg-slate-50 p-3 text-sm">{message}</p>}
@@ -270,9 +286,9 @@ export default function PanelPataAsada(){
    <div className="flex flex-wrap items-start justify-between gap-3">
     <div>
      <p className="text-xs font-bold uppercase tracking-widest text-teal-800">Producción · Patas asadas</p>
-     <h2 className="mt-1 text-2xl font-extrabold">Lista de encargos confirmados</h2>
+     <h2 className="mt-1 text-2xl font-extrabold">Lista de encargos</h2>
      <p className="mt-2 max-w-2xl text-sm text-slate-600">
-      Los pedidos quedan guardados en la base de datos. Aquí aparecen los cobrados online y los confirmados manualmente; nunca las solicitudes pendientes de pago.
+      Reservas confirmadas, pedidos manuales y, al consultar un mes, anulaciones. Los encargos del mostrador no acreditan el cobro.
      </p>
     </div>
     <button type="button" disabled={loadingOrders} onClick={()=>{void refresh(viewMonth).catch(e=>setMessage(e instanceof Error?e.message:'Error al actualizar'))}}
@@ -306,7 +322,7 @@ export default function PanelPataAsada(){
     ?<p role="status" className="py-7 text-center text-sm text-slate-600">Cargando encargos…</p>
     :shownOrders.length===0
      ?<p className="mt-4 rounded-xl border border-dashed p-6 text-center text-sm text-slate-600">
-      No hay encargos confirmados en esta vista.
+      No hay encargos en esta vista.
      </p>
      :<div className="mt-3 divide-y divide-slate-200">
       {shownOrders.map(o=><article key={o.id} className="grid gap-3 py-4 sm:grid-cols-[1.4fr_1.2fr_0.7fr_auto] sm:items-center">
@@ -324,10 +340,15 @@ export default function PanelPataAsada(){
         <p className="text-sm text-slate-600">{((o.amountCents??o.quantity*9000)/100).toLocaleString('es-ES',{style:'currency',currency:'EUR'})}</p>
        </div>
        <div>
-        <span className={'inline-block rounded-full px-3 py-1 text-xs font-bold '+(o.status==='PAID'?'bg-teal-100 text-teal-900':'bg-amber-100 text-amber-900')}>
-         {o.status==='PAID'?'Pago confirmado':'Confirmado manualmente'}
+        <span className={'inline-block rounded-full px-3 py-1 text-xs font-bold '+(o.status==='PAID'?'bg-teal-100 text-teal-900':o.status==='CANCELED'?'bg-slate-100 text-slate-700':'bg-amber-100 text-amber-900')}>
+         {o.status==='PAID'?'Pago confirmado':o.status==='CANCELED'?'Anulado':'Reserva manual confirmada'}
         </span>
-        <p className="mt-1 text-xs text-slate-500">{o.source==='MANUAL'?'WhatsApp / teléfono':'Reserva online'}</p>
+        <p className="mt-1 text-xs text-slate-500">{o.staffCreator?'Mostrador · '+o.staffCreator:o.source==='MANUAL'?'Administración / WhatsApp':'Reserva online'}</p>
+         {o.source==='MANUAL'&&o.status==='MANUAL_CONFIRMED'&&<button
+          type="button" disabled={loading} onClick={()=>{void cancelOrder(o)}}
+          className="mt-2 min-h-10 rounded-lg border border-rose-400 px-3 text-xs font-bold text-rose-700 disabled:opacity-40">
+          Anular reserva
+         </button>}
        </div>
        {o.notes&&<p className="text-xs text-slate-600 sm:col-span-4">Observaciones: {o.notes}</p>}
       </article>)}
@@ -406,7 +427,15 @@ export default function PanelPataAsada(){
           <div><span className="font-semibold">{o.name}</span>
            <p className="text-xs text-slate-500">{o.reference} · {o.status==='PAID'?'Pagado':o.status==='MANUAL_CONFIRMED'?'Manual confirmado':o.status}</p>
           </div>
-          <strong>{o.quantity} {o.quantity===1?'pata':'patas'}</strong>
+          <div className="text-right">
+           <strong>{o.quantity} {o.quantity===1?'pata':'patas'}</strong>
+           {o.staffCreator&&<p className="text-xs text-slate-500">Mostrador: {o.staffCreator}</p>}
+           {o.source==='MANUAL'&&o.status==='MANUAL_CONFIRMED'&&!historical&&
+            <button type="button" disabled={loading} onClick={()=>{void cancelOrder(o)}}
+             className="mt-1 min-h-9 rounded-lg border border-rose-400 px-2 text-xs font-bold text-rose-700">
+             Anular
+            </button>}
+          </div>
          </div>)}
         </div>}
       </div>
