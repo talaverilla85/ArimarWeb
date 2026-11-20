@@ -66,6 +66,10 @@ export default function PanelPataAsada(){
  const [paymentDate,setPaymentDate]=useState('')
  const [paymentReceipt,setPaymentReceipt]=useState('')
  const [payingOrder,setPayingOrder]=useState<string|null>(null)
+ const [cancellingId,setCancellingId]=useState<string|null>(null)
+ const [cancellationReason,setCancellationReason]=useState('')
+ const [cancellationError,setCancellationError]=useState('')
+ const [cancellationNotice,setCancellationNotice]=useState('')
  const [settlementMethod,setSettlementMethod]=useState<'CARD'|'CASH'|'MONEI'>('CARD')
  const [settlementDate,setSettlementDate]=useState(()=>dayCanary())
  const [settlementReceipt,setSettlementReceipt]=useState('')
@@ -125,15 +129,61 @@ export default function PanelPataAsada(){
   catch(e){setMessage(e instanceof Error?e.message:'Error desconocido')}
   finally{setLoading(false)}
  }
+ function prepareCancellation(order:Order){
+  if(loading)return
+  setCancellingId(order.id)
+  setCancellationReason('')
+  setCancellationError('')
+  setCancellationNotice('')
+ }
  async function cancelOrder(order:Order){
   if(order.source!=='MANUAL'||order.status!=='MANUAL_CONFIRMED'||loading)return
-  const reason=window.prompt('Motivo de anulación de '+(order.reference||'este encargo')+':')
-  if(reason===null)return
-  if(reason.trim().length<5){setMessage('Indica un motivo de al menos cinco caracteres.');return}
-  if(!window.confirm('¿Anular el encargo '+(order.reference||'')+' y devolver sus '+order.quantity+' unidades al calendario? Esto NO realiza devoluciones de dinero.'))return
-  await action(async()=>{
-   await api('cancel',{method:'POST',body:JSON.stringify({id:order.id,reason:reason.trim()})})
-  })
+  const reason=cancellationReason.trim()
+  if(reason.length<5){setCancellationError('Escribe un motivo de al menos cinco caracteres.');return}
+  setLoading(true);setCancellationError('');setCancellationNotice('')
+  try{
+   const result=await api('cancel',{method:'POST',body:JSON.stringify({id:order.id,reason})})
+   if(result.status!=='CANCELED'&&result.status!=='ALREADY_CANCELED')
+    throw Error('No se pudo confirmar la anulación. Actualiza la lista antes de volver a intentarlo.')
+   setCancellingId(null);setCancellationReason('')
+   let refreshed=true
+   try{await refresh()}catch{refreshed=false}
+   const notice=refreshed
+    ?'Reserva '+(order.reference||'')+' anulada. Se han liberado '+order.quantity+' '+(order.quantity===1?'pata.':'patas.')
+    :'Reserva '+(order.reference||'')+' anulada. Actualiza el calendario para comprobar las plazas disponibles.'
+   setCancellationNotice(notice)
+   setManualFeedback(notice)
+   setMessage(notice)
+  }catch(e){setCancellationError(e instanceof Error?e.message:'No se pudo anular la reserva.')}
+  finally{setLoading(false)}
+ }
+ function cancellationForm(order:Order){
+  if(cancellingId!==order.id)return null
+  return <form onSubmit={e=>{e.preventDefault();void cancelOrder(order)}}
+   className="mt-3 w-full rounded-xl border border-rose-200 bg-rose-50 p-3 text-left sm:col-span-4">
+   <p className="text-sm font-bold text-rose-900">Anular {order.reference||'reserva'} · {order.quantity} {order.quantity===1?'pata':'patas'}</p>
+   <p className="mt-1 text-xs leading-relaxed text-rose-900">
+    Al confirmar se liberan las plazas y el encargo queda registrado como anulado. No se devuelve dinero automáticamente.
+   </p>
+   <label className="mt-3 block text-sm font-semibold text-slate-800">Motivo de la anulación (obligatorio)
+    <textarea className={input+' mt-1 min-h-20 bg-white text-base'} value={cancellationReason}
+     onChange={e=>{setCancellationReason(e.target.value);setCancellationError('')}}
+     minLength={5} maxLength={150} required disabled={loading}
+     placeholder="Por ejemplo: cliente cancela el encargo"/>
+   </label>
+   {cancellationError&&<p role="alert" className="mt-2 text-sm font-semibold text-rose-800">{cancellationError}</p>}
+   <div className="mt-3 flex flex-wrap gap-2">
+    <button type="submit" disabled={loading||cancellationReason.trim().length<5}
+     className="min-h-11 rounded-lg bg-rose-700 px-4 py-2 text-sm font-bold text-white disabled:opacity-50">
+     {loading?'Anulando…':'Confirmar anulación'}
+    </button>
+    <button type="button" disabled={loading}
+     onClick={()=>{setCancellingId(null);setCancellationReason('');setCancellationError('')}}
+     className="min-h-11 rounded-lg border border-slate-300 bg-white px-4 py-2 text-sm font-semibold">
+     Conservar reserva
+    </button>
+   </div>
+  </form>
  }
  function selectDate(date:string){
   if(loading||loadingCalendar)return
@@ -150,6 +200,7 @@ export default function PanelPataAsada(){
   setManualNotes('')
   setPaymentMethod('PENDING');setPaymentDate('');setPaymentReceipt('')
   setPayingOrder(null);setSettlementReceipt('');setSettlementDate(dayCanary())
+  setCancellingId(null);setCancellationReason('');setCancellationError('')
   setMessage('')
  }
  async function submitManual(event:React.FormEvent<HTMLFormElement>){
@@ -202,6 +253,7 @@ export default function PanelPataAsada(){
   setDayAction('choose')
   setConfigError('')
   setManualFeedback('');setPayingOrder(null)
+  setCancellingId(null);setCancellationReason('');setCancellationError('')
  }
  async function saveDateConfig(){
   if(loading||loadingCalendar||historical||!current)return
@@ -376,6 +428,7 @@ export default function PanelPataAsada(){
     <span className="text-slate-600">{orderView==='upcoming'?'Ordenados por fecha de recogida':'Periodo: '+monthLabel(viewMonth)}</span>
    </div>
    {ordersError&&orderView==='upcoming'&&<p role="alert" className="mt-4 text-sm font-semibold text-rose-700">{ordersError}</p>}
+   {cancellationNotice&&<p role="status" className="mt-4 rounded-lg bg-teal-50 p-3 text-sm font-semibold text-teal-900">{cancellationNotice}</p>}
    {(loadingOrders&&orderView==='upcoming'&&upcomingOrders.length===0)|| (loadingCalendar&&orderView==='month')
     ?<p role="status" className="py-7 text-center text-sm text-slate-600">Cargando encargos…</p>
     :shownOrders.length===0
@@ -403,7 +456,7 @@ export default function PanelPataAsada(){
         </span>
         <p className="mt-1 text-xs text-slate-500">{o.staffCreator?'Mostrador · '+o.staffCreator:o.source==='MANUAL'?'Administración / WhatsApp':'Reserva online'}</p>
          {o.source==='MANUAL'&&o.status==='MANUAL_CONFIRMED'&&<button
-          type="button" disabled={loading} onClick={()=>{void cancelOrder(o)}}
+          type="button" disabled={loading} onClick={()=>prepareCancellation(o)}
           className="mt-2 min-h-10 rounded-lg border border-rose-400 px-3 text-xs font-bold text-rose-700 disabled:opacity-40">
           Anular reserva
          </button>}
@@ -418,6 +471,7 @@ export default function PanelPataAsada(){
         {o.manualPaymentMethod==='MONEI'&&' (registro manual)'}
        </p>}
        {o.notes&&<p className="text-xs text-slate-600 sm:col-span-4">Observaciones: {o.notes}</p>}
+        {cancellationForm(o)}
       </article>)}
      </div>}
    {orderView==='upcoming'&&nextOrderCursor&&<button type="button"
@@ -486,7 +540,7 @@ export default function PanelPataAsada(){
        {orders.filter(o=>o.date===selected).length===0
         ?<p className="mt-2 text-sm text-slate-500">Todavía no hay encargos.</p>
         :<div className="mt-2 divide-y">
-         {orders.filter(o=>o.date===selected).map(o=><div key={o.id} className="flex justify-between gap-3 py-2 text-sm">
+         {orders.filter(o=>o.date===selected).map(o=><div key={o.id} className="flex flex-wrap justify-between gap-3 py-2 text-sm">
           <div><span className="font-semibold">{o.name}</span>
            {o.email&&<p className="text-xs text-slate-600">{o.email} · Valoración: {o.reviewConsent?'Autorizada':'No autorizada'}</p>}
            <p className="text-xs text-slate-500">{o.reference} · {o.status==='PAID'?'Pagado':o.status==='MANUAL_CONFIRMED'?'Manual confirmado':o.status}</p>
@@ -506,12 +560,13 @@ export default function PanelPataAsada(){
               className="mt-2 min-h-10 rounded-lg border border-[#207F85] px-3 text-xs font-bold text-[#207F85]">
               Registrar cobro pendiente
              </button>}
-           {o.source==='MANUAL'&&o.status==='MANUAL_CONFIRMED'&&!historical&&
-            <button type="button" disabled={loading} onClick={()=>{void cancelOrder(o)}}
+           {o.source==='MANUAL'&&o.status==='MANUAL_CONFIRMED'&&
+            <button type="button" disabled={loading} onClick={()=>prepareCancellation(o)}
              className="mt-1 min-h-9 rounded-lg border border-rose-400 px-2 text-xs font-bold text-rose-700">
              Anular
             </button>}
           </div>
+          {cancellationForm(o)}
          </div>)}
         </div>}
       </div>
