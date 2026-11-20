@@ -12,6 +12,7 @@ export const metadata: Metadata = {
     languages: {
       'es-ES': '/sin-gluten-gran-canaria',
       'en': '/en/gluten-free-gran-canaria',
+      'it-IT': '/it/senza-glutine-gran-canaria',
     },
   },
   openGraph: {
@@ -356,6 +357,12 @@ export default function SinGlutenGranCanariaPage() {
           </Link>
         </div>
       </section>
+
+      <nav aria-label="Idiomas disponibles" className="mx-auto mt-8 flex max-w-6xl flex-wrap items-center gap-4 px-4 text-sm font-semibold text-primary-800 sm:px-6 lg:px-8">
+        <span className="text-slate-500">También disponible en:</span>
+        <Link href="/en/gluten-free-gran-canaria" lang="en" className="underline decoration-primary-300 underline-offset-4 hover:text-primary-950">English</Link>
+        <Link href="/it/senza-glutine-gran-canaria" lang="it" className="underline decoration-primary-300 underline-offset-4 hover:text-primary-950">Italiano</Link>
+      </nav>
     </div>
   )
 }
