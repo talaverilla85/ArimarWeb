@@ -326,7 +326,7 @@ export default function PanelMostradorPata(){
       <label className="block text-sm font-semibold">Correo electrónico (opcional)
        <input className={input} type="email" autoComplete="email" maxLength={254} disabled={busy}
         value={email} placeholder="correo@ejemplo.com"
-        onChange={e=>change(()=>{setEmail(e.target.value);if(!e.target.value.trim())setReviewConsent(false)})}/>
+        onChange={e=>change(()=>{setEmail(e.target.value);setReviewConsent(false)})}/>
       </label>
       <label className="flex items-start gap-3 rounded-xl border border-slate-200 bg-slate-50 p-3 text-sm text-slate-700">
        <input type="checkbox" checked={reviewConsent} disabled={busy||!email.trim()}
