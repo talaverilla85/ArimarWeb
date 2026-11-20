@@ -26,3 +26,12 @@
 - \`006_staff_counter.sql\` aplicada y comprobada únicamente en Neon de pruebas. Validado: 1 reserva de 2 patas, reintento idéntico no duplica, otra de 2 falla por capacidad, cancelación libera disponibilidad.
 - Pendiente tras revisar Vercel: pruebas en teléfono real de login, selección, teclados, errores, cierre de sesión y visibilidad en admin; autorización para desplegar a producción; migración aditiva en Neon real.
 - Mantener estable \`/pata-asada-gran-canaria\`, su foto, vídeo y SEO.
+
+## Trazabilidad de cobros de encargos manuales (007_manual_payment_trace.sql)
+- Formulario **Administración → fecha → Reserva manual**: forma de pago `Pendiente`, `Tarjeta`, `Efectivo`, `Monei`; si no es pendiente, fecha de pago (puede ser anterior a la fecha de recogida, nunca posterior al día actual de Canarias) y número de ticket/factura obligatorios (máximo 100 caracteres).
+- Fecha de pago y fecha de **recogida** son distintas: se guardan en columnas separadas. El número de ticket es una referencia externa para localizar la venta, no genera factura ni comprueba fiscalidad.
+- Si queda `Pendiente`, la reserva igualmente ocupa stock (estado `MANUAL_CONFIRMED`). Puede completarse una sola vez en el modal **Ajustes → Encargos registrados para este día → Registrar cobro pendiente**. Solo administración; el mostrador sigue sin registrar cobros.
+- `MONEI` aquí es una anotación **manual** del administrador; NO es confirmación criptográfica del proveedor ni altera los estados web `PAID` o `PAYMENT_PENDING`.
+- La base PostgreSQL valida método, fecha, ticket y coherencia pendiente/pagado; reserva + registro inicial se hacen en una misma transacción mediante `pata_admin_booking_with_payment`. El cobro posterior se realiza con `pata_admin_complete_manual_payment` solo si previamente estaba pendiente.
+- En las listas administrativas se muestran método, fecha de pago y número de ticket. Migración 007 aplicada exclusivamente en Neon **sandbox**; producción no modificada.
+- Validación sandbox: reserva efectivo+ticket, otra pendiente que se completa a tarjeta+ticket, comprobación de persistencia y anulación de ambas pruebas. Build Vercel de la rama de pruebas verificado.
