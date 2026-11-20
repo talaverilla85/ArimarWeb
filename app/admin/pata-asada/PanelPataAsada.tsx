@@ -63,6 +63,10 @@ export default function PanelPataAsada(){
  const [paymentMethod,setPaymentMethod]=useState<ManualPaymentMethod>('PENDING')
  const [paymentDate,setPaymentDate]=useState('')
  const [paymentReceipt,setPaymentReceipt]=useState('')
+ const [payingOrder,setPayingOrder]=useState<string|null>(null)
+ const [settlementMethod,setSettlementMethod]=useState<'CARD'|'CASH'|'MONEI'>('CARD')
+ const [settlementDate,setSettlementDate]=useState(()=>dayCanary())
+ const [settlementReceipt,setSettlementReceipt]=useState('')
  const [quantity,setQuantity]=useState(1)
  const [message,setMessage]=useState('')
  const [loading,setLoading]=useState(false)
@@ -142,6 +146,7 @@ export default function PanelPataAsada(){
   setPhone('')
   setManualNotes('')
   setPaymentMethod('PENDING');setPaymentDate('');setPaymentReceipt('')
+  setPayingOrder(null);setSettlementReceipt('');setSettlementDate(dayCanary())
   setMessage('')
  }
  async function submitManual(event:React.FormEvent<HTMLFormElement>){
@@ -167,17 +172,32 @@ export default function PanelPataAsada(){
    setManualFeedback(e instanceof Error?e.message:'No se pudo registrar el encargo.')
   }finally{setLoading(false)}
  }
+ async function completePendingPayment(event:React.FormEvent<HTMLFormElement>){
+  event.preventDefault()
+  if(loading||!payingOrder||!settlementDate||!settlementReceipt.trim()||settlementDate>today)return
+  setLoading(true);setConfigError('');setManualFeedback('')
+  try{
+   const result=await api('manual-payment',{method:'PATCH',body:JSON.stringify({
+    id:payingOrder,paymentMethod:settlementMethod,paymentDate:settlementDate,
+    paymentReceipt:settlementReceipt.trim()
+   })})
+   await refresh()
+   setPayingOrder(null);setSettlementReceipt('')
+   setManualFeedback('Cobro de '+result.reference+' registrado con fecha y ticket.')
+  }catch(e){setConfigError(e instanceof Error?e.message:'No se pudo registrar el cobro.')}
+  finally{setLoading(false)}
+ }
  function showSettings(){
   if(!current)return
   setCapacity(current.capacity);setBlocked(current.blocked);setNote(current.note??'')
-  setConfigError('');setDayAction('settings')
+  setConfigError('');setPayingOrder(null);setDayAction('settings')
  }
  function closeDateConfig(){
   if(loading)return
   setConfigOpen(false)
   setDayAction('choose')
   setConfigError('')
-  setManualFeedback('')
+  setManualFeedback('');setPayingOrder(null)
  }
  async function saveDateConfig(){
   if(loading||loadingCalendar||historical||!current)return
@@ -539,7 +559,7 @@ export default function PanelPataAsada(){
         </label>
        </>}
        {paymentMethod==='PENDING'&&<p className="rounded-lg bg-amber-50 p-3 text-sm text-amber-900 sm:col-span-2">
-        La reserva ocupa sus unidades, pero el cobro queda pendiente.
+        La reserva ocupa sus unidades, pero el cobro queda pendiente. Podrás registrarlo después desde Ajustes.
        </p>}
        {paymentMethod==='MONEI'&&<p className="text-xs text-amber-800 sm:col-span-2">
         Esta anotación de Monei es manual; no verifica el pago con la pasarela.
