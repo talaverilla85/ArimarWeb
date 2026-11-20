@@ -491,6 +491,13 @@ export default function PanelPataAsada(){
             {o.manualPaymentDate&&' · '+paymentDateLabel(o.manualPaymentDate)}
             {o.manualPaymentReceipt&&' · Ticket: '+o.manualPaymentReceipt}
            </p>
+            {o.source==='MANUAL'&&o.status==='MANUAL_CONFIRMED'&&
+             (!o.manualPaymentMethod||o.manualPaymentMethod==='PENDING')&&
+             <button type="button" disabled={loading}
+              onClick={()=>{setPayingOrder(o.id);setSettlementMethod('CARD');setSettlementDate(dayCanary());setSettlementReceipt('');setConfigError('')}}
+              className="mt-2 min-h-10 rounded-lg border border-[#207F85] px-3 text-xs font-bold text-[#207F85]">
+              Registrar cobro pendiente
+             </button>}
            {o.source==='MANUAL'&&o.status==='MANUAL_CONFIRMED'&&!historical&&
             <button type="button" disabled={loading} onClick={()=>{void cancelOrder(o)}}
              className="mt-1 min-h-9 rounded-lg border border-rose-400 px-2 text-xs font-bold text-rose-700">
@@ -501,6 +508,34 @@ export default function PanelPataAsada(){
         </div>}
       </div>
       
+       {payingOrder&&<form className="mt-4 space-y-3 rounded-xl border border-[#207F85] bg-[#F1F8F7] p-4"
+        onSubmit={completePendingPayment}>
+        <h4 className="text-sm font-extrabold text-[#207F85]">Completar cobro pendiente</h4>
+        <label className="block text-sm font-semibold">Forma de pago
+         <select className={input+' mt-2 min-h-12 text-base'} value={settlementMethod}
+          disabled={loading} onChange={e=>setSettlementMethod(e.target.value as 'CARD'|'CASH'|'MONEI')}>
+          <option value="CARD">Tarjeta</option><option value="CASH">Efectivo</option><option value="MONEI">Monei</option>
+         </select>
+        </label>
+        <label className="block text-sm font-semibold">Fecha de pago
+         <input className={input+' mt-2 min-h-12 text-base'} type="date" required max={today}
+          disabled={loading} value={settlementDate} onChange={e=>setSettlementDate(e.target.value)}/>
+        </label>
+        <label className="block text-sm font-semibold">Número de factura/ticket
+         <input className={input+' mt-2 min-h-12 text-base'} required maxLength={100}
+          disabled={loading} value={settlementReceipt} onChange={e=>setSettlementReceipt(e.target.value)}
+          placeholder="Número que figura en el ticket"/>
+        </label>
+        {settlementMethod==='MONEI'&&<p className="text-xs text-amber-800">Registro manual: no verifica el cobro con Monei.</p>}
+        <div className="flex flex-wrap gap-2">
+         <button type="submit" disabled={loading||!settlementDate||!settlementReceipt.trim()}
+          className="min-h-11 rounded-lg bg-[#207F85] px-4 text-sm font-extrabold text-white disabled:opacity-50">
+          Guardar cobro
+         </button>
+         <button type="button" disabled={loading} onClick={()=>setPayingOrder(null)}
+          className="min-h-11 rounded-lg border bg-white px-4 text-sm font-semibold">Cancelar</button>
+        </div>
+       </form>}
        {configError&&<p role="alert" className="rounded-xl bg-rose-50 p-3 text-sm font-semibold text-rose-800">{configError}</p>}
       </div>}
     {dayAction==='manual'&&!historical&&!current.blocked&&current.available>0&&
