@@ -10,11 +10,11 @@ export async function POST(request:Request){
  if(!validOrigin(request))return rejectOrigin()
  try{
   const a=await parseBody(request),date=a.date,quantity=a.quantity
-  const name=str(a.name,100),phone=str(a.phone??'',30),notes=str(a.notes??'',500)
+  const name=str(a.name,100),phone=str(a.phone,30),notes=str(a.notes??'',500)
   if(!dateISO(date)||date<operationalDay()
    ||typeof quantity!=='number'||!Number.isInteger(quantity)||Number(quantity)<1||Number(quantity)>3
-   ||!name||name.length<2||phone===null||notes===null)
-  return NextResponse.json({error:'Datos incorrectos'},{status:400,headers:noStore})
+   ||!name||name.length<2||!phone||phone.replace(/\D/g,'').length<6||notes===null)
+  return NextResponse.json({error:'Revisa la fecha, el nombre y el teléfono obligatorio (mínimo 6 dígitos).'},{status:400,headers:noStore})
   const id=await manualBooking({date,quantity:Number(quantity),name,phone,notes})
   return NextResponse.json({id,status:'MANUAL_CONFIRMED'},{status:201,headers:noStore})
  }catch(e){return fail(e)}
