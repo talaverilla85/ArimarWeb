@@ -48,6 +48,8 @@ export default function PanelMostradorPata(){
  const [quantity,setQuantity]=useState(1)
  const [name,setName]=useState('')
  const [phone,setPhone]=useState('')
+ const [email,setEmail]=useState('')
+ const [reviewConsent,setReviewConsent]=useState(false)
  const [operator,setOperator]=useState('')
  const [notes,setNotes]=useState('')
  const [paymentMethod,setPaymentMethod]=useState<PaymentMethod>('CASH')
@@ -104,7 +106,7 @@ export default function PanelMostradorPata(){
   if(!calendar||!day||date<calendar.first||day.blocked||day.available<1||busy)return
   previousFocus.current=document.activeElement instanceof HTMLElement?document.activeElement:null
   change(()=>{
-   setSelected(date);setQuantity(1);setName('');setPhone('');setNotes('')
+   setSelected(date);setQuantity(1);setName('');setPhone('');setEmail('');setReviewConsent(false);setNotes('')
    setPaymentMethod('CASH');setPaymentDate(calendar.today);setPaymentReceipt('')
    setConfirmation(null);setModalOpen(true)
   })
@@ -148,7 +150,8 @@ export default function PanelMostradorPata(){
    const result=await staffApi('book',{method:'POST',body:JSON.stringify({
     key:keyRef.current,date,quantity:units,
     name:customer,phone:phone.trim(),notes:notes.trim(),operator:operator.trim(),
-    paymentMethod,paymentDate,paymentReceipt:paymentReceipt.trim()
+    paymentMethod,paymentDate,paymentReceipt:paymentReceipt.trim(),
+    email:email.trim(),reviewConsent
    })}) as {
     reference:string;amountCents:number;date:string;quantity:number;
     paymentMethod:PaymentMethod;paymentDate:string;paymentReceipt:string
@@ -157,7 +160,7 @@ export default function PanelMostradorPata(){
     date:result.date,quantity:result.quantity,name:customer,
     paymentMethod:result.paymentMethod,paymentDate:result.paymentDate,
     paymentReceipt:result.paymentReceipt})
-   setName('');setPhone('');setNotes('');setSelected('');setQuantity(1)
+   setName('');setPhone('');setEmail('');setReviewConsent(false);setNotes('');setSelected('');setQuantity(1)
    setPaymentReceipt('');keyRef.current=null
    setModalOpen(false)
    await loadCalendar()
@@ -319,6 +322,17 @@ export default function PanelMostradorPata(){
       <label className="block text-sm font-semibold">Teléfono de contacto (obligatorio)
        <input className={input} value={phone} type="tel" inputMode="tel" autoComplete="tel"
         required minLength={6} maxLength={30} disabled={busy} onChange={e=>change(()=>setPhone(e.target.value))}/>
+      </label>
+      <label className="block text-sm font-semibold">Correo electrónico (opcional)
+       <input className={input} type="email" autoComplete="email" maxLength={254} disabled={busy}
+        value={email} placeholder="correo@ejemplo.com"
+        onChange={e=>change(()=>{setEmail(e.target.value);if(!e.target.value.trim())setReviewConsent(false)})}/>
+      </label>
+      <label className="flex items-start gap-3 rounded-xl border border-slate-200 bg-slate-50 p-3 text-sm text-slate-700">
+       <input type="checkbox" checked={reviewConsent} disabled={busy||!email.trim()}
+        className="mt-1 h-5 w-5 shrink-0 accent-[#207F85]"
+        onChange={e=>change(()=>setReviewConsent(e.target.checked))}/>
+       <span>El cliente autoriza a AriMar a enviarle por correo una invitación para valorar su experiencia en Google (opcional). Preguntar al cliente antes de marcar.</span>
       </label>
       <label className="block text-sm font-semibold">Patas enteras
        <select className={input} disabled={busy} value={Math.min(left,quantity)}
