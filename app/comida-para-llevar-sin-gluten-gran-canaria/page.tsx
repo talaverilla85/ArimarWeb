@@ -23,8 +23,8 @@ export const metadata: Metadata = {
     url: pageUrl,
     images: [
       {
-        url: '/images/hero-variedad-tuppers.webp',
-        alt: 'Variedad de platos caseros preparados de AriMar para llevar',
+        url: '/images/arimar-vitrina-comida-para-llevar.webp',
+        alt: 'Vitrina real de AriMar con comidas preparadas, ensaladas y platos caseros para llevar',
       },
     ],
   },
@@ -131,10 +131,10 @@ export default function ComidaParaLlevarSinGlutenGranCanariaPage() {
               </div>
 
               <figure className="mx-auto w-full max-w-xl lg:max-w-none">
-                <div className="relative aspect-[5/4] overflow-hidden rounded-[1.75rem] bg-slate-100 shadow-xl sm:aspect-[4/3] lg:aspect-[4/5]">
+                <div className="relative aspect-[3/2] overflow-hidden rounded-[1.75rem] bg-slate-100 shadow-xl">
                   <Image
-                    src="/images/hero-variedad-tuppers.webp"
-                    alt="Variedad de elaboraciones caseras de AriMar preparadas en recipientes para llevar"
+                    src="/images/arimar-vitrina-comida-para-llevar.webp"
+                    alt="Vitrina real de AriMar con ensaladas, arroces, guisos y platos preparados etiquetados para llevar"
                     fill
                     priority
                     sizes="(max-width: 1024px) 100vw, 54vw"
@@ -142,7 +142,7 @@ export default function ComidaParaLlevarSinGlutenGranCanariaPage() {
                   />
                 </div>
                 <figcaption className="mt-3 text-xs text-slate-500">
-                  Comida preparada en nuestra cocina. La disponibilidad depende del día.
+                  Nuestra vitrina real en Playa de Arinaga. Los platos disponibles cambian cada día.
                 </figcaption>
               </figure>
             </div>
