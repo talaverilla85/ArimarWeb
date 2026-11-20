@@ -1,0 +1,54 @@
+# AriMar · Panel de mostrador de pata asada (desarrollo)
+
+## Objetivo y roles
+- **Administración**: \`/admin/pata-asada\`. Bloquea fechas, ajusta capacidad 0–3, ve todos los encargos, registra manuales y anula manuales con motivo. La anulación libera unidades; NO hace reembolsos.
+- **Mostrador**: \`/mostrador/pata-asada\`. Contraseña y cookie propias (ruta exclusivamente \`/api/pata-asada/staff\`), selector móvil de fecha y creación de encargos presenciales. No puede acceder a API administrativa, bloquear días, cambiar capacidad ni acceder al panel de administración; solo anota pagos realizados en caja, sin ejecutar cobros.
+- Misma base de datos por entorno: en pruebas, Neon sandbox \`soft-flower-21317287\`. Producción usaría Neon aislado \`solitary-pond-46590390\`. **Nunca compartir las dos**.
+- Credenciales independientes: \`PATA_STAFF_PASSWORD\` (mínimo 20 caracteres) y \`PATA_STAFF_SESSION_SECRET\` (mínimo 32), siempre **secretas y server-side**; no usar \`NEXT_PUBLIC_\`. Sesión HttpOnly Secure SameSite=strict (8 h), comprobación de origin en escrituras y sin indexación de la página. El nombre del operador se introduce en el formulario (no equivale a cuenta individual verificada).
+
+## Flujo en mostrador
+1. El dependiente entra con la contraseña exclusiva de mostrador y escribe su nombre.
+2. Selecciona una fecha en el calendario conectado a los bloqueos y las unidades restantes.
+3. Introduce nombre del cliente, teléfono, unidades y observaciones opcionales. Precio: 90 €/pieza; retirada 11:30–16:00.
+4. Confirma. La operación PostgreSQL bloquea la fila del día y cuenta **todas** las reservas vigentes: nunca supera tres unidades/día.
+5. El servidor devuelve referencia \`PA-DDMMAA-0001\`. Se puede copiar el resumen.
+6. El pedido aparece en el panel administrativo junto al nombre del dependiente. El estado \`MANUAL_CONFIRMED\` confirma la reserva, no acredita cobro remoto. El empleado anota método de caja, fecha real del cobro y ticket. Los datos se verifican por los documentos del TPV, no automáticamente por la app.
+7. En caso de error, solo administración puede anular la reserva con motivo, liberando las unidades sin borrar el historial.
+
+## Reglas y seguridad
+- Mostrador respeta el mismo mínimo de antelación y corte de las 16:00 (Atlantic/Canary) que la web, y admite hasta 62 días desde la fecha operativa.
+- La función \`pata_staff_booking\` recibe UUID de idempotencia; dos solicitudes idénticas con la misma clave devuelven **la misma** reserva, y el servidor rechaza reutilizar esa clave con datos diferentes.
+- No se envían correos ni se generan cobros mediante este panel. Se registran manualmente los cobros hechos en el TPV de tienda, con su fecha y ticket.
+- No conceder al staff acceso directo a Neon, contraseñas de administración ni variables de entorno.
+- La contraseña compartida con el nombre introducido es una **fase inicial**. Para trazabilidad individual real, evolución futura: una cuenta y autorización por empleado.
+
+## Estado
+- \`006_staff_counter.sql\` aplicada y comprobada únicamente en Neon de pruebas. Validado: 1 reserva de 2 patas, reintento idéntico no duplica, otra de 2 falla por capacidad, cancelación libera disponibilidad.
+- Pendiente tras revisar Vercel: pruebas en teléfono real de login, selección, teclados, errores, cierre de sesión y visibilidad en admin; autorización para desplegar a producción; migración aditiva en Neon real.
+- Mantener estable \`/pata-asada-gran-canaria\`, su foto, vídeo y SEO.
+
+## Trazabilidad de cobros de encargos manuales (007_manual_payment_trace.sql)
+- Formulario **Administración → fecha → Reserva manual**: forma de pago `Pendiente`, `Tarjeta`, `Efectivo`, `Monei`; si no es pendiente, fecha de pago (puede ser anterior a la fecha de recogida, nunca posterior al día actual de Canarias) y número de ticket/factura obligatorios (máximo 100 caracteres).
+- Fecha de pago y fecha de **recogida** son distintas: se guardan en columnas separadas. El número de ticket es una referencia externa para localizar la venta, no genera factura ni comprueba fiscalidad.
+- Si queda `Pendiente`, la reserva igualmente ocupa stock (estado `MANUAL_CONFIRMED`). Puede completarse una sola vez en el modal **Ajustes → Encargos registrados para este día → Registrar cobro pendiente**. Solo administración; el mostrador registra únicamente **efectivo o tarjeta** en nuevas reservas, nunca modifica cobros pasados.
+- `MONEI` aquí es una anotación **manual** del administrador; NO es confirmación criptográfica del proveedor ni altera los estados web `PAID` o `PAYMENT_PENDING`.
+- La base PostgreSQL valida método, fecha, ticket y coherencia pendiente/pagado; reserva + registro inicial se hacen en una misma transacción mediante `pata_admin_booking_with_payment`. El cobro posterior se realiza con `pata_admin_complete_manual_payment` solo si previamente estaba pendiente.
+- En las listas administrativas se muestran método, fecha de pago y número de ticket. Migración 007 aplicada exclusivamente en Neon **sandbox**; producción no modificada.
+- Validación sandbox: reserva efectivo+ticket, otra pendiente que se completa a tarjeta+ticket, comprobación de persistencia y anulación de ambas pruebas. Build Vercel de la rama de pruebas verificado.
+
+## Mostrador con calendario a color, modal y cobro de caja (008_staff_paid_booking.sql)
+- Calendario del mes completo: días anteriores en rojo suave, día actual con borde turquesa, disponibilidad futura verde/ámbar, días completos y bloqueados diferenciados. Se permite consultar visualmente todas las fechas, pero solo reservar desde `firstPickupDate()` en días habilitados con plazas.
+- Al pulsar una fecha reservable se abre **un único modal** (sin Ajustes), con dependiente, nombre y teléfono obligatorios, unidades, **forma de pago solo Efectivo o Tarjeta**, fecha del pago y número de ticket/factura obligatorios; observaciones opcionales. No existe opción Pendiente o Monei en mostrador.
+- El registro del pago se hace **después del cobro real en el TPV**: el panel no cobra. Forma de pago, fecha y referencia de ticket se guardan junto a la reserva, visibles en administración.
+- `pata_staff_booking_paid` valida efectivo/tarjeta, fecha actual o anterior en Canarias, referencia de ticket no vacía, y delega capacidad e idempotencia a `pata_staff_booking`. La reserva y el dato de pago se escriben en la **misma transacción**.
+- 008 aplicada únicamente a Neon sandbox. Pruebas realizadas: guardado de pago en efectivo, idempotencia, detección de cambio de método sobre misma clave, exceso de capacidad y anulación de la reserva de prueba.
+- Los colores y el modal solo se han cambiado en la rama de pruebas; no afecta la web pública de pata asada ni el panel de producción.
+
+## Correo opcional e invitación a valoración (009_optional_email_review_consent.sql)
+- Administración y mostrador: campo **correo electrónico opcional** y **casilla de autorización separada, inicialmente sin marcar**. El personal pregunta al cliente antes de activarla. Si no hay correo, la casilla está inhabilitada.
+- Email normalizado en minúsculas, validado en UI, API y PostgreSQL; máximo 254 caracteres. La reserva funciona sin email. Se guarda en `pata_orders.customer_email` (existente).
+- El permiso para una futura invitación a valorar AriMar en Google se guarda en `review_request_consent` (bool) y `review_request_consented_at` (fecha/hora). Los pedidos anteriores quedan sin autorización por defecto, incluso si ya tenían email por la web.
+- Ambas operaciones de reserva se realizan atómicamente con el correo y su autorización: `pata_admin_booking_with_review_email` y `pata_staff_booking_paid_with_review_email`. El mostrador mantiene la idempotencia del pedido y rechaza reutilizar la clave con un correo/permiso diferente.
+- El panel de administración muestra correo y estado del permiso en encargos y ajustes por fecha. En mostrador el cliente aporta voluntariamente el email y la autorización; la aplicación **no envía correos automáticamente**.
+- Antes de programar campañas: revisar el aviso de privacidad, la prueba del consentimiento, las bajas/oposiciones, la finalidad y el momento oportuno de solicitud (después de recoger la pata). No solicitar solo valoraciones positivas.
+- 009 aplicada únicamente en Neon sandbox. Probadas cuatro variantes: administrador con y sin email, mostrador con y sin email, ambos estados de permiso, reintento idempotente y rechazo de cambio de autorización. Las reservas de prueba quedaron anuladas.
