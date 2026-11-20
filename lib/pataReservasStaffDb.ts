@@ -44,3 +44,15 @@ export async function cancelManualBooking(id:string,reason:string){
  if(result.startsWith('PATA_'))throw Error(result)
  return result
 }
+
+/** Lectura posterior a la anulación, desde la misma base de datos que sirve el calendario. */
+export async function verifyManualCancellation(id:string){
+ if(!process.env.PATA_DATABASE_URL)throw Error('PATA_DATABASE_NOT_CONFIGURED')
+ const db=neon(process.env.PATA_DATABASE_URL)
+ const rows=await db`SELECT pickup_date::text AS date,status,quantity
+  FROM pata_orders WHERE id=${id}::uuid LIMIT 1`
+ if(rows.length!==1)throw Error('PATA_ORDER_NOT_FOUND')
+ const order=rows[0]
+ if(order.status!=='CANCELED')throw Error('PATA_CANCEL_NOT_CONFIRMED')
+ return {date:String(order.date),quantity:Number(order.quantity)}
+}
