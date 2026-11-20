@@ -203,6 +203,41 @@ export default function PataAsadaPage() {
         </div>
       </div>
 
+      <section className="border-b border-[#D9E8E8] bg-[#F8FAFC] px-4 py-14 sm:px-6 md:py-20" aria-labelledby="pata-corte-video-h2">
+        <div className="mx-auto grid max-w-7xl items-center gap-8 md:grid-cols-[0.8fr_1.2fr] md:gap-12 lg:gap-20">
+          <div className="order-2 md:order-1">
+            <p className="text-xs font-extrabold uppercase tracking-[0.18em] text-[#207F85]">Mira cómo queda al cortarla</p>
+            <h2 id="pata-corte-video-h2" className="mt-4 text-3xl font-black leading-tight text-[#1E293B] md:text-4xl">
+              Crujiente por fuera. <span className="text-[#207F85]">Jugosa por dentro.</span>
+            </h2>
+            <p className="mt-5 max-w-lg text-base leading-relaxed text-slate-600 md:text-lg">
+              No hace falta imaginarlo: descubre el interior de nuestra pata asada en este vídeo real del corte.
+            </p>
+            <a href="#solicitar-presupuesto" className="mt-6 inline-flex min-h-12 items-center justify-center rounded-xl bg-[#207F85] px-6 py-3 text-sm font-extrabold text-white transition hover:bg-[#18686D]">
+              Elegir fecha de recogida <span className="ml-2" aria-hidden="true">↓</span>
+            </a>
+          </div>
+          <figure className="order-1 min-w-0 md:order-2">
+            <div className="overflow-hidden rounded-2xl border border-[#D9E8E8] bg-[#1E293B] shadow-lg shadow-slate-900/10">
+              <video
+                className="aspect-video w-full object-cover"
+                controls
+                playsInline
+                preload="none"
+                poster="/images/pata-asada-corte-portada.webp"
+                aria-label="Vídeo real del corte de la pata asada de AriMar"
+              >
+                <source src="/images/pata-asada-corte-arimar.mp4" type="video/mp4" />
+                Tu navegador no admite este vídeo. <a href="/images/pata-asada-corte-arimar.mp4">Ver el corte de la pata asada</a>.
+              </video>
+            </div>
+            <figcaption className="mt-3 text-center text-xs leading-relaxed text-slate-500">
+              Vídeo auténtico de nuestra pata asada · Pulsa reproducir para verlo
+            </figcaption>
+          </figure>
+        </div>
+      </section>
+
       <section className="mx-auto max-w-7xl px-6 py-20 md:py-28" aria-labelledby="celebrar-h2">
         <div className="grid gap-10 lg:grid-cols-[0.7fr_1.3fr] lg:gap-20">
           <div>
