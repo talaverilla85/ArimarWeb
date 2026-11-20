@@ -24,7 +24,7 @@ export async function POST(request:Request){
    ||paymentReceipt===null||!review
    ||(paymentMethod==='PENDING'&&(paymentDate!==null||paymentReceipt!==''))
    ||(paymentMethod!=='PENDING'&&(!dateISO(paymentDate)||paymentDate>todayCanary()||!paymentReceipt)))
-    return NextResponse.json({error:'Revisa los datos: teléfono obligatorio. Si hay un cobro, indica la fecha y el número de ticket o factura.'},
+    return NextResponse.json({error:'Revisa los datos: teléfono obligatorio, correo válido si se indica y, para pagos registrados, fecha y número de ticket.'},
      {status:400,headers:noStore})
   const result=await manualBooking({
    date,quantity,name,phone,notes,
