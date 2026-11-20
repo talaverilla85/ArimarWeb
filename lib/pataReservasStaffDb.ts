@@ -3,15 +3,17 @@ import {neon} from '@neondatabase/serverless'
 export async function bookFromCounter(input:{
  date:string;quantity:number;name:string;phone:string;
  notes:string;operator:string;key:string;
- paymentMethod:'CARD'|'CASH';paymentDate:string;paymentReceipt:string
+ paymentMethod:'CARD'|'CASH';paymentDate:string;paymentReceipt:string;
+ email:string;reviewConsent:boolean
 }){
  if(!process.env.PATA_DATABASE_URL)throw Error('PATA_DATABASE_NOT_CONFIGURED')
  const db=neon(process.env.PATA_DATABASE_URL)
  const rows=await db`SELECT order_id::text AS id, reservation_ref AS reference
-  FROM pata_staff_booking_paid(
+  FROM pata_staff_booking_paid_with_review_email(
    ${input.date}::date,${input.quantity},${input.name},
    ${input.phone},${input.notes},${input.operator},${input.key}::uuid,
-   ${input.paymentMethod},${input.paymentDate}::date,${input.paymentReceipt})`
+   ${input.paymentMethod},${input.paymentDate}::date,${input.paymentReceipt},
+   ${input.email},${input.reviewConsent})`
  if(rows.length!==1||!rows[0].id||!rows[0].reference)throw Error('PATA_STAFF_BOOKING_FAILED')
  return {id:String(rows[0].id),reference:String(rows[0].reference)}
 }
