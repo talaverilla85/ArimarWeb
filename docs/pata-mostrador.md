@@ -43,3 +43,12 @@
 - `pata_staff_booking_paid` valida efectivo/tarjeta, fecha actual o anterior en Canarias, referencia de ticket no vacía, y delega capacidad e idempotencia a `pata_staff_booking`. La reserva y el dato de pago se escriben en la **misma transacción**.
 - 008 aplicada únicamente a Neon sandbox. Pruebas realizadas: guardado de pago en efectivo, idempotencia, detección de cambio de método sobre misma clave, exceso de capacidad y anulación de la reserva de prueba.
 - Los colores y el modal solo se han cambiado en la rama de pruebas; no afecta la web pública de pata asada ni el panel de producción.
+
+## Correo opcional e invitación a valoración (009_optional_email_review_consent.sql)
+- Administración y mostrador: campo **correo electrónico opcional** y **casilla de autorización separada, inicialmente sin marcar**. El personal pregunta al cliente antes de activarla. Si no hay correo, la casilla está inhabilitada.
+- Email normalizado en minúsculas, validado en UI, API y PostgreSQL; máximo 254 caracteres. La reserva funciona sin email. Se guarda en `pata_orders.customer_email` (existente).
+- El permiso para una futura invitación a valorar AriMar en Google se guarda en `review_request_consent` (bool) y `review_request_consented_at` (fecha/hora). Los pedidos anteriores quedan sin autorización por defecto, incluso si ya tenían email por la web.
+- Ambas operaciones de reserva se realizan atómicamente con el correo y su autorización: `pata_admin_booking_with_review_email` y `pata_staff_booking_paid_with_review_email`. El mostrador mantiene la idempotencia del pedido y rechaza reutilizar la clave con un correo/permiso diferente.
+- El panel de administración muestra correo y estado del permiso en encargos y ajustes por fecha. En mostrador el cliente aporta voluntariamente el email y la autorización; la aplicación **no envía correos automáticamente**.
+- Antes de programar campañas: revisar el aviso de privacidad, la prueba del consentimiento, las bajas/oposiciones, la finalidad y el momento oportuno de solicitud (después de recoger la pata). No solicitar solo valoraciones positivas.
+- 009 aplicada únicamente en Neon sandbox. Probadas cuatro variantes: administrador con y sin email, mostrador con y sin email, ambos estados de permiso, reintento idempotente y rechazo de cambio de autorización. Las reservas de prueba quedaron anuladas.
