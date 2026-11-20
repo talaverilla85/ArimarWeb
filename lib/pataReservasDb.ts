@@ -55,7 +55,7 @@ export async function getOrders(from:string,to:string) {
  const sql=db()
  return await sql`SELECT id::text,pickup_date::text AS date,quantity,
  customer_name AS name,customer_phone AS phone,customer_email AS email,
- reservation_reference AS reference,notes,status,source,created_at::text AS created
+ reservation_reference AS reference,staff_creator AS "staffCreator",notes,status,source,created_at::text AS created
  FROM pata_orders WHERE pickup_date BETWEEN ${from}::date AND ${to}::date
  ORDER BY pickup_date,created_at DESC LIMIT 500`
 }
@@ -67,7 +67,7 @@ export async function getOrders(from:string,to:string) {
  * Orden estable (fecha de recogida, fecha de creación, id) para paginación.
  */
 export type ConfirmedPataOrder = {
- id:string;date:string;quantity:number;name:string;reference:string;
+ id:string;date:string;quantity:number;name:string;reference:string;staffCreator:string|null;
  phone:string|null;email:string|null;notes:string|null;
  source:'WEB'|'MANUAL';status:'PAID'|'MANUAL_CONFIRMED';
  created:string;amountCents:number;
@@ -75,7 +75,7 @@ export type ConfirmedPataOrder = {
 function normalizeConfirmed(row:Record<string,unknown>):ConfirmedPataOrder {
  return {
   id:String(row.id),date:String(row.date),quantity:Number(row.quantity),
-  reference:String(row.reference),name:String(row.name),phone:row.phone==null?null:String(row.phone),
+  reference:String(row.reference),staffCreator:row.staffCreator==null?null:String(row.staffCreator),name:String(row.name),phone:row.phone==null?null:String(row.phone),
   email:row.email==null?null:String(row.email),notes:row.notes==null?null:String(row.notes),
   source:row.source as ConfirmedPataOrder['source'],
   status:row.status as ConfirmedPataOrder['status'],
@@ -92,7 +92,7 @@ export async function getUpcomingConfirmedOrders(
  const cursorId=cursor?.id??null
  const rows=await sql`SELECT id::text AS id,pickup_date::text AS date,quantity,
   customer_name AS name,customer_phone AS phone,customer_email AS email,
-  reservation_reference AS reference,notes,source,status,created_at::text AS created,amount_cents
+  reservation_reference AS reference,staff_creator AS "staffCreator",notes,source,status,created_at::text AS created,amount_cents
   FROM pata_orders
   WHERE pickup_date>=${from}::date AND status IN ('PAID','MANUAL_CONFIRMED')
   AND (${cursorDate}::date IS NULL
@@ -108,7 +108,7 @@ export async function getConfirmedOrdersForIntegration(from:string,to:string) {
  const sql=db()
  const rows=await sql`SELECT id::text AS id,pickup_date::text AS date,quantity,
   customer_name AS name,customer_phone AS phone,customer_email AS email,
-  reservation_reference AS reference,notes,source,status,created_at::text AS created,amount_cents
+  reservation_reference AS reference,staff_creator AS "staffCreator",notes,source,status,created_at::text AS created,amount_cents
   FROM pata_orders
   WHERE pickup_date BETWEEN ${from}::date AND ${to}::date
    AND status IN ('PAID','MANUAL_CONFIRMED')
