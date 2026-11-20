@@ -2,12 +2,19 @@ import type { MetadataRoute } from 'next'
 
 const baseUrl = 'https://arimarfoodlab.es'
 
+const senzaGlutineLanguages = {
+  'es-ES': `${baseUrl}/sin-gluten-gran-canaria`,
+  en: `${baseUrl}/en/gluten-free-gran-canaria`,
+  'it-IT': `${baseUrl}/it/senza-glutine-gran-canaria`,
+}
+
 export default function sitemap(): MetadataRoute.Sitemap {
   return [
     { url: `${baseUrl}/`, changeFrequency: 'daily', priority: 1 },
     { url: `${baseUrl}/carta`, changeFrequency: 'daily', priority: 0.9 },
-    { url: `${baseUrl}/sin-gluten-gran-canaria`, changeFrequency: 'weekly', priority: 0.95 },
-    { url: `${baseUrl}/en/gluten-free-gran-canaria`, changeFrequency: 'weekly', priority: 0.9 },
+    { url: `${baseUrl}/sin-gluten-gran-canaria`, changeFrequency: 'weekly', priority: 0.95, alternates: { languages: senzaGlutineLanguages } },
+    { url: `${baseUrl}/en/gluten-free-gran-canaria`, changeFrequency: 'weekly', priority: 0.9, alternates: { languages: senzaGlutineLanguages } },
+    { url: `${baseUrl}/it/senza-glutine-gran-canaria`, changeFrequency: 'weekly', priority: 0.9, alternates: { languages: senzaGlutineLanguages } },
     { url: `${baseUrl}/freiduria-sin-gluten-gran-canaria`, changeFrequency: 'weekly', priority: 0.85 },
     { url: `${baseUrl}/croquetas-sin-gluten-gran-canaria`, changeFrequency: 'weekly', priority: 0.85 },
     { url: `${baseUrl}/comida-para-llevar-sin-gluten-gran-canaria`, changeFrequency: 'weekly', priority: 0.85 },
