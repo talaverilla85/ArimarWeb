@@ -478,8 +478,8 @@ export default function PanelPataAsada(){
          autoComplete="name" disabled={loading} value={name} onChange={e=>setName(e.target.value)}/>
        </label>
        <label className="block text-sm font-semibold">Teléfono de contacto (obligatorio)
-        <input className={input+' mt-2 min-h-12 text-base'} type="tel" autoComplete="tel"
-         maxLength={30} disabled={loading} value={phone} onChange={e=>setPhone(e.target.value)}/>
+        <input className={input+' mt-2 min-h-12 text-base'} type="tel" inputMode="tel"
+         autoComplete="tel" required minLength={6} maxLength={30} disabled={loading} value={phone} onChange={e=>setPhone(e.target.value)}/>
        </label>
        <label className="block text-sm font-semibold">Número de patas enteras
         <select className={input+' mt-2 min-h-12 text-base'} disabled={loading}
