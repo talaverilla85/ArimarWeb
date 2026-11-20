@@ -2,6 +2,7 @@
 import {useEffect,useRef,useState} from 'react'
 import InstallPataAdmin from './InstallPataAdmin'
 import Link from 'next/link'
+import {operationalDay} from '@/lib/pataReservasDates'
 type Day={date:string;capacity:number;occupied:number;available:number;blocked:boolean;note:string|null}
 type Order={id:string;date:string;quantity:number;name:string;reference?:string;staffCreator?:string|null;phone:string|null;email:string|null;status:string;source:string;notes:string|null;amountCents?:number}
 const input='w-full rounded-xl border border-slate-300 px-3 py-2 text-slate-900 focus:border-teal-700 focus:outline-none'
@@ -33,7 +34,9 @@ export default function PanelPataAsada(){
  const today=dayCanary()
  const [authenticated,setAuthenticated]=useState<boolean|null>(null)
  const [password,setPassword]=useState('')
- const [selected,setSelected]=useState(today)
+ const [selected,setSelected]=useState('')
+ const [dayAction,setDayAction]=useState<'choose'|'manual'>('choose')
+ const [manualFeedback,setManualFeedback]=useState('')
  const [viewMonth,setViewMonth]=useState(()=>dayCanary().slice(0,7))
  const [loadingCalendar,setLoadingCalendar]=useState(false)
  const [configOpen,setConfigOpen]=useState(false)
@@ -53,6 +56,7 @@ export default function PanelPataAsada(){
  const [note,setNote]=useState('')
  const [name,setName]=useState('')
  const [phone,setPhone]=useState('')
+ const [manualNotes,setManualNotes]=useState('')
  const [quantity,setQuantity]=useState(1)
  const [message,setMessage]=useState('')
  const [loading,setLoading]=useState(false)
@@ -119,6 +123,33 @@ export default function PanelPataAsada(){
    await api('cancel',{method:'POST',body:JSON.stringify({id:order.id,reason:reason.trim()})})
   })
  }
+ function selectDate(date:string){
+  if(loading||loadingCalendar)return
+  setSelected(date)
+  setDayAction('choose')
+  setManualFeedback('')
+  setQuantity(1)
+  setName('')
+  setPhone('')
+  setManualNotes('')
+  setMessage('')
+ }
+ async function submitManual(event:React.FormEvent<HTMLFormElement>){
+  event.preventDefault()
+  if(loading||loadingCalendar||!current||current.blocked||historical||quantity>current.available)return
+  setLoading(true);setManualFeedback('');setMessage('')
+  try{
+   await api('manual',{method:'POST',body:JSON.stringify({
+    date:selected,quantity,name:name.trim(),phone:phone.trim(),notes:manualNotes.trim()
+   })})
+   await refresh()
+   setName('');setPhone('');setManualNotes('');setQuantity(1)
+   setDayAction('choose')
+   setManualFeedback('Reserva manual registrada. Las unidades ya están descontadas del calendario. El cobro no se registra automáticamente.')
+  }catch(e){
+   setManualFeedback(e instanceof Error?e.message:'No se pudo registrar el encargo.')
+  }finally{setLoading(false)}
+ }
  function openDateConfig(date:string){
   const day=days.find(d=>d.date===date)
   if(!day)return
@@ -164,10 +195,12 @@ export default function PanelPataAsada(){
  function navigateMonth(month:string){
   if(!/^\d{4}-(0[1-9]|1[0-2])$/.test(month))return
   setViewMonth(month)
-  setSelected(month===today.slice(0,7)?today:month+'-01')
+  setSelected('')
+  setDayAction('choose')
+  setManualFeedback('')
  }
  const current=days.find(x=>x.date===selected)
- const historical=selected<today
+ const historical=selected<operationalDay()
  const {from:monthStart}=monthBounds(viewMonth)
  const leadDays=(new Date(monthStart+'T12:00:00Z').getUTCDay()+6)%7
  const confirmedForMonth=orders.filter(o=>o.status==='PAID'||o.status==='MANUAL_CONFIRMED'||o.status==='CANCELED')
@@ -239,7 +272,7 @@ export default function PanelPataAsada(){
     ? <p className="py-10 text-center text-slate-600" role="status">Cargando disponibilidad del mes…</p>
     : <div className="grid grid-cols-7 gap-1 sm:gap-2">
       {Array.from({length:leadDays},(_,i)=><div key={'blank-'+i} aria-hidden="true"/>)}
-      {days.map(d=><button key={d.date} type="button" onClick={()=>openDateConfig(d.date)}
+      {days.map(d=><button key={d.date} type="button" onClick={()=>selectDate(d.date)}
        aria-pressed={selected===d.date}
        aria-label={d.date+': '+(d.blocked?'fecha bloqueada':d.available+' patas disponibles de '+d.capacity)}
        className={'min-h-20 rounded-xl border p-1.5 text-center transition hover:border-teal-600 sm:min-h-24 sm:p-2 '+(selected===d.date?'border-teal-700 ring-2 ring-teal-700':'border-slate-200')+(d.blocked?' bg-slate-200':d.available===0?' bg-rose-50':d.available===3?' bg-teal-50':' bg-amber-50')}>
@@ -252,36 +285,86 @@ export default function PanelPataAsada(){
     <span>🟢 3 disponibles</span><span>🟡 1 o 2 disponibles</span>
     <span>🔴 Completo</span><span>⚪ Bloqueado</span>
    </div>
+   {current&&<div className="mt-6 rounded-2xl border border-[#CFE4E4] bg-[#F1F8F7] p-4 sm:p-6" aria-live="polite">
+    <div className="flex flex-wrap items-start justify-between gap-3">
+     <div>
+      <p className="text-xs font-extrabold uppercase tracking-widest text-[#207F85]">Fecha seleccionada</p>
+      <h3 className="mt-1 text-xl font-black sm:text-2xl">{readableDate(selected)}</h3>
+      <p className="mt-2 text-sm text-slate-700">
+       {current.blocked?'Bloqueada para nuevos encargos':
+        current.available+' patas disponibles de '+current.capacity+' · '+current.occupied+' ocupadas'}
+      </p>
+     </div>
+     <button type="button" onClick={()=>{setSelected('');setDayAction('choose');setManualFeedback('')}}
+      className="min-h-11 rounded-xl border border-slate-300 bg-white px-4 text-sm font-semibold">Cerrar</button>
+    </div>
+    <div className="mt-5 grid grid-cols-2 gap-3" role="group" aria-label="Opciones del día seleccionado">
+     <button type="button" disabled={loading} onClick={()=>openDateConfig(selected)}
+      className="min-h-14 rounded-xl border-2 border-[#207F85] bg-white px-3 py-3 text-sm font-extrabold text-[#207F85] disabled:opacity-50 sm:text-base">
+      Ajustes del día
+     </button>
+     <button type="button" disabled={loading||historical||current.blocked||current.available<1}
+      onClick={()=>{setDayAction('manual');setManualFeedback('')}}
+      aria-pressed={dayAction==='manual'}
+      className={'min-h-14 rounded-xl px-3 py-3 text-sm font-extrabold disabled:cursor-not-allowed disabled:opacity-40 sm:text-base '+
+       (dayAction==='manual'?'bg-[#165E64] text-white':'bg-[#207F85] text-white hover:bg-[#18686D]')}>
+      Reserva manual
+     </button>
+    </div>
+    {manualFeedback&&<p role="status" className="mt-4 rounded-xl border border-[#CFE4E4] bg-white p-4 text-sm font-semibold text-slate-800">{manualFeedback}</p>}
+    {historical&&<p className="mt-3 text-sm font-semibold text-amber-900">Esta fecha ya no admite reservas ni cambios de disponibilidad.</p>}
+    {!historical&&current.blocked&&<p className="mt-3 text-sm font-semibold text-amber-900">Fecha bloqueada. Puedes modificarla desde Ajustes del día.</p>}
+    {!historical&&!current.blocked&&current.available===0&&<p className="mt-3 text-sm font-semibold text-rose-800">Las tres unidades están ocupadas. No se admiten más reservas para este día.</p>}
+    {dayAction==='manual'&&!historical&&!current.blocked&&current.available>0&&
+     <div className="mt-5 rounded-xl border border-slate-200 bg-white p-4 sm:p-5">
+      <div className="flex flex-wrap items-start justify-between gap-2">
+       <div>
+        <h4 className="text-lg font-extrabold text-slate-900">Registrar reserva manual</h4>
+        <p className="mt-1 text-sm text-slate-600">Recogida el {readableDate(selected)} · de 11:30 a 16:00 h</p>
+       </div>
+       <button type="button" disabled={loading}
+        onClick={()=>{setDayAction('choose');setManualFeedback('')}}
+        className="min-h-11 rounded-lg border border-slate-300 px-3 text-sm font-bold disabled:opacity-50">
+        Volver
+       </button>
+      </div>
+      <form className="mt-5 grid gap-4 sm:grid-cols-2" onSubmit={submitManual}>
+       <label className="block text-sm font-semibold">Nombre del cliente
+        <input className={input+' mt-2 min-h-12 text-base'} required minLength={2} maxLength={100}
+         autoComplete="name" disabled={loading} value={name} onChange={e=>setName(e.target.value)}/>
+       </label>
+       <label className="block text-sm font-semibold">Teléfono (opcional)
+        <input className={input+' mt-2 min-h-12 text-base'} type="tel" autoComplete="tel"
+         maxLength={30} disabled={loading} value={phone} onChange={e=>setPhone(e.target.value)}/>
+       </label>
+       <label className="block text-sm font-semibold">Número de patas enteras
+        <select className={input+' mt-2 min-h-12 text-base'} disabled={loading}
+         value={Math.min(quantity,current.available)} onChange={e=>setQuantity(Number(e.target.value))}>
+         {Array.from({length:current.available},(_,i)=>i+1).map(n=><option key={n} value={n}>
+          {n} {n===1?'pata':'patas'} · {n*90} €
+         </option>)}
+        </select>
+       </label>
+       <label className="block text-sm font-semibold sm:col-span-2">Observaciones (opcional)
+        <textarea className={input+' mt-2 min-h-20 text-base'} rows={2} maxLength={500}
+         disabled={loading} value={manualNotes} onChange={e=>setManualNotes(e.target.value)}/>
+       </label>
+       <div className="flex flex-wrap items-center justify-between gap-3 border-t border-slate-200 pt-4 sm:col-span-2">
+        <div><p className="text-xs font-medium text-slate-500">Total del encargo</p>
+         <p className="text-2xl font-black text-slate-900">{Math.min(quantity,current.available)*90} €</p>
+        </div>
+        <button type="submit" disabled={loading||loadingCalendar||Math.min(quantity,current.available)<1}
+         className="min-h-14 rounded-xl bg-[#207F85] px-6 py-3 text-base font-extrabold text-white disabled:opacity-50">
+         {loading?'Guardando…':'Confirmar reserva'}
+        </button>
+       </div>
+       <p className="text-xs leading-relaxed text-slate-600 sm:col-span-2">
+        Al registrar la reserva se descuentan las unidades de esta fecha. Esta acción no registra ningún cobro.
+       </p>
+      </form>
+     </div>}
+   </div>
   </section>
-  <div className="mt-6">
-   <section className="rounded-2xl border bg-white p-5 shadow-sm sm:p-6">
-    <h2 className="text-xl font-extrabold">Añadir encargo manual</h2>
-    <p className="mt-2 text-sm text-slate-600">Pedidos gestionados por WhatsApp o teléfono. Ocupan unidades inmediatamente y aparecen en la lista de encargos.</p>
-    <label className="mt-4 block text-sm font-semibold">Fecha de recogida
-     <input className={input+' mt-2'} type="date" min={today} value={selected}
-      onChange={e=>{const date=e.target.value;setSelected(date);if(date&&date.slice(0,7)!==viewMonth)setViewMonth(date.slice(0,7))}}/>
-    </label>
-    <p className="mt-2 text-sm text-slate-600">Disponibles para esa fecha: <strong>{current?.available??'—'}</strong> de {current?.capacity??3} {current?.blocked?'· Día bloqueado':''}</p>
-    <form className="mt-5 grid gap-4 sm:grid-cols-2" onSubmit={e=>{e.preventDefault();action(async()=>{
-     await api('manual',{method:'POST',body:JSON.stringify({date:selected,quantity,name,phone,notes:''})})
-     setName('');setPhone('')
-    })}}>
-     <label className="block text-sm font-semibold">Nombre del cliente
-      <input className={input+' mt-2'} required minLength={2} maxLength={100} value={name} onChange={e=>setName(e.target.value)}/>
-     </label>
-     <label className="block text-sm font-semibold">Teléfono (opcional)
-      <input className={input+' mt-2'} maxLength={30} value={phone} onChange={e=>setPhone(e.target.value)}/>
-     </label>
-     <label className="block text-sm font-semibold">Número de patas
-      <select className={input+' mt-2'} value={quantity} onChange={e=>setQuantity(Number(e.target.value))}>
-       {[1,2,3].map(n=><option key={n}>{n}</option>)}
-      </select>
-     </label>
-     <p className="text-sm sm:col-span-2">Importe del encargo: <strong>{quantity*90} €</strong> (el panel no cobra).</p>
-     <button disabled={loading||loadingCalendar||historical||!current||current.blocked||quantity>current.available} className="rounded-xl bg-[#207F85] px-5 py-3 font-bold text-white disabled:opacity-50 sm:col-span-2 sm:justify-self-start">Registrar encargo</button>
-    </form>
-   </section>
-  </div>
   <section className="mt-6 rounded-2xl border bg-white p-5 shadow-sm sm:p-6">
    <div className="flex flex-wrap items-start justify-between gap-3">
     <div>
