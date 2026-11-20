@@ -273,18 +273,33 @@ export default function PanelPataAsada(){
     ? <p className="py-10 text-center text-slate-600" role="status">Cargando disponibilidad del mes…</p>
     : <div className="grid grid-cols-7 gap-1 sm:gap-2">
       {Array.from({length:leadDays},(_,i)=><div key={'blank-'+i} aria-hidden="true"/>)}
-      {days.map(d=><button key={d.date} type="button" onClick={()=>selectDate(d.date)}
-       aria-pressed={selected===d.date}
-       aria-label={d.date+': '+(d.blocked?'fecha bloqueada':d.available+' patas disponibles de '+d.capacity)}
-       className={'min-h-20 rounded-xl border p-1.5 text-center transition hover:border-teal-600 sm:min-h-24 sm:p-2 '+(selected===d.date?'border-teal-700 ring-2 ring-teal-700':'border-slate-200')+(d.blocked?' bg-slate-200':d.available===0?' bg-rose-50':d.available===3?' bg-teal-50':' bg-amber-50')}>
-        <span className="block text-sm font-bold sm:text-base">{Number(d.date.slice(-2))}</span>
-        <span className="mt-1 block text-base font-black sm:text-xl">{d.blocked?'×':d.available}</span>
-        <span className="block text-[9px] leading-tight sm:text-xs">{d.blocked?'Bloqueado':d.available===0?'Completo':'libres'}</span>
-       </button>)}
+      {days.map(d=>{
+       const past=d.date<today
+       const isToday=d.date===today
+       return <button key={d.date} type="button" onClick={()=>selectDate(d.date)}
+        aria-pressed={selected===d.date}
+        aria-current={isToday?'date':undefined}
+        aria-label={d.date+': '+(past?'fecha pasada, ':isToday?'hoy, ':'')+
+         (d.blocked?'fecha bloqueada':d.available+' patas disponibles de '+d.capacity)}
+        className={'min-h-20 rounded-xl border p-1.5 text-center transition sm:min-h-24 sm:p-2 '+
+         (isToday?'border-[#207F85] ring-2 ring-[#207F85] ':
+          selected===d.date?'border-[#207F85] ring-2 ring-[#207F85]/50 ':'border-slate-200 ')+
+         (past?'bg-rose-100 text-rose-800 hover:border-rose-500 ':
+          d.blocked?'bg-slate-200 ':d.available===0?'bg-rose-50 ':
+          d.available===3?'bg-teal-50 ':'bg-amber-50 ')}>
+         <span className="block text-sm font-bold sm:text-base">{Number(d.date.slice(-2))}</span>
+         <span className="mt-1 block text-base font-black sm:text-xl">{d.blocked?'×':d.available}</span>
+         <span className="block text-[9px] leading-tight sm:text-xs">
+          {past?'Pasado':isToday?'Hoy':d.blocked?'Bloqueado':d.available===0?'Completo':'libres'}
+         </span>
+        </button>
+      })}
      </div>}
    <div className="mt-4 flex flex-wrap gap-3 text-xs text-slate-600">
     <span>🟢 3 disponibles</span><span>🟡 1 o 2 disponibles</span>
     <span>🔴 Completo</span><span>⚪ Bloqueado</span>
+    <span className="font-semibold text-rose-800">▣ Día pasado</span>
+    <span className="font-semibold text-[#207F85]">▢ Hoy (borde destacado)</span>
    </div>
 
   </section>
