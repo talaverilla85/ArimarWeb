@@ -27,7 +27,7 @@ export async function POST(request:Request){
    ||!operator||operator.length<2||notes===null||typeof key!=='string'||!uuid.test(key)
    ||(paymentMethod!=='CARD'&&paymentMethod!=='CASH')
    ||!dateISO(paymentDate)||paymentDate>todayCanary()||!paymentReceipt||!review)
-   return NextResponse.json({error:'Revisa fecha, cliente, teléfono, empleado, pago y número de ticket obligatorio.'},
+   return NextResponse.json({error:'Revisa fecha, cliente, teléfono, empleado, forma de pago, ticket y correo electrónico si se indica.'},
     {status:400,headers:noStore})
   const order=await bookFromCounter({date,quantity,name,phone,notes,operator,key,
    paymentMethod,paymentDate,paymentReceipt,email:review!.email,reviewConsent:review!.reviewConsent})
