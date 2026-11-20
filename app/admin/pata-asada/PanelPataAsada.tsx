@@ -128,6 +128,7 @@ export default function PanelPataAsada(){
   setSelected(date)
   setDayAction('choose')
   setManualFeedback('')
+  setSelectedOnly(false)
   setQuantity(1)
   setName('')
   setPhone('')
@@ -136,11 +137,12 @@ export default function PanelPataAsada(){
  }
  async function submitManual(event:React.FormEvent<HTMLFormElement>){
   event.preventDefault()
-  if(loading||loadingCalendar||!current||current.blocked||historical||quantity>current.available)return
+  if(loading||loadingCalendar||!current||current.blocked||historical||current.available<1)return
+  const confirmedQuantity=Math.min(quantity,current.available)
   setLoading(true);setManualFeedback('');setMessage('')
   try{
    await api('manual',{method:'POST',body:JSON.stringify({
-    date:selected,quantity,name:name.trim(),phone:phone.trim(),notes:manualNotes.trim()
+    date:selected,quantity:confirmedQuantity,name:name.trim(),phone:phone.trim(),notes:manualNotes.trim()
    })})
    await refresh()
    setName('');setPhone('');setManualNotes('');setQuantity(1)
@@ -198,6 +200,7 @@ export default function PanelPataAsada(){
   setSelected('')
   setDayAction('choose')
   setManualFeedback('')
+  setSelectedOnly(false)
  }
  const current=days.find(x=>x.date===selected)
  const historical=selected<operationalDay()
@@ -206,7 +209,7 @@ export default function PanelPataAsada(){
  const confirmedForMonth=orders.filter(o=>o.status==='PAID'||o.status==='MANUAL_CONFIRMED'||o.status==='CANCELED')
   .sort((a,b)=>a.date.localeCompare(b.date)||a.id.localeCompare(b.id))
  const shownOrders=(orderView==='upcoming'?upcomingOrders:confirmedForMonth)
-  .filter(o=>orderView!=='month'||!selectedOnly||o.date===selected)
+  .filter(o=>orderView!=='month'||!selectedOnly||!selected||o.date===selected)
  const shownUnits=shownOrders.reduce((total,o)=>total+(o.status==='CANCELED'?0:o.quantity),0)
  function readableDate(date:string){
   return new Intl.DateTimeFormat('es-ES',{timeZone:'UTC',weekday:'short',
@@ -363,7 +366,7 @@ export default function PanelPataAsada(){
        </p>
       </form>
      </div>}
-   </div>
+   </div>}
   </section>
   <section className="mt-6 rounded-2xl border bg-white p-5 shadow-sm sm:p-6">
    <div className="flex flex-wrap items-start justify-between gap-3">
@@ -391,7 +394,7 @@ export default function PanelPataAsada(){
       Mes seleccionado ({monthLabel(viewMonth)})
     </button>
    </div>
-   {orderView==='month'&&<label className="mt-4 flex items-center gap-2 text-sm font-medium">
+   {orderView==='month'&&selected&&<label className="mt-4 flex items-center gap-2 text-sm font-medium">
     <input type="checkbox" checked={selectedOnly} onChange={e=>setSelectedOnly(e.target.checked)}/>
     Solo el día {readableDate(selected)}
    </label>}
