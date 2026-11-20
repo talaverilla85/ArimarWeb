@@ -7,7 +7,7 @@ type Day={date:string;capacity:number;occupied:number;available:number;blocked:b
 type ManualPaymentMethod='PENDING'|'CARD'|'CASH'|'MONEI'
 const paymentMethodLabels:Record<ManualPaymentMethod,string>={PENDING:'Pendiente',CARD:'Tarjeta',CASH:'Efectivo',MONEI:'Monei'}
 const paymentDateLabel=(iso:string)=>iso.split('-').reverse().join('/')
-type Order={id:string;date:string;quantity:number;name:string;reference?:string;staffCreator?:string|null;phone:string|null;email:string|null;status:string;source:string;notes:string|null;amountCents?:number;manualPaymentMethod?:ManualPaymentMethod;manualPaymentDate?:string|null;manualPaymentReceipt?:string|null}
+type Order={id:string;date:string;quantity:number;name:string;reference?:string;staffCreator?:string|null;phone:string|null;email:string|null;status:string;source:string;notes:string|null;amountCents?:number;manualPaymentMethod?:ManualPaymentMethod;manualPaymentDate?:string|null;manualPaymentReceipt?:string|null;reviewConsent?:boolean;reviewConsentAt?:string|null}
 const input='w-full rounded-xl border border-slate-300 px-3 py-2 text-slate-900 focus:border-teal-700 focus:outline-none'
 function dayCanary(){const p=new Intl.DateTimeFormat('en-CA',{timeZone:'Atlantic/Canary',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(new Date());const f=(t:string)=>p.find(x=>x.type===t)?.value||'';return [f('year'),f('month'),f('day')].join('-')}
 function monthBounds(month:string){
@@ -59,6 +59,8 @@ export default function PanelPataAsada(){
  const [note,setNote]=useState('')
  const [name,setName]=useState('')
  const [phone,setPhone]=useState('')
+ const [email,setEmail]=useState('')
+ const [reviewConsent,setReviewConsent]=useState(false)
  const [manualNotes,setManualNotes]=useState('')
  const [paymentMethod,setPaymentMethod]=useState<ManualPaymentMethod>('PENDING')
  const [paymentDate,setPaymentDate]=useState('')
@@ -144,6 +146,7 @@ export default function PanelPataAsada(){
   setQuantity(1)
   setName('')
   setPhone('')
+  setEmail('');setReviewConsent(false)
   setManualNotes('')
   setPaymentMethod('PENDING');setPaymentDate('');setPaymentReceipt('')
   setPayingOrder(null);setSettlementReceipt('');setSettlementDate(dayCanary())
@@ -160,10 +163,11 @@ export default function PanelPataAsada(){
    const result=await api('manual',{method:'POST',body:JSON.stringify({
     date:selected,quantity:confirmedQuantity,name:name.trim(),phone:phone.trim(),notes:manualNotes.trim(),
     paymentMethod,paymentDate:paymentMethod==='PENDING'?null:paymentDate,
-    paymentReceipt:paymentMethod==='PENDING'?'':paymentReceipt.trim()
+    paymentReceipt:paymentMethod==='PENDING'?'':paymentReceipt.trim(),
+    email:email.trim(),reviewConsent
    })})
    await refresh()
-   setName('');setPhone('');setManualNotes('');setQuantity(1)
+   setName('');setPhone('');setEmail('');setReviewConsent(false);setManualNotes('');setQuantity(1)
    setPaymentMethod('PENDING');setPaymentDate('');setPaymentReceipt('')
    setDayAction('choose')
    setManualFeedback('Reserva '+result.reference+' registrada. '+
@@ -404,6 +408,9 @@ export default function PanelPataAsada(){
           Anular reserva
          </button>}
        </div>
+       {o.email&&<p className="text-xs leading-relaxed text-slate-700 sm:col-span-4">
+        <strong>Correo:</strong> {o.email} · Invitación a valorar: {o.reviewConsent?'Autorizada':'Sin autorización'}
+       </p>}
        {o.source==='MANUAL'&&<p className="text-xs leading-relaxed text-slate-700 sm:col-span-4">
         <strong>Cobro:</strong> {paymentMethodLabels[o.manualPaymentMethod??'PENDING']}
         {o.manualPaymentDate&&' · '+paymentDateLabel(o.manualPaymentDate)}
@@ -481,6 +488,7 @@ export default function PanelPataAsada(){
         :<div className="mt-2 divide-y">
          {orders.filter(o=>o.date===selected).map(o=><div key={o.id} className="flex justify-between gap-3 py-2 text-sm">
           <div><span className="font-semibold">{o.name}</span>
+           {o.email&&<p className="text-xs text-slate-600">{o.email} · Valoración: {o.reviewConsent?'Autorizada':'No autorizada'}</p>}
            <p className="text-xs text-slate-500">{o.reference} · {o.status==='PAID'?'Pagado':o.status==='MANUAL_CONFIRMED'?'Manual confirmado':o.status}</p>
           </div>
           <div className="text-right">
@@ -559,6 +567,17 @@ export default function PanelPataAsada(){
        <label className="block text-sm font-semibold">Teléfono de contacto (obligatorio)
         <input className={input+' mt-2 min-h-12 text-base'} type="tel" inputMode="tel"
          autoComplete="tel" required minLength={6} maxLength={30} disabled={loading} value={phone} onChange={e=>setPhone(e.target.value)}/>
+       </label>
+       <label className="block text-sm font-semibold sm:col-span-2">Correo electrónico (opcional)
+        <input className={input+' mt-2 min-h-12 text-base'} type="email" autoComplete="email"
+         maxLength={254} disabled={loading} value={email} placeholder="correo@ejemplo.com"
+         onChange={e=>{setEmail(e.target.value);if(!e.target.value.trim())setReviewConsent(false)}}/>
+       </label>
+       <label className="flex items-start gap-3 rounded-xl border border-slate-200 bg-slate-50 p-3 text-sm text-slate-700 sm:col-span-2">
+        <input type="checkbox" className="mt-1 h-5 w-5 shrink-0 accent-[#207F85]"
+         disabled={loading||!email.trim()} checked={reviewConsent}
+         onChange={e=>setReviewConsent(e.target.checked)}/>
+        <span>El cliente autoriza a AriMar a enviarle por correo una invitación para valorar su experiencia en Google (opcional). Preguntar al cliente antes de marcar.</span>
        </label>
        <label className="block text-sm font-semibold">Número de patas enteras
         <select className={input+' mt-2 min-h-12 text-base'} disabled={loading}
