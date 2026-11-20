@@ -154,3 +154,13 @@ export async function getConfirmedOrdersForIntegration(from:string,to:string) {
   ORDER BY pickup_date,created_at,id LIMIT 500`
  return rows.map(r=>normalizeConfirmed(r as Record<string,unknown>))
 }
+
+/** Resumen agregado para pantalla de cocina: sin nombres, teléfonos ni correos. */
+export async function getConfirmedPataDayTotals():Promise<Array<{date:string;quantity:number}>>{
+ const sql=db()
+ const rows=await sql`SELECT pickup_date::text AS date,quantity
+ FROM public.pata_kitchen_daily_totals
+ WHERE pickup_date >= (now() AT TIME ZONE 'Atlantic/Canary')::date
+ ORDER BY pickup_date ASC LIMIT 365`
+ return rows.map(row=>({date:String(row.date),quantity:Number(row.quantity)}))
+}
