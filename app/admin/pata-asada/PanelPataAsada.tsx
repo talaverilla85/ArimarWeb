@@ -35,7 +35,7 @@ export default function PanelPataAsada(){
  const [authenticated,setAuthenticated]=useState<boolean|null>(null)
  const [password,setPassword]=useState('')
  const [selected,setSelected]=useState('')
- const [dayAction,setDayAction]=useState<'choose'|'manual'>('choose')
+ const [dayAction,setDayAction]=useState<'choose'|'settings'|'manual'>('choose')
  const [manualFeedback,setManualFeedback]=useState('')
  const [viewMonth,setViewMonth]=useState(()=>dayCanary().slice(0,7))
  const [loadingCalendar,setLoadingCalendar]=useState(false)
@@ -125,7 +125,9 @@ export default function PanelPataAsada(){
  }
  function selectDate(date:string){
   if(loading||loadingCalendar)return
+  previousFocus.current=document.activeElement instanceof HTMLElement?document.activeElement:null
   setSelected(date)
+  setConfigOpen(true)
   setDayAction('choose')
   setManualFeedback('')
   setSelectedOnly(false)
@@ -152,21 +154,17 @@ export default function PanelPataAsada(){
    setManualFeedback(e instanceof Error?e.message:'No se pudo registrar el encargo.')
   }finally{setLoading(false)}
  }
- function openDateConfig(date:string){
-  const day=days.find(d=>d.date===date)
-  if(!day)return
-  previousFocus.current=document.activeElement instanceof HTMLElement?document.activeElement:null
-  setSelected(date)
-  setCapacity(day.capacity)
-  setBlocked(day.blocked)
-  setNote(day.note??'')
-  setConfigError('')
-  setConfigOpen(true)
+ function showSettings(){
+  if(!current)return
+  setCapacity(current.capacity);setBlocked(current.blocked);setNote(current.note??'')
+  setConfigError('');setDayAction('settings')
  }
  function closeDateConfig(){
   if(loading)return
   setConfigOpen(false)
+  setDayAction('choose')
   setConfigError('')
+  setManualFeedback('')
  }
  async function saveDateConfig(){
   if(loading||loadingCalendar||historical||!current)return
@@ -288,85 +286,7 @@ export default function PanelPataAsada(){
     <span>🟢 3 disponibles</span><span>🟡 1 o 2 disponibles</span>
     <span>🔴 Completo</span><span>⚪ Bloqueado</span>
    </div>
-   {current&&<div className="mt-6 rounded-2xl border border-[#CFE4E4] bg-[#F1F8F7] p-4 sm:p-6" aria-live="polite">
-    <div className="flex flex-wrap items-start justify-between gap-3">
-     <div>
-      <p className="text-xs font-extrabold uppercase tracking-widest text-[#207F85]">Fecha seleccionada</p>
-      <h3 className="mt-1 text-xl font-black sm:text-2xl">{readableDate(selected)}</h3>
-      <p className="mt-2 text-sm text-slate-700">
-       {current.blocked?'Bloqueada para nuevos encargos':
-        current.available+' patas disponibles de '+current.capacity+' · '+current.occupied+' ocupadas'}
-      </p>
-     </div>
-     <button type="button" onClick={()=>{setSelected('');setDayAction('choose');setManualFeedback('')}}
-      className="min-h-11 rounded-xl border border-slate-300 bg-white px-4 text-sm font-semibold">Cerrar</button>
-    </div>
-    <div className="mt-5 grid grid-cols-2 gap-3" role="group" aria-label="Opciones del día seleccionado">
-     <button type="button" disabled={loading} onClick={()=>openDateConfig(selected)}
-      className="min-h-14 rounded-xl border-2 border-[#207F85] bg-white px-3 py-3 text-sm font-extrabold text-[#207F85] disabled:opacity-50 sm:text-base">
-      Ajustes del día
-     </button>
-     <button type="button" disabled={loading||historical||current.blocked||current.available<1}
-      onClick={()=>{setDayAction('manual');setManualFeedback('')}}
-      aria-pressed={dayAction==='manual'}
-      className={'min-h-14 rounded-xl px-3 py-3 text-sm font-extrabold disabled:cursor-not-allowed disabled:opacity-40 sm:text-base '+
-       (dayAction==='manual'?'bg-[#165E64] text-white':'bg-[#207F85] text-white hover:bg-[#18686D]')}>
-      Reserva manual
-     </button>
-    </div>
-    {manualFeedback&&<p role="status" className="mt-4 rounded-xl border border-[#CFE4E4] bg-white p-4 text-sm font-semibold text-slate-800">{manualFeedback}</p>}
-    {historical&&<p className="mt-3 text-sm font-semibold text-amber-900">Esta fecha ya no admite reservas ni cambios de disponibilidad.</p>}
-    {!historical&&current.blocked&&<p className="mt-3 text-sm font-semibold text-amber-900">Fecha bloqueada. Puedes modificarla desde Ajustes del día.</p>}
-    {!historical&&!current.blocked&&current.available===0&&<p className="mt-3 text-sm font-semibold text-rose-800">Las tres unidades están ocupadas. No se admiten más reservas para este día.</p>}
-    {dayAction==='manual'&&!historical&&!current.blocked&&current.available>0&&
-     <div className="mt-5 rounded-xl border border-slate-200 bg-white p-4 sm:p-5">
-      <div className="flex flex-wrap items-start justify-between gap-2">
-       <div>
-        <h4 className="text-lg font-extrabold text-slate-900">Registrar reserva manual</h4>
-        <p className="mt-1 text-sm text-slate-600">Recogida el {readableDate(selected)} · de 11:30 a 16:00 h</p>
-       </div>
-       <button type="button" disabled={loading}
-        onClick={()=>{setDayAction('choose');setManualFeedback('')}}
-        className="min-h-11 rounded-lg border border-slate-300 px-3 text-sm font-bold disabled:opacity-50">
-        Volver
-       </button>
-      </div>
-      <form className="mt-5 grid gap-4 sm:grid-cols-2" onSubmit={submitManual}>
-       <label className="block text-sm font-semibold">Nombre del cliente
-        <input className={input+' mt-2 min-h-12 text-base'} required minLength={2} maxLength={100}
-         autoComplete="name" disabled={loading} value={name} onChange={e=>setName(e.target.value)}/>
-       </label>
-       <label className="block text-sm font-semibold">Teléfono (opcional)
-        <input className={input+' mt-2 min-h-12 text-base'} type="tel" autoComplete="tel"
-         maxLength={30} disabled={loading} value={phone} onChange={e=>setPhone(e.target.value)}/>
-       </label>
-       <label className="block text-sm font-semibold">Número de patas enteras
-        <select className={input+' mt-2 min-h-12 text-base'} disabled={loading}
-         value={Math.min(quantity,current.available)} onChange={e=>setQuantity(Number(e.target.value))}>
-         {Array.from({length:current.available},(_,i)=>i+1).map(n=><option key={n} value={n}>
-          {n} {n===1?'pata':'patas'} · {n*90} €
-         </option>)}
-        </select>
-       </label>
-       <label className="block text-sm font-semibold sm:col-span-2">Observaciones (opcional)
-        <textarea className={input+' mt-2 min-h-20 text-base'} rows={2} maxLength={500}
-         disabled={loading} value={manualNotes} onChange={e=>setManualNotes(e.target.value)}/>
-       </label>
-       <div className="flex flex-wrap items-center justify-between gap-3 border-t border-slate-200 pt-4 sm:col-span-2">
-        <div><p className="text-xs font-medium text-slate-500">Total del encargo</p>
-         <p className="text-2xl font-black text-slate-900">{Math.min(quantity,current.available)*90} €</p>
-        </div>
-        <button type="submit" disabled={loading||loadingCalendar||Math.min(quantity,current.available)<1}
-         className="min-h-14 rounded-xl bg-[#207F85] px-6 py-3 text-base font-extrabold text-white disabled:opacity-50">
-         {loading?'Guardando…':'Confirmar reserva'}
-        </button>
-       </div>
-       <p className="text-xs leading-relaxed text-slate-600 sm:col-span-2">
-        Al registrar la reserva se descuentan las unidades de esta fecha. Esta acción no registra ningún cobro.
-       </p>
-      </form>
-     </div>}
-   </div>}
+
   </section>
   <section className="mt-6 rounded-2xl border bg-white p-5 shadow-sm sm:p-6">
    <div className="flex flex-wrap items-start justify-between gap-3">
@@ -450,43 +370,39 @@ export default function PanelPataAsada(){
    </p>
   </section>
 
-  {configOpen&&current&&<div className="fixed inset-0 z-[110] flex items-center justify-center bg-slate-950/70 px-3 py-4 sm:px-6"
-   onMouseDown={e=>{if(e.target===e.currentTarget)closeDateConfig()}}>
-    <div role="dialog" aria-modal="true" aria-labelledby="pata-config-title"
-     aria-describedby="pata-config-description" onKeyDown={handleDialogKeys}
-     className="w-full max-w-xl max-h-[92dvh] overflow-y-auto rounded-3xl bg-white text-slate-800 shadow-2xl"
-    >
-     <div className="sticky top-0 z-10 flex items-start justify-between gap-4 border-b border-slate-100 bg-white px-5 py-5 sm:px-7">
+  {configOpen&&current&&<div className="fixed inset-0 z-[110] flex items-center justify-center bg-slate-950/70 px-3 py-3 sm:px-6"
+    onMouseDown={e=>{if(e.target===e.currentTarget)closeDateConfig()}}>
+    <div role="dialog" aria-modal="true" aria-labelledby="pata-config-title" aria-describedby="pata-config-description"
+     onKeyDown={handleDialogKeys} className="flex max-h-[94dvh] w-full max-w-xl flex-col overflow-hidden rounded-3xl bg-white text-slate-800 shadow-2xl">
+     <div className="flex shrink-0 items-start justify-between gap-4 border-b border-slate-200 px-5 py-5 sm:px-7">
       <div>
-       <p className="text-xs font-extrabold uppercase tracking-widest text-teal-800">Disponibilidad · AriMar</p>
-       <h2 id="pata-config-title" className="mt-1 text-xl font-extrabold sm:text-2xl">
-        {readableDate(selected)}
-       </h2>
-       <p id="pata-config-description" className="mt-1 text-sm text-slate-600">
-        {historical?'Consulta de una fecha anterior.': 'Modifica la capacidad o bloquea este día.'}
-       </p>
+       <p className="text-xs font-extrabold uppercase tracking-widest text-[#207F85]">AriMar · Gestión de fecha</p>
+       <h2 id="pata-config-title" className="mt-1 text-xl font-extrabold sm:text-2xl">{readableDate(selected)}</h2>
+       <p id="pata-config-description" className="mt-1 text-sm text-slate-600">Selecciona qué quieres hacer con este día.</p>
       </div>
-      <button ref={closeDialogButton} type="button" onClick={closeDateConfig} disabled={loading}
-       aria-label="Cerrar configuración de fecha"
-       className="flex h-10 w-10 flex-none items-center justify-center rounded-full bg-slate-100 text-2xl font-bold text-slate-700 hover:bg-slate-200 disabled:opacity-50">×</button>
+      <button type="button" ref={closeDialogButton} onClick={closeDateConfig} disabled={loading}
+       aria-label="Cerrar ventana" className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-slate-100 text-2xl font-bold disabled:opacity-50">×</button>
      </div>
-     <div className="space-y-5 px-5 py-5 sm:px-7">
+     <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-5 py-5 sm:px-7">
       <div className="grid grid-cols-3 gap-2 text-center">
-       <div className="rounded-xl bg-slate-50 p-3">
-        <p className="text-2xl font-black">{current.capacity}</p>
-        <p className="mt-1 text-xs text-slate-600">Capacidad</p>
-       </div>
-       <div className="rounded-xl bg-amber-50 p-3">
-        <p className="text-2xl font-black">{current.occupied}</p>
-        <p className="mt-1 text-xs text-slate-600">Ocupadas</p>
-       </div>
-       <div className="rounded-xl bg-teal-50 p-3">
-        <p className="text-2xl font-black">{current.available}</p>
-        <p className="mt-1 text-xs text-slate-600">Disponibles</p>
-       </div>
+       <div className="rounded-xl bg-slate-50 p-3"><p className="text-2xl font-black">{current.capacity}</p><p className="mt-1 text-xs text-slate-600">Capacidad</p></div>
+       <div className="rounded-xl bg-amber-50 p-3"><p className="text-2xl font-black">{current.occupied}</p><p className="mt-1 text-xs text-slate-600">Ocupadas</p></div>
+       <div className="rounded-xl bg-teal-50 p-3"><p className="text-2xl font-black">{current.available}</p><p className="mt-1 text-xs text-slate-600">Disponibles</p></div>
       </div>
-      {current.blocked&&<p className="rounded-xl bg-slate-100 p-3 text-sm font-bold">Este día está bloqueado para nuevos encargos.</p>}
-      <label className="block text-sm font-semibold">
+      <div className="mt-5 grid grid-cols-2 gap-3" role="group" aria-label="Acciones del día seleccionado">
+       <button type="button" disabled={loading} onClick={showSettings} aria-pressed={dayAction==='settings'}
+        className={'min-h-14 rounded-xl border-2 border-[#207F85] px-3 py-3 text-sm font-extrabold disabled:opacity-50 sm:text-base '+(dayAction==='settings'?'bg-[#207F85] text-white':'bg-white text-[#207F85]')}>Ajustes</button>
+       <button type="button" disabled={loading||historical||current.blocked||current.available===0}
+        onClick={()=>{setDayAction('manual');setConfigError('');setManualFeedback('')}} aria-pressed={dayAction==='manual'}
+        className={'min-h-14 rounded-xl border-2 border-[#207F85] px-3 py-3 text-sm font-extrabold disabled:opacity-40 sm:text-base '+(dayAction==='manual'?'bg-[#207F85] text-white':'bg-white text-[#207F85]')}>Reserva manual</button>
+      </div>
+      {dayAction==='choose'&&<p className="mt-5 rounded-xl bg-[#F1F8F7] p-4 text-sm text-slate-700">Elige Ajustes para gestionar la disponibilidad o Reserva manual para registrar un encargo.</p>}
+      {historical&&<p className="mt-4 rounded-xl bg-amber-50 p-3 text-sm font-semibold text-amber-900">Esta fecha ya no admite nuevas reservas o cambios de capacidad.</p>}
+      {!historical&&current.blocked&&<p className="mt-4 rounded-xl bg-slate-100 p-3 text-sm font-semibold">Fecha bloqueada para nuevos encargos. Puedes desbloquearla en Ajustes.</p>}
+      {!historical&&!current.blocked&&current.available===0&&<p className="mt-4 rounded-xl bg-rose-50 p-3 text-sm font-semibold text-rose-800">Fecha completa, sin patas disponibles.</p>}
+      {manualFeedback&&<p role="status" className="mt-4 rounded-xl border border-teal-200 bg-teal-50 p-4 text-sm font-semibold">{manualFeedback}</p>}
+      {dayAction==='settings'&&<div className="mt-5 space-y-5">
+<label className="block text-sm font-semibold">
        Capacidad máxima de esta fecha
        <select className={input+' mt-2'} value={capacity} disabled={historical||loading}
         onChange={e=>setCapacity(Number(e.target.value))}>
@@ -525,16 +441,65 @@ export default function PanelPataAsada(){
          </div>)}
         </div>}
       </div>
-      {configError&&<p role="alert" className="rounded-xl bg-rose-50 p-3 text-sm font-semibold text-rose-800">{configError}</p>}
-      {historical&&<p className="text-sm font-semibold text-amber-800">La configuración de fechas pasadas no se puede modificar.</p>}
+      
+       {configError&&<p role="alert" className="rounded-xl bg-rose-50 p-3 text-sm font-semibold text-rose-800">{configError}</p>}
+      </div>}
+    {dayAction==='manual'&&!historical&&!current.blocked&&current.available>0&&
+     <div className="mt-5 rounded-xl border border-slate-200 bg-white p-4 sm:p-5">
+      <div className="flex flex-wrap items-start justify-between gap-2">
+       <div>
+        <h4 className="text-lg font-extrabold text-slate-900">Registrar reserva manual</h4>
+        <p className="mt-1 text-sm text-slate-600">Recogida el {readableDate(selected)} · de 11:30 a 16:00 h</p>
+       </div>
+       <button type="button" disabled={loading}
+        onClick={()=>{setDayAction('choose');setManualFeedback('')}}
+        className="min-h-11 rounded-lg border border-slate-300 px-3 text-sm font-bold disabled:opacity-50">
+        Volver
+       </button>
+      </div>
+      <form className="mt-5 grid gap-4 sm:grid-cols-2" onSubmit={submitManual}>
+       <label className="block text-sm font-semibold">Nombre del cliente
+        <input className={input+' mt-2 min-h-12 text-base'} required minLength={2} maxLength={100}
+         autoComplete="name" disabled={loading} value={name} onChange={e=>setName(e.target.value)}/>
+       </label>
+       <label className="block text-sm font-semibold">Teléfono (opcional)
+        <input className={input+' mt-2 min-h-12 text-base'} type="tel" autoComplete="tel"
+         maxLength={30} disabled={loading} value={phone} onChange={e=>setPhone(e.target.value)}/>
+       </label>
+       <label className="block text-sm font-semibold">Número de patas enteras
+        <select className={input+' mt-2 min-h-12 text-base'} disabled={loading}
+         value={Math.min(quantity,current.available)} onChange={e=>setQuantity(Number(e.target.value))}>
+         {Array.from({length:current.available},(_,i)=>i+1).map(n=><option key={n} value={n}>
+          {n} {n===1?'pata':'patas'} · {n*90} €
+         </option>)}
+        </select>
+       </label>
+       <label className="block text-sm font-semibold sm:col-span-2">Observaciones (opcional)
+        <textarea className={input+' mt-2 min-h-20 text-base'} rows={2} maxLength={500}
+         disabled={loading} value={manualNotes} onChange={e=>setManualNotes(e.target.value)}/>
+       </label>
+       <div className="flex flex-wrap items-center justify-between gap-3 border-t border-slate-200 pt-4 sm:col-span-2">
+        <div><p className="text-xs font-medium text-slate-500">Total del encargo</p>
+         <p className="text-2xl font-black text-slate-900">{Math.min(quantity,current.available)*90} €</p>
+        </div>
+        <button type="submit" disabled={loading||loadingCalendar||Math.min(quantity,current.available)<1}
+         className="min-h-14 rounded-xl bg-[#207F85] px-6 py-3 text-base font-extrabold text-white disabled:opacity-50">
+         {loading?'Guardando…':'Confirmar reserva'}
+        </button>
+       </div>
+       <p className="text-xs leading-relaxed text-slate-600 sm:col-span-2">
+        Al registrar la reserva se descuentan las unidades de esta fecha. Esta acción no registra ningún cobro.
+       </p>
+      </form>
+     </div>}
      </div>
-     <div className="sticky bottom-0 flex justify-end gap-3 border-t border-slate-100 bg-white px-5 py-4 sm:px-7">
+     <div className="flex shrink-0 justify-end gap-3 border-t border-slate-100 bg-white px-5 py-4 sm:px-7">
       <button type="button" onClick={closeDateConfig} disabled={loading}
-       className="rounded-xl border border-slate-300 px-4 py-3 text-sm font-bold disabled:opacity-50">Cerrar</button>
-      {!historical&&<button type="button" disabled={loading||loadingCalendar||capacity<current.occupied}
+       className="min-h-12 rounded-xl border border-slate-300 px-4 py-3 text-sm font-bold disabled:opacity-50">Cerrar</button>
+      {dayAction==='settings'&&!historical&&<button type="button" disabled={loading||loadingCalendar||capacity<current.occupied}
        onClick={()=>{void saveDateConfig()}}
-       className="rounded-xl bg-[#207F85] px-5 py-3 text-sm font-extrabold text-white hover:bg-[#18686D] disabled:opacity-50">
-       {loading?'Guardando…':'Guardar cambios'}
+       className="min-h-12 rounded-xl bg-[#207F85] px-5 py-3 text-sm font-extrabold text-white disabled:opacity-50">
+       {loading?'Guardando…':'Guardar ajustes'}
       </button>}
      </div>
     </div>
