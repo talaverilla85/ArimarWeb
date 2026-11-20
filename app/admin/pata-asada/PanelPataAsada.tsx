@@ -4,7 +4,10 @@ import InstallPataAdmin from './InstallPataAdmin'
 import Link from 'next/link'
 import {operationalDay} from '@/lib/pataReservasDates'
 type Day={date:string;capacity:number;occupied:number;available:number;blocked:boolean;note:string|null}
-type Order={id:string;date:string;quantity:number;name:string;reference?:string;staffCreator?:string|null;phone:string|null;email:string|null;status:string;source:string;notes:string|null;amountCents?:number}
+type ManualPaymentMethod='PENDING'|'CARD'|'CASH'|'MONEI'
+const paymentMethodLabels:Record<ManualPaymentMethod,string>={PENDING:'Pendiente',CARD:'Tarjeta',CASH:'Efectivo',MONEI:'Monei'}
+const paymentDateLabel=(iso:string)=>iso.split('-').reverse().join('/')
+type Order={id:string;date:string;quantity:number;name:string;reference?:string;staffCreator?:string|null;phone:string|null;email:string|null;status:string;source:string;notes:string|null;amountCents?:number;manualPaymentMethod?:ManualPaymentMethod;manualPaymentDate?:string|null;manualPaymentReceipt?:string|null}
 const input='w-full rounded-xl border border-slate-300 px-3 py-2 text-slate-900 focus:border-teal-700 focus:outline-none'
 function dayCanary(){const p=new Intl.DateTimeFormat('en-CA',{timeZone:'Atlantic/Canary',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(new Date());const f=(t:string)=>p.find(x=>x.type===t)?.value||'';return [f('year'),f('month'),f('day')].join('-')}
 function monthBounds(month:string){
@@ -57,6 +60,9 @@ export default function PanelPataAsada(){
  const [name,setName]=useState('')
  const [phone,setPhone]=useState('')
  const [manualNotes,setManualNotes]=useState('')
+ const [paymentMethod,setPaymentMethod]=useState<ManualPaymentMethod>('PENDING')
+ const [paymentDate,setPaymentDate]=useState('')
+ const [paymentReceipt,setPaymentReceipt]=useState('')
  const [quantity,setQuantity]=useState(1)
  const [message,setMessage]=useState('')
  const [loading,setLoading]=useState(false)
@@ -135,6 +141,7 @@ export default function PanelPataAsada(){
   setName('')
   setPhone('')
   setManualNotes('')
+  setPaymentMethod('PENDING');setPaymentDate('');setPaymentReceipt('')
   setMessage('')
  }
  async function submitManual(event:React.FormEvent<HTMLFormElement>){
@@ -143,13 +150,19 @@ export default function PanelPataAsada(){
   const confirmedQuantity=Math.min(quantity,current.available)
   setLoading(true);setManualFeedback('');setMessage('')
   try{
-   await api('manual',{method:'POST',body:JSON.stringify({
-    date:selected,quantity:confirmedQuantity,name:name.trim(),phone:phone.trim(),notes:manualNotes.trim()
+   if(paymentMethod!=='PENDING'&&(!paymentDate||!paymentReceipt.trim()||paymentDate>today))
+    throw Error('Indica fecha de pago y número de ticket/factura.')
+   const result=await api('manual',{method:'POST',body:JSON.stringify({
+    date:selected,quantity:confirmedQuantity,name:name.trim(),phone:phone.trim(),notes:manualNotes.trim(),
+    paymentMethod,paymentDate:paymentMethod==='PENDING'?null:paymentDate,
+    paymentReceipt:paymentMethod==='PENDING'?'':paymentReceipt.trim()
    })})
    await refresh()
    setName('');setPhone('');setManualNotes('');setQuantity(1)
+   setPaymentMethod('PENDING');setPaymentDate('');setPaymentReceipt('')
    setDayAction('choose')
-   setManualFeedback('Reserva manual registrada. Las unidades ya están descontadas del calendario. El cobro no se registra automáticamente.')
+   setManualFeedback('Reserva '+result.reference+' registrada. '+
+    (paymentMethod==='PENDING'?'Cobro pendiente.':'Cobro anotado con fecha y ticket.'))
   }catch(e){
    setManualFeedback(e instanceof Error?e.message:'No se pudo registrar el encargo.')
   }finally{setLoading(false)}
@@ -371,6 +384,12 @@ export default function PanelPataAsada(){
           Anular reserva
          </button>}
        </div>
+       {o.source==='MANUAL'&&<p className="text-xs leading-relaxed text-slate-700 sm:col-span-4">
+        <strong>Cobro:</strong> {paymentMethodLabels[o.manualPaymentMethod??'PENDING']}
+        {o.manualPaymentDate&&' · '+paymentDateLabel(o.manualPaymentDate)}
+        {o.manualPaymentReceipt&&' · Ticket/factura: '+o.manualPaymentReceipt}
+        {o.manualPaymentMethod==='MONEI'&&' (registro manual)'}
+       </p>}
        {o.notes&&<p className="text-xs text-slate-600 sm:col-span-4">Observaciones: {o.notes}</p>}
       </article>)}
      </div>}
@@ -447,6 +466,11 @@ export default function PanelPataAsada(){
           <div className="text-right">
            <strong>{o.quantity} {o.quantity===1?'pata':'patas'}</strong>
            {o.staffCreator&&<p className="text-xs text-slate-500">Mostrador: {o.staffCreator}</p>}
+           {o.source==='MANUAL'&&<p className="mt-1 text-xs text-slate-600">
+            Cobro: {paymentMethodLabels[o.manualPaymentMethod??'PENDING']}
+            {o.manualPaymentDate&&' · '+paymentDateLabel(o.manualPaymentDate)}
+            {o.manualPaymentReceipt&&' · Ticket: '+o.manualPaymentReceipt}
+           </p>
            {o.source==='MANUAL'&&o.status==='MANUAL_CONFIRMED'&&!historical&&
             <button type="button" disabled={loading} onClick={()=>{void cancelOrder(o)}}
              className="mt-1 min-h-9 rounded-lg border border-rose-400 px-2 text-xs font-bold text-rose-700">
@@ -489,6 +513,37 @@ export default function PanelPataAsada(){
          </option>)}
         </select>
        </label>
+       <label className="block text-sm font-semibold">Forma de pago
+        <select className={input+' mt-2 min-h-12 text-base'} disabled={loading} value={paymentMethod}
+         onChange={e=>{
+          const next=e.target.value as ManualPaymentMethod
+          setPaymentMethod(next)
+          if(next==='PENDING'){setPaymentDate('');setPaymentReceipt('')}
+          else if(!paymentDate)setPaymentDate(dayCanary())
+         }}>
+         <option value="PENDING">Pendiente</option>
+         <option value="CARD">Tarjeta</option>
+         <option value="CASH">Efectivo</option>
+         <option value="MONEI">Monei</option>
+        </select>
+       </label>
+       {paymentMethod!=='PENDING'&&<>
+        <label className="block text-sm font-semibold">Fecha de pago
+         <input className={input+' mt-2 min-h-12 text-base'} type="date" required max={today}
+          disabled={loading} value={paymentDate} onChange={e=>setPaymentDate(e.target.value)}/>
+        </label>
+        <label className="block text-sm font-semibold sm:col-span-2">Número de factura/ticket
+         <input className={input+' mt-2 min-h-12 text-base'} required maxLength={100}
+          placeholder="Escribe el número del ticket" disabled={loading}
+          value={paymentReceipt} onChange={e=>setPaymentReceipt(e.target.value)}/>
+        </label>
+       </>}
+       {paymentMethod==='PENDING'&&<p className="rounded-lg bg-amber-50 p-3 text-sm text-amber-900 sm:col-span-2">
+        La reserva ocupa sus unidades, pero el cobro queda pendiente.
+       </p>}
+       {paymentMethod==='MONEI'&&<p className="text-xs text-amber-800 sm:col-span-2">
+        Esta anotación de Monei es manual; no verifica el pago con la pasarela.
+       </p>}
        <label className="block text-sm font-semibold sm:col-span-2">Observaciones (opcional)
         <textarea className={input+' mt-2 min-h-20 text-base'} rows={2} maxLength={500}
          disabled={loading} value={manualNotes} onChange={e=>setManualNotes(e.target.value)}/>
@@ -503,7 +558,7 @@ export default function PanelPataAsada(){
         </button>
        </div>
        <p className="text-xs leading-relaxed text-slate-600 sm:col-span-2">
-        Al registrar la reserva se descuentan las unidades de esta fecha. Esta acción no registra ningún cobro.
+        Al guardar, la reserva ocupa sus unidades. Los datos de cobro son un registro manual, no un cargo desde esta pantalla.
        </p>
       </form>
      </div>}
