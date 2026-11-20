@@ -1,342 +1,265 @@
 import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
-import SeoInternalLinks from '@/components/SeoInternalLinks'
 import { getWhatsAppUrl, siteConfig } from '@/lib/siteConfig'
 
+const pagePath = '/freiduria-sin-gluten-gran-canaria'
+const pageUrl = 'https://arimarfoodlab.es' + pagePath
+
 export const metadata: Metadata = {
+  // Conservamos el titulo y la URL por su historial de posicionamiento.
   title: 'Freiduría sin gluten en Gran Canaria | AriMar FoodLab',
   description:
-    'Croquetas caseras, fingers de pollo y fritos en una cocina 100 % sin gluten. Descubre la freiduría de AriMar en Playa de Arinaga, Gran Canaria. Consulta y pide para recoger.',
-  alternates: {
-    canonical: '/freiduria-sin-gluten-gran-canaria',
-  },
+    'Freiduría en Playa de Arinaga: fingers de pollo crujiente, croquetas caseras, churros de pescado y otros fritos para llevar. Consulta disponibilidad y pide online.',
+  alternates: { canonical: pagePath },
   openGraph: {
     title: 'Freiduría sin gluten en Gran Canaria | AriMar FoodLab',
     description:
-      'Croquetas caseras, pollo crujiente y comida para llevar. Nuestra freiduría 100 % sin gluten está en Playa de Arinaga, Gran Canaria.',
-    url: 'https://arimarfoodlab.es/freiduria-sin-gluten-gran-canaria',
+      'Fingers de pollo, croquetas caseras, churros de pescado y fritos para llevar desde Playa de Arinaga. Consulta raciones y disponibilidad.',
+    url: pageUrl,
     type: 'website',
+    locale: 'es_ES',
     images: [
       {
         url: '/images/arimar-freiduria-pollo-kentucky.webp',
         width: 1600,
         height: 1067,
-        alt: 'Fingers de pollo estilo Kentucky elaborados en AriMar',
+        alt: 'Fingers de pollo crujiente estilo Kentucky de AriMar',
       },
     ],
   },
 }
 
-const croquetas = [
+const fritos = [
   {
-    number: '01',
-    name: 'Jamón serrano',
-    description: 'Una de esas croquetas clásicas que siempre apetece repetir.',
+    name: 'Fingers de pollo estilo Kentucky',
+    amount: '280–300 g',
+    price: '7 €',
+    text: 'Pollo crujiente por fuera y tierno por dentro. Una de las raciones protagonistas de nuestra freiduría.',
   },
   {
-    number: '02',
-    name: 'Queso de cabra y cebolla caramelizada',
-    description: 'Un contraste de sabores para los que buscan algo diferente.',
+    name: 'Croquetas caseras',
+    amount: '9 unidades · 270 g aprox.',
+    price: '7 €',
+    text: 'De jamón, pollo asado, atún con piquillo o queso de cabra con cebolla. Los sabores disponibles pueden variar.',
   },
   {
-    number: '03',
-    name: 'Atún y pimiento del piquillo',
-    description: 'Una combinación con personalidad y sabor a cocina de casa.',
+    name: 'Churros de pescado',
+    amount: '300 g',
+    price: '7 €',
+    text: 'Tiras de pescado con rebozado, preparadas para disfrutar de un bocado de pescado frito.',
   },
   {
-    number: '04',
-    name: 'Pollo asado',
-    description: 'Nuestro pollo asado llevado también al mundo de las croquetas.',
+    name: 'Torreznos',
+    amount: '180 g',
+    price: '5 €',
+    text: 'Una ración para quienes buscan ese punto crujiente. Consulta si los tenemos en la vitrina del día.',
   },
-]
+] as const
+
+const primaryButton =
+  'inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-primary-500 px-7 py-3.5 text-center font-bold text-white shadow-sm transition-colors hover:bg-primary-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-600 focus-visible:ring-offset-2'
 
 export default function FreiduriaSinGlutenGranCanariaPage() {
   return (
-    <div className="overflow-hidden bg-white pb-20">
+    <div className="overflow-hidden bg-white pb-20 text-slate-900">
       <header className="relative bg-gradient-to-br from-primary-50 via-white to-amber-50 pt-28 pb-16 md:pt-32 md:pb-24">
-        <div className="pointer-events-none absolute -right-24 top-4 h-80 w-80 rounded-full bg-primary-100/50 blur-3xl" aria-hidden="true" />
-        <div className="relative mx-auto grid max-w-7xl items-center gap-10 px-4 sm:px-6 lg:grid-cols-[1fr_0.88fr] lg:gap-16 lg:px-8">
-          <div>
-            <p className="mb-5 text-xs font-bold uppercase tracking-[0.2em] text-primary-800 md:text-sm">
-              AriMar · Playa de Arinaga · Gran Canaria
-            </p>
-            <h1 className="mb-7 text-4xl font-extrabold leading-[1.08] tracking-tight text-slate-900 sm:text-5xl lg:text-[3.65rem]">
-              Freiduría sin gluten.
-              <span className="mt-2 block text-primary-700">Aquí manda el sabor.</span>
-            </h1>
-            <p className="mb-5 max-w-xl text-lg leading-relaxed text-slate-700 md:text-xl">
-              Croquetas caseras, pollo crujiente y ese antojo que pide algo recién hecho.
-              En AriMar, toda la cocina —también nuestra freiduría— es 100 % sin gluten.
-            </p>
-            <p className="mb-8 max-w-xl leading-relaxed text-slate-600">
-              Estamos en Playa de Arinaga, Agüimes. Si vienes desde cualquier otro punto de
-              Gran Canaria, puedes consultar la disponibilidad y pedir antes de desplazarte.
-            </p>
-            <div className="flex flex-wrap gap-3">
-              <Link href={siteConfig.pedirPath}
-                className="inline-flex min-h-12 items-center justify-center rounded-xl bg-primary-500 px-7 py-3 font-bold text-white shadow-sm transition-colors hover:bg-primary-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2">
-                Ver qué hay hoy y pedir <span className="ml-2" aria-hidden="true">→</span>
-              </Link>
-              <Link href="/contacto"
-                className="inline-flex min-h-12 items-center justify-center rounded-xl border-2 border-primary-200 bg-white px-7 py-3 font-bold text-primary-800 transition-colors hover:bg-primary-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2">
-                Cómo llegar
-              </Link>
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <nav aria-label="Ruta de navegación" className="mb-8 text-xs font-medium text-slate-500 md:mb-12">
+            <Link href="/" className="hover:text-primary-700">Inicio</Link>
+            <span className="mx-2 text-slate-400" aria-hidden="true">/</span>
+            <span className="text-slate-700">Freiduría</span>
+          </nav>
+          <div className="grid items-center gap-10 lg:grid-cols-[0.93fr_1.07fr] lg:gap-14">
+            <div>
+              <p className="mb-5 text-xs font-bold uppercase tracking-[0.19em] text-primary-800 md:text-sm">
+                Fritos para llevar · Playa de Arinaga
+              </p>
+              <h1 className="text-balance text-4xl font-extrabold leading-[1.08] tracking-tight text-slate-900 sm:text-5xl lg:text-[3.7rem]">
+                Freiduría en Arinaga.
+                <span className="mt-2 block text-primary-700">El crujiente tiene su sitio.</span>
+              </h1>
+              <p className="mt-7 max-w-xl text-lg leading-relaxed text-slate-700 md:text-xl">
+                Fingers de pollo, croquetas caseras, churros de pescado y otras frituras
+                para llevar. Raciones para cuando te apetece algo sabroso sin tener que cocinar.
+              </p>
+              <p className="mt-4 max-w-xl leading-relaxed text-slate-600">
+                Nuestra freiduría forma parte de una cocina 100 % sin gluten.
+                Preparamos las raciones en Playa de Arinaga, Gran Canaria,
+                y su disponibilidad depende de la producción del día.
+              </p>
+              <div className="mt-8 flex flex-col items-start gap-3 sm:flex-row sm:items-center">
+                <Link href={siteConfig.pedirPath} className={primaryButton}>
+                  Ver disponibilidad y pedir <span aria-hidden="true">→</span>
+                </Link>
+                <a href="#raciones" className="inline-flex min-h-12 items-center font-semibold text-primary-700 underline decoration-primary-300 underline-offset-4 hover:text-primary-900">
+                  Ver nuestras raciones
+                </a>
+              </div>
+              <p className="mt-6 text-sm text-slate-500">
+                Para recoger en {siteConfig.address.street}, {siteConfig.address.locality}.
+              </p>
             </div>
-            <p className="mt-7 text-sm font-medium text-slate-600">
-              <span className="text-primary-700" aria-hidden="true">●</span> Comida para llevar
-              <span className="mx-2 text-slate-300" aria-hidden="true">·</span> Recogida en local
-              <span className="mx-2 text-slate-300" aria-hidden="true">·</span> Sin comedor
+            <figure className="relative mx-auto w-full max-w-xl lg:max-w-none">
+              <div className="relative aspect-[5/4] overflow-hidden rounded-[1.75rem] bg-slate-900 shadow-2xl sm:aspect-[4/3] lg:aspect-[4/5]">
+                <Image
+                  src="/images/arimar-freiduria-pollo-kentucky.webp"
+                  alt="Fingers de pollo estilo Kentucky crujientes, preparados en AriMar para llevar"
+                  fill
+                  priority
+                  sizes="(max-width: 1024px) 100vw, 53vw"
+                  className="object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent" aria-hidden="true" />
+                <figcaption className="absolute bottom-0 left-0 right-0 px-6 pb-6 pt-14 text-white sm:px-8">
+                  <p className="text-xs font-bold uppercase tracking-[0.16em] text-primary-100">Fingers estilo Kentucky</p>
+                  <p className="mt-2 text-xl font-bold">280–300 g · 7 €</p>
+                  <p className="mt-1 text-xs text-white/80">Fotografía real de AriMar</p>
+                </figcaption>
+              </div>
+            </figure>
+          </div>
+        </div>
+      </header>
+
+      <section id="raciones" className="scroll-mt-24 py-20 md:py-28" aria-labelledby="raciones-titulo">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+          <div className="max-w-3xl">
+            <p className="mb-4 text-xs font-bold uppercase tracking-[0.2em] text-primary-700">Qué sale de nuestra freidora</p>
+            <h2 id="raciones-titulo" className="text-balance text-3xl font-bold leading-tight tracking-tight sm:text-4xl md:text-5xl">
+              De los fingers a las croquetas.
+              <span className="block text-primary-700">Hay más de un antojo.</span>
+            </h2>
+            <p className="mt-6 text-lg leading-relaxed text-slate-600">
+              Estas son algunas de nuestras raciones habituales. No todo está disponible
+              todos los días: consulta lo que tenemos preparado antes de desplazarte.
             </p>
           </div>
+          <div className="mt-12 border-t-2 border-primary-500">
+            {fritos.map((frito) => (
+              <article key={frito.name} className="grid gap-4 border-b border-slate-200 py-7 sm:grid-cols-[1fr_auto] sm:items-start sm:gap-8 md:py-9">
+                <div>
+                  <h3 className="text-xl font-bold tracking-tight text-slate-900 sm:text-2xl">{frito.name}</h3>
+                  <p className="mt-2 text-sm font-semibold text-primary-700">{frito.amount} por ración</p>
+                  <p className="mt-3 max-w-2xl leading-relaxed text-slate-600">{frito.text}</p>
+                </div>
+                <p className="text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl">{frito.price}</p>
+              </article>
+            ))}
+          </div>
+          <p className="mt-7 text-sm leading-relaxed text-slate-500">
+            Precios de las raciones indicadas. Disponibilidad sujeta a producción. Si necesitas
+            conocer otros alérgenos o ingredientes, consúltanos antes de pedir.
+          </p>
+        </div>
+      </section>
 
-          <figure className="relative mx-auto w-full max-w-[490px]">
-            <div className="relative aspect-[2/3] overflow-hidden rounded-[2rem] border-[7px] border-white bg-white shadow-2xl">
+      <section className="bg-[#f6faf9] py-20 md:py-24" aria-labelledby="croquetas-especialidad">
+        <div className="mx-auto grid max-w-6xl items-center gap-10 px-4 sm:px-6 lg:grid-cols-[0.95fr_1.05fr] lg:gap-16 lg:px-8">
+          <figure className="relative mx-auto w-full max-w-md">
+            <div className="relative aspect-[2/3] overflow-hidden rounded-[1.75rem] bg-white shadow-lg">
               <Image
                 src="/images/arimar-freiduria-pizarra.webp"
-                alt="Pizarra de AriMar con el mensaje Nuestros fritos, croquetas y fingers de pollo, junto a las plantas del local"
+                alt="Pizarra de la freiduría de AriMar con la selección de croquetas y fritos"
                 fill
-                priority
                 sizes="(max-width: 1024px) 90vw, 42vw"
                 className="object-cover"
               />
             </div>
-            <figcaption className="absolute -bottom-4 left-4 right-4 rounded-2xl bg-slate-900/95 px-5 py-4 text-sm font-semibold text-white shadow-lg sm:left-8 sm:right-auto">
-              Nuestra pizarra. Nuestra freiduría. AriMar.
-            </figcaption>
+            <figcaption className="mt-3 text-sm text-slate-500">Nuestra pizarra, en Playa de Arinaga.</figcaption>
           </figure>
-        </div>
-      </header>
-
-      <main>
-        <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8" aria-labelledby="croquetas-title">
-          <div className="mb-11 grid gap-6 lg:grid-cols-[0.85fr_1.15fr] lg:items-end">
-            <div>
-              <p className="mb-4 text-xs font-bold uppercase tracking-[0.2em] text-primary-700">
-                Una de nuestras especialidades
-              </p>
-              <h2 id="croquetas-title" className="text-3xl font-bold leading-tight tracking-tight text-slate-900 md:text-5xl">
-                Croquetas con nombre y apellidos.
-              </h2>
-            </div>
-            <p className="max-w-2xl text-lg leading-relaxed text-slate-600">
-              Las hacemos en nuestro obrador y no necesitas buscar una versión aparte sin gluten:
-              así son las croquetas de AriMar. Estos son nuestros cuatro sabores;
-              la disponibilidad de cada uno depende de la producción.
+          <div>
+            <p className="mb-4 text-xs font-bold uppercase tracking-[0.2em] text-primary-700">Una especialidad con página propia</p>
+            <h2 id="croquetas-especialidad" className="text-balance text-3xl font-bold leading-tight tracking-tight sm:text-4xl">
+              Las croquetas merecen capítulo aparte.
+            </h2>
+            <p className="mt-6 text-lg leading-relaxed text-slate-700">
+              Preparamos croquetas de jamón serrano, queso de cabra con cebolla caramelizada,
+              atún con piquillo y pollo asado. Nueve unidades por ración, 7 €.
             </p>
-          </div>
-
-          <div className="mb-7 flex flex-wrap items-center justify-between gap-5 rounded-2xl border border-primary-100 bg-white px-6 py-5 shadow-sm sm:px-8">
-            <div>
-              <p className="text-xs font-bold uppercase tracking-[0.16em] text-primary-700">
-                Ración de croquetas
-              </p>
-              <p className="mt-1 text-lg font-bold text-slate-800">9 unidades</p>
-            </div>
-            <p className="text-3xl font-extrabold tracking-tight text-slate-900" aria-label="7 euros">7 €</p>
-          </div>
-
-          <div className="grid overflow-hidden rounded-[2rem] border border-primary-100 bg-primary-50/60 sm:grid-cols-2">
-            {croquetas.map((item) => (
-              <article key={item.number}
-                className="border-b border-primary-100 p-7 sm:p-9 sm:odd:border-r sm:last:border-b-0">
-                <div className="mb-5 flex items-center justify-between gap-4">
-                  <span className="text-sm font-bold tracking-widest text-primary-700">{item.number} / 04</span>
-                  <span className="h-px w-16 bg-primary-200" aria-hidden="true" />
-                </div>
-                <h3 className="mb-3 text-xl font-bold leading-tight text-slate-900 md:text-2xl">{item.name}</h3>
-                <p className="leading-relaxed text-slate-600">{item.description}</p>
-              </article>
-            ))}
-          </div>
-          <div className="mt-8 flex flex-col gap-4 rounded-2xl border border-amber-100 bg-amber-50 px-6 py-6 sm:flex-row sm:items-center sm:justify-between">
-            <p className="max-w-xl leading-relaxed text-slate-700">
-              <strong className="text-slate-900">¿Quieres saber qué lleva cada sabor?</strong>{' '}
-              Conoce nuestras croquetas, sus ingredientes protagonistas y cómo pedirlas.
+            <p className="mt-5 leading-relaxed text-slate-600">
+              Cada sabor tiene sus ingredientes y su historia. Si vienes buscando
+              croquetas, te contamos todo sobre ellas en su propia página.
             </p>
             <Link href="/croquetas-sin-gluten-gran-canaria"
-              className="inline-flex shrink-0 items-center justify-center rounded-xl bg-primary-500 px-5 py-3 text-sm font-bold text-white transition-colors hover:bg-primary-600">
-              Descubre nuestras croquetas <span className="ml-2" aria-hidden="true">→</span>
+              className="mt-8 inline-flex min-h-12 items-center gap-2 font-bold text-primary-700 underline decoration-primary-300 underline-offset-4 hover:text-primary-900">
+              Conoce nuestras croquetas <span aria-hidden="true">→</span>
             </Link>
           </div>
-          <p className="mt-5 text-sm text-slate-500">
-            Los productos contienen otros ingredientes y pueden presentar otros alérgenos.
-            Consúltanos si necesitas información sobre un sabor concreto antes de pedir.
-          </p>
-        </section>
-
-        <section className="bg-slate-900 py-16 text-white md:py-24" aria-labelledby="crujientes-title">
-          <div className="mx-auto grid max-w-7xl items-center gap-10 px-4 sm:px-6 lg:grid-cols-[1fr_0.86fr] lg:gap-16 lg:px-8">
-            <figure className="relative overflow-hidden rounded-[2rem] bg-slate-800 shadow-xl">
-              <div className="relative aspect-[4/3]">
-                <Image
-                  src="/images/arimar-freiduria-pollo-kentucky.webp"
-                  alt="Fingers de pollo crujiente estilo Kentucky en un cuenco de cartón de AriMar"
-                  fill
-                  sizes="(max-width: 1024px) 100vw, 55vw"
-                  className="object-cover"
-                />
-              </div>
-              <figcaption className="px-5 py-4 text-sm text-white/75">
-                Fingers de pollo estilo Kentucky · fotografía real de AriMar
-              </figcaption>
-            </figure>
-            <div>
-              <p className="mb-4 text-xs font-bold uppercase tracking-[0.2em] text-primary-200">
-                Más allá de las croquetas
-              </p>
-              <h2 id="crujientes-title" className="mb-6 text-3xl font-bold leading-tight tracking-tight md:text-4xl">
-                Ese crujiente que no necesita presentación.
-              </h2>
-              <p className="mb-5 text-lg leading-relaxed text-white/85">
-                También preparamos propuestas como nuestros fingers de pollo estilo Kentucky,
-                torreznos y otras frituras según la producción de cada día.
-              </p>
-              <div className="mb-7 flex flex-wrap items-center justify-between gap-5 rounded-2xl border border-white/20 bg-white/10 px-5 py-4">
-                <div>
-                  <p className="text-sm font-semibold text-white">Ración de pollo estilo Kentucky</p>
-                  <p className="mt-1 text-lg font-bold text-white">280–300 g</p>
-                </div>
-                <p className="text-3xl font-extrabold tracking-tight text-white" aria-label="7 euros">7 €</p>
-              </div>
-              <p className="mb-8 leading-relaxed text-white/70">
-                Las imágenes muestran elaboraciones reales de nuestra cocina, no un inventario en tiempo real.
-                Si has venido por algo concreto, comprueba primero qué tenemos disponible.
-              </p>
-              <Link href={siteConfig.pedirPath}
-                className="inline-flex rounded-xl bg-primary-500 px-7 py-3 font-bold text-white transition-colors hover:bg-primary-600">
-                Consultar los platos de hoy <span className="ml-2" aria-hidden="true">→</span>
-              </Link>
-            </div>
-          </div>
-        </section>
-
-        <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8" aria-labelledby="cocina-title">
-          <div className="grid items-center gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
-            <div>
-              <p className="mb-4 text-xs font-bold uppercase tracking-[0.2em] text-primary-700">
-                Sin una carta aparte
-              </p>
-              <h2 id="cocina-title" className="mb-5 text-3xl font-bold tracking-tight text-slate-900 md:text-4xl">
-                Nuestra cocina es sin gluten. Y punto.
-              </h2>
-              <p className="mb-5 text-lg leading-relaxed text-slate-700">
-                No tenemos una freidora para unos clientes y otra carta para los demás:
-                AriMar es una casa de comidas y freiduría concebida al completo sin gluten.
-                Cocinamos para todos desde la misma idea.
-              </p>
-              <p className="mb-6 leading-relaxed text-slate-600">
-                Eso no significa que todos los platos sean adecuados para cualquier alergia:
-                si necesitas información sobre leche, huevo, pescado u otros ingredientes,
-                habla con nuestro equipo antes de realizar el pedido.
-              </p>
-              <Link href="/nuestra-cocina" className="inline-flex font-bold text-primary-700 underline-offset-4 hover:underline">
-                Conoce cómo trabajamos en AriMar <span className="ml-2" aria-hidden="true">→</span>
-              </Link>
-            </div>
-            <figure className="relative overflow-hidden rounded-[2rem] border border-primary-100 bg-white shadow-lg">
-              <div className="relative aspect-[5/4]">
-                <Image
-                  src="/images/arimar-20261023-vitrina-arimar.webp"
-                  alt="Vitrina real de AriMar con platos caseros preparados para llevar"
-                  fill
-                  sizes="(max-width: 1024px) 100vw, 53vw"
-                  className="object-cover"
-                />
-              </div>
-              <figcaption className="px-5 py-4 text-sm font-medium text-slate-600">
-                Así es nuestra vitrina en Playa de Arinaga.
-              </figcaption>
-            </figure>
-          </div>
-        </section>
-
-        <section className="bg-primary-50 py-16 md:py-20" aria-labelledby="pedido-title">
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div className="mb-10 max-w-3xl">
-              <p className="mb-4 text-xs font-bold uppercase tracking-[0.2em] text-primary-700">
-                Ven a recoger tu comida
-              </p>
-              <h2 id="pedido-title" className="mb-4 text-3xl font-bold tracking-tight text-slate-900 md:text-4xl">
-                De nuestra freiduría a tu mesa, sin complicaciones.
-              </h2>
-              <p className="text-lg leading-relaxed text-slate-600">
-                Estamos en Avenida Polizón 67, Playa de Arinaga (Agüimes). No tenemos comedor:
-                eliges lo que te apetece y te lo llevas.
-              </p>
-            </div>
-            <div className="mb-9 grid gap-5 md:grid-cols-3">
-              {[
-                { step: '01', title: 'Mira qué hay hoy', text: 'La disponibilidad de croquetas y fritos cambia según la producción.' },
-                { step: '02', title: 'Haz tu pedido', text: 'Puedes pedir online o consultarnos si buscas un sabor concreto.' },
-                { step: '03', title: 'Pásate por AriMar', text: 'Recoge en nuestro local de Playa de Arinaga y disfruta donde quieras.' },
-              ].map((item) => (
-                <div key={item.step} className="rounded-2xl border border-primary-100 bg-white p-7">
-                  <p className="mb-5 text-sm font-bold tracking-widest text-primary-700">{item.step}</p>
-                  <h3 className="mb-3 text-xl font-bold text-slate-900">{item.title}</h3>
-                  <p className="leading-relaxed text-slate-600">{item.text}</p>
-                </div>
-              ))}
-            </div>
-            <div className="flex flex-wrap gap-3">
-              <Link href={siteConfig.pedirPath}
-                className="inline-flex min-h-12 items-center rounded-xl bg-primary-500 px-7 py-3 font-bold text-white hover:bg-primary-600">
-                Ver disponibilidad y pedir <span className="ml-2" aria-hidden="true">→</span>
-              </Link>
-              <a
-                href={getWhatsAppUrl('Hola, AriMar. ¿Qué croquetas y fritos tenéis disponibles? Quiero consultar antes de hacer mi pedido.')}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex min-h-12 items-center rounded-xl border-2 border-primary-200 bg-white px-7 py-3 font-bold text-primary-800 hover:bg-primary-50">
-                Preguntar por WhatsApp
-              </a>
-              <a href={siteConfig.mapsUrl} target="_blank" rel="noopener noreferrer"
-                className="inline-flex min-h-12 items-center rounded-xl border-2 border-primary-200 bg-white px-7 py-3 font-bold text-primary-800 hover:bg-primary-50">
-                Ver ubicación
-              </a>
-            </div>
-          </div>
-        </section>
-
-        <section className="mx-auto max-w-4xl px-4 py-16 sm:px-6 lg:px-8" aria-labelledby="freiduria-faq">
-          <h2 id="freiduria-faq" className="mb-8 text-2xl font-bold text-slate-900 md:text-3xl">
-            Preguntas sobre nuestra freiduría
-          </h2>
-          <div className="divide-y divide-slate-200 border-y border-slate-200">
-            <details className="group py-5">
-              <summary className="cursor-pointer font-bold text-slate-900">
-                ¿Las croquetas de AriMar son sin gluten?
-              </summary>
-              <p className="mt-3 leading-relaxed text-slate-600">
-                Sí. Todas nuestras croquetas se elaboran sin gluten. Si tienes otras alergias
-                o intolerancias, consúltanos los ingredientes del sabor que te interese.
-              </p>
-            </details>
-            <details className="group py-5">
-              <summary className="cursor-pointer font-bold text-slate-900">
-                ¿Siempre tenéis todos los sabores y fritos?
-              </summary>
-              <p className="mt-3 leading-relaxed text-slate-600">
-                No necesariamente. La producción varía y algunos sabores pueden agotarse.
-                Lo mejor es consultar nuestra disponibilidad online antes de desplazarte.
-              </p>
-            </details>
-            <details className="group py-5">
-              <summary className="cursor-pointer font-bold text-slate-900">
-                ¿Dónde puedo recoger el pedido?
-              </summary>
-              <p className="mt-3 leading-relaxed text-slate-600">
-                En AriMar, Avenida Polizón 67, Playa de Arinaga, Gran Canaria.
-                Somos un establecimiento de comida para llevar, sin comedor.
-              </p>
-            </details>
-          </div>
-        </section>
-
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <SeoInternalLinks />
         </div>
-      </main>
+      </section>
+
+      <section className="bg-slate-900 py-20 text-white md:py-24" aria-labelledby="fritos-para-llevar">
+        <div className="mx-auto grid max-w-6xl gap-10 px-4 sm:px-6 md:grid-cols-[0.9fr_1.1fr] md:gap-16 lg:px-8">
+          <div>
+            <p className="mb-4 text-xs font-bold uppercase tracking-[0.2em] text-primary-200">Fritos para llevar</p>
+            <h2 id="fritos-para-llevar" className="text-balance text-3xl font-bold tracking-tight sm:text-4xl">
+              Elige lo que te apetece. Lo recoges y listo.
+            </h2>
+          </div>
+          <div className="border-t border-primary-300/50 pt-7">
+            <p className="text-lg leading-relaxed text-white/85">
+              Estamos en Avenida Polizón 67, Playa de Arinaga (Agüimes).
+              Puedes consultar las frituras disponibles y pedir online para recoger
+              en el local. No disponemos de comedor.
+            </p>
+            <p className="mt-5 leading-relaxed text-white/75">
+              Trabajamos 100 % sin gluten en toda nuestra cocina. Para otros alérgenos
+              como leche, huevo o pescado, comprueba la información del producto antes de pedir.
+            </p>
+            <div className="mt-8 flex flex-wrap gap-4">
+              <Link href={siteConfig.pedirPath} className={primaryButton}>
+                Ver qué hay hoy y pedir <span aria-hidden="true">→</span>
+              </Link>
+              <a href={siteConfig.mapsUrl} target="_blank" rel="noopener noreferrer"
+                className="inline-flex min-h-12 items-center font-bold text-white underline decoration-white/40 underline-offset-4 hover:text-primary-200">
+                Cómo llegar <span aria-hidden="true">↗</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-4xl px-4 py-16 sm:px-6 md:py-20 lg:px-8" aria-labelledby="preguntas-freiduria">
+        <p className="mb-4 text-xs font-bold uppercase tracking-[0.2em] text-primary-700">Antes de venir</p>
+        <h2 id="preguntas-freiduria" className="mb-8 text-2xl font-bold text-slate-900 md:text-3xl">
+          Preguntas sobre nuestras frituras
+        </h2>
+        <div className="divide-y divide-slate-200 border-y border-slate-200">
+          <details className="group py-5">
+            <summary className="cursor-pointer font-semibold text-slate-900">¿Qué fritos puedo comprar para llevar en Arinaga?</summary>
+            <p className="mt-3 leading-relaxed text-slate-600">
+              Entre nuestras raciones habituales hay fingers de pollo, croquetas,
+              churros de pescado y torreznos. Consulta la disponibilidad diaria antes de venir.
+            </p>
+          </details>
+          <details className="group py-5">
+            <summary className="cursor-pointer font-semibold text-slate-900">¿Son frituras sin gluten?</summary>
+            <p className="mt-3 leading-relaxed text-slate-600">
+              Sí. Nuestra cocina y freiduría trabajan 100 % sin gluten.
+              Si necesitas información sobre otros alérgenos, consúltanos antes de pedir.
+            </p>
+          </details>
+          <details className="group py-5">
+            <summary className="cursor-pointer font-semibold text-slate-900">¿Dónde puedo recoger el pedido?</summary>
+            <p className="mt-3 leading-relaxed text-slate-600">
+              En Avenida Polizón 67, Playa de Arinaga, Gran Canaria. Puedes
+              pedir online y recoger tu comida en el local.
+            </p>
+          </details>
+        </div>
+        <div className="mt-8 flex flex-wrap gap-4 text-sm font-semibold text-primary-700">
+          <Link href="/croquetas-sin-gluten-gran-canaria" className="underline underline-offset-4 hover:text-primary-900">
+            Ver sabores de croquetas
+          </Link>
+          <a
+            href={getWhatsAppUrl('Hola, AriMar. Quería consultar qué fritos tenéis disponibles y sus ingredientes antes de pedir.')}
+            target="_blank" rel="noopener noreferrer"
+            className="underline underline-offset-4 hover:text-primary-900">
+            Consultar por WhatsApp
+          </a>
+        </div>
+      </section>
     </div>
   )
 }
