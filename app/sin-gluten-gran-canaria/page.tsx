@@ -76,6 +76,29 @@ const faqs = [
   },
 ]
 
+const mencionesExternas = [
+  {
+    name: 'CeliNews',
+    description: 'Guía sin gluten de Gran Canaria',
+    href: 'https://celinews.com/gran-canaria-sin-gluten-para-celiacos/',
+  },
+  {
+    name: 'NoGluApp',
+    description: 'Ficha en la comunidad sin gluten',
+    href: 'https://nogluapp.com/restaurante/2391',
+  },
+  {
+    name: 'Find Me Gluten Free',
+    description: 'Ficha para viajeros celíacos',
+    href: 'https://www.findmeglutenfree.com/biz/arimar/6616784932569088',
+  },
+  {
+    name: 'Canarias7',
+    description: 'Directorio de empresas de Gran Canaria',
+    href: 'https://servicios.canarias7.es/empresas/arimar.html',
+  },
+] as const
+
 const highlights = ['100 % sin gluten', 'Pedido online', 'Comida para llevar', 'Gran Canaria']
 
 export default function SinGlutenGranCanariaPage() {
@@ -169,6 +192,73 @@ export default function SinGlutenGranCanariaPage() {
           <Link href="/hoy" className="inline-flex justify-center px-7 py-3 bg-primary-500 text-white font-semibold rounded-lg hover:bg-primary-600 transition-colors">
             Hacer pedido online
           </Link>
+        </section>
+
+        {/* Fuentes independientes. ASOCECA se distingue de las guías y directorios. */}
+        <section
+          className="mb-16 border-t border-b border-slate-200 py-12 md:py-16"
+          aria-labelledby="presencia-sin-gluten"
+        >
+          <p className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-primary-700">
+            Reconocimiento y presencia online
+          </p>
+          <h2 id="presencia-sin-gluten" className="max-w-2xl text-2xl font-bold tracking-tight text-slate-900 md:text-3xl">
+            También puedes encontrarnos fuera de esta web
+          </h2>
+          <p className="mt-4 max-w-2xl leading-relaxed text-slate-600">
+            Si estás organizando tu visita a Gran Canaria, puedes consultar nuestras
+            fichas en la asociación y en diferentes guías especializadas.
+            Son fuentes distintas, por eso te mostramos dónde aparece AriMar.
+          </p>
+
+          <div className="mt-9 border-l-4 border-primary-500 bg-primary-50/70 px-5 py-7 md:px-8">
+            <p className="text-xs font-bold uppercase tracking-[0.15em] text-primary-800">
+              Asociación de celíacos
+            </p>
+            <h3 className="mt-3 text-xl font-bold text-slate-900 md:text-2xl">
+              ASOCECA · Restauración sin gluten
+            </h3>
+            <p className="mt-3 max-w-2xl leading-relaxed text-slate-700">
+              AriMar dispone de una ficha en ASOCECA, la Asociación de Celíacos
+              y Sensibles al Gluten de Canarias, vinculada al programa FACE Restauración.
+              Consulta nuestra información directamente en su directorio.
+            </p>
+            <a
+              href="https://asoceca.org/establecimiento/arimar-foodlab/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-5 inline-flex min-h-10 items-center gap-2 font-bold text-primary-800 underline decoration-primary-300 underline-offset-4 hover:text-primary-950"
+            >
+              Ver ficha de AriMar en ASOCECA <span aria-hidden="true">↗</span>
+            </a>
+          </div>
+
+          <h3 className="mt-10 text-lg font-bold tracking-tight text-slate-900">
+            Guías, aplicaciones y medios
+          </h3>
+          <p className="mt-2 text-sm leading-relaxed text-slate-600">
+            Estas menciones y fichas ayudan a descubrir el establecimiento;
+            no equivalen a una certificación de seguridad alimentaria.
+          </p>
+          <div className="mt-5 divide-y divide-slate-200 border-y border-slate-200">
+            {mencionesExternas.map((mencion) => (
+              <a
+                key={mencion.href}
+                href={mencion.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group flex flex-col gap-1 py-5 transition-colors hover:bg-primary-50/40 sm:flex-row sm:items-center sm:justify-between sm:gap-6 sm:px-3"
+              >
+                <span className="text-lg font-bold text-slate-900 group-hover:text-primary-800">
+                  {mencion.name}
+                </span>
+                <span className="flex items-center justify-between gap-6 text-sm text-slate-600">
+                  {mencion.description}
+                  <span className="text-lg font-bold text-primary-700" aria-hidden="true">↗</span>
+                </span>
+              </a>
+            ))}
+          </div>
         </section>
 
         <section className="mb-14">
