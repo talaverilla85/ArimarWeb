@@ -28,7 +28,7 @@ export async function cancelManualBooking(id:string,reason:string){
  const rows=await db`WITH changed AS (
    UPDATE pata_orders
    SET status='CANCELED',
-       notes=left(concat_ws(E'\\n',nullif(notes,''),'ANULACIÓN: '||trim(${reason})),500),
+       notes=left(concat_ws(chr(10),nullif(notes,''),'ANULACIÓN: '||trim(${reason})),500),
        updated_at=now()
    WHERE id=${id}::uuid AND source='MANUAL' AND status='MANUAL_CONFIRMED'
    RETURNING id
