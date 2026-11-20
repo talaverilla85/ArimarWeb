@@ -571,7 +571,7 @@ export default function PanelPataAsada(){
        <label className="block text-sm font-semibold sm:col-span-2">Correo electrónico (opcional)
         <input className={input+' mt-2 min-h-12 text-base'} type="email" autoComplete="email"
          maxLength={254} disabled={loading} value={email} placeholder="correo@ejemplo.com"
-         onChange={e=>{setEmail(e.target.value);if(!e.target.value.trim())setReviewConsent(false)}}/>
+         onChange={e=>{setEmail(e.target.value);setReviewConsent(false)}}/>
        </label>
        <label className="flex items-start gap-3 rounded-xl border border-slate-200 bg-slate-50 p-3 text-sm text-slate-700 sm:col-span-2">
         <input type="checkbox" className="mt-1 h-5 w-5 shrink-0 accent-[#207F85]"
