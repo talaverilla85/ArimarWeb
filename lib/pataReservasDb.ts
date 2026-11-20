@@ -42,13 +42,15 @@ export async function makeHold(a:{
 export type ManualPaymentMethod='PENDING'|'CARD'|'CASH'|'MONEI'
 export async function manualBooking(a:{
  date:string;quantity:number;name:string;phone:string;notes:string;
- paymentMethod:ManualPaymentMethod;paymentDate:string|null;paymentReceipt:string|null
+ paymentMethod:ManualPaymentMethod;paymentDate:string|null;paymentReceipt:string|null;
+ email:string;reviewConsent:boolean
 }){
  const sql=db()
  const rows=await sql`SELECT order_id::text AS id,reservation_ref AS reference
- FROM pata_admin_booking_with_payment(
+ FROM pata_admin_booking_with_review_email(
  ${a.date}::date,${a.quantity},${a.name},${a.phone},${a.notes},
- ${a.paymentMethod},${a.paymentDate}::date,${a.paymentReceipt})`
+ ${a.paymentMethod},${a.paymentDate}::date,${a.paymentReceipt},
+ ${a.email},${a.reviewConsent})`
  if(rows.length!==1)throw Error('PATA_INVALID_ORDER')
  return {id:String(rows[0].id),reference:String(rows[0].reference)}
 }
@@ -71,6 +73,8 @@ export async function getOrders(from:string,to:string) {
  return await sql`SELECT id::text,pickup_date::text AS date,quantity,
  customer_name AS name,customer_phone AS phone,customer_email AS email,
  reservation_reference AS reference,staff_creator AS "staffCreator",notes,status,source,
+ review_request_consent AS "reviewConsent",
+ review_request_consented_at::text AS "reviewConsentAt",
  manual_payment_method AS "manualPaymentMethod",
  manual_payment_date::text AS "manualPaymentDate",
  manual_payment_receipt AS "manualPaymentReceipt",created_at::text AS created
@@ -88,6 +92,7 @@ export type ConfirmedPataOrder = {
  id:string;date:string;quantity:number;name:string;reference:string;staffCreator:string|null;
  phone:string|null;email:string|null;notes:string|null;
  manualPaymentMethod:ManualPaymentMethod;manualPaymentDate:string|null;manualPaymentReceipt:string|null;
+ reviewConsent:boolean;reviewConsentAt:string|null;
  source:'WEB'|'MANUAL';status:'PAID'|'MANUAL_CONFIRMED';
  created:string;amountCents:number;
 }
@@ -101,7 +106,9 @@ function normalizeConfirmed(row:Record<string,unknown>):ConfirmedPataOrder {
   created:String(row.created),amountCents:Number(row.amount_cents),
   manualPaymentMethod:row.manualPaymentMethod as ManualPaymentMethod,
   manualPaymentDate:row.manualPaymentDate==null?null:String(row.manualPaymentDate),
-  manualPaymentReceipt:row.manualPaymentReceipt==null?null:String(row.manualPaymentReceipt)
+  manualPaymentReceipt:row.manualPaymentReceipt==null?null:String(row.manualPaymentReceipt),
+  reviewConsent:row.reviewConsent===true,
+  reviewConsentAt:row.reviewConsentAt==null?null:String(row.reviewConsentAt)
  }
 }
 export type PataOrderCursor = {date:string;created:string;id:string}
@@ -115,6 +122,8 @@ export async function getUpcomingConfirmedOrders(
  const rows=await sql`SELECT id::text AS id,pickup_date::text AS date,quantity,
   customer_name AS name,customer_phone AS phone,customer_email AS email,
   reservation_reference AS reference,staff_creator AS "staffCreator",notes,source,status,
+ review_request_consent AS "reviewConsent",
+ review_request_consented_at::text AS "reviewConsentAt",
  manual_payment_method AS "manualPaymentMethod",
  manual_payment_date::text AS "manualPaymentDate",
  manual_payment_receipt AS "manualPaymentReceipt",created_at::text AS created,amount_cents
@@ -134,6 +143,8 @@ export async function getConfirmedOrdersForIntegration(from:string,to:string) {
  const rows=await sql`SELECT id::text AS id,pickup_date::text AS date,quantity,
   customer_name AS name,customer_phone AS phone,customer_email AS email,
   reservation_reference AS reference,staff_creator AS "staffCreator",notes,source,status,
+ review_request_consent AS "reviewConsent",
+ review_request_consented_at::text AS "reviewConsentAt",
  manual_payment_method AS "manualPaymentMethod",
  manual_payment_date::text AS "manualPaymentDate",
  manual_payment_receipt AS "manualPaymentReceipt",created_at::text AS created,amount_cents
