@@ -39,13 +39,28 @@ export async function makeHold(a:{
  ${a.name},${a.email},${a.phone},${a.notes},${a.key}::uuid)`
  return {id:String(rows[0].order_id),holdUntil:String(rows[0].hold_until)}
 }
+export type ManualPaymentMethod='PENDING'|'CARD'|'CASH'|'MONEI'
 export async function manualBooking(a:{
- date:string;quantity:number;name:string;phone:string;notes:string
+ date:string;quantity:number;name:string;phone:string;notes:string;
+ paymentMethod:ManualPaymentMethod;paymentDate:string|null;paymentReceipt:string|null
 }){
  const sql=db()
- const rows=await sql`SELECT pata_manual_booking(${a.date}::date,${a.quantity},
- ${a.name},${a.phone},${a.notes}) AS id`
- return String(rows[0].id)
+ const rows=await sql`SELECT order_id::text AS id,reservation_ref AS reference
+ FROM pata_admin_booking_with_payment(
+ ${a.date}::date,${a.quantity},${a.name},${a.phone},${a.notes},
+ ${a.paymentMethod},${a.paymentDate}::date,${a.paymentReceipt})`
+ if(rows.length!==1)throw Error('PATA_INVALID_ORDER')
+ return {id:String(rows[0].id),reference:String(rows[0].reference)}
+}
+export async function completeManualPayment(a:{
+ id:string;paymentMethod:Exclude<ManualPaymentMethod,'PENDING'>;
+ paymentDate:string;paymentReceipt:string
+}){
+ const sql=db()
+ const rows=await sql`SELECT pata_admin_complete_manual_payment(
+ ${a.id}::uuid,${a.paymentMethod},${a.paymentDate}::date,${a.paymentReceipt}
+ ) AS reference`
+ return String(rows[0].reference)
 }
 export async function configureDay(a:{date:string;capacity:number;blocked:boolean;note:string}){
  const sql=db()
@@ -55,7 +70,10 @@ export async function getOrders(from:string,to:string) {
  const sql=db()
  return await sql`SELECT id::text,pickup_date::text AS date,quantity,
  customer_name AS name,customer_phone AS phone,customer_email AS email,
- reservation_reference AS reference,staff_creator AS "staffCreator",notes,status,source,created_at::text AS created
+ reservation_reference AS reference,staff_creator AS "staffCreator",notes,status,source,
+ manual_payment_method AS "manualPaymentMethod",
+ manual_payment_date::text AS "manualPaymentDate",
+ manual_payment_receipt AS "manualPaymentReceipt",created_at::text AS created
  FROM pata_orders WHERE pickup_date BETWEEN ${from}::date AND ${to}::date
  ORDER BY pickup_date,created_at DESC LIMIT 500`
 }
@@ -69,6 +87,7 @@ export async function getOrders(from:string,to:string) {
 export type ConfirmedPataOrder = {
  id:string;date:string;quantity:number;name:string;reference:string;staffCreator:string|null;
  phone:string|null;email:string|null;notes:string|null;
+ manualPaymentMethod:ManualPaymentMethod;manualPaymentDate:string|null;manualPaymentReceipt:string|null;
  source:'WEB'|'MANUAL';status:'PAID'|'MANUAL_CONFIRMED';
  created:string;amountCents:number;
 }
@@ -79,7 +98,10 @@ function normalizeConfirmed(row:Record<string,unknown>):ConfirmedPataOrder {
   email:row.email==null?null:String(row.email),notes:row.notes==null?null:String(row.notes),
   source:row.source as ConfirmedPataOrder['source'],
   status:row.status as ConfirmedPataOrder['status'],
-  created:String(row.created),amountCents:Number(row.amount_cents)
+  created:String(row.created),amountCents:Number(row.amount_cents),
+  manualPaymentMethod:row.manualPaymentMethod as ManualPaymentMethod,
+  manualPaymentDate:row.manualPaymentDate==null?null:String(row.manualPaymentDate),
+  manualPaymentReceipt:row.manualPaymentReceipt==null?null:String(row.manualPaymentReceipt)
  }
 }
 export type PataOrderCursor = {date:string;created:string;id:string}
@@ -92,7 +114,10 @@ export async function getUpcomingConfirmedOrders(
  const cursorId=cursor?.id??null
  const rows=await sql`SELECT id::text AS id,pickup_date::text AS date,quantity,
   customer_name AS name,customer_phone AS phone,customer_email AS email,
-  reservation_reference AS reference,staff_creator AS "staffCreator",notes,source,status,created_at::text AS created,amount_cents
+  reservation_reference AS reference,staff_creator AS "staffCreator",notes,source,status,
+ manual_payment_method AS "manualPaymentMethod",
+ manual_payment_date::text AS "manualPaymentDate",
+ manual_payment_receipt AS "manualPaymentReceipt",created_at::text AS created,amount_cents
   FROM pata_orders
   WHERE pickup_date>=${from}::date AND status IN ('PAID','MANUAL_CONFIRMED')
   AND (${cursorDate}::date IS NULL
@@ -108,7 +133,10 @@ export async function getConfirmedOrdersForIntegration(from:string,to:string) {
  const sql=db()
  const rows=await sql`SELECT id::text AS id,pickup_date::text AS date,quantity,
   customer_name AS name,customer_phone AS phone,customer_email AS email,
-  reservation_reference AS reference,staff_creator AS "staffCreator",notes,source,status,created_at::text AS created,amount_cents
+  reservation_reference AS reference,staff_creator AS "staffCreator",notes,source,status,
+ manual_payment_method AS "manualPaymentMethod",
+ manual_payment_date::text AS "manualPaymentDate",
+ manual_payment_receipt AS "manualPaymentReceipt",created_at::text AS created,amount_cents
   FROM pata_orders
   WHERE pickup_date BETWEEN ${from}::date AND ${to}::date
    AND status IN ('PAID','MANUAL_CONFIRMED')
