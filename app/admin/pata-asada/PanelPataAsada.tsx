@@ -490,7 +490,7 @@ export default function PanelPataAsada(){
             Cobro: {paymentMethodLabels[o.manualPaymentMethod??'PENDING']}
             {o.manualPaymentDate&&' · '+paymentDateLabel(o.manualPaymentDate)}
             {o.manualPaymentReceipt&&' · Ticket: '+o.manualPaymentReceipt}
-           </p>
+           </p>}
             {o.source==='MANUAL'&&o.status==='MANUAL_CONFIRMED'&&
              (!o.manualPaymentMethod||o.manualPaymentMethod==='PENDING')&&
              <button type="button" disabled={loading}
