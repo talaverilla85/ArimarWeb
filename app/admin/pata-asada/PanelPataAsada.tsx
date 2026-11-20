@@ -45,6 +45,7 @@ export default function PanelPataAsada(){
  const [configOpen,setConfigOpen]=useState(false)
  const [configError,setConfigError]=useState('')
  const closeDialogButton=useRef<HTMLButtonElement>(null)
+ const cancellationReasonInput=useRef<HTMLTextAreaElement>(null)
  const previousFocus=useRef<HTMLElement|null>(null)
  const [days,setDays]=useState<Day[]>([])
  const [orders,setOrders]=useState<Order[]>([])
@@ -104,6 +105,7 @@ export default function PanelPataAsada(){
    previousFocus.current?.focus()
   }
  },[configOpen])
+ useEffect(()=>{if(cancellingId)cancellationReasonInput.current?.focus()},[cancellingId])
  useEffect(()=>{if(authenticated)void loadUpcoming()},[authenticated])
  useEffect(()=>{
   if(!authenticated)return
@@ -131,10 +133,11 @@ export default function PanelPataAsada(){
  }
  function prepareCancellation(order:Order){
   if(loading)return
-  setCancellingId(order.id)
-  setCancellationReason('')
-  setCancellationError('')
-  setCancellationNotice('')
+  setCancellingId(order.id);setCancellationReason('');setCancellationError('');setCancellationNotice('')
+ }
+ function closeCancellation(){
+  if(loading)return
+  setCancellingId(null);setCancellationReason('');setCancellationError('')
  }
  async function cancelOrder(order:Order){
   if(order.source!=='MANUAL'||order.status!=='MANUAL_CONFIRMED'||loading)return
@@ -143,47 +146,19 @@ export default function PanelPataAsada(){
   setLoading(true);setCancellationError('');setCancellationNotice('')
   try{
    const result=await api('cancel',{method:'POST',body:JSON.stringify({id:order.id,reason})})
-   if(result.status!=='CANCELED'&&result.status!=='ALREADY_CANCELED')
-    throw Error('No se pudo confirmar la anulación. Actualiza la lista antes de volver a intentarlo.')
-   setCancellingId(null);setCancellationReason('')
+   if(result.status!=='CANCELED'||result.verified!==true)
+    throw Error('El servidor no ha podido verificar la anulación ni la liberación de plazas.')
    let refreshed=true
    try{await refresh()}catch{refreshed=false}
+   setCancellingId(null);setCancellationReason('')
    const notice=refreshed
-    ?'Reserva '+(order.reference||'')+' anulada. Se han liberado '+order.quantity+' '+(order.quantity===1?'pata.':'patas.')
-    :'Reserva '+(order.reference||'')+' anulada. Actualiza el calendario para comprobar las plazas disponibles.'
-   setCancellationNotice(notice)
-   setManualFeedback(notice)
-   setMessage(notice)
+    ?'Reserva '+(order.reference||'')+' anulada y verificada. '+result.available+
+      ' '+(result.available===1?'pata disponible':'patas disponibles')+' para el '+readableDate(result.date)+'.'
+    :'Reserva '+(order.reference||'')+' anulada y verificada en la base de datos. '+
+      'Actualiza el calendario para consultar las plazas disponibles.'
+   setCancellationNotice(notice);setManualFeedback(notice);setMessage(notice)
   }catch(e){setCancellationError(e instanceof Error?e.message:'No se pudo anular la reserva.')}
   finally{setLoading(false)}
- }
- function cancellationForm(order:Order){
-  if(cancellingId!==order.id)return null
-  return <form onSubmit={e=>{e.preventDefault();void cancelOrder(order)}}
-   className="mt-3 w-full rounded-xl border border-rose-200 bg-rose-50 p-3 text-left sm:col-span-4">
-   <p className="text-sm font-bold text-rose-900">Anular {order.reference||'reserva'} · {order.quantity} {order.quantity===1?'pata':'patas'}</p>
-   <p className="mt-1 text-xs leading-relaxed text-rose-900">
-    Al confirmar se liberan las plazas y el encargo queda registrado como anulado. No se devuelve dinero automáticamente.
-   </p>
-   <label className="mt-3 block text-sm font-semibold text-slate-800">Motivo de la anulación (obligatorio)
-    <textarea className={input+' mt-1 min-h-20 bg-white text-base'} value={cancellationReason}
-     onChange={e=>{setCancellationReason(e.target.value);setCancellationError('')}}
-     minLength={5} maxLength={150} required disabled={loading}
-     placeholder="Por ejemplo: cliente cancela el encargo"/>
-   </label>
-   {cancellationError&&<p role="alert" className="mt-2 text-sm font-semibold text-rose-800">{cancellationError}</p>}
-   <div className="mt-3 flex flex-wrap gap-2">
-    <button type="submit" disabled={loading||cancellationReason.trim().length<5}
-     className="min-h-11 rounded-lg bg-rose-700 px-4 py-2 text-sm font-bold text-white disabled:opacity-50">
-     {loading?'Anulando…':'Confirmar anulación'}
-    </button>
-    <button type="button" disabled={loading}
-     onClick={()=>{setCancellingId(null);setCancellationReason('');setCancellationError('')}}
-     className="min-h-11 rounded-lg border border-slate-300 bg-white px-4 py-2 text-sm font-semibold">
-     Conservar reserva
-    </button>
-   </div>
-  </form>
  }
  function selectDate(date:string){
   if(loading||loadingCalendar)return
@@ -291,6 +266,7 @@ export default function PanelPataAsada(){
  }
  const current=days.find(x=>x.date===selected)
  const historical=selected<operationalDay()
+ const cancellationOrder=(cancellingId?[...orders,...upcomingOrders].find(o=>o.id===cancellingId):null)
  const activeSelectedOrders=orders.filter(o=>o.date===selected&&o.status!=='CANCELED')
  const canceledSelectedOrders=orders.filter(o=>o.date===selected&&o.status==='CANCELED')
  const {from:monthStart}=monthBounds(viewMonth)
@@ -473,7 +449,7 @@ export default function PanelPataAsada(){
         {o.manualPaymentMethod==='MONEI'&&' (registro manual)'}
        </p>}
        {o.notes&&<p className="text-xs text-slate-600 sm:col-span-4">Observaciones: {o.notes}</p>}
-        {cancellationForm(o)}
+        
       </article>)}
      </div>}
    {orderView==='upcoming'&&nextOrderCursor&&<button type="button"
@@ -568,7 +544,7 @@ export default function PanelPataAsada(){
              Anular
             </button>}
           </div>
-          {cancellationForm(o)}
+          
          </div>)}
         </div>}
        {canceledSelectedOrders.length>0&&<details className="mt-3 rounded-lg border border-slate-200 bg-slate-50 p-3">
@@ -716,5 +692,45 @@ export default function PanelPataAsada(){
      </div>
     </div>
    </div>}
+ {cancellationOrder&&<div className="fixed inset-0 z-[200] flex items-center justify-center bg-slate-950/75 p-3 sm:p-6"
+  onMouseDown={e=>{if(e.target===e.currentTarget)closeCancellation()}}>
+  <div role="dialog" aria-modal="true" aria-labelledby="cancel-pata-title"
+   onKeyDown={e=>{if(e.key==='Escape'){e.stopPropagation();e.preventDefault();closeCancellation()}}}
+   className="w-full max-w-lg overflow-y-auto rounded-3xl bg-white p-5 shadow-2xl sm:p-7" style={{maxHeight:'94dvh'}}>
+   <p className="text-xs font-extrabold uppercase tracking-widest text-rose-700">Administración · Anulación</p>
+   <h2 id="cancel-pata-title" className="mt-2 text-xl font-black text-slate-900">¿Anular esta reserva?</h2>
+   <div className="mt-4 rounded-xl bg-slate-50 p-4 text-sm text-slate-800">
+    <p className="font-bold">{cancellationOrder.name}</p>
+    <p className="mt-1">Referencia: {cancellationOrder.reference||cancellationOrder.id.slice(0,8).toUpperCase()}</p>
+    <p className="mt-1">{readableDate(cancellationOrder.date)} · {cancellationOrder.quantity} {cancellationOrder.quantity===1?'pata':'patas'}</p>
+   </div>
+   <p className="mt-4 text-sm leading-relaxed text-slate-700">
+    Esta operación libera las unidades reservadas, mantiene el registro como anulado y
+    <strong> no devuelve dinero automáticamente</strong>.
+   </p>
+   <form className="mt-4" onSubmit={e=>{e.preventDefault();void cancelOrder(cancellationOrder)}}>
+    <label className="block text-sm font-bold text-slate-800">
+     Motivo de anulación (obligatorio)
+     <textarea ref={cancellationReasonInput} className={input+' mt-2 min-h-24 bg-white p-3 text-base'}
+      value={cancellationReason} required minLength={5} maxLength={150} disabled={loading}
+      onChange={e=>{setCancellationReason(e.target.value);setCancellationError('')}}
+      placeholder="Por ejemplo: cancelación solicitada por el cliente"/>
+    </label>
+    {cancellationError&&<p role="alert" className="mt-3 rounded-lg bg-rose-50 p-3 text-sm font-semibold text-rose-800">
+      {cancellationError}
+     </p>}
+    <div className="mt-5 flex flex-col-reverse gap-3 sm:flex-row sm:justify-end">
+     <button type="button" disabled={loading} onClick={closeCancellation}
+      className="min-h-12 rounded-xl border border-slate-300 px-5 text-sm font-semibold disabled:opacity-50">
+      Conservar reserva
+     </button>
+     <button type="submit" disabled={loading||cancellationReason.trim().length<5}
+      className="min-h-12 rounded-xl bg-rose-700 px-5 text-sm font-extrabold text-white disabled:opacity-50">
+      {loading?'Verificando anulación…':'Confirmar anulación'}
+     </button>
+    </div>
+   </form>
+  </div>
+ </div>}
  </main>
 }
