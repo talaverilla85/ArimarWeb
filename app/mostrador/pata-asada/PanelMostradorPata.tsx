@@ -260,24 +260,27 @@ export default function PanelMostradorPata(){
       const d=daysByDate.get(date)
       if(!d)return <div key={date} aria-hidden="true" className="min-h-20 sm:min-h-24"/>
       const past=date<calendar.today,isToday=date===calendar.today
+      const leadTimeBlocked=!past&&date<calendar.first
       const canBook=date>=calendar.first&&!d.blocked&&d.available>0
       return <button key={date} type="button" disabled={!canBook} onClick={()=>pick(date)}
        aria-current={isToday?'date':undefined}
        aria-label={date+': '+(past?'fecha pasada, ':isToday?'hoy, ':'')+
-        (d.blocked?'bloqueado':d.available+' patas libres')}
+        (leadTimeBlocked?'no seleccionable':d.blocked?'bloqueado':d.available+' patas libres')}
        className={'min-h-20 rounded-xl border p-1.5 text-center transition sm:min-h-24 sm:p-2 '+
         (isToday?'border-[#207F85] ring-2 ring-[#207F85] ':
          selected===date?'border-[#207F85] ring-2 ring-[#207F85]/50 ':'border-slate-200 ')+
-        (past?'bg-rose-100 text-rose-800 ':
+        (past||leadTimeBlocked?'bg-rose-100 text-rose-800 ':
          d.blocked?'bg-slate-200 text-slate-700 ':
          d.available===0?'bg-rose-50 text-slate-900 ':
          d.available===3?'bg-teal-50 text-slate-900 ':'bg-amber-50 text-slate-900 ')+
-        (canBook?'hover:border-[#207F85]':'cursor-not-allowed')}>
+        (canBook?'hover:border-[#207F85] cursor-pointer':'cursor-default')}>
        <span className="block text-sm font-bold sm:text-base">{i+1}</span>
-       <span className="mt-1 block text-base font-black sm:text-xl">{d.blocked?'×':d.available}</span>
-       <span className="block text-[9px] leading-tight sm:text-xs">
-        {past?'Pasado':isToday?'Hoy':d.blocked?'Bloqueado':d.available===0?'Completo':date<calendar.first?'Próx.':'libres'}
-       </span>
+       {!leadTimeBlocked&&<>
+        <span className="mt-1 block text-base font-black sm:text-xl">{d.blocked?'×':d.available}</span>
+        <span className="block text-[9px] leading-tight sm:text-xs">
+         {past?'Pasado':isToday?'Hoy':d.blocked?'Bloqueado':d.available===0?'Completo':'libres'}
+        </span>
+       </>}
       </button>
      })}
     </div>}
@@ -287,9 +290,6 @@ export default function PanelMostradorPata(){
      <span className="font-semibold text-rose-800">▣ Día pasado</span>
      <span className="font-semibold text-[#207F85]">▢ Hoy (borde)</span>
     </div>
-    <p className="mt-3 text-xs leading-relaxed text-slate-600">
-     Las fechas que todavía no cumplen el plazo mínimo de preparación se muestran, pero no permiten reservar.
-    </p>
    </div>}
   </section>
   {modalOpen&&valid&&calendar&&<div className="fixed inset-0 z-[110] flex items-center justify-center bg-slate-950/70 px-3 py-3 sm:px-6"
