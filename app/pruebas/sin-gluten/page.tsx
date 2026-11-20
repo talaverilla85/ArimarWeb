@@ -4,15 +4,54 @@ import Link from 'next/link'
 import { siteConfig } from '@/lib/siteConfig'
 
 export const metadata: Metadata = {
-  title: 'Vista de prueba · Sin gluten en Gran Canaria | AriMar',
-  description: 'Vista previa privada de diseño de la página sin gluten de AriMar.',
+  // Vista previa de los metadatos propuestos para la página definitiva.
+  // Se mantiene noindex: esta ruta nunca debe competir en Google con la URL original.
+  title: 'Comer sin gluten en Gran Canaria | AriMar 100 % sin gluten',
+  description:
+    '¿Buscas dónde comer sin gluten en Gran Canaria? En AriMar encontrarás comida casera 100 % sin gluten para llevar. Pide online y recoge en Playa de Arinaga.',
   robots: {
     index: false,
     follow: false,
     googleBot: { index: false, follow: false, noimageindex: true },
   },
   alternates: { canonical: '/sin-gluten-gran-canaria' },
+  openGraph: {
+    title: 'Comer sin gluten en Gran Canaria | AriMar 100 % sin gluten',
+    description:
+      'Comida casera 100 % sin gluten para llevar en Gran Canaria. Consulta la oferta, pide online y recoge en Playa de Arinaga.',
+    type: 'website',
+    url: 'https://arimarfoodlab.es/sin-gluten-gran-canaria',
+    images: [
+      {
+        url: '/images/arimar-vitrina-comida-para-llevar.webp',
+        alt: 'Vitrina de comida preparada 100 % sin gluten para llevar de AriMar',
+      },
+    ],
+  },
 }
+
+const dudasViajeros = [
+  {
+    question: '¿Dónde puedo comprar comida sin gluten en Gran Canaria?',
+    answer:
+      'En AriMar, Avenida Polizón 67, Playa de Arinaga (Agüimes). Preparamos comida casera 100 % sin gluten para llevar. Puedes consultar la oferta diaria antes de desplazarte.',
+  },
+  {
+    question: '¿Toda la comida de AriMar es apta para celíacos?',
+    answer:
+      'Toda nuestra carta se elabora sin ingredientes con gluten, no solo una selección de platos. También informamos de los ingredientes y de otros alérgenos de cada elaboración para que puedas elegir con claridad.',
+  },
+  {
+    question: '¿Puedo recoger comida sin gluten y llevarla a mi alojamiento?',
+    answer:
+      'Sí. Puedes hacer tu pedido online, recogerlo en nuestro local de Playa de Arinaga y llevártelo al alojamiento o donde prefieras. No disponemos de comedor ni de reparto a domicilio.',
+  },
+  {
+    question: '¿Qué comida sin gluten puedo encontrar?',
+    answer:
+      'Según la producción del día, elaboramos guisos, arroces, ensaladas, asados, croquetas, fritos y otras raciones. Consulta las existencias actuales antes de hacer tu pedido.',
+  },
+] as const
 
 const directorios = [
   {
@@ -197,8 +236,8 @@ export default function PruebaSinGlutenGranCanariaPage() {
               También nos puedes encontrar en
             </h2>
             <p className="mt-5 text-lg leading-relaxed text-slate-600">
-              Asociaciones, guías y aplicaciones que te ayudan a encontrar
-              opciones sin gluten en Gran Canaria.
+              Encuentra nuestra ficha en ASOCECA y en guías y aplicaciones
+              utilizadas para buscar comida sin gluten en Gran Canaria.
             </p>
           </div>
 
@@ -224,7 +263,8 @@ export default function PruebaSinGlutenGranCanariaPage() {
                 ASOCECA · FACE Restauración
               </h3>
               <p className="mt-2 text-sm leading-relaxed text-slate-600">
-                Consulta la ficha de AriMar en el directorio de ASOCECA.
+                Consulta nuestra ficha en el directorio de ASOCECA,
+                diferenciada de las apariciones en guías y apps.
               </p>
             </div>
             <span
@@ -274,6 +314,43 @@ export default function PruebaSinGlutenGranCanariaPage() {
             no implica que esas plataformas certifiquen el establecimiento ni que
             exista una colaboración comercial con ellas.
           </p>
+        </div>
+      </section>
+
+      <section className="bg-[#f5f9f7] py-16 md:py-20" aria-labelledby="dudas-celiacos">
+        <div className="mx-auto grid max-w-6xl gap-9 px-4 sm:px-6 md:grid-cols-[0.82fr_1.18fr] md:gap-16 lg:px-8">
+          <div>
+            <p className="mb-4 text-xs font-bold uppercase tracking-[0.2em] text-primary-800">
+              Para quienes viven o viajan a la isla
+            </p>
+            <h2 id="dudas-celiacos" className="text-balance text-3xl font-bold leading-tight tracking-tight sm:text-4xl">
+              ¿Buscas dónde comer sin gluten en Gran Canaria?
+            </h2>
+            <p className="mt-5 leading-relaxed text-slate-600">
+              Resolvemos las dudas más habituales antes de venir.
+              Aquí encontrarás comida para llevar y recoger, no servicio de restaurante en mesa.
+            </p>
+          </div>
+          <div className="divide-y divide-slate-200 border-y border-slate-200">
+            {dudasViajeros.map((duda) => (
+              <details key={duda.question} className="group py-5">
+                <summary className="cursor-pointer pr-5 text-base font-bold leading-snug text-slate-900 marker:text-primary-700 hover:text-primary-800">
+                  {duda.question}
+                </summary>
+                <p className="mt-3 max-w-xl leading-relaxed text-slate-600">
+                  {duda.answer}
+                </p>
+              </details>
+            ))}
+            <div className="pt-5">
+              <Link
+                href={siteConfig.pedirPath}
+                className="inline-flex min-h-11 items-center gap-2 font-bold text-primary-800 underline decoration-primary-300 underline-offset-4 hover:text-primary-950"
+              >
+                Ver los platos disponibles y pedir <span aria-hidden="true">→</span>
+              </Link>
+            </div>
+          </div>
         </div>
       </section>
 
