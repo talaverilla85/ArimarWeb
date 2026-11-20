@@ -1,13 +1,12 @@
 import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
-import SeoInternalLinks from '@/components/SeoInternalLinks'
-import { SIN_GLUTEN_ALT, SIN_GLUTEN_IMAGE } from '@/components/SinGlutenBlock'
+import { siteConfig } from '@/lib/siteConfig'
 
 export const metadata: Metadata = {
-  title: 'Sin gluten en Gran Canaria: comida 100% gluten free | AriMar',
+  title: 'Comer sin gluten en Gran Canaria | AriMar 100 % sin gluten',
   description:
-    'AriMar es una casa de comidas 100% sin gluten en Gran Canaria. Comida casera, freiduría, platos preparados y pedido online para recoger en Playa de Arinaga.',
+    '¿Buscas dónde comer sin gluten en Gran Canaria? En AriMar encontrarás comida casera 100 % sin gluten para llevar. Pide online y recoge en Playa de Arinaga.',
   alternates: {
     canonical: '/sin-gluten-gran-canaria',
     languages: {
@@ -16,284 +15,347 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: 'Sin gluten en Gran Canaria: comida 100% gluten free | AriMar',
+    title: 'Comer sin gluten en Gran Canaria | AriMar 100 % sin gluten',
     description:
-      'Comida casera, freiduría y platos preparados 100% sin gluten en Gran Canaria. Pide online y recoge en Playa de Arinaga.',
+      'Comida casera 100 % sin gluten para llevar en Gran Canaria. Consulta la oferta, pide online y recoge en Playa de Arinaga.',
     type: 'website',
     url: 'https://arimarfoodlab.es/sin-gluten-gran-canaria',
+    images: [
+      {
+        url: '/images/arimar-vitrina-comida-para-llevar.webp',
+        alt: 'Vitrina de comida preparada 100 % sin gluten para llevar de AriMar',
+      },
+    ],
   },
 }
 
-const sections = [
+const dudasViajeros = [
   {
-    eyebrow: '100 % sin gluten',
-    title: 'No tenemos unas pocas opciones sin gluten',
-    text: 'AriMar nace como un establecimiento 100 % sin gluten. No hay una carta normal y otra adaptada: la comida que elaboramos parte de una cocina sin ingredientes con gluten, desde los platos de cuchara hasta la freiduría, los arroces, las pastas, las croquetas y los postres.',
+    question: '¿Dónde puedo comprar comida sin gluten en Gran Canaria?',
+    answer:
+      'En AriMar, Avenida Polizón 67, Playa de Arinaga (Agüimes). Preparamos comida casera 100 % sin gluten para llevar. Puedes consultar la oferta diaria antes de desplazarte.',
   },
   {
-    eyebrow: 'Para toda Gran Canaria',
-    title: 'Una parada que puede encajar en tu día o en tus vacaciones',
-    text: 'Estamos en Playa de Arinaga, pero AriMar no está pensado solo para quien vive cerca. Puedes consultar lo disponible y hacer tu pedido online antes de desplazarte, para recogerlo preparado cuando vengas.',
+    question: '¿Toda la comida de AriMar es apta para celíacos?',
+    answer:
+      'Toda nuestra carta se elabora sin ingredientes con gluten, no solo una selección de platos. También informamos de los ingredientes y de otros alérgenos de cada elaboración para que puedas elegir con claridad.',
   },
   {
-    eyebrow: 'Freiduría',
-    title: 'Freiduría 100 % sin gluten',
-    text: 'La freiduría suele ser uno de los puntos que más dudas genera cuando se necesita evitar el gluten. En AriMar forma parte de una cocina concebida sin gluten, no de una pequeña selección adaptada dentro de una cocina convencional.',
+    question: '¿Puedo recoger comida sin gluten y llevarla a mi alojamiento?',
+    answer:
+      'Sí. Puedes hacer tu pedido online, recogerlo en nuestro local de Playa de Arinaga y llevártelo al alojamiento o donde prefieras. No disponemos de comedor ni de reparto a domicilio.',
   },
   {
-    eyebrow: 'Comida para llevar',
-    title: 'Comida casera, vitrina y platos preparados',
-    text: 'Preparamos comida para llevar con elaboraciones que cambian según la producción del día: guisos, arroces, carnes, ensaladas, fritos, croquetas, postres y otras propuestas caseras.',
-  },
-  {
-    eyebrow: 'Alérgenos',
-    title: 'Información para elegir con claridad',
-    text: 'Además del gluten, informamos del resto de alérgenos presentes en cada elaboración. Si tienes dudas sobre un plato concreto, nuestro equipo puede ayudarte antes de elegir.',
-  },
-  {
-    eyebrow: 'Playa de Arinaga',
-    title: 'Dónde encontrar AriMar en Gran Canaria',
-    text: 'Estamos en Playa de Arinaga, Agüimes. Abrimos todos los días de 11:30 a 16:00. Puedes venir a elegir en la vitrina o hacer el pedido online para recoger.',
-  },
-]
-
-const faqs = [
-  {
-    q: '¿AriMar es 100 % sin gluten?',
-    a: 'Sí. AriMar es una casa de comidas y freiduría 100 % sin gluten en Playa de Arinaga, Gran Canaria.',
-  },
-  {
-    q: '¿Puedo pedir antes de desplazarme hasta AriMar?',
-    a: 'Sí. Puedes consultar la oferta disponible y hacer tu pedido online para recogerlo en el local.',
-  },
-  {
-    q: '¿AriMar es solo para personas celíacas?',
-    a: 'No. Nuestra propuesta es comida casera para todos con una única carta elaborada sin gluten, para que todo el grupo pueda elegir de la misma oferta.',
-  },
-  {
-    q: '¿Dónde está AriMar?',
-    a: 'En Playa de Arinaga, en el municipio de Agüimes, Gran Canaria.',
-  },
-]
-
-const mencionesExternas = [
-  {
-    name: 'CeliNews',
-    description: 'Guía sin gluten de Gran Canaria',
-    href: 'https://celinews.com/gran-canaria-sin-gluten-para-celiacos/',
-  },
-  {
-    name: 'NoGluApp',
-    description: 'Ficha en la comunidad sin gluten',
-    href: 'https://nogluapp.com/restaurante/2391',
-  },
-  {
-    name: 'Find Me Gluten Free',
-    description: 'Ficha para viajeros celíacos',
-    href: 'https://www.findmeglutenfree.com/biz/arimar/6616784932569088',
-  },
-  {
-    name: 'Canarias7',
-    description: 'Directorio de empresas de Gran Canaria',
-    href: 'https://servicios.canarias7.es/empresas/arimar.html',
+    question: '¿Qué comida sin gluten puedo encontrar?',
+    answer:
+      'Según la producción del día, elaboramos guisos, arroces, ensaladas, asados, croquetas, fritos y otras raciones. Consulta las existencias actuales antes de hacer tu pedido.',
   },
 ] as const
 
-const highlights = ['100 % sin gluten', 'Pedido online', 'Comida para llevar', 'Gran Canaria']
+const directorios = [
+  {
+    name: 'CeliNews',
+    description: 'Guía para celíacos',
+    domain: 'celinews.com',
+    href: 'https://celinews.com/gran-canaria-sin-gluten-para-celiacos/',
+    wordmark: 'font-bold tracking-tight',
+  },
+  {
+    name: 'NoGluApp',
+    description: 'App sin gluten',
+    domain: 'nogluapp.com',
+    href: 'https://nogluapp.com/restaurante/2391',
+    wordmark: 'font-extrabold tracking-tight',
+  },
+  {
+    name: 'Find Me Gluten Free',
+    description: 'Guía internacional',
+    domain: 'findmeglutenfree.com',
+    href: 'https://www.findmeglutenfree.com/biz/arimar/6616784932569088',
+    wordmark: 'font-bold tracking-tight',
+  },
+  {
+    name: 'Canarias7',
+    description: 'Directorio de empresas',
+    domain: 'canarias7.es',
+    href: 'https://servicios.canarias7.es/empresas/arimar.html',
+    wordmark: 'font-extrabold tracking-tight',
+  },
+] as const
+
+const buttonClass =
+  'inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-primary-500 px-7 py-3.5 text-center font-bold text-white shadow-sm transition-colors hover:bg-primary-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-700 focus-visible:ring-offset-2'
 
 export default function SinGlutenGranCanariaPage() {
-  const faqJsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'FAQPage',
-    mainEntity: faqs.map((faq) => ({
-      '@type': 'Question',
-      name: faq.q,
-      acceptedAnswer: { '@type': 'Answer', text: faq.a },
-    })),
-  }
-
   return (
-    <div className="pt-28 pb-20 px-4 sm:px-6 lg:px-8">
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />
-      <div className="max-w-4xl mx-auto">
-        <header className="relative overflow-hidden rounded-3xl border border-primary-100 bg-gradient-to-br from-primary-50 via-white to-emerald-50 px-6 py-10 md:px-10 md:py-12 mb-14 shadow-sm">
-          <div className="relative grid gap-8 md:grid-cols-[1fr_220px] md:items-center">
-            <div className="text-center md:text-left">
-              <p className="text-sm md:text-base text-primary-700 font-semibold tracking-wide uppercase mb-3">
-                AriMar · Playa de Arinaga · Gran Canaria
-              </p>
-              <h1 className="text-4xl md:text-5xl font-bold text-slate-800 mb-5 tracking-tight">
-                Sin gluten en Gran Canaria: comida 100 % gluten free
-              </h1>
-              <p className="text-lg md:text-xl text-slate-600 leading-relaxed">
-                Si vives en la isla o estás preparando tus vacaciones en Gran Canaria, en AriMar encontrarás
-                comida casera, freiduría y platos preparados 100 % sin gluten para llevar. Puedes pedir online
-                antes de venir y recoger en Playa de Arinaga.
-              </p>
-              <div className="mt-6 flex flex-wrap justify-center gap-2 md:justify-start">
-                {highlights.map((item) => (
-                  <span key={item} className="rounded-full border border-primary-100 bg-white/80 px-4 py-2 text-sm font-semibold text-primary-800 shadow-sm">
-                    {item}
-                  </span>
-                ))}
-              </div>
-              <div className="mt-7 flex flex-col sm:flex-row gap-3 justify-center md:justify-start">
-                <Link href="/hoy" className="inline-flex justify-center px-7 py-3 bg-primary-500 text-white font-semibold rounded-lg hover:bg-primary-600 transition-colors shadow-md">
-                  Ver qué hay hoy y pedir
-                </Link>
-                <Link href="/contacto" className="inline-flex justify-center px-7 py-3 border border-primary-200 bg-white/70 text-primary-700 font-semibold rounded-lg hover:bg-primary-50 transition-colors">
-                  Cómo llegar
-                </Link>
-              </div>
-            </div>
-            <div className="mx-auto w-44 md:w-52">
-              <div className="rounded-3xl border border-white/80 bg-white/90 p-3 shadow-md">
-                <Image src={SIN_GLUTEN_IMAGE} alt={SIN_GLUTEN_ALT} width={260} height={220} className="h-auto w-full object-contain" priority />
-              </div>
-            </div>
-          </div>
-        </header>
-
-        <section className="mb-14 rounded-3xl border border-slate-200 bg-white px-6 py-8 md:px-8 shadow-sm">
-          <p className="text-sm font-semibold uppercase tracking-wide text-primary-700 mb-2">Gran Canaria sin gluten</p>
-          <h2 className="text-2xl md:text-3xl font-bold text-slate-800 mb-3 tracking-tight">
-            Aquí no preguntas qué puedes comer. Preguntas qué te apetece.
-          </h2>
-          <p className="text-slate-600 leading-relaxed max-w-3xl">
-            Queremos que buscar comida sin gluten en Gran Canaria sea más sencillo. En AriMar todos eligen de la
-            misma oferta: no existe una carta aparte para quien evita el gluten. Consulta nuestra
-            <Link href="/carta" className="font-semibold text-primary-700 hover:underline"> carta</Link>, mira qué
-            tenemos disponible hoy y organiza la recogida antes de venir.
-          </p>
-        </section>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-14">
-          {sections.map((section, index) => (
-            <section key={section.title} className="rounded-2xl border border-slate-200 bg-white px-6 py-6 md:px-7 shadow-sm hover:shadow-md transition-shadow">
-              <div className="mb-4 flex items-center gap-3">
-                <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary-50 text-sm font-bold text-primary-700">{index + 1}</span>
-                <p className="text-xs font-semibold uppercase tracking-wide text-primary-700">{section.eyebrow}</p>
-              </div>
-              <h2 className="text-xl md:text-2xl font-bold text-slate-800 mb-3 tracking-tight">{section.title}</h2>
-              <p className="text-slate-600 leading-relaxed text-sm md:text-base">{section.text}</p>
-            </section>
-          ))}
-        </div>
-
-        <section className="mb-14 rounded-3xl bg-slate-900 px-6 py-9 md:px-10 text-white">
-          <p className="text-sm font-semibold uppercase tracking-wide text-primary-300 mb-2">¿Vienes de vacaciones?</p>
-          <h2 className="text-2xl md:text-3xl font-bold mb-4 tracking-tight">
-            Puedes dejar una comida sin gluten resuelta antes de llegar
-          </h2>
-          <p className="text-white/80 leading-relaxed mb-6">
-            Consulta online lo que tenemos disponible, haz tu pedido y recógelo en AriMar cuando pases por Playa
-            de Arinaga. Una opción práctica para llevar al alojamiento, a la playa o continuar tu ruta por Gran Canaria.
-          </p>
-          <Link href="/hoy" className="inline-flex justify-center px-7 py-3 bg-primary-500 text-white font-semibold rounded-lg hover:bg-primary-600 transition-colors">
-            Hacer pedido online
-          </Link>
-        </section>
-
-        {/* Fuentes independientes. ASOCECA se distingue de las guías y directorios. */}
-        <section
-          className="mb-16 border-t border-b border-slate-200 py-12 md:py-16"
-          aria-labelledby="presencia-sin-gluten"
-        >
-          <p className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-primary-700">
-            Reconocimiento y presencia online
-          </p>
-          <h2 id="presencia-sin-gluten" className="max-w-2xl text-2xl font-bold tracking-tight text-slate-900 md:text-3xl">
-            También puedes encontrarnos fuera de esta web
-          </h2>
-          <p className="mt-4 max-w-2xl leading-relaxed text-slate-600">
-            Si estás organizando tu visita a Gran Canaria, puedes consultar nuestras
-            fichas en la asociación y en diferentes guías especializadas.
-            Son fuentes distintas, por eso te mostramos dónde aparece AriMar.
-          </p>
-
-          <div className="mt-9 border-l-4 border-primary-500 bg-primary-50/70 px-5 py-7 md:px-8">
-            <p className="text-xs font-bold uppercase tracking-[0.15em] text-primary-800">
-              Asociación de celíacos
+    <div className="overflow-hidden bg-white pb-16 text-slate-900">
+      <section className="relative bg-gradient-to-br from-[#f2f9f7] via-white to-[#fbf7ef] pt-24 pb-20 md:pt-32 md:pb-28">
+        <div className="mx-auto grid max-w-7xl gap-12 px-4 sm:px-6 lg:grid-cols-[0.92fr_1.08fr] lg:items-center lg:gap-16 lg:px-8">
+          <div>
+            <p className="mb-6 text-xs font-extrabold uppercase tracking-[0.19em] text-primary-800">
+              Gran Canaria · Comida sin gluten para llevar
             </p>
-            <h3 className="mt-3 text-xl font-bold text-slate-900 md:text-2xl">
-              ASOCECA · Restauración sin gluten
-            </h3>
-            <p className="mt-3 max-w-2xl leading-relaxed text-slate-700">
-              AriMar dispone de una ficha en ASOCECA, la Asociación de Celíacos
-              y Sensibles al Gluten de Canarias, vinculada al programa FACE Restauración.
-              Consulta nuestra información directamente en su directorio.
+            <h1 className="text-balance text-4xl font-extrabold leading-[1.08] tracking-tight sm:text-5xl lg:text-[3.8rem]">
+              Comer sin gluten en Gran Canaria.
+              <span className="mt-3 block text-primary-700">
+                Y comer lo que te apetece.
+              </span>
+            </h1>
+            <p className="mt-7 max-w-xl text-lg leading-relaxed text-slate-700 md:text-xl">
+              Pollo asado, guisos, croquetas, arroces y platos preparados.
+              Una única carta para todos, elaborada en nuestra cocina 100 % sin gluten.
             </p>
-            <a
-              href="https://asoceca.org/establecimiento/arimar-foodlab/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-5 inline-flex min-h-10 items-center gap-2 font-bold text-primary-800 underline decoration-primary-300 underline-offset-4 hover:text-primary-950"
-            >
-              Ver ficha de AriMar en ASOCECA <span aria-hidden="true">↗</span>
-            </a>
-          </div>
-
-          <h3 className="mt-10 text-lg font-bold tracking-tight text-slate-900">
-            Guías, aplicaciones y medios
-          </h3>
-          <p className="mt-2 text-sm leading-relaxed text-slate-600">
-            Estas menciones y fichas ayudan a descubrir el establecimiento;
-            no equivalen a una certificación de seguridad alimentaria.
-          </p>
-          <div className="mt-5 divide-y divide-slate-200 border-y border-slate-200">
-            {mencionesExternas.map((mencion) => (
+            <p className="mt-4 max-w-lg leading-relaxed text-slate-600">
+              Estamos en Playa de Arinaga. Si vives en la isla o vienes de vacaciones,
+              puedes mirar qué tenemos hoy, hacer tu pedido y recogerlo en nuestro local.
+            </p>
+            <div className="mt-9 flex flex-wrap items-center gap-5">
+              <Link href={siteConfig.pedirPath} className={buttonClass}>
+                Ver qué hay hoy y pedir <span aria-hidden="true">→</span>
+              </Link>
               <a
-                key={mencion.href}
-                href={mencion.href}
+                href={siteConfig.mapsUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group flex flex-col gap-1 py-5 transition-colors hover:bg-primary-50/40 sm:flex-row sm:items-center sm:justify-between sm:gap-6 sm:px-3"
+                className="inline-flex min-h-12 items-center font-bold text-primary-800 underline decoration-primary-300 underline-offset-4 hover:text-primary-950"
               >
-                <span className="text-lg font-bold text-slate-900 group-hover:text-primary-800">
-                  {mencion.name}
-                </span>
-                <span className="flex items-center justify-between gap-6 text-sm text-slate-600">
-                  {mencion.description}
-                  <span className="text-lg font-bold text-primary-700" aria-hidden="true">↗</span>
-                </span>
+                Cómo llegar <span aria-hidden="true">↗</span>
               </a>
-            ))}
+            </div>
+            <div className="mt-9 flex flex-wrap gap-x-6 gap-y-2 border-t border-primary-200 pt-6 text-sm font-semibold text-slate-600">
+              <span>100 % sin gluten</span>
+              <span>Comida para llevar</span>
+              <span>Playa de Arinaga</span>
+            </div>
           </div>
-        </section>
+          <figure className="mx-auto w-full max-w-2xl lg:max-w-none">
+            <div className="relative aspect-[3/2] overflow-hidden rounded-[1.5rem] bg-slate-100 shadow-2xl lg:aspect-[5/4]">
+              <Image
+                src="/images/arimar-vitrina-comida-para-llevar.webp"
+                alt="Vitrina real de AriMar llena de platos caseros preparados para llevar, con etiquetas de ingredientes"
+                fill
+                priority
+                sizes="(max-width: 1024px) 100vw, 55vw"
+                className="object-cover"
+              />
+            </div>
+            <figcaption className="mt-3 text-sm text-slate-500">
+              La vitrina de AriMar, en Playa de Arinaga. Platos sujetos a disponibilidad.
+            </figcaption>
+          </figure>
+        </div>
+      </section>
 
-        <section className="mb-14">
-          <h2 className="text-2xl md:text-3xl font-bold text-slate-800 mb-6 tracking-tight">
-            Preguntas sobre AriMar y la comida sin gluten en Gran Canaria
-          </h2>
-          <div className="space-y-3">
-            {faqs.map((faq) => (
-              <details key={faq.q} className="rounded-2xl border border-slate-200 bg-white px-5 py-4 shadow-sm">
-                <summary className="cursor-pointer font-semibold text-slate-800">{faq.q}</summary>
-                <p className="pt-3 text-slate-600 leading-relaxed">{faq.a}</p>
+      <section className="py-20 md:py-24" aria-labelledby="una-carta">
+        <div className="mx-auto grid max-w-6xl gap-9 px-4 sm:px-6 md:grid-cols-[0.86fr_1.14fr] md:gap-16 lg:px-8">
+          <div>
+            <p className="mb-5 text-xs font-bold uppercase tracking-[0.2em] text-primary-800">
+              Toda la carta
+            </p>
+            <h2 id="una-carta" className="text-balance text-3xl font-bold leading-tight tracking-tight sm:text-4xl">
+              No tenemos una carta «especial» sin gluten.
+              <span className="mt-2 block text-primary-700">Toda la carta lo es.</span>
+            </h2>
+          </div>
+          <div className="border-t-2 border-primary-500 pt-7">
+            <p className="text-lg leading-relaxed text-slate-700">
+              No necesitas elegir entre un par de platos adaptados. En AriMar
+              trabajamos sin ingredientes con gluten en todas nuestras elaboraciones:
+              desde los guisos y arroces hasta las croquetas y los fritos.
+            </p>
+            <p className="mt-5 leading-relaxed text-slate-600">
+              También indicamos otros alérgenos e ingredientes en el etiquetado.
+              Si necesitas información sobre un plato concreto, puedes consultarla
+              antes de pedir.
+            </p>
+            <Link
+              href="/carta"
+              className="mt-7 inline-flex min-h-11 items-center font-bold text-primary-800 underline decoration-primary-300 underline-offset-4 hover:text-primary-950"
+            >
+              Conocer nuestra carta <span aria-hidden="true">→</span>
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-[#f8f4ee] py-20 md:py-24" aria-labelledby="para-toda-gran-canaria">
+        <div className="mx-auto grid max-w-6xl items-center gap-10 px-4 sm:px-6 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16 lg:px-8">
+          <figure className="relative aspect-[4/3] overflow-hidden rounded-[1.5rem] bg-slate-200 shadow-lg">
+            <Image
+              src="/images/arimar-20261023-ropa-vieja.webp"
+              alt="Ropa vieja con garbanzos y carne, uno de los platos preparados sin gluten de AriMar"
+              fill
+              sizes="(max-width: 1024px) 100vw, 50vw"
+              className="object-cover"
+            />
+          </figure>
+          <div>
+            <p className="mb-5 text-xs font-bold uppercase tracking-[0.2em] text-primary-800">
+              Para vecinos y viajeros
+            </p>
+            <h2 id="para-toda-gran-canaria" className="text-balance text-3xl font-bold leading-tight tracking-tight sm:text-4xl">
+              Tu comida resuelta, también cuando estás de vacaciones.
+            </h2>
+            <p className="mt-6 text-lg leading-relaxed text-slate-700">
+              Un almuerzo para llevar a casa, al alojamiento o a la playa.
+              Elige entre lo que tenemos preparado cada día y haz tu pedido
+              antes de desplazarte hasta Playa de Arinaga.
+            </p>
+            <p className="mt-5 leading-relaxed text-slate-600">
+              No disponemos de comedor ni servicio de entrega a domicilio.
+              Recoges tu comida en Avenida Polizón 67, Agüimes, Gran Canaria.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Presencia de AriMar en la asociación y en directorios especializados. */}
+      <section className="py-20 md:py-28" aria-labelledby="donde-nos-encuentras">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-3xl text-center">
+            <p className="mb-4 text-xs font-bold uppercase tracking-[0.21em] text-primary-800">
+              Nuestra presencia
+            </p>
+            <h2 id="donde-nos-encuentras" className="text-balance text-3xl font-bold tracking-tight sm:text-4xl">
+              También nos puedes encontrar en
+            </h2>
+            <p className="mt-5 text-lg leading-relaxed text-slate-600">
+              Encuentra nuestra ficha en ASOCECA y en guías y aplicaciones
+              utilizadas para buscar comida sin gluten en Gran Canaria.
+            </p>
+          </div>
+
+          <a
+            href="https://asoceca.org/establecimiento/arimar-foodlab/"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Ver ficha de AriMar en ASOCECA, FACE Restauración"
+            className="group mx-auto mt-11 flex max-w-3xl flex-col items-center gap-5 border-y border-primary-200 py-7 transition-colors hover:bg-primary-50/30 sm:flex-row sm:justify-center sm:gap-7 sm:px-5"
+          >
+            <Image
+              src="/images/arimar-face-restauracion.webp"
+              alt="Distintivo FACE Restauración Sin Gluten Gluten Free"
+              width={96}
+              height={96}
+              className="h-20 w-20 shrink-0 object-contain sm:h-24 sm:w-24"
+            />
+            <div className="text-center sm:text-left">
+              <p className="text-xs font-bold uppercase tracking-[0.16em] text-primary-700">
+                Asociación de celíacos
+              </p>
+              <h3 className="mt-1 text-xl font-bold tracking-tight text-slate-900 sm:text-2xl">
+                ASOCECA · FACE Restauración
+              </h3>
+              <p className="mt-2 text-sm leading-relaxed text-slate-600">
+                Consulta nuestra ficha en el directorio de ASOCECA,
+                diferenciada de las apariciones en guías y apps.
+              </p>
+            </div>
+            <span
+              aria-hidden="true"
+              className="text-2xl font-bold text-primary-700 transition-transform group-hover:translate-x-1"
+            >↗</span>
+          </a>
+
+          <div className="mt-12">
+            <p className="mb-7 text-center text-xs font-bold uppercase tracking-[0.18em] text-slate-500">
+              Guías, apps y medios donde aparecemos
+            </p>
+            <div className="grid grid-cols-2 gap-x-5 gap-y-9 sm:grid-cols-4 sm:gap-x-8">
+              {directorios.map((directorio) => (
+                <a
+                  key={directorio.href}
+                  href={directorio.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group flex min-h-[112px] flex-col items-center justify-center text-center"
+                  aria-label={'Ver AriMar en ' + directorio.name}
+                >
+                  <div className="flex min-h-[60px] items-center justify-center gap-2.5">
+                    <Image
+                      src={'https://www.google.com/s2/favicons?domain=' + directorio.domain + '&sz=128'}
+                      alt=""
+                      aria-hidden="true"
+                      width={36}
+                      height={36}
+                      unoptimized
+                      loading="lazy"
+                      className="h-9 w-9 shrink-0 rounded-md object-contain"
+                    />
+                    <span className={directorio.wordmark + ' max-w-[155px] text-left text-base leading-tight text-slate-800 transition-colors group-hover:text-primary-800 sm:text-lg'}>
+                      {directorio.name}
+                    </span>
+                  </div>
+                  <span className="mt-2 text-xs text-slate-500">{directorio.description}</span>
+                  <span className="mt-2 h-px w-9 bg-primary-300 transition-all group-hover:w-16 group-hover:bg-primary-600" aria-hidden="true" />
+                </a>
+              ))}
+            </div>
+          </div>
+
+          <p className="mx-auto mt-9 max-w-3xl text-center text-xs leading-relaxed text-slate-500">
+            Las guías y directorios muestran información sobre AriMar; su inclusión
+            no implica que esas plataformas certifiquen el establecimiento ni que
+            exista una colaboración comercial con ellas.
+          </p>
+        </div>
+      </section>
+
+      <section className="bg-[#f5f9f7] py-16 md:py-20" aria-labelledby="dudas-celiacos">
+        <div className="mx-auto grid max-w-6xl gap-9 px-4 sm:px-6 md:grid-cols-[0.82fr_1.18fr] md:gap-16 lg:px-8">
+          <div>
+            <p className="mb-4 text-xs font-bold uppercase tracking-[0.2em] text-primary-800">
+              Para quienes viven o viajan a la isla
+            </p>
+            <h2 id="dudas-celiacos" className="text-balance text-3xl font-bold leading-tight tracking-tight sm:text-4xl">
+              ¿Buscas dónde comer sin gluten en Gran Canaria?
+            </h2>
+            <p className="mt-5 leading-relaxed text-slate-600">
+              Resolvemos las dudas más habituales antes de venir.
+              Aquí encontrarás comida para llevar y recoger, no servicio de restaurante en mesa.
+            </p>
+          </div>
+          <div className="divide-y divide-slate-200 border-y border-slate-200">
+            {dudasViajeros.map((duda) => (
+              <details key={duda.question} className="group py-5">
+                <summary className="cursor-pointer pr-5 text-base font-bold leading-snug text-slate-900 marker:text-primary-700 hover:text-primary-800">
+                  {duda.question}
+                </summary>
+                <p className="mt-3 max-w-xl leading-relaxed text-slate-600">
+                  {duda.answer}
+                </p>
               </details>
             ))}
+            <div className="pt-5">
+              <Link
+                href={siteConfig.pedirPath}
+                className="inline-flex min-h-11 items-center gap-2 font-bold text-primary-800 underline decoration-primary-300 underline-offset-4 hover:text-primary-950"
+              >
+                Ver los platos disponibles y pedir <span aria-hidden="true">→</span>
+              </Link>
+            </div>
           </div>
-        </section>
+        </div>
+      </section>
 
-        <section className="rounded-2xl bg-primary-50 border border-primary-100 px-6 py-10 md:px-10 text-center shadow-sm mb-10">
-          <h2 className="text-2xl md:text-3xl font-bold text-slate-800 mb-4 tracking-tight">
-            AriMar: comida 100 % sin gluten en Gran Canaria
-          </h2>
-          <p className="text-slate-600 mb-8 max-w-2xl mx-auto leading-relaxed">
-            Estamos en Playa de Arinaga y abrimos todos los días de 11:30 a 16:00. Elige en el local o haz tu pedido online para recoger.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/hoy" className="inline-flex justify-center px-8 py-3 bg-primary-500 text-white text-sm md:text-base font-semibold rounded-lg hover:bg-primary-600 transition-colors shadow-md">
-              Pedir online
-            </Link>
-            <Link href="/en/gluten-free-gran-canaria" className="inline-flex justify-center px-8 py-3 border border-primary-200 text-primary-700 text-sm md:text-base font-semibold rounded-lg hover:bg-primary-100 transition-colors">
-              English: Gluten-free Gran Canaria
-            </Link>
+      <section className="mx-4 overflow-hidden rounded-[1.5rem] bg-gradient-to-br from-primary-50 to-[#f8f4ed] px-6 py-12 sm:mx-6 sm:px-10 md:mx-8 md:py-16" aria-labelledby="hacer-pedido">
+        <div className="mx-auto flex max-w-5xl flex-col items-start justify-between gap-7 md:flex-row md:items-center">
+          <div>
+            <p className="mb-4 text-xs font-bold uppercase tracking-[0.2em] text-primary-800">
+              Tu disfruta, nosotros cocinamos
+            </p>
+            <h2 id="hacer-pedido" className="text-balance text-3xl font-bold tracking-tight sm:text-4xl">
+              ¿Qué te apetece comer hoy?
+            </h2>
+            <p className="mt-4 text-lg text-slate-600">
+              Comida preparada 100 % sin gluten. Pídela para recoger en Playa de Arinaga.
+            </p>
           </div>
-        </section>
-
-        <SeoInternalLinks />
-      </div>
+          <Link href={siteConfig.pedirPath} className={buttonClass}>
+            Ver disponibilidad y pedir <span aria-hidden="true">→</span>
+          </Link>
+        </div>
+      </section>
     </div>
   )
 }
