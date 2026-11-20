@@ -22,7 +22,9 @@ export function fail(error:unknown){
   PATA_ORDER_NOT_FOUND:[404,'No se ha encontrado esa reserva.'],
   PATA_MANUAL_ONLY:[403,'Solo se pueden anular encargos manuales desde este panel.'],
   PATA_INVALID_ORDER:[409,'El estado de la reserva ya ha cambiado. Actualiza la lista.'],
-  PATA_STAFF_BOOKING_FAILED:[503,'No se pudo confirmar el encargo. Comprueba el estado antes de repetir.']
+  PATA_STAFF_BOOKING_FAILED:[503,'No se pudo confirmar el encargo. Comprueba el estado antes de repetir.'],
+  PATA_INVALID_MANUAL_PAYMENT:[400,'El pago debe tener fecha y número de ticket/factura. Si está pendiente, deja ambos vacíos.'],
+  PATA_MANUAL_PAYMENT_ALREADY_RECORDED:[409,'El pago de esta reserva ya consta registrado. Actualiza los encargos antes de modificarlo.']
  }
  const match=Object.keys(messages).find(key=>message.includes(key))
  if(match){const [status,msg]=messages[match];return NextResponse.json({error:msg},{status,headers:noStore})}
