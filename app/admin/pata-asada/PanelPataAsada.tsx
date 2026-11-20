@@ -291,6 +291,8 @@ export default function PanelPataAsada(){
  }
  const current=days.find(x=>x.date===selected)
  const historical=selected<operationalDay()
+ const activeSelectedOrders=orders.filter(o=>o.date===selected&&o.status!=='CANCELED')
+ const canceledSelectedOrders=orders.filter(o=>o.date===selected&&o.status==='CANCELED')
  const {from:monthStart}=monthBounds(viewMonth)
  const leadDays=(new Date(monthStart+'T12:00:00Z').getUTCDay()+6)%7
  const confirmedForMonth=orders.filter(o=>o.status==='PAID'||o.status==='MANUAL_CONFIRMED'||o.status==='CANCELED')
@@ -536,11 +538,11 @@ export default function PanelPataAsada(){
         placeholder="Festivo, falta de proveedor, motivo del bloqueo…"/>
       </label>
       <div className="rounded-xl border border-slate-200 p-3">
-       <h3 className="text-sm font-bold">Encargos registrados para este día</h3>
-       {orders.filter(o=>o.date===selected).length===0
-        ?<p className="mt-2 text-sm text-slate-500">Todavía no hay encargos.</p>
+       <h3 className="text-sm font-bold">Reservas activas de este día</h3>
+       {activeSelectedOrders.length===0
+        ?<p className="mt-2 text-sm text-slate-500">No hay reservas activas para esta fecha.</p>
         :<div className="mt-2 divide-y">
-         {orders.filter(o=>o.date===selected).map(o=><div key={o.id} className="flex flex-wrap justify-between gap-3 py-2 text-sm">
+         {activeSelectedOrders.map(o=><div key={o.id} className="flex flex-wrap justify-between gap-3 py-2 text-sm">
           <div><span className="font-semibold">{o.name}</span>
            {o.email&&<p className="text-xs text-slate-600">{o.email} · Valoración: {o.reviewConsent?'Autorizada':'No autorizada'}</p>}
            <p className="text-xs text-slate-500">{o.reference} · {o.status==='PAID'?'Pagado':o.status==='MANUAL_CONFIRMED'?'Manual confirmado':o.status}</p>
@@ -569,6 +571,17 @@ export default function PanelPataAsada(){
           {cancellationForm(o)}
          </div>)}
         </div>}
+       {canceledSelectedOrders.length>0&&<details className="mt-3 rounded-lg border border-slate-200 bg-slate-50 p-3">
+        <summary className="cursor-pointer text-sm font-semibold text-slate-600">
+         Anuladas ({canceledSelectedOrders.length}) · No ocupan plazas
+        </summary>
+        <div className="mt-2 divide-y divide-slate-200">
+         {canceledSelectedOrders.map(o=><div key={o.id} className="py-2 text-sm text-slate-600">
+          <p className="font-semibold">{o.name} · {o.quantity} {o.quantity===1?'pata':'patas'}</p>
+          <p className="text-xs">{o.reference||o.id.slice(0,8).toUpperCase()} · Anulada</p>
+         </div>)}
+        </div>
+       </details>}
       </div>
       
        {payingOrder&&<form className="mt-4 space-y-3 rounded-xl border border-[#207F85] bg-[#F1F8F7] p-4"
