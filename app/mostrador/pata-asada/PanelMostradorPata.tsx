@@ -3,6 +3,14 @@ import {useCallback,useEffect,useRef,useState,type FormEvent,type KeyboardEvent}
 type PaymentMethod='CARD'|'CASH'
 type Day={date:string;capacity:number;available:number;blocked:boolean}
 type Calendar={from:string;to:string;first:string;today:string;days:Day[]}
+type StaffOrderSummary={
+ id:string;date:string;quantity:number;name:string;phone:string|null;
+ reference:string|null;staffCreator:string|null;source:'WEB'|'MANUAL';
+ status:'PAID'|'MANUAL_CONFIRMED'|'CANCELED';
+ paymentMethod:'PENDING'|'CARD'|'CASH'|'MONEI'|null;
+ paymentDate:string|null;paymentReceipt:string|null
+}
+type StaffOverview={active:StaffOrderSummary[];history:StaffOrderSummary[]}
 type Confirmation={
  reference:string;date:string;quantity:number;name:string;amountCents:number;
  paymentMethod:PaymentMethod;paymentDate:string;paymentReceipt:string
@@ -59,6 +67,21 @@ export default function PanelMostradorPata(){
  const [error,setError]=useState('')
  const [confirmation,setConfirmation]=useState<Confirmation|null>(null)
  const [reload,setReload]=useState(0)
+ const [overview,setOverview]=useState<StaffOverview|null>(null)
+ const [overviewBusy,setOverviewBusy]=useState(false)
+ const [overviewError,setOverviewError]=useState('')
+ const [overviewTab,setOverviewTab]=useState<'active'|'history'>('active')
+ const [showAllOrders,setShowAllOrders]=useState(false)
+ const loadOverview=useCallback(async()=>{
+  setOverviewBusy(true);setOverviewError('')
+  try{
+   const data=await staffApi('orders') as StaffOverview
+   if(!Array.isArray(data.active)||!Array.isArray(data.history))
+    throw Error('No se pudo consultar el resumen de encargos.')
+   setOverview(data)
+  }catch(e){setOverviewError(e instanceof Error?e.message:'No se pudo consultar los encargos')}
+  finally{setOverviewBusy(false)}
+ },[])
  const loadCalendar=useCallback(async()=>{
   setCalendarBusy(true);setCalendarError('')
   try{
@@ -72,17 +95,20 @@ export default function PanelMostradorPata(){
    setCalendar(null)
   }finally{setCalendarBusy(false)}
  },[])
+ const refreshAll=useCallback(async()=>{
+  await Promise.all([loadCalendar(),loadOverview()])
+ },[loadCalendar,loadOverview])
  useEffect(()=>{
   staffApi('session').then(data=>setAuthenticated(Boolean(data.authenticated)))
    .catch(()=>setAuthenticated(false))
  },[])
  useEffect(()=>{
   if(!authenticated)return
-  void loadCalendar()
+  void refreshAll()
   const interval=window.setInterval(()=>setReload(n=>n+1),60000)
   return ()=>window.clearInterval(interval)
- },[authenticated,loadCalendar])
- useEffect(()=>{if(authenticated&&reload>0)void loadCalendar()},[reload,authenticated,loadCalendar])
+ },[authenticated,refreshAll])
+ useEffect(()=>{if(authenticated&&reload>0)void refreshAll()},[reload,authenticated,refreshAll])
  useEffect(()=>{
   if(!modalOpen)return
   const previousOverflow=document.body.style.overflow
@@ -163,14 +189,14 @@ export default function PanelMostradorPata(){
    setName('');setPhone('');setEmail('');setReviewConsent(false);setNotes('');setSelected('');setQuantity(1)
    setPaymentReceipt('');keyRef.current=null
    setModalOpen(false)
-   await loadCalendar()
+   await refreshAll()
   }catch(e){setError(e instanceof Error?e.message:'No se pudo registrar')}
   finally{setBusy(false)}
  }
  async function logout(){
   if(busy)return
   await staffApi('session',{method:'DELETE'})
-  setAuthenticated(false);setCalendar(null);setConfirmation(null);setModalOpen(false)
+  setAuthenticated(false);setCalendar(null);setOverview(null);setConfirmation(null);setModalOpen(false)
  }
  if(authenticated===null)return <main className="mx-auto max-w-3xl px-4 pb-20 pt-32 text-slate-700">Comprobando acceso al mostrador…</main>
  if(!authenticated)return <main className="mx-auto min-h-[75vh] max-w-lg px-4 pb-20 pt-32 text-slate-800">
@@ -199,6 +225,8 @@ export default function PanelMostradorPata(){
  const maxDay=year&&mm?new Date(Date.UTC(year,mm,0)).getUTCDate():0
  const weekday=year&&mm?(new Date(Date.UTC(year,mm-1,1)).getUTCDay()+6)%7:0
  const daysByDate=new Map(calendar?.days.map(d=>[d.date,d])??[])
+ const summaryOrders=overviewTab==='active'?(overview?.active??[]):(overview?.history??[])
+ const activeUnits=(overview?.active??[]).reduce((total,o)=>total+o.quantity,0)
  return <main className="mx-auto max-w-5xl px-3 pb-24 pt-28 text-slate-800 sm:px-6 sm:pt-32">
   <header className="flex flex-wrap items-start justify-between gap-3 px-1">
    <div>
@@ -234,9 +262,9 @@ export default function PanelMostradorPata(){
      <h2 className="text-xl font-black">Calendario de disponibilidad</h2>
      <p className="mt-1 text-sm text-slate-600">Pulsa una fecha disponible para registrar el encargo.</p>
     </div>
-    <button type="button" disabled={calendarBusy} onClick={()=>void loadCalendar()}
+    <button type="button" disabled={calendarBusy||overviewBusy} onClick={()=>void refreshAll()}
      className="min-h-12 shrink-0 rounded-xl border border-[#207F85] px-3 text-sm font-bold text-[#207F85] disabled:opacity-50">
-     {calendarBusy?'Actualizando…':'Actualizar'}</button>
+     {calendarBusy||overviewBusy?'Actualizando…':'Actualizar'}</button>
    </div>
    {calendarError&&<p role="alert" className="mt-4 rounded-xl bg-rose-50 p-3 text-sm text-rose-800">{calendarError}</p>}
    {calendar&&<div className="mt-5">
@@ -291,6 +319,84 @@ export default function PanelMostradorPata(){
      <span className="font-semibold text-[#207F85]">▢ Hoy (borde)</span>
     </div>
    </div>}
+  </section>
+  <section className="mt-6 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:p-6" aria-label="Resumen de encargos del mostrador">
+   <div className="flex flex-wrap items-start justify-between gap-3">
+    <div>
+     <p className="text-xs font-extrabold uppercase tracking-widest text-[#207F85]">Consulta · Mostrador</p>
+     <h2 className="mt-1 text-xl font-black">Resumen de reservas</h2>
+     <p className="mt-1 text-sm text-slate-600">Encargos de administración, web y mostrador. Solo lectura.</p>
+    </div>
+    <button type="button" disabled={overviewBusy} onClick={()=>void loadOverview()}
+     className="min-h-11 rounded-xl border border-[#207F85] px-4 text-sm font-bold text-[#207F85] disabled:opacity-50">
+     {overviewBusy?'Actualizando…':'Actualizar reservas'}
+    </button>
+   </div>
+   <div className="mt-4 grid grid-cols-2 gap-3">
+    <div className="rounded-xl bg-[#F1F8F7] p-3">
+     <p className="text-xs font-semibold text-slate-600">Reservas activas</p>
+     <p className="mt-1 text-2xl font-black tabular-nums text-[#207F85]">{overview?.active.length??'–'}</p>
+    </div>
+    <div className="rounded-xl bg-slate-50 p-3">
+     <p className="text-xs font-semibold text-slate-600">Patas encargadas</p>
+     <p className="mt-1 text-2xl font-black tabular-nums">{overview?activeUnits:'–'}</p>
+    </div>
+   </div>
+   <div className="mt-5 flex flex-wrap gap-2" role="group" aria-label="Vista del resumen">
+    <button type="button" aria-pressed={overviewTab==='active'}
+     onClick={()=>{setOverviewTab('active');setShowAllOrders(false)}}
+     className={'min-h-11 rounded-xl px-4 text-sm font-bold '+(overviewTab==='active'?'bg-[#207F85] text-white':'border border-slate-300 bg-white text-slate-700')}>
+     Próximas reservas
+    </button>
+    <button type="button" aria-pressed={overviewTab==='history'}
+     onClick={()=>{setOverviewTab('history');setShowAllOrders(false)}}
+     className={'min-h-11 rounded-xl px-4 text-sm font-bold '+(overviewTab==='history'?'bg-[#207F85] text-white':'border border-slate-300 bg-white text-slate-700')}>
+     Historial reciente
+    </button>
+   </div>
+   {overviewTab==='history'&&<p className="mt-3 text-xs text-slate-500">
+    Últimos 30 días y anulaciones, hasta 40 registros.
+   </p>}
+   {overviewError&&<p role="alert" className="mt-4 rounded-xl bg-rose-50 p-3 text-sm font-semibold text-rose-800">{overviewError}</p>}
+   {!overview
+    ?<p role="status" className="mt-4 rounded-xl border border-dashed p-5 text-sm text-slate-600">
+      {overviewBusy?'Cargando reservas…':'No se ha podido cargar el resumen.'}
+     </p>
+    :summaryOrders.length===0
+     ?<p className="mt-4 rounded-xl border border-dashed p-5 text-sm text-slate-600">
+       {overviewTab==='active'?'No hay reservas próximas confirmadas.':'No hay encargos recientes en el historial.'}
+      </p>
+     :<div className="mt-4 divide-y divide-slate-200">
+      {summaryOrders.slice(0,showAllOrders?summaryOrders.length:6).map(o=>
+       <article key={o.id} className="py-3">
+        <div className="flex flex-wrap items-start justify-between gap-2">
+         <div className="min-w-0">
+          <p className="font-extrabold text-slate-900">{o.name}</p>
+          <p className="mt-0.5 text-xs text-slate-500">Ref. {o.reference||o.id.slice(0,8).toUpperCase()}</p>
+         </div>
+         <div className="text-right">
+          <p className="font-extrabold text-slate-900">{o.quantity} {o.quantity===1?'pata':'patas'}</p>
+          <p className="text-xs text-slate-500">{o.quantity*90} €</p>
+         </div>
+        </div>
+        <div className="mt-2 flex flex-wrap items-center justify-between gap-x-4 gap-y-1 text-sm">
+         <strong className="text-[#207F85]">{dateLabel(o.date)}</strong>
+         {o.phone&&<a href={'tel:'+o.phone} className="font-semibold text-teal-800 underline">{o.phone}</a>}
+        </div>
+        <div className="mt-2 flex flex-wrap gap-x-3 gap-y-1 text-xs text-slate-600">
+         <span>{o.status==='CANCELED'?'Anulada':o.source==='WEB'?'Pago online confirmado':
+          o.paymentMethod==='PENDING'||!o.paymentMethod?'Cobro pendiente':
+          'Cobro anotado: '+(o.paymentMethod==='CARD'?'Tarjeta':o.paymentMethod==='CASH'?'Efectivo':'Monei')}</span>
+         {o.staffCreator&&<span>Registrada por: {o.staffCreator}</span>}
+         {o.paymentReceipt&&<span>Ticket: {o.paymentReceipt}</span>}
+        </div>
+       </article>)}
+      {summaryOrders.length>6&&<button type="button" onClick={()=>setShowAllOrders(v=>!v)}
+       className="mt-3 min-h-11 w-full rounded-xl border border-[#207F85] px-4 text-sm font-bold text-[#207F85]">
+       {showAllOrders?'Ver menos':'Ver todas ('+summaryOrders.length+')'}
+      </button>}
+     </div>}
+   <p className="mt-4 text-xs text-slate-500">Las anulaciones y los ajustes de disponibilidad solo se gestionan desde Administración.</p>
   </section>
   {modalOpen&&valid&&calendar&&<div className="fixed inset-0 z-[110] flex items-center justify-center bg-slate-950/70 px-3 py-3 sm:px-6"
    onMouseDown={e=>{if(e.target===e.currentTarget)close()}}>
