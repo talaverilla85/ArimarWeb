@@ -17,16 +17,23 @@ ON public.pata_booking_notification_queue (next_attempt_at, created_at)
 WHERE sent_at IS NULL;
 
 CREATE OR REPLACE FUNCTION public.pata_enqueue_confirmed_telegram()
-RETURNS trigger LANGUAGE plpgsql AS $$
+RETURNS trigger LANGUAGE plpgsql AS $
+DECLARE should_enqueue boolean := false;
 BEGIN
-  IF NEW.status IN ('MANUAL_CONFIRMED','PAID')
-    AND (TG_OP = 'INSERT' OR OLD.status IS DISTINCT FROM NEW.status) THEN
+  IF NEW.status IN ('MANUAL_CONFIRMED','PAID') THEN
+    IF TG_OP = 'INSERT' THEN
+      should_enqueue := true;
+    ELSIF OLD.status IS DISTINCT FROM NEW.status THEN
+      should_enqueue := true;
+    END IF;
+  END IF;
+  IF should_enqueue THEN
     INSERT INTO public.pata_booking_notification_queue (order_id)
       VALUES (NEW.id)
       ON CONFLICT (order_id) DO NOTHING;
   END IF;
   RETURN NEW;
-END $$;
+END $;
 
 DO $$
 BEGIN
