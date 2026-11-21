@@ -4,7 +4,7 @@ import {getDays,reservationsReady} from '@/lib/pataReservasDb'
 import {cancelManualBooking,verifyManualCancellation} from '@/lib/pataReservasStaffDb'
 import {fail,noStore,parseBody,rejectOrigin,str,unauthorized,unavailable} from '@/lib/pataReservasHttp'
 export const dynamic='force-dynamic'
-const uuid=/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i
+const uuid=/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i
 export async function POST(request:Request){
  if(!reservationsReady())return unavailable()
  if(!validAdmin(request))return unauthorized()
@@ -12,8 +12,11 @@ export async function POST(request:Request){
  try{
   const data=await parseBody(request)
   const id=data.id,reason=str(data.reason,150)
-  if(typeof id!=='string'||!uuid.test(id)||!reason||reason.length<5)
-   return NextResponse.json({error:'Indica la reserva y un motivo de al menos 5 caracteres.'},
+  if(typeof id!=='string'||!uuid.test(id))
+   return NextResponse.json({error:'No se reconoce el identificador interno de esta reserva. Actualiza el calendario e inténtalo de nuevo.'},
+    {status:400,headers:noStore})
+  if(!reason||reason.length<5)
+   return NextResponse.json({error:'Escribe un motivo de anulación de al menos 5 caracteres.'},
     {status:400,headers:noStore})
   const status=await cancelManualBooking(id,reason)
   if(status==='ALREADY_CANCELED')
