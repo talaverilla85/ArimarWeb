@@ -1,5 +1,7 @@
 -- AriMar / Avisos Telegram para reservas de pata confirmadas.
--- Una fila por reserva, sin duplicados cuando se reintenta o llega de nuevo un webhook.
+-- Una fila por reserva. Se impide el encolado duplicado incluso con reintentos.
+-- Telegram no dispone de clave de idempotencia de entrega: una caida entre enviar
+-- y confirmar en BD podria volver a enviar; el mensaje lleva su referencia.
 -- No se envian avisos por reservas antiguas: solo se encolan nuevas confirmaciones.
 
 CREATE TABLE IF NOT EXISTS public.pata_booking_notification_queue (
