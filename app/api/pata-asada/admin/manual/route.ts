@@ -1,4 +1,5 @@
 import {NextResponse} from 'next/server'
+import {notifyConfirmedPataBooking} from '@/lib/pataTelegram'
 import {validAdmin,validOrigin} from '@/lib/pataReservasAdmin'
 import {parseReviewEmail} from '@/lib/pataReviewEmail'
 import {manualBooking,reservationsReady,type ManualPaymentMethod} from '@/lib/pataReservasDb'
@@ -33,6 +34,7 @@ export async function POST(request:Request){
    paymentReceipt:paymentMethod==='PENDING'?null:paymentReceipt,
    email:review!.email,reviewConsent:review!.reviewConsent
   })
+  await notifyConfirmedPataBooking(result.id)
   return NextResponse.json({
    ...result,status:'MANUAL_CONFIRMED',manualPaymentMethod:paymentMethod,
    manualPaymentDate:paymentMethod==='PENDING'?null:paymentDate,

@@ -1,4 +1,5 @@
 import {NextResponse} from 'next/server'
+import {notifyConfirmedPataBooking} from '@/lib/pataTelegram'
 import {staffAuthenticated} from '@/lib/pataReservasStaff'
 import {parseReviewEmail} from '@/lib/pataReviewEmail'
 import {bookFromCounter} from '@/lib/pataReservasStaffDb'
@@ -31,6 +32,7 @@ export async function POST(request:Request){
     {status:400,headers:noStore})
   const order=await bookFromCounter({date,quantity,name,phone,notes,operator,key,
    paymentMethod,paymentDate,paymentReceipt,email:review!.email,reviewConsent:review!.reviewConsent})
+  await notifyConfirmedPataBooking(order.id)
   return NextResponse.json({
    reference:order.reference,status:'MANUAL_CONFIRMED',
    date,quantity,amountCents:quantity*9000,
